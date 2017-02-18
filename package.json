@@ -1,0 +1,24 @@
+{
+  "name": "eggup",
+  "version": "2.0.0",
+  "description": "Order breakfast eggs at the Silverspin office",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ljungmark/eggup-node.git"
+  },
+  "author": "twitter.com/ljungmark",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ljungmark/eggup-node/issues"
+  },
+  "homepage": "https://github.com/ljungmark/eggup-node#readme",
+  "dependencies": {
+    "express": "^4.14.1",
+    "mysql": "^2.13.0"
+  }
+}
