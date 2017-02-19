@@ -2,6 +2,13 @@ const express = require('express'),
   app = express(),
   path = require('path');
 
+  /**
+    Map static resources
+    Static resources should be stored in the 'public' folder
+  */
+  app.use('/styles', express.static(path.join(__dirname, 'static/')));
+  app.use('/scripts', express.static(path.join(__dirname, 'static/')));
+
 const mysql = require('mysql');
 const pool  = mysql.createPool({
 	connectionLimit: 10,
@@ -9,7 +16,7 @@ const pool  = mysql.createPool({
 	user: '',
 	password: '',
 	database: '',
-	dateStrings: true
+	dateStrings: true /** Don't return dates as actual dates, but rather as strings */
 });
 
 function get_date(date) {
@@ -46,11 +53,11 @@ app.post('/synchronize', function(request, response) {
 	pool.query(sql, function (error, results, fields) {
     if (error) throw error;
 
-		/**
+    /**
       If there isn't a result, it means that the cooking hasn't commenced yet
       The app is availaboe for additional orders
     */
-		if (!results.length) {
+    if (!results.length) {
       response.send(JSON.stringify({ 'available': true }));
     } else {
     /**
