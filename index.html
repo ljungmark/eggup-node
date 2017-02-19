@@ -8,10 +8,19 @@
   <meta name="description" content="Order breakfast eggs at the Silverspin office">
   <meta name="author" content="Widence">
 
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+
+  <style>
+    /* Critical Rendering Path */
+  </style>
 </head>
 
 <body>
+  <div class="application">
+    <div class="application__block">Order block</div>
+    <div class="application__block">Observer block</div>
+    <div class="application__block">Operation block</div>
+  </div>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   let Eggup = function() {

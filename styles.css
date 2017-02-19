@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+}
+
+.application {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.application__block {
+  max-width: 50%;
+  position: absolute; /* Stack blocks upon each other */
+}
