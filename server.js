@@ -1,15 +1,3 @@
-/**
-Table of Contents
-  * DEPENDENCIES
-  * DATABASE
-  * HELPER FUNCTIONS
-    - get_date(date)
-  * ROUTING
-    - /
-    - /tokens
-    - /syncronize
-*/
-
 /** DEPENDENCIES */
 const path = require('path'),
   express = require('express'),
@@ -24,9 +12,10 @@ const path = require('path'),
   app.use('/scripts', express.static(path.join(__dirname, 'static/')));
 
   /**
-    Use bodyparser to interpret XHR bodies
+    Use body-parser to interpret XHR bodies
   */
   app.use(bodyParser.urlencoded({ extended: true }));
+
 
 /** DATABASE */
 const mysql = require('mysql');

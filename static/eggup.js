@@ -59,6 +59,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
       return cache;
     })();
+
+    /**
+      this.block: Current active block (String)
+      Used to calculate animation direction when loading blocks
+    */
+    this.block = 'loading';
   }
 
 
@@ -78,5 +84,43 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  let eggup = new Eggup().initialize();
+
+  Eggup.prototype.load = function(target_block) {
+    let current_block = this.block;
+
+    /** Allowed targets */
+    let block_array = [
+      'loading',
+      'order',
+      'observe',
+      'operation',
+      'closed'
+    ];
+
+    current_block_index = block_array.indexOf(current_block);
+    target_block_index = block_array.indexOf(target_block);
+
+    /** If target is the same as current block */
+    if (target_block_index == current_block_index) return false;
+
+    /** If target is not in block_array */
+    if (target_block_index == -1) return false;
+
+    /** Decide animatin direction */
+    if (current_block_index < target_block_index) {
+      document.querySelector('.application__block--' + current_block).classList.add('application__block--hidden');
+      document.querySelector('.application__block--' + target_block).classList.remove('application__block--hidden');
+      console.log('moving forward');
+    } else {
+      document.querySelector('.application__block--' + current_block).classList.add('application__block--hidden');
+      document.querySelector('.application__block--' + target_block).classList.remove('application__block--hidden');
+      console.log('moving backwards');
+    }
+
+    this.block = target_block;
+  }
+
+  let eggup = new Eggup();
+
+  eggup.initialize();
 });

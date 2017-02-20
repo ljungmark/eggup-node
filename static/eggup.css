@@ -1,4 +1,6 @@
 body {
+  background: #21272c;
+  color: #ffffff;
   font-family: 'Athiti', sans-serif;
   font-size: 1em;
   margin: 0;
@@ -9,8 +11,12 @@ body {
 }
 
 .application__block {
+  border-radius: 2px;
+  box-shadow: inset 0 3px 2px rgba(255, 255, 255, .02);
+  box-sizing: border-box;
   left: 50%;
   max-width: 50%;
+  padding: 10px;
   position: absolute; /* Stack blocks upon each other */
   top: 50%;
   transform: translate(-50%, -50%);
