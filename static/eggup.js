@@ -1,4 +1,18 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
+
+  /** Helper functions */
+  function serialize(object) {
+    let str = [];
+
+    for (let property in object) {
+      if (object.hasOwnProperty(property)) {
+        str.push(encodeURIComponent(property) + "=" + encodeURIComponent(object[property]));
+      }
+    }
+
+    return str.join("&");
+  }
+
 
   let Eggup = function() {
 

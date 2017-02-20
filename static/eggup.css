@@ -5,15 +5,15 @@ body {
 }
 
 .application {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 100vh;
 }
 
 .application__block {
+  left: 50%;
   max-width: 50%;
   position: absolute; /* Stack blocks upon each other */
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .application__block--hidden {

@@ -1,5 +1,19 @@
-  const path = require('path'),
+/**
+Table of Contents
+  * DEPENDENCIES
+  * DATABASE
+  * HELPER FUNCTIONS
+    - get_date(date)
+  * ROUTING
+    - /
+    - /tokens
+    - /syncronize
+*/
+
+/** DEPENDENCIES */
+const path = require('path'),
   express = require('express'),
+  bodyParser = require('body-parser'),
   app = express();
 
   /**
@@ -9,6 +23,12 @@
   app.use('/styles', express.static(path.join(__dirname, 'static/')));
   app.use('/scripts', express.static(path.join(__dirname, 'static/')));
 
+  /**
+    Use bodyparser to interpret XHR bodies
+  */
+  app.use(bodyParser.urlencoded({ extended: true }));
+
+/** DATABASE */
 const mysql = require('mysql');
 const pool  = mysql.createPool({
 	connectionLimit: 10,
@@ -19,6 +39,8 @@ const pool  = mysql.createPool({
 	dateStrings: true /** Don't return dates as actual dates, but rather as strings */
 });
 
+
+/** HELPER FUNCTIONS */
 function get_date(date) {
   current_date = new Date(),
   year = current_date.getFullYear(),
@@ -47,7 +69,6 @@ app.post('/token', (request, response) => {
   let token = '';
 
   for (let i = 2; i > 0; --i) token += Math.random().toString(36).slice(2);
-
 
   let sql = 'INSERT INTO tokens (`token`) VALUES (?)',
     values = [token.slice(-32)];
