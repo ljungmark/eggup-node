@@ -1,20 +1,29 @@
 document.addEventListener("DOMContentLoaded", function() {
+
   let Eggup = function() {
 
     /**
-      this.identifier: Unique client identifier (String(32))
+      this.token: Unique client identifier (String(32))
       Used to connect the user to an action, such as an placed order
 
       Example:
-      this.identifier = 'fojdpzu2kodx95lh75zbl0rmef1d81acm'
+      this.token = 'fojdpzu2kodx95lh75zbl0rmef1d81acm'
     */
-    this.identifier = JSON.parse(localStorage.getItem('identifier')) || (function() {
-      let identifier = '';
-      for (let i = 3; i > 0; --i) identifier += Math.random().toString(36).slice(2);
+    this.token = JSON.parse(localStorage.getItem('token')) || (function() {
+      let token = '';
 
-      localStorage.setItem('identifier', JSON.stringify(identifier));
+      fetch('/token', {
+        method: 'post'
+      }).then(function(response) {
+        return response.json().then(function(json) {
+          console.log(json);
+          token = json['token'];
+          localStorage.setItem('token', JSON.stringify(token));
+        });
+      });
 
-      return identifier;
+
+      return token;
     })();
 
     /**
@@ -38,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })();
   }
 
+
   Eggup.prototype.initialize = function() {
 
     fetch('/synchronize', {
@@ -46,11 +56,11 @@ document.addEventListener("DOMContentLoaded", function() {
       return response.json().then(function(json) {
         console.log(json);
         if (json['available']) {
-          console.log('available')
+          console.log('available');
         } else {
           console.log(json['date']);
         }
-        });
+      });
     });
   }
 

@@ -1,6 +1,6 @@
-const express = require('express'),
-  app = express(),
-  path = require('path');
+  const path = require('path'),
+  express = require('express'),
+  app = express();
 
   /**
     Map static resources
@@ -27,15 +27,55 @@ function get_date(date) {
   date = year + '-' + month + '-' + day;
 }
 
+
 /** ROUTING */
-app.get('/', function(request, response) {
-	response.sendFile(path.join(__dirname + '/index.html'));
+app.get('/', (request, response) => {
+  response.sendFile(path.join(__dirname + '/index.html'));
 });
+
+
+/**
+  Request a new token
+  Available through API
+
+  Example
+  {
+    'token': 'zzn1r0b212mw3lk24l5jt6gvi98gia61v8puakxvht64ezsemi'
+  }
+*/
+app.post('/token', (request, response) => {
+  let token = '';
+
+  for (let i = 2; i > 0; --i) token += Math.random().toString(36).slice(2);
+
+
+  let sql = 'INSERT INTO tokens (`token`) VALUES (?)',
+    values = [token.slice(-32)];
+  sql = mysql.format(sql, values);
+
+  pool.query(sql, function (error, results, fields) {
+    if (error) throw error;
+
+    /**
+      Something went wrong
+    */
+    if (results.affectedRows == 0) {
+      response.send(JSON.stringify({ 'status': 'token generation failed' }));
+    } else {
+    /**
+      Token has been successfully generated
+    */
+      response.send(JSON.stringify({ 'token': token.slice(-32) }));
+    }
+  });
+});
+
 
 /**
   Synchronize the application with the database
   Retrives the current application status from the database
-  Returns JSON encoded object with availability and possibly a stringified datetime.
+  Returns JSON encoded object with availability and possibly a stringified datetime
+  Available through API
 
   Example
   {
@@ -43,7 +83,7 @@ app.get('/', function(request, response) {
     'date': '2017-02-17 09:12:09'
   }
 */
-app.post('/synchronize', function(request, response) {
+app.post('/synchronize', (request, response) => {
 	const date = get_date();
 
 	let sql = 'SELECT date FROM cookings WHERE DATE(date) = ?',
@@ -71,4 +111,6 @@ app.post('/synchronize', function(request, response) {
 	});
 });
 
-app.listen(8080);
+app.listen(8080, function() {
+  console.log('Eggup is running');
+});
