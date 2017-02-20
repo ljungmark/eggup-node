@@ -1,4 +1,6 @@
 body {
+  font-family: 'Athiti', sans-serif;
+  font-size: 1em;
   margin: 0;
 }
 
@@ -12,4 +14,8 @@ body {
 .application__block {
   max-width: 50%;
   position: absolute; /* Stack blocks upon each other */
+}
+
+.application__block--hidden {
+	display: none;
 }
