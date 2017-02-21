@@ -91,10 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
     })();
 
     /**
-      this.block: Current active block (String)
-      Used to calculate animation direction when loading blocks
+      this.module: Current active module (String)
+      Used to calculate animation direction when loading modules
     */
-    this.block = 'loading';
+    this.module = 'loading';
   }
 
 
@@ -106,20 +106,22 @@ document.addEventListener('DOMContentLoaded', function() {
       return response.json().then(function(json) {
         console.log(json);
         if (json['available']) {
-          console.log('available');
+          eggup.load('order');
         } else {
-          console.log(json['date']);
+          /** Show when the eggs were started */
+          document.querySelector('.module-closed__timer').innerHTML = json['date'].slice(11,16);
+          eggup.load('closed');
         }
       });
     });
   }
 
 
-  Eggup.prototype.load = function(target_block) {
-    let current_block = this.block;
+  Eggup.prototype.load = function(target_module) {
+    const current_module = this.module;
 
     /** Allowed targets */
-    const block_array = [
+    const module_array = [
       'loading',
       'order',
       'observe',
@@ -127,43 +129,46 @@ document.addEventListener('DOMContentLoaded', function() {
       'closed'
     ];
 
-    const current_block_element = document.querySelector('.application__block--' + current_block),
-      target_block_element = document.querySelector('.application__block--' + target_block),
-      current_block_index = block_array.indexOf(current_block),
-      target_block_index = block_array.indexOf(target_block);
+    const current_module_element = document.querySelector('.module-' + current_module),
+      target_module_element = document.querySelector('.module-' + target_module),
+      current_module_index = module_array.indexOf(current_module),
+      target_module_index = module_array.indexOf(target_module);
 
-    /** If target is the same as current block */
-    if (target_block_index == current_block_index) return false;
+    /**
+      Deny load if the target is the same as current module,
+      if the target module it's not in the module_array
+      or if the application is closed
+    */
+    if (target_module_index == current_module_index
+      || target_module_index == -1
+      || current_module === 'closed') return false;
 
-    /** If target is not in block_array */
-    if (target_block_index == -1) return false;
+    /** Decide animation direction and perform navigation */
+    if (current_module_index < target_module_index) {
+      current_module_element.classList.add('fade_out_to_left');
+      target_module_element.classList.remove('module--hidden');
+      target_module_element.classList.add('fade_in_from_right');
 
-    /** Decide animatin direction */
-    if (current_block_index < target_block_index) {
-      current_block_element.classList.add('fade_out_to_left');
-      target_block_element.classList.remove('application__block--hidden');
-      target_block_element.classList.add('fade_in_from_right');
-
-      current_block_element.onCSSAnimationEnd( function()
+      current_module_element.onCSSAnimationEnd( function()
       {
-        current_block_element.classList.remove('fade_out_to_left');
-        current_block_element.classList.add('application__block--hidden');
-        target_block_element.classList.remove('fade_in_from_right');
+        current_module_element.classList.remove('fade_out_to_left');
+        current_module_element.classList.add('module--hidden');
+        target_module_element.classList.remove('fade_in_from_right');
       });
     } else {
-      current_block_element.classList.add('fade_out_to_right');
-      target_block_element.classList.remove('application__block--hidden');
-      target_block_element.classList.add('fade_in_from_left');
+      current_module_element.classList.add('fade_out_to_right');
+      target_module_element.classList.remove('module--hidden');
+      target_module_element.classList.add('fade_in_from_left');
 
-      current_block_element.onCSSAnimationEnd( function()
+      current_module_element.onCSSAnimationEnd( function()
       {
-        current_block_element.classList.remove('fade_out_to_right');
-        current_block_element.classList.add('application__block--hidden');
-        target_block_element.classList.remove('fade_in_from_left');
+        current_module_element.classList.remove('fade_out_to_right');
+        current_module_element.classList.add('module--hidden');
+        target_module_element.classList.remove('fade_in_from_left');
       });
     }
 
-    this.block = target_block;
+    this.module = target_module;
   }
 
   let eggup = new Eggup();

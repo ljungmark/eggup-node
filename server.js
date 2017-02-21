@@ -36,6 +36,8 @@ function get_date(date) {
   month = ('0' + (current_date.getMonth() + 1)).slice(-2),
   day = ('0' + current_date.getDate()).slice(-2),
   date = year + '-' + month + '-' + day;
+
+  return date;
 }
 
 
@@ -105,7 +107,7 @@ app.post('/synchronize', (request, response) => {
 
     /**
       If there isn't a result, it means that the cooking hasn't commenced yet
-      The app is availaboe for additional orders
+      The app is available for additional orders
     */
     if (!results.length) {
       response.send(JSON.stringify({ 'available': true }));

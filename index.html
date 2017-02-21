@@ -8,35 +8,40 @@
   <meta name="description" content="Order breakfast eggs at the Silverspin office">
   <meta name="author" content="Widence">
 
-  <link rel="stylesheet" href="styles/eggup.css" media="screen">
-  <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
-
   <style>
     /** Critical Rendering Path */
+    body {
+      background: #21272c;
+      color: #ffffff;
+      height: 100vh;
+      margin: 0;
+    }
   </style>
+
+  <link rel="stylesheet" href="styles/eggup.css" media="screen">
+  <link href="https://fonts.googleapis.com/css?family=Athiti:300" rel="stylesheet">
 </head>
 
 <body>
-  <div class="application">
-    <div class="application__block application__block--loading">
-      Loading block
-    </div>
+  <div class="module module-loading">
+    Synkroniserar med Mamma Höna, en sekund!
+  </div>
 
-    <div class="application__block application__block--order application__block--hidden">
-      Order block
-    </div>
+  <div class="module module-order module--hidden">
+    Order block
+  </div>
 
-    <div class="application__block application__block--observe application__block--hidden">
-      Observe block
-    </div>
+  <div class="module module-observe module--hidden">
+    Observe block
+  </div>
 
-    <div class="application__block application__block--operation application__block--hidden">
-      Operation block
-    </div>
+  <div class="module module-operation module--hidden">
+    Operation block
+  </div>
 
-    <div class="application__block application__block--closed application__block--hidden">
-      Finished block
-    </div>
+  <div class="module module-closed module--hidden">
+    <h2>Completed</h2>
+    <div class="module-closed__timer"></div>
   </div>
   <script src="scripts/eggup.js"></script>
 </body>
