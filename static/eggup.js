@@ -1,32 +1,6 @@
 /** Helper functions */
 
 /**
-  onCSSAnimationEnd, trigger callback when CSS animation has ended on a element
-  Originally by Osvaldas Valutis, www.osvaldas.info
-*/
-(function() {
-  var scope = document.body || document.documentElement,
-    scope = scope.style,
-    prefixAnimation = '';
-
-  if(scope.WebkitAnimation == '') prefixAnimation = '-webkit-';
-  if(scope.MozAnimation == '') prefixAnimation = '-moz-';
-  if(scope.OAnimation == '') prefixAnimation = '-o-';
-
-  Object.prototype.onCSSAnimationEnd = function(callback)
-  {
-    let runOnce = function(e) { callback(); e.target.removeEventListener(e.type, runOnce); };
-    this.addEventListener('webkitAnimationEnd', runOnce);
-    this.addEventListener('mozAnimationEnd', runOnce);
-    this.addEventListener('oAnimationEnd', runOnce);
-    this.addEventListener('oanimationend', runOnce);
-    this.addEventListener('animationend', runOnce);
-    if ((prefixAnimation == '' && !('animation' in scope)) || getComputedStyle(this)[ prefixAnimation + 'animation-duration' ] == '0s') callback();
-    return this;
-  };
-}());
-
-/**
   Serialize from object to URIEncoded string
 */
 function serialize(object) {
@@ -72,18 +46,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
       this.cache: Get previous orders to populate input fields (Object)
-      We expect an object here, with class and quantity properties
-      The class defines the boiling time for the eggs, eg. soft- or hard-boiled
+      We expect an object here, with variant and quantity properties
+      The variant defines the boiling time for the eggs, eg. soft- or hard-boiled
       The quantity deines the amount of eggs the user wishes to order
 
       Example:
       this.cache = {
-        class: 1 || 2,
+        variant: 1 || 2,
         quantity: 1 || 2
       }
     */
     this.cache = JSON.parse(localStorage.getItem('cache')) || (function() {
-      let cache =  { 'class': 1, 'quantity': 1 };
+      let cache =  { 'variant': 1, 'quantity': 1 };
 
       localStorage.setItem('cache', JSON.stringify(cache));
 
@@ -106,6 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return response.json().then(function(json) {
         console.log(json);
         if (json['available']) {
+          //document.querySelector('#order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity']
+          document.querySelector('#order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant']
           eggup.load('order');
         } else {
           /** Show when the eggs were started */
@@ -149,8 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
       target_module_element.classList.remove('module--hidden');
       target_module_element.classList.add('fade_in_from_right');
 
-      current_module_element.onCSSAnimationEnd( function()
-      {
+      current_module_element.addEventListener('webkitAnimationEnd', function(e) {
+        e.target.removeEventListener(e.type, arguments.callee)
         current_module_element.classList.remove('fade_out_to_left');
         current_module_element.classList.add('module--hidden');
         target_module_element.classList.remove('fade_in_from_right');
@@ -160,8 +136,8 @@ document.addEventListener('DOMContentLoaded', function() {
       target_module_element.classList.remove('module--hidden');
       target_module_element.classList.add('fade_in_from_left');
 
-      current_module_element.onCSSAnimationEnd( function()
-      {
+      current_module_element.addEventListener('webkitAnimationEnd', function(e) {
+        e.target.removeEventListener(e.type, arguments.callee)
         current_module_element.classList.remove('fade_out_to_right');
         current_module_element.classList.add('module--hidden');
         target_module_element.classList.remove('fade_in_from_left');
@@ -169,6 +145,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     this.module = target_module;
+  }
+
+  document.querySelector('.order-submit').onclick = () => {
+    if (!document.querySelector('#order-quantity__data').value.length > 0
+      || !document.querySelector('#order-variant__data').value.length > 0) {
+
+      /** Abort any ongoing animation */
+      document.querySelector('.module-order').classList.remove('module-order--error');
+      void document.querySelector('.module-order').offsetWidth;
+
+      document.querySelector('.order-quantity').classList.add('quantity--error');
+      document.querySelector('.order-variant').classList.add('variant--error');
+      document.querySelector('.module-order').classList.add('module-order--error');
+
+      document.querySelector('.module-order').addEventListener('webkitAnimationEnd', function(event) {
+        event.target.removeEventListener(event.type, arguments.callee);
+
+        document.querySelector('.module-order').classList.remove('module-order--error');
+        document.querySelector('.order-quantity').classList.remove('quantity--error');
+        document.querySelector('.order-variant').classList.remove('variant--error');
+      });
+
+      return false
+    }
   }
 
   let eggup = new Eggup();
