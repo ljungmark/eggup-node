@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     */
     this.cache = JSON.parse(localStorage.getItem('cache')) || (function() {
-      let cache =  { 'variant': 1, 'quantity': 1 };
+      const cache =  { 'variant': '', 'quantity': 1 };
 
       localStorage.setItem('cache', JSON.stringify(cache));
 
@@ -73,15 +73,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   Eggup.prototype.initialize = function() {
-
     fetch('/synchronize', {
       method: 'post'
     }).then(function(response) {
       return response.json().then(function(json) {
         console.log(json);
         if (json['available']) {
-          //document.querySelector('#order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity']
-          document.querySelector('#order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant']
+          document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
+          document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
           eggup.load('order');
         } else {
           /** Show when the eggs were started */
@@ -93,26 +92,29 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
+  /**
+    Eggup.prototype.load: Load a specific module
+
+    Example:
+    eggup.load('docket');
+  */
   Eggup.prototype.load = function(target_module) {
     const current_module = this.module;
 
     /** Allowed targets */
-    const module_array = [
-      'loading',
-      'order',
-      'observe',
-      'operation',
-      'closed'
-    ];
+    const module_array = [];
+    document.querySelectorAll('.module').forEach((element) => {
+      module_array.push(element.dataset.module);
+    });
 
-    const current_module_element = document.querySelector('.module-' + current_module),
-      target_module_element = document.querySelector('.module-' + target_module),
+    const current_module_element = document.querySelector('div[data-module="' + current_module + '"]'),
+      target_module_element = document.querySelector('div[data-module="' + target_module + '"]'),
       current_module_index = module_array.indexOf(current_module),
       target_module_index = module_array.indexOf(target_module);
 
     /**
       Deny load if the target is the same as current module,
-      if the target module it's not in the module_array
+      if the target module doesn't exist
       or if the application is closed
     */
     if (target_module_index == current_module_index
@@ -145,33 +147,63 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     this.module = target_module;
-  }
+  };
+
+
+  /**
+    Eggup.prototype.error: Visual feedback to indicate an error in the application
+  */
+  Eggup.prototype.error = function() {
+    const current_module = document.querySelector('.module[data-module="' + this.module + '"]');
+
+    /** Abort any ongoing animation */
+    if (current_module.classList.contains('module--error')) {
+      current_module.classList.remove('module--error');
+      void current_module.offsetWidth;
+    }
+
+    current_module.classList.add('module--error');
+
+    /** Remove module-error modifier when animation is complete */
+    current_module.addEventListener('webkitAnimationEnd', function(event) {
+      event.target.removeEventListener(event.type, arguments.callee);
+
+      current_module.classList.remove('module--error');
+    });
+
+    return false;
+  };
+
+  document.onkeydown = (event) => {
+    event = event || window.event;
+
+    if (eggup.module == 'order') {
+      if (event.keyCode == '13' || event.keyCode == '32') {
+        document.querySelector('.order-submit').click();
+
+        return false;
+      }
+    }
+  };
 
   document.querySelector('.order-submit').onclick = () => {
-    if (!document.querySelector('#order-quantity__data').value.length > 0
-      || !document.querySelector('#order-variant__data').value.length > 0) {
+    /** Ensure we have input data */
+    if (!document.querySelector('.order-quantity__data').value.length > 0
+      || !document.querySelector('.order-variant__data').value.length > 0) {
 
-      /** Abort any ongoing animation */
-      document.querySelector('.module-order').classList.remove('module-order--error');
-      void document.querySelector('.module-order').offsetWidth;
+      eggup.error();
 
-      document.querySelector('.order-quantity').classList.add('quantity--error');
-      document.querySelector('.order-variant').classList.add('variant--error');
-      document.querySelector('.module-order').classList.add('module-order--error');
-
-      document.querySelector('.module-order').addEventListener('webkitAnimationEnd', function(event) {
-        event.target.removeEventListener(event.type, arguments.callee);
-
-        document.querySelector('.module-order').classList.remove('module-order--error');
-        document.querySelector('.order-quantity').classList.remove('quantity--error');
-        document.querySelector('.order-variant').classList.remove('variant--error');
-      });
-
-      return false
+      return false;
     }
-  }
+  };
 
-  let eggup = new Eggup();
+  document.querySelector('.order-skip').onclick = () => {
+    eggup.load('docket');
+
+    return false;
+  };
+
+  const eggup = new Eggup();
 
   eggup.initialize();
 });

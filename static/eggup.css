@@ -20,7 +20,7 @@ h2 {
   transform: translate(-50%, -50%);
 }
 
-.module-order {
+.module[data-module="order"] {
   background-image: linear-gradient(20deg, #8cc3c1, #b4e4e3);
 }
 
@@ -218,7 +218,7 @@ h2 {
   }
 }
 
-.module-order--error {
+.module--error {
   -webkit-animation-duration: 0.7s;
   animation-duration: 0.7s;
   -webkit-animation-fill-mode: both;
@@ -252,14 +252,15 @@ h2 {
   overflow-x: auto;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
-  transition: background-color 0.4s linear;
+  transition: background-color 300ms linear;
   padding: 2px 14px 8px;
   width: 100%;
 }
 
-.quantity--error,
-.variant--error {
+.module--error .order-quantity,
+.module--error .order-variant {
   background: rgba(255, 76, 76, 0.5);
+  transition: background-color 100ms linear;
 }
 
 .order-quantity {
@@ -279,7 +280,7 @@ h2 {
 
 .order-quantity__label,
 .order-variant__label {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.95);
   font-size: 12px;
   letter-spacing: 1px;
   pointer-events: none;
