@@ -19,66 +19,80 @@ function serialize(object) {
 document.addEventListener('DOMContentLoaded', function() {
 
   const Eggup = function() {
-
     /**
-      this.token: Unique client identifier (String(32))
+      instance.token: Unique client identifier (String(32))
       Used to connect the user to an action, such as an placed order
 
       Example:
-      this.token = 'fojdpzu2kodx95lh75zbl0rmef1d81acm'
+      instance.token = 'fojdpzu2kodx95lh75zbl0rmef1d81acm'
     */
-    this.token = Promise.resolve(JSON.parse(localStorage.getItem('token')) || (function() {
-      let token = '';
+    const instance = this;
+    instance.token = '';
 
-      fetch('/token', {
-        method: 'post'
-      }).then(function(response) {
-        return response.json().then(function(json) {
-          token = json['token'];
-          localStorage.setItem('token', JSON.stringify(token));
+    let get_token = new Promise(function(resolve, reject) {
+      let token = JSON.parse(localStorage.getItem('token'));
+
+      if (token) {
+        instance.token = token;
+
+        resolve(token);
+      } else {
+        token = '';
+
+        fetch('/token', {
+          method: 'post'
+        }).then(function(response) {
+          return response.json().then(function(json) {
+            token = json['token'];
+            localStorage.setItem('token', JSON.stringify(token));
+
+            instance.token = token;
+
+            resolve(token);
+          });
         });
-      });
+      }
+    });
 
-
-      return token;
-    })());
 
     /**
-      this.cache: Get previous orders to populate input fields (Object)
+      instance.cache: Get previous orders to populate input fields (Object)
       We expect an object here, with variant and quantity properties
       The variant defines the boiling time for the eggs, eg. soft- or hard-boiled
       The quantity deines the amount of eggs the user wishes to order
 
       Example:
-      this.cache = {
+      instance.cache = {
         variant: 1 || 2,
         quantity: 1 || 2
       }
     */
-    this.cache = Promise.resolve(JSON.parse(localStorage.getItem('cache')) || (function() {
+    instance.cache = JSON.parse(localStorage.getItem('cache')) || (function() {
       const cache =  { 'variant': '', 'quantity': 1 };
 
       localStorage.setItem('cache', JSON.stringify(cache));
 
       return cache;
-    })());
+    })();
 
     /**
-      this.module: Current active module (String)
+      instance.module: Current active module (String)
       Used to calculate animation direction when loading modules
     */
-    this.module = 'instantiate';
+    instance.module = 'instantiate';
 
     /**
       Wait until instantiation is complete before synchronizing
     */
-    Promise.all([this.token, this.cache, this.module]).then(() => {
-      eggup.synchronize();
+    get_token.then(() => {
+      instance.synchronize();
     });
   }
 
 
   Eggup.prototype.synchronize = function() {
+    const instance = this;
+
     fetch('/synchronize', {
       method: 'post'
     }).then(function(response) {
@@ -86,14 +100,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (json['available']) {
           document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
           document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
-          eggup.load('request');
+          instance.load('request');
         } else {
           /** Show when the eggs were started */
           document.querySelector('.module-closed__timer').innerHTML = json['date'].slice(11,16);
-          eggup.load('closed');
+          instance.load('docket');
         }
       });
     });
+    setTimeout(function() { console.log(instance.token); }, 5000);
   }
 
 
@@ -104,7 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
     eggup.load('docket');
   */
   Eggup.prototype.load = function(target_module) {
-    const current_module = this.module;
+    const instance = this;
+    const current_module = instance.module;
 
     /** Allowed targets */
     const module_array = [];
@@ -151,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    this.module = target_module;
+    instance.module = target_module;
   };
 
 
@@ -159,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Eggup.prototype.error: Visual feedback to indicate an error in the application
   */
   Eggup.prototype.error = function() {
-    const current_module = document.querySelector('.module[data-module="' + this.module + '"]');
+    const current_module = document.querySelector('.module[data-module="' + instance.module + '"]');
 
     /** Abort any ongoing animation */
     if (current_module.classList.contains('module--error')) {
