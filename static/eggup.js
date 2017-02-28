@@ -18,7 +18,7 @@ function serialize(object) {
 
 document.addEventListener('DOMContentLoaded', function() {
 
-  let Eggup = function() {
+  const Eggup = function() {
 
     /**
       this.token: Unique client identifier (String(32))
@@ -27,14 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
       Example:
       this.token = 'fojdpzu2kodx95lh75zbl0rmef1d81acm'
     */
-    this.token = JSON.parse(localStorage.getItem('token')) || (function() {
+    this.token = Promise.resolve(JSON.parse(localStorage.getItem('token')) || (function() {
       let token = '';
 
       fetch('/token', {
         method: 'post'
       }).then(function(response) {
         return response.json().then(function(json) {
-          console.log(json);
           token = json['token'];
           localStorage.setItem('token', JSON.stringify(token));
         });
@@ -42,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
       return token;
-    })();
+    })());
 
     /**
       this.cache: Get previous orders to populate input fields (Object)
@@ -56,32 +55,38 @@ document.addEventListener('DOMContentLoaded', function() {
         quantity: 1 || 2
       }
     */
-    this.cache = JSON.parse(localStorage.getItem('cache')) || (function() {
+    this.cache = Promise.resolve(JSON.parse(localStorage.getItem('cache')) || (function() {
       const cache =  { 'variant': '', 'quantity': 1 };
 
       localStorage.setItem('cache', JSON.stringify(cache));
 
       return cache;
-    })();
+    })());
 
     /**
       this.module: Current active module (String)
       Used to calculate animation direction when loading modules
     */
-    this.module = 'loading';
+    this.module = 'instantiate';
+
+    /**
+      Wait until instantiation is complete before synchronizing
+    */
+    Promise.all([this.token, this.cache, this.module]).then(() => {
+      eggup.synchronize();
+    });
   }
 
 
-  Eggup.prototype.initialize = function() {
+  Eggup.prototype.synchronize = function() {
     fetch('/synchronize', {
       method: 'post'
     }).then(function(response) {
       return response.json().then(function(json) {
-        console.log(json);
         if (json['available']) {
           document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
           document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
-          eggup.load('order');
+          eggup.load('request');
         } else {
           /** Show when the eggs were started */
           document.querySelector('.module-closed__timer').innerHTML = json['date'].slice(11,16);
@@ -177,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.onkeydown = (event) => {
     event = event || window.event;
 
-    if (eggup.module == 'order') {
+    if (eggup.module == 'request') {
       if (event.keyCode == '13' || event.keyCode == '32') {
         document.querySelector('.order-submit').click();
 
@@ -204,6 +209,4 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   const eggup = new Eggup();
-
-  eggup.initialize();
 });

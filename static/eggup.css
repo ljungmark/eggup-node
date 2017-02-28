@@ -20,7 +20,11 @@ h2 {
   transform: translate(-50%, -50%);
 }
 
-.module[data-module="order"] {
+.module[data-module="instantiate"] {
+  background-image: linear-gradient(20deg, #8cc3c1, #b4e4e3);
+}
+
+.module[data-module="request"] {
   background-image: linear-gradient(20deg, #8cc3c1, #b4e4e3);
 }
 
