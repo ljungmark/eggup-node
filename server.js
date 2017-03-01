@@ -20,12 +20,12 @@ const path = require('path'),
 /** DATABASE */
 const mysql = require('mysql');
 const pool  = mysql.createPool({
-	connectionLimit: 10,
-	host: '',
-	user: '',
-	password: '',
-	database: '',
-	dateStrings: true /** Don't return dates as actual dates, but rather as strings */
+  connectionLimit: 10,
+  host: '',
+  user: '',
+  password: '',
+  database: '',
+  dateStrings: true /** Don't return dates as actual dates, but rather as strings */
 });
 
 
@@ -49,7 +49,6 @@ app.get('/', (request, response) => {
 
 /**
   Request a new token
-  Available through API
 
   Example
   {
@@ -87,7 +86,6 @@ app.post('/token', (request, response) => {
   Synchronize the application with the database
   Retrives the current application status from the database
   Returns JSON encoded object with availability and possibly a stringified datetime
-  Available through API
 
   Example
   {
@@ -96,13 +94,13 @@ app.post('/token', (request, response) => {
   }
 */
 app.post('/synchronize', (request, response) => {
-	const date = get_date();
+  const date = get_date();
 
-	let sql = 'SELECT date FROM cookings WHERE DATE(date) = ?',
-		values = [date];
-	sql = mysql.format(sql, values);
+  let sql = 'SELECT date FROM cookings WHERE DATE(date) = ?',
+    values = [date];
+  sql = mysql.format(sql, values);
 
-	pool.query(sql, function (error, results, fields) {
+  pool.query(sql, function (error, results, fields) {
     if (error) throw error;
 
     /**
@@ -118,9 +116,35 @@ app.post('/synchronize', (request, response) => {
       Returns the datetime when the cooking started to process further actions
     */
       const return_values = Object.assign({ 'available': false }, results[0]);
-		  response.send(JSON.stringify(return_values));
+      response.send(JSON.stringify(return_values));
     }
-	});
+  });
+});
+
+
+/**
+  Place a new order
+
+  Example
+  {
+    'token': false,
+  }
+*/
+app.post('/request', (request, response) => {
+  /**
+    Check if token exists in database
+  */
+  let sql = 'SELECT token FROM tokens WHERE token = ?',
+    values = [request.body.token];
+  sql = mysql.format(sql, values);
+
+  pool.query(sql, function (error, results, fields) {
+    if (!results.length) {
+      response.send(JSON.stringify({ 'status': false }));
+    } else {
+      response.send(JSON.stringify({ 'status': true }));
+    }
+  });
 });
 
 app.listen(8080, function() {

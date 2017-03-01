@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     */
     instance.cache = JSON.parse(localStorage.getItem('cache')) || (function() {
-      const cache =  { 'variant': '', 'quantity': 1 };
+      const cache =  { 'variant': 'Löskokt', 'quantity': 1 };
 
       localStorage.setItem('cache', JSON.stringify(cache));
 
@@ -108,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     });
-    setTimeout(function() { console.log(instance.token); }, 5000);
   }
 
 
@@ -175,7 +174,8 @@ document.addEventListener('DOMContentLoaded', function() {
     Eggup.prototype.error: Visual feedback to indicate an error in the application
   */
   Eggup.prototype.error = function() {
-    const current_module = document.querySelector('.module[data-module="' + instance.module + '"]');
+    const instance = this,
+      current_module = document.querySelector('.module[data-module="' + instance.module + '"]');
 
     /** Abort any ongoing animation */
     if (current_module.classList.contains('module--error')) {
@@ -196,8 +196,6 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.onkeydown = (event) => {
-    event = event || window.event;
-
     if (eggup.module == 'request') {
       if (event.keyCode == '13' || event.keyCode == '32') {
         document.querySelector('.order-submit').click();
@@ -208,14 +206,55 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.querySelector('.order-submit').onclick = () => {
+    const quantity =document.querySelector('.order-quantity__data').value,
+      variant = document.querySelector('.order-variant__data').value;
+    let variant_data;
+
     /** Ensure we have input data */
-    if (!document.querySelector('.order-quantity__data').value.length > 0
-      || !document.querySelector('.order-variant__data').value.length > 0) {
+    if (!quantity.length > 0
+      || !variant.length > 0) {
 
       eggup.error();
 
       return false;
     }
+
+    /** Convert variant into integer */
+    if (variant === 'Löskokt' || variant === 'Löskokta') {
+      variant_data = 1;
+    } else if (variant === 'Hårdkokt' || variant === 'Hårdkokta') {
+      variant_data = 2;
+    } else {
+      eggup.error();
+
+      return false;
+    }
+
+    let set_request = new Promise(function(resolve, reject) {
+      const token = JSON.parse(localStorage.getItem('token'));
+
+      fetch('/request', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: serialize({ 'token': token, 'quantity': quantity, 'variant': variant_data })
+      }).then(function(response) {
+        return response.json().then(function(json) {
+          resolve(json);
+        });
+      });
+    });
+
+    set_request.then((response) => {
+      if (response['status'] == true) {
+        eggup.load('docket');
+      } else {
+        eggup.error();
+      }
+    });
+
+    return false;
   };
 
   document.querySelector('.order-skip').onclick = () => {
