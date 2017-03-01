@@ -131,19 +131,67 @@ app.post('/synchronize', (request, response) => {
   }
 */
 app.post('/request', (request, response) => {
+  const date = get_date();
   /**
     Check if token exists in database
   */
-  let sql = 'SELECT token FROM tokens WHERE token = ?',
-    values = [request.body.token];
-  sql = mysql.format(sql, values);
 
-  pool.query(sql, function (error, results, fields) {
-    if (!results.length) {
-      response.send(JSON.stringify({ 'status': false }));
-    } else {
-      response.send(JSON.stringify({ 'status': true }));
-    }
+  let is_token_valid = new Promise(function(resolve, reject) {
+    let sql = 'SELECT token FROM tokens WHERE token = ?',
+      values = [request.body.token];
+    sql = mysql.format(sql, values);
+
+    pool.query(sql, function (error, results, fields) {
+      if (!results.length) {
+        reject();
+      } else {
+        resolve();
+      }
+    });
+  }).then(function(valid) {
+    let quantity = request.body.quantity,
+      variant = request.body.variant;
+
+    let already_ordered = new Promise(function(resolve, reject) {
+      sql = 'SELECT * FROM orders WHERE `token` = ? AND DATE(date) = ?',
+        values = [request.body.token, date];
+      sql = mysql.format(sql, values);
+
+      pool.query(sql, function (error, results, fields) {
+        if (error) throw error;
+
+        if (!results.length) {
+          reject();
+        } else {
+          resolve();
+        }
+      });
+
+    }).then(function(exists) {
+      // update
+      sql = 'UPDATE orders SET `quantity` = ?, `variant` = ? WHERE `token` = ? AND DATE(date) = ?',
+        values = [quantity, variant, request.body.token, date];
+      sql = mysql.format(sql, values);
+
+      pool.query(sql, function (error, results, fields) {
+        if (error) throw error;
+
+        response.send(JSON.stringify({ 'status': true, 'reason': 'updated' }));
+      });
+    }).catch(function() {
+      /// sinsert plx
+      sql = 'INSERT INTO orders (token, quantity, variant) VALUES (?, ?, ?)',
+        values = [request.body.token, quantity, variant];
+      sql = mysql.format(sql, values);
+
+      pool.query(sql, function (error, results, fields) {
+        if (error) throw error;
+
+        response.send(JSON.stringify({ 'status': true, 'reason': 'inserted' }));
+      });
+    });
+  }).catch(function() {
+    response.send(JSON.stringify({ 'status': false, 'reason': 'no token found' }));
   });
 });
 
