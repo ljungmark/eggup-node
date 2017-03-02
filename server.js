@@ -132,10 +132,10 @@ app.post('/synchronize', (request, response) => {
 */
 app.post('/request', (request, response) => {
   const date = get_date();
+
   /**
     Check if token exists in database
   */
-
   let is_token_valid = new Promise(function(resolve, reject) {
     let sql = 'SELECT token FROM tokens WHERE token = ?',
       values = [request.body.token];
@@ -149,6 +149,9 @@ app.post('/request', (request, response) => {
       }
     });
   }).then(function(valid) {
+    /**
+      The token exists, see if this token has already ordered today
+    */
     let quantity = request.body.quantity,
       variant = request.body.variant;
 
@@ -168,7 +171,9 @@ app.post('/request', (request, response) => {
       });
 
     }).then(function(exists) {
-      // update
+      /**
+        Previous order today exists for this token, update already existing order
+      */
       sql = 'UPDATE orders SET `quantity` = ?, `variant` = ? WHERE `token` = ? AND DATE(date) = ?',
         values = [quantity, variant, request.body.token, date];
       sql = mysql.format(sql, values);
@@ -179,7 +184,9 @@ app.post('/request', (request, response) => {
         response.send(JSON.stringify({ 'status': true, 'reason': 'updated' }));
       });
     }).catch(function() {
-      /// sinsert plx
+      /**
+        No previous order for this token has been found today, create a new
+      */
       sql = 'INSERT INTO orders (token, quantity, variant) VALUES (?, ?, ?)',
         values = [request.body.token, quantity, variant];
       sql = mysql.format(sql, values);
