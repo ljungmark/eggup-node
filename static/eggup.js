@@ -341,14 +341,14 @@ document.addEventListener('DOMContentLoaded', function() {
   document.onkeydown = (event) => {
     if (eggup.module == 'request') {
       if (event.keyCode == '13' || event.keyCode == '32') { /** Return & Space keys */
-        document.querySelector('.order-submit').click();
+        document.querySelector('.order-button__submit').click();
 
         return false;
       }
     }
   };
 
-  document.querySelector('.order-submit').onclick = () => {
+  document.querySelector('.order-button__submit').onclick = () => {
     const quantity =document.querySelector('.order-quantity__data').value,
       variant = document.querySelector('.order-variant__data').value;
     let variant_data;
@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return false;
   };
 
-  document.querySelector('.order-skip').onclick = () => {
+  document.querySelector('.order-button__skip').onclick = () => {
     eggup.load('docket');
 
     return false;
