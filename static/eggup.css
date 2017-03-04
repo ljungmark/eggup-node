@@ -2,6 +2,7 @@ body {
   color: #ffffff;
   font-family: 'Signika Negative', sans-serif;
   font-size: 1em;
+  overflow: hidden;
   user-select: none;
 }
 
@@ -10,15 +11,13 @@ h2 {
 }
 
 .module {
-  border-radius: 2px;
-  box-shadow: inset 0 3px 2px rgba(255, 255, 255, .02);
   box-sizing: border-box;
-  left: 50%;
-  max-width: 50%;
+  bottom: 0;
+  left: 0;
   padding: 30px;
   position: absolute; /** Stack blocks upon each other */
-  top: 50%;
-  transform: translate(-50%, -50%);
+  right: 0;
+  top: 0;
 }
 
 .module[data-module="instantiate"] {
@@ -37,59 +36,44 @@ h2 {
 /**
   MODULE TRANSITIONS
 */
+
 @-webkit-keyframes fade_out_to_left {
   from {
     opacity: 1;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
   }
 
   to {
     opacity: 0;
-    transform: translate(calc(-50% + -10px), -50%);
-    -webkit-transform: translate(calc(-50% + -10px), -50%);
   }
 }
 
 @keyframes fade_out_to_left {
   from {
     opacity: 1;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
   }
 
   to {
     opacity: 0;
-    transform: translate(calc(-50% + -10px), -50%);
-    -webkit-transform: translate(calc(-50% + -10px), -50%);
   }
 }
 
 @-webkit-keyframes fade_out_to_right {
   from {
     opacity: 1;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
   }
 
   to {
     opacity: 0;
-    transform: translate(calc(-50% + 10px), -50%);
-    -webkit-transform: translate(calc(-50% + 10px), -50%);
   }
 }
 
 @keyframes fade_out_to_right {
   from {
     opacity: 1;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
   }
 
   to {
     opacity: 0;
-    transform: translate(calc(-50% + 10px), -50%);
-    -webkit-transform: translate(calc(-50% + 10px), -50%);
   }
 }
 
@@ -114,56 +98,40 @@ h2 {
 @-webkit-keyframes fade_in_from_right {
   from {
     opacity: 0;
-    transform: translate(calc(-50% + 10px), -50%);
-    -webkit-transform: translate(calc(-50% + 10px), -50%);
   }
 
   to {
     opacity: 1;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
   }
 }
 
 @keyframes fade_in_from_right {
   from {
     opacity: 0;
-    transform: translate(calc(-50% + 10px), -50%);
-    -webkit-transform: translate(calc(-50% + 10px), -50%);
   }
 
   to {
     opacity: 1;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
   }
 }
 
 @-webkit-keyframes fade_in_from_left {
   from {
     opacity: 0;
-    transform: translate(calc(-50% + -10px), -50%);
-    -webkit-transform: translate(calc(-50% + -10px), -50%);
   }
 
   to {
     opacity: 1;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
   }
 }
 
 @keyframes fade_in_from_left {
   from {
     opacity: 0;
-    transform: translate(calc(-50% + -10px), -50%);
-    -webkit-transform: translate(calc(-50% + -10px), -50%);
   }
 
   to {
     opacity: 1;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
   }
 }
 
@@ -188,7 +156,7 @@ h2 {
 }
 
 /**
-  MODULE TRANSITIONS
+  MODULE ANIMATIONS
 */
 @-webkit-keyframes shake {
   from, to {
@@ -314,9 +282,151 @@ h2 {
   width: 100%;
 }
 
+.order-button {
+  background: #ffffff;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.3);
+  color: #171b1f;
+  display: inline-block;
+  font-family: 'Signika Negative', sans-serif;
+  font-size: 14px;
+  height: 40px;
+  margin-top: 17px;
+  outline: 0;
+  padding: 12px 23px;
+  text-shadow: none;
+}
+
 
 /* DESKTOP */
 @media only screen and (min-width:960px){
+  .module {
+    border-radius: 2px;
+    bottom: initial;
+    box-shadow: inset 0 3px 2px rgba(255, 255, 255, .02);
+    box-sizing: border-box;
+    left: 50%;
+    max-width: 50%;
+    padding: 30px;
+    position: absolute; /** Stack blocks upon each other */
+    right: initial;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @-webkit-keyframes fade_out_to_left {
+    from {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+    }
+
+    to {
+      opacity: 0;
+      transform: translate(calc(-50% + -10px), -50%);
+      -webkit-transform: translate(calc(-50% + -10px), -50%);
+    }
+  }
+
+  @keyframes fade_out_to_left {
+    from {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+    }
+
+    to {
+      opacity: 0;
+      transform: translate(calc(-50% + -10px), -50%);
+      -webkit-transform: translate(calc(-50% + -10px), -50%);
+    }
+  }
+
+  @-webkit-keyframes fade_out_to_right {
+    from {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+    }
+
+    to {
+      opacity: 0;
+      transform: translate(calc(-50% + 10px), -50%);
+      -webkit-transform: translate(calc(-50% + 10px), -50%);
+    }
+  }
+
+  @keyframes fade_out_to_right {
+    from {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+    }
+
+    to {
+      opacity: 0;
+      transform: translate(calc(-50% + 10px), -50%);
+      -webkit-transform: translate(calc(-50% + 10px), -50%);
+    }
+  }
+
+  @-webkit-keyframes fade_in_from_right {
+    from {
+      opacity: 0;
+      transform: translate(calc(-50% + 10px), -50%);
+      -webkit-transform: translate(calc(-50% + 10px), -50%);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+    }
+  }
+
+  @keyframes fade_in_from_right {
+    from {
+      opacity: 0;
+      transform: translate(calc(-50% + 10px), -50%);
+      -webkit-transform: translate(calc(-50% + 10px), -50%);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+    }
+  }
+
+  @-webkit-keyframes fade_in_from_left {
+    from {
+      opacity: 0;
+      transform: translate(calc(-50% + -10px), -50%);
+      -webkit-transform: translate(calc(-50% + -10px), -50%);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+    }
+  }
+
+  @keyframes fade_in_from_left {
+    from {
+      opacity: 0;
+      transform: translate(calc(-50% + -10px), -50%);
+      -webkit-transform: translate(calc(-50% + -10px), -50%);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+    }
+  }
+
   .order-quantity__data,
   .order-variant__data {
     font-size: 80px;
