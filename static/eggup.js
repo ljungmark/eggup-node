@@ -405,4 +405,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     return false;
   };
+
+  document.querySelectorAll('.module-content').forEach(function(element) {
+    let current_element = element;
+
+    element.addEventListener('scroll', () => {
+      if(current_element.scrollTop > 0) {
+        current_element.classList.add('module-content__scrolled');
+      } else {
+        current_element.classList.remove('module-content__scrolled');
+      }
+    });
+  });
 });

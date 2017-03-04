@@ -24,26 +24,30 @@
 
 <body>
   <div class="module" data-module="instantiate">
-    Synkroniserar med Mamma Höna, en sekund!
+    <div class="module-content">
+      Synkroniserar med Mamma Höna, en sekund!
+    </div>
   </div>
 
   <div class="module module--hidden" data-module="request">
     <h2>Order</h2>
-    <form class="order">
-      <div class="order-quantity">
-        <label class="order-quantity__label" for="order-quantity__data">Antal ägg</label>
-        <input class="order-quantity__data" name="order-quantity__data" readonly="" tabindex="-1" type="text">
-      </div>
-      <div class="order-variant">
-        <label class="order-variant__label" for="order-variant__data">Koktid</label>
-        <input class="order-variant__data" name="order-variant__data" readonly="" tabindex="-1" type="text">
-      </div>
-      <button class="order-button order-button__skip" tabindex="2">Skippa</button>
-      <button class="order-button order-button__submit" tabindex="1" type="submit">
-        <div class="order-submit__text">Beställ</div>
-        <div class="order-submit__progress"></div>
-      </button>
-    </form>
+    <div class="module-content">
+      <form class="order">
+        <div class="order-quantity">
+          <label class="order-quantity__label" for="order-quantity__data">Antal ägg</label>
+          <input class="order-quantity__data" name="order-quantity__data" readonly="" tabindex="-1" type="text">
+        </div>
+        <div class="order-variant">
+          <label class="order-variant__label" for="order-variant__data">Koktid</label>
+          <input class="order-variant__data" name="order-variant__data" readonly="" tabindex="-1" type="text">
+        </div>
+        <button class="order-button order-button__skip" tabindex="2">Skippa</button>
+        <button class="order-button order-button__submit" tabindex="1" type="submit">
+          <div class="order-submit__text">Beställ</div>
+          <div class="order-submit__progress"></div>
+        </button>
+      </form>
+    </div>
   </div>
 
   <div class="module module--hidden" data-module="console">
