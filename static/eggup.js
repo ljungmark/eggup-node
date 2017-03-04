@@ -110,7 +110,7 @@ Eggup.prototype.synchronize = function() {
       if (json['available']) {
         document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
         document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
-        instance.load('request');
+        instance.load('application');
       } else {
         /** Show when the eggs were started */
         document.querySelector('.module-closed__timer').innerHTML = json['date'].slice(11,16);
@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   document.onkeydown = (event) => {
-    if (eggup.module == 'request') {
+    if (eggup.module == 'application') {
       if (event.keyCode == '13' || event.keyCode == '32') { /** Return & Space keys */
         document.querySelector('.order-button__submit').click();
 
@@ -396,12 +396,6 @@ document.addEventListener('DOMContentLoaded', function() {
         eggup.error();
       }
     });
-
-    return false;
-  };
-
-  document.querySelector('.order-button__skip').onclick = () => {
-    eggup.load('docket');
 
     return false;
   };

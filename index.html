@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div class="module module--hidden" data-module="request">
+  <div class="module module--hidden" data-module="application">
     <h2>Order</h2>
     <div class="module-content">
       <form class="order">
@@ -41,11 +41,9 @@
           <label class="order-variant__label" for="order-variant__data">Koktid</label>
           <input class="order-variant__data" name="order-variant__data" readonly="" tabindex="-1" type="text">
         </div>
-        <button class="order-button order-button__skip" tabindex="2">Skippa</button>
-        <button class="order-button order-button__submit" tabindex="1" type="submit">
-          <div class="order-submit__text">Beställ</div>
-          <div class="order-submit__progress"></div>
-        </button>
+        <div class="order-buttons">
+          <button class="order-button order-button__submit" tabindex="1" type="submit">Beställ</button>
+        </div>
       </form>
     </div>
   </div>
