@@ -28,7 +28,7 @@ The Eggup constructor
 const Eggup = function() {
   /**
     instance.token: Unique client identifier (String(32))
-    Used to connect the user to an action, such as an placed order
+    Used to associate the user to an action, such as an placed order
 
     Example:
     instance.token = 'fojdpzu2kodx95lh75zbl0rmef1d81acm'
@@ -91,7 +91,7 @@ const Eggup = function() {
   /**
     Wait until instantiation is complete before synchronizing
   */
-  get_token.then(() => {
+  get_token.then(_ => {
     instance.synchronize();
   });
 }
@@ -110,6 +110,7 @@ Eggup.prototype.synchronize = function() {
       if (json['available']) {
         document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
         document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
+        instance.map(1);
         instance.load('application');
       } else {
         /** Show when the eggs were started */
@@ -149,7 +150,11 @@ Eggup.prototype.load = function(target_module) {
   */
   if (target_module_index == current_module_index
     || target_module_index == -1
-    || current_module === 'closed') return false;
+    || current_module === 'closed') {
+    instance.error();
+
+    return false;
+  }
 
   /** Decide animation direction and perform navigation */
   if (current_module_index < target_module_index) {
@@ -203,6 +208,29 @@ Eggup.prototype.error = function() {
   });
 
   return false;
+};
+
+
+Eggup.prototype.map = function(node) {
+  current_node = 0;
+
+  document.querySelectorAll('.node').forEach(function(element) {
+    let current_element = element;
+    if (current_element.classList.contains('done')) { current_element.classList.remove('done'); }
+    if (current_element.classList.contains('active')) { current_element.classList.remove('active'); }
+
+    current_node++;
+
+    if (current_node < node) {
+      current_element.classList.add('done');
+      current_element.innerHTML = '<i class="icon-ok"></i>';
+    } else if (current_node == node) {
+      current_element.classList.add('active');
+      current_element.innerHTML = current_node;
+    } else if (current_node > node) {
+      current_element.innerHTML = current_node;
+    }
+  });
 };
 
 
