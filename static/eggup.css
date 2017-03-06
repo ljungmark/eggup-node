@@ -1,5 +1,4 @@
 body {
-  color: #ffffff;
   font-family: 'Varela Round', sans-serif;
   font-size: 1em;
   overflow: hidden;
@@ -34,11 +33,7 @@ h2 {
 }
 
 .container {
-  background: radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.1), rgba(0,0,0,0));
-  background-repeat: no-repeat;
-  background-position: 0 -6px;
-  background-size: 100% 6px;
-  border-top: 1px solid#ffffff;;
+  border-top: 1px solid #ffffff;
   height: calc(100vh - 140px);
   overflow: auto;
   overflow-x: hidden;
@@ -46,8 +41,16 @@ h2 {
   transition: background-position 500ms;
 }
 
-.container__scrolled {
-  background-position: 0 0;
+.container__scrolled:before {
+  background: rgba(255, 0, 0, 0);
+  border-radius: 250px / 60%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.22);
+  content: '';
+  display: block;
+  height: 4px;
+  position: fixed;
+  transform: translateY(-6px);
+  width: 100%;
 }
 
 

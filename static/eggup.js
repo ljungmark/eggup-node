@@ -421,8 +421,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     set_request.then((response) => {
       if (response['status'] == true) {
-        //eggup.load('docket');
-        eggup.error();
+        eggup.load('interstitial');
       } else {
         eggup.error();
       }
