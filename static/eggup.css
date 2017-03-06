@@ -10,13 +10,14 @@ h2 {
   margin-top: 0;
 }
 
-.padding {
+.module {
   padding: 30px;
   position: absolute;
   width: calc(100% - 60px);
 }
 
-.module {
+.application {
+  background: #f5f5f7;
   box-sizing: border-box;
   bottom: 0;
   left: -10px; /** Compensate when shaking on device */
@@ -27,27 +28,26 @@ h2 {
   top: 0;
 }
 
-.module[data-module="application"] {
-  background: #f5f5f7;
-}
-
 .module--hidden {
   display: none;
   pointer-events: none;
 }
 
-.module-content {
+.container {
   background: radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.1), rgba(0,0,0,0));
   background-repeat: no-repeat;
-  background-size: 100% 0px;
+  background-position: 0 -6px;
+  background-size: 100% 6px;
   border-top: 1px solid#ffffff;;
   height: calc(100vh - 140px);
   overflow: auto;
+  overflow-x: hidden;
   position: relative;
+  transition: background-position 500ms;
 }
 
-.module-content__scrolled {
-  background-size: 100% 6px;
+.container__scrolled {
+  background-position: 0 0;
 }
 
 
@@ -210,7 +210,7 @@ h2 {
   }
 }
 
-.module--error {
+.application--error {
   -webkit-animation-duration: 0.7s;
   animation-duration: 0.7s;
   -webkit-animation-fill-mode: both;
@@ -336,8 +336,8 @@ h2 {
   width: 100%;
 }
 
-.module--error .order-quantity,
-.module--error .order-variant {
+.application--error .order-quantity,
+.application--error .order-variant {
   background: rgba(210, 77, 81, 0.7);
   transition: background-color 100ms linear;
 }
@@ -429,7 +429,7 @@ h2 {
   Only utilized on machines with more computional power
 */
 @media only screen and (min-width:960px){
-  .module {
+  .application {
     border-radius: 6px;
     bottom: initial;
     box-shadow: inset 0 3px 2px rgba(255, 255, 255, .02);
@@ -444,13 +444,12 @@ h2 {
     transform: translate(-50%, -50%);
   }
 
-  .module[data-module="application"],
-  .module[data-module="docket"] {
+  .module[data-module="application"] {
     border-bottom: 3px solid #c3c3c3;
   }
 
-  .module-content {
-    height: 402px;
+  .container {
+    height: 397px;
     max-height: calc(100vh - 220px);
     padding: 0;
   }
@@ -468,112 +467,112 @@ h2 {
   @-webkit-keyframes fade_out_to_left {
     from {
       opacity: 1;
-      transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
+      transform: translate(0, 0);
+      -webkit-transform: translate(0, 0);
     }
 
     to {
       opacity: 0;
-      transform: translate(calc(-50% + -10px), -50%);
-      -webkit-transform: translate(calc(-50% + -10px), -50%);
+      transform: translate(-10px, 0);
+      -webkit-transform: translate(-10px, 0);
     }
   }
 
   @keyframes fade_out_to_left {
     from {
       opacity: 1;
-      transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
+      transform: translate(0, 0);
+      -webkit-transform: translate(0, 0);
     }
 
     to {
       opacity: 0;
-      transform: translate(calc(-50% + -10px), -50%);
-      -webkit-transform: translate(calc(-50% + -10px), -50%);
+      transform: translate(-10px, 0);
+      -webkit-transform: translate(-10px, 0);
     }
   }
 
   @-webkit-keyframes fade_out_to_right {
     from {
       opacity: 1;
-      transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
+      transform: translate(0, 0);
+      -webkit-transform: translate(0, 0);
     }
 
     to {
       opacity: 0;
-      transform: translate(calc(-50% + 10px), -50%);
-      -webkit-transform: translate(calc(-50% + 10px), -50%);
+      transform: translate(10px, 0);
+      -webkit-transform: translate(10px, 0);
     }
   }
 
   @keyframes fade_out_to_right {
     from {
       opacity: 1;
-      transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
+      transform: translate(0, 0);
+      -webkit-transform: translate(0, 0);
     }
 
     to {
       opacity: 0;
-      transform: translate(calc(-50% + 10px), -50%);
-      -webkit-transform: translate(calc(-50% + 10px), -50%);
+      transform: translate(10px, 0);
+      -webkit-transform: translate(10px, 0);
     }
   }
 
   @-webkit-keyframes fade_in_from_right {
     from {
       opacity: 0;
-      transform: translate(calc(-50% + 10px), -50%);
-      -webkit-transform: translate(calc(-50% + 10px), -50%);
+      transform: translate(10px, 0);
+      -webkit-transform: translate(10px, 0);
     }
 
     to {
       opacity: 1;
-      transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
+      transform: translate(0, 0);
+      -webkit-transform: translate(0, 0);
     }
   }
 
   @keyframes fade_in_from_right {
     from {
       opacity: 0;
-      transform: translate(calc(-50% + 10px), -50%);
-      -webkit-transform: translate(calc(-50% + 10px), -50%);
+      transform: translate(10px, 0);
+      -webkit-transform: translate(10px, 0);
     }
 
     to {
       opacity: 1;
-      transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
+      transform: translate(0, 0);
+      -webkit-transform: translate(0, 0);
     }
   }
 
   @-webkit-keyframes fade_in_from_left {
     from {
       opacity: 0;
-      transform: translate(calc(-50% + -10px), -50%);
-      -webkit-transform: translate(calc(-50% + -10px), -50%);
+      transform: translate(-10px, 0);
+      -webkit-transform: translate(-10px, 0);
     }
 
     to {
       opacity: 1;
-      transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
+      transform: translate(0, 0);
+      -webkit-transform: translate(0, 0);
     }
   }
 
   @keyframes fade_in_from_left {
     from {
       opacity: 0;
-      transform: translate(calc(-50% + -10px), -50%);
-      -webkit-transform: translate(calc(-50% + -10px), -50%);
+      transform: translate(-10px, 0);
+      -webkit-transform: translate(-10px, 0);
     }
 
     to {
       opacity: 1;
-      transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
+      transform: translate(0, 0);
+      -webkit-transform: translate(0, 0);
     }
   }
 

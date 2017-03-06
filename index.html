@@ -25,21 +25,18 @@
 </head>
 
 <body>
-  <div class="module" data-module="instantiate">
-    <div class="padding">
-      Synkroniserar med Mamma Höna, en sekund!
-    </div>
-  </div>
-
-  <div class="module module--hidden" data-module="application">
+  <div class="application">
     <div class="map">
       <div class="node" data-desc="Beställ ägg">1</div>
       <div class="node" data-desc="Invänta kokning">2</div>
       <div class="node" data-desc="Äggen kokar">3</div>
       <div class="node" data-desc="Klart">4</div>
     </div>
-    <div class="module-content">
-      <div class="padding">
+    <div class="container">
+      <div class="module" data-module="init" style="color: black">
+        test
+      </div>
+      <div class="module module--hidden" data-module="order">
         <form class="order">
           <div class="order-quantity">
             <label class="order-quantity__label" for="order-quantity__data">Antal ägg</label>
@@ -53,6 +50,15 @@
             <button class="order-button order-button__submit" tabindex="1" type="submit">Beställ <img class="order-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAclBMVEUAAAAAAAAEBAQBAQEAAAAJCQliYmL///8AAACOjo7////p6eny8vIiIiL////4+Pj///9DQ0Pw8PD///+2tranp6f////Gxsb+/v739/f7+/vs7Oz39/fj4+Ph4eH19fXy8vJubm5GRkYjIyOgoKD////gy5wGAAAAJXRSTlMPABQdJRkUBAQZ+hwTEALAJBMiHhwaFRL008+xqZ2YkowzLCQj8f+kPwAAAK1JREFUGNNNkFkShCAMBQPIoiA6brPvw/2vODERyveTStOBCiDWOKmqqlLSUUdMYwsAeKA35pSGHK0cMXIo5K5MMipQCnB58JnHHRQr3Q6bCbqw1NUssvdqUpNSuvzYo5wSp+O2BcyDvfObCV28bobWBzBI6vLG9UsVyTGzu+KKxGYxo9qCCAb2MQH3jd7skY/IhPVzQbO3/KdxGSbTQmumYYmCGaph7Pt+DJa6P73VCGq32yoQAAAAAElFTkSuQmCC"></button>
           </div>
         </form>
+      </div>
+      <div class="module module--hidden" data-module="interstitial" style="color: black">
+        Interstitial
+      </div>
+      <div class="module module--hidden" data-module="cooking" style="color: black">
+        Cooking
+      </div>
+      <div class="module module--hidden" data-module="docket" style="color: black">
+        Docket
       </div>
     </div>
   </div>

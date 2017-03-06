@@ -86,7 +86,7 @@ const Eggup = function() {
     instance.module: Current active module (String)
     Used to calculate animation direction when loading modules
   */
-  instance.module = 'instantiate';
+  instance.module = 'init';
 
   /**
     Wait until instantiation is complete before synchronizing
@@ -111,7 +111,7 @@ Eggup.prototype.synchronize = function() {
         document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
         document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
         instance.map(1);
-        instance.load('application');
+        instance.load('order');
       } else {
         /** Show when the eggs were started */
         document.querySelector('.module-closed__timer').innerHTML = json['date'].slice(11,16);
@@ -181,6 +181,8 @@ Eggup.prototype.load = function(target_module) {
     });
   }
 
+  (target_module == 'docket') ? eggup.map(target_module_index + 1) : eggup.map(target_module_index);
+
   instance.module = target_module;
 };
 
@@ -190,21 +192,21 @@ Eggup.prototype.load = function(target_module) {
 */
 Eggup.prototype.error = function() {
   const instance = this,
-    current_module = document.querySelector('.module[data-module="' + instance.module + '"]');
+    current_module = document.querySelector('.application');
 
   /** Abort any ongoing animation */
-  if (current_module.classList.contains('module--error')) {
-    current_module.classList.remove('module--error');
+  if (current_module.classList.contains('application--error')) {
+    current_module.classList.remove('application--error');
     void current_module.offsetWidth;
   }
 
-  current_module.classList.add('module--error');
+  current_module.classList.add('application--error');
 
   /** Remove module-error modifier when animation is complete */
   current_module.addEventListener('webkitAnimationEnd', function(event) {
     event.target.removeEventListener(event.type, arguments.callee);
 
-    current_module.classList.remove('module--error');
+    current_module.classList.remove('application--error');
   });
 
   return false;
@@ -235,7 +237,7 @@ Eggup.prototype.map = function(node) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  const eggup = new Eggup();
+  window.eggup = new Eggup();
 
   document.querySelector('.order-quantity').onclick = function() {
     let quantity_element = document.querySelector('.order-quantity__data'),
@@ -367,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   document.onkeydown = (event) => {
-    if (eggup.module == 'application') {
+    if (eggup.module == 'order') {
       if (event.keyCode == '13' || event.keyCode == '32') { /** Return & Space keys */
         document.querySelector('.order-button__submit').click();
 
@@ -419,7 +421,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     set_request.then((response) => {
       if (response['status'] == true) {
-        eggup.load('docket');
+        //eggup.load('docket');
+        eggup.error();
       } else {
         eggup.error();
       }
@@ -428,15 +431,11 @@ document.addEventListener('DOMContentLoaded', function() {
     return false;
   };
 
-  document.querySelectorAll('.module-content').forEach(function(element) {
+  document.querySelectorAll('.container').forEach(function(element) {
     let current_element = element;
 
     element.addEventListener('scroll', () => {
-      if(current_element.scrollTop > 0) {
-        current_element.classList.add('module-content__scrolled');
-      } else {
-        current_element.classList.remove('module-content__scrolled');
-      }
+      current_element.classList.toggle('container__scrolled', current_element.scrollTop > 0);
     });
   });
 });
