@@ -302,6 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const cache =  { 'variant': variant_value, 'quantity': quantity_value };
 
+    eggup.cache = cache;
     localStorage.setItem('cache', JSON.stringify(cache));
 
     return false;
@@ -364,6 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const cache =  { 'variant': variant_value, 'quantity': quantity_value };
 
+    eggup.cache = cache;
     localStorage.setItem('cache', JSON.stringify(cache));
 
     return false;
@@ -423,6 +425,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     set_request.then((response) => {
       if (response['status'] == true) {
+
+        document.querySelector('.interstitial-text__order').innerHTML = eggup.cache['quantity'] + ' ' + eggup.cache['variant'].toLowerCase();
+
         eggup.load('interstitial');
       } else {
         eggup.error();
