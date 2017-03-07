@@ -418,7 +418,7 @@ h2 {
 }
 
 .order-button,
-.interstitial-button {
+.review-button {
   background-image: linear-gradient(-180deg,#44b1e8,#3098de);
   border: 0;
   border-radius: 3px;
@@ -447,7 +447,7 @@ h2 {
   vertical-align: middle;
 }
 
-.interstitial-button__image {
+.review-button__image {
   margin-right: 10px;
   vertical-align: middle;
 }
@@ -489,7 +489,7 @@ h2 {
   }
 
   .order-button,
-  .interstitial-button {
+  .review-button {
     width: initial;
   }
 

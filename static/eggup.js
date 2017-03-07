@@ -21,6 +21,48 @@ function serialize(object) {
   return str.join("&");
 }
 
+/**
+  Object.watch polyfill
+  From: https://gist.github.com/flackjap/f318e6a2b316e4d9fa44
+  Based on: https://gist.github.com/eligrey/384583
+
+  Example:
+  window.eggup.watch('module', function (id, oldval, newval) {
+    console.log(JSON.stringify(oldval)+' '+ JSON.stringify(newval));
+    return newval;
+  });
+*/
+if (!Object.prototype.watch) {
+  Object.defineProperty(Object.prototype, 'watch', {
+    enumerable: false,
+    configurable: true,
+    writable: false,
+    value: function (prop, handler) {
+      let oldval = this[prop],
+        getter = function () {
+          return oldval;
+        },
+        setter = function (newval) {
+          if (oldval !== newval) {
+            handler.call(this, prop, oldval, newval);
+            oldval = newval;
+          } else {
+            return false;
+          }
+      };
+
+      if (delete this[prop]) {
+        Object.defineProperty(this, prop, {
+          get: getter,
+          set: setter,
+          enumerable: true,
+          configurable: true
+        });
+      }
+    }
+  });
+}
+
 
 /**
 The Eggup constructor
@@ -426,9 +468,9 @@ document.addEventListener('DOMContentLoaded', function() {
     set_request.then((response) => {
       if (response['status'] == true) {
 
-        document.querySelector('.interstitial-text__order').innerHTML = eggup.cache['quantity'] + ' ' + eggup.cache['variant'].toLowerCase();
+        document.querySelector('.review-text__order').innerHTML = eggup.cache['quantity'] + ' ' + eggup.cache['variant'].toLowerCase();
 
-        eggup.load('interstitial');
+        eggup.load('review');
       } else {
         eggup.error();
       }
