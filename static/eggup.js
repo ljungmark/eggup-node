@@ -34,6 +34,7 @@ const Eggup = function() {
     instance.token = 'fojdpzu2kodx95lh75zbl0rmef1d81acm'
   */
   const instance = this;
+
   instance.token = '';
 
   let get_token = new Promise(function(resolve, reject) {
@@ -113,9 +114,10 @@ Eggup.prototype.synchronize = function() {
         instance.map(1);
         instance.load('order');
       } else {
+        instance.load(json['status']);
+
         /** Show when the eggs were started */
-        document.querySelector('.module-closed__timer').innerHTML = json['date'].slice(11,16);
-        instance.load('docket');
+        //document.querySelector('.module-closed__timer').innerHTML = json['date'].slice(11,16);
       }
     });
   });
@@ -225,7 +227,7 @@ Eggup.prototype.map = function(node) {
 
     if (current_node < node) {
       current_element.classList.add('done');
-      current_element.innerHTML = '<i class="icon-ok"></i>';
+      current_element.innerHTML = '<img src="assets/tick.svg" />';
     } else if (current_node == node) {
       current_element.classList.add('active');
       current_element.innerHTML = current_node;
@@ -339,6 +341,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (typeof quantity_value === 'undefined' || !quantity_value) {
+      quantity_element.value = 1;
+
       quantity_element.classList.add('swap');
 
       quantity_element.addEventListener('webkitAnimationEnd', function(e) {
@@ -346,8 +350,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         quantity_element.classList.remove('swap');
       });
-
-      quantity_element.value = quantity_value;
     }
 
     variant_element.classList.add('swap');
