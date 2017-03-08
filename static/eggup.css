@@ -32,7 +32,7 @@ h2 {
   text-align: center;
 }
 
-.module[data-module="interstitial"] {
+.module[data-module="review"] {
   background: url('../assets/receipt_bottom.png') bottom repeat-x, url('../assets/receipt_background.png') repeat;
   padding-bottom: 34px;
 }
