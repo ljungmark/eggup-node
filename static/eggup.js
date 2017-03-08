@@ -68,6 +68,11 @@ if (!Object.prototype.watch) {
 The Eggup constructor
 */
 const Eggup = function() {
+  if (window.eggup) {
+    console.log('Eggup is already instantiated, will not create a new instance.');
+
+    return false;
+  }
   /**
     instance.token: Unique client identifier (String(32))
     Used to associate the user to an action, such as an placed order
