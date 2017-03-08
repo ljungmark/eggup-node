@@ -403,7 +403,7 @@ h2 {
   box-sizing: border-box;
   color: #ffffff;
   font-family: 'Varela Round', sans-serif;
-  font-size: 30px;
+  font-size: 40px;
   outline: 0;
   overflow: hidden;
   padding-top: 4px;
@@ -469,6 +469,7 @@ h2 {
     left: 50%;
     max-height: calc(100vh - 60px);
     max-width: 600px;
+    min-width: 570px;
     padding: 0;
     position: absolute; /** Stack blocks upon each other */
     right: initial;
