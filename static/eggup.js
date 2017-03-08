@@ -111,7 +111,7 @@ Eggup.prototype.synchronize = function() {
       if (json['available']) {
         document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
         document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
-        instance.map(1);
+
         instance.load('order');
       } else {
         instance.load(json['status']);
