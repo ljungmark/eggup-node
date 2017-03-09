@@ -23,6 +23,19 @@
 */
 
 /**
+  Returns date in format YYYY-MM-DD
+*/
+function get_date(date) {
+  current_date = new Date(),
+  year = current_date.getFullYear(),
+  month = ('0' + (current_date.getMonth() + 1)).slice(-2),
+  day = ('0' + current_date.getDate()).slice(-2),
+  date = year + '-' + month + '-' + day;
+
+  return date;
+}
+
+/**
   Serialize from object to URIEncoded string
 
   Used for fetcH) to convert the data objects to something the receving node can interpret
@@ -593,6 +606,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.review-text__order').innerHTML = eggup.cache['quantity'] + ' ' + eggup.cache['variant'].toLowerCase();
 
         let thread = JSON.parse(localStorage.getItem('thread'));
+        thread.tokenstamp = get_date();
         thread.variant = eggup.cache['variant'];
         thread.quantity = eggup.cache['quantity'];
         localStorage.setItem('thread', JSON.stringify(thread));
@@ -636,9 +650,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     set_request.then((response) => {
-      if (response['status'] == true) {
+      if (response.status == true) {
 
         let thread = JSON.parse(localStorage.getItem('thread'));
+        thread.tokenstamp = response.tokenstamp;
         thread.variant = null;
         thread.quantity = null;
         localStorage.setItem('thread', JSON.stringify(thread));

@@ -215,25 +215,50 @@ app.post('/request', (request, response) => {
 app.post('/delete', (request, response) => {
   const date = get_date();
 
+  let returns = {
+    'status': false,
+    'tokenstamp': null
+  }
+
   /**
     Check if token exists in database
   */
   let is_token_valid = new Promise(function(resolve, reject) {
-    let sql = 'DELETE FROM orders WHERE token = ? AND DATE(date) = ?',
+    let sql = 'DELETE FROM `orders` WHERE `token` = ? AND DATE(date) = ?',
       values = [request.body.token, date];
     sql = mysql.format(sql, values);
 
     pool.query(sql, function (error, results, fields) {
       if (results.affectedRows > 0) {
+        returns.status = true;
+
         resolve();
       } else {
         reject();
       }
     });
   }).then(function(exists) {
-    response.send(JSON.stringify({ 'status': true, 'text': 'order deleted' }));
+    let tokenstamp = new Promise(function(resolve, reject) {
+      sql = 'SELECT date FROM `orders` WHERE `token` = ?',
+        values = [request.body.token];
+      sql = mysql.format(sql, values);
+
+      pool.query(sql, function (error, results, fields) {
+        if (results.length > 0) {
+          returns.tokenstamp = results[0].date.slice(0, 10);
+
+          resolve();
+        } else {
+          reject();
+        }
+      });
+    }).then(function(exists) {
+      response.send(JSON.stringify(returns));
+    }).catch(function() {
+      response.send(JSON.stringify(returns));
+    });
   }).catch(function() {
-    response.send(JSON.stringify({ 'status': false, 'text': 'no order deleted' }));
+    response.send(JSON.stringify(returns));
   });
 });
 
