@@ -166,6 +166,33 @@ const Eggup = function() {
 
 
   /**
+    instance.thread: Main application thread replica (Object)
+
+    Example:
+    instance.thread = {
+      'last_known_order': '2017-03-09 08:45:04',
+      'variant': 1,
+      'quantity': 2,
+      'heap_1': 11,
+      'heap_2': 4
+    }
+  */
+  instance.thread = JSON.parse(localStorage.getItem('thread')) || (function() {
+    const thread =  {
+      'last_known_order': null,
+      'variant': null,
+      'quantity': null,
+      'heap_1': 0,
+      'heap_2': 0
+    };
+
+    localStorage.setItem('thread', JSON.stringify(thread));
+
+    return thread;
+  })();
+
+
+  /**
     instance.module: Current active module (String)
     Used to calculate animation direction when loading modules
   */
@@ -200,6 +227,12 @@ Eggup.prototype.synchronize = function() {
     method: 'post'
   }).then(function(response) {
     return response.json().then(function(json) {
+      console.log(json);
+
+      document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
+      document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
+      document.querySelector('.review-text__heap_2').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_2'] + (JSON.parse(localStorage.getItem('thread'))['heap_2'] == 1 ? ' hårdkokt' : ' hårdkokta');
+
       if (json['available']) {
         document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
         document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
@@ -279,7 +312,11 @@ Eggup.prototype.load = function(target_module) {
     });
   }
 
+  /** Finish all map nodes when orders are done */
   (target_module == 'docket') ? eggup.map(target_module_index + 1) : eggup.map(target_module_index);
+
+  /** Never load a module while not scrolled to the top */
+  document.querySelector('.container').scrollTop = 0;
 
   instance.module = target_module;
 };

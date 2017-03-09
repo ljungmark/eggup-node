@@ -57,7 +57,6 @@ app.get('/', (request, response) => {
   }
 */
 app.post('/token', (request, response) => {
-  setTimeout(function() {
   let token = '';
 
   for (let i = 2; i > 0; --i) token += Math.random().toString(36).slice(2);
@@ -81,7 +80,6 @@ app.post('/token', (request, response) => {
       response.send(JSON.stringify({ 'token': token.slice(-32) }));
     }
   });
-  }, 3000);
 });
 
 
@@ -103,7 +101,7 @@ app.post('/synchronize', (request, response) => {
     values = [date];
   sql = mysql.format(sql, values);
 
-  pool.query(sql, function (error, results, fields) {
+  pool.query(sql, function(error, results, fields) {
     if (error) throw error;
 
     /**
