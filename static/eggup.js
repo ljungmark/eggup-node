@@ -1,12 +1,38 @@
-/** Helper functions */
+/**
+  EGGUP
+
+  1. Helper Functions
+    - serialize()
+    - Object.watch()
+
+  2. The Constructor
+
+  3. Prototypes
+    - syncronize
+    - load
+    - error
+    - map
+
+  4. DOMContentLoaded
+    - event listeners
+*/
+
+
+/**
+  HELPER FUNCTIONS
+*/
 
 /**
   Serialize from object to URIEncoded string
 
-  Converts
+  Used for fetcH) to convert the data objects to something the receving node can interpret
+
+  Example:
   { property1: 'value1',
     property2: 'value2' }
-  into
+
+  becomes
+
   property1=value1&property2=value2
 */
 function serialize(object) {
@@ -26,7 +52,9 @@ function serialize(object) {
   From: https://gist.github.com/flackjap/f318e6a2b316e4d9fa44
   Based on: https://gist.github.com/eligrey/384583
 
-  Example:
+  Used to watch the Eggup object for value changes, triggering functions when changes occurs
+
+  Example (listen for changes/updates on eggup.module):
   window.eggup.watch('module', function (id, oldval, newval) {
     console.log(JSON.stringify(oldval)+' '+ JSON.stringify(newval));
     return newval;
@@ -65,14 +93,22 @@ if (!Object.prototype.watch) {
 
 
 /**
-The Eggup constructor
+  The Eggup constructor
 */
 const Eggup = function() {
+  const instance = this;
+
+
+  /**
+    Don't allow more than one Eggup instance
+  */
   if (window.eggup) {
     console.log('Eggup is already instantiated, will not create a new instance.');
 
     return false;
   }
+
+
   /**
     instance.token: Unique client identifier (String(32))
     Used to associate the user to an action, such as an placed order
@@ -80,8 +116,6 @@ const Eggup = function() {
     Example:
     instance.token = 'fojdpzu2kodx95lh75zbl0rmef1d81acm'
   */
-  const instance = this;
-
   instance.token = '';
 
   let get_token = new Promise(function(resolve, reject) {
@@ -130,11 +164,22 @@ const Eggup = function() {
     return cache;
   })();
 
+
   /**
     instance.module: Current active module (String)
     Used to calculate animation direction when loading modules
   */
   instance.module = 'init';
+
+
+  /**
+    instance.input_threshold: Don't fire input when the application is already
+    processing a input
+
+    Will prevent race condition between module transitions
+  */
+  instance.input_threshold = true;
+
 
   /**
     Wait until instantiation is complete before synchronizing
@@ -216,6 +261,8 @@ Eggup.prototype.load = function(target_module) {
       current_module_element.classList.remove('fade_out_to_left');
       current_module_element.classList.add('module--hidden');
       target_module_element.classList.remove('fade_in_from_right');
+
+      instance.input_threshold = false;
     });
   } else {
     current_module_element.classList.add('fade_out_to_right');
@@ -227,6 +274,8 @@ Eggup.prototype.load = function(target_module) {
       current_module_element.classList.remove('fade_out_to_right');
       current_module_element.classList.add('module--hidden');
       target_module_element.classList.remove('fade_in_from_left');
+
+      instance.input_threshold = false;
     });
   }
 
@@ -256,6 +305,8 @@ Eggup.prototype.error = function() {
     event.target.removeEventListener(event.type, arguments.callee);
 
     current_module.classList.remove('application--error');
+
+    instance.input_threshold = false;
   });
 
   return false;
@@ -287,6 +338,14 @@ Eggup.prototype.map = function(node) {
 
 document.addEventListener('DOMContentLoaded', function() {
   window.eggup = new Eggup();
+
+  /**
+    Intercept attempts to submit the form through GET
+  */
+  const form = document.querySelector('form');
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+  });
 
   document.querySelector('.order-quantity').onclick = function() {
     let quantity_element = document.querySelector('.order-quantity__data'),
@@ -427,18 +486,36 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
       }
     }
+
+    if (eggup.module == 'review') {
+      if (event.keyCode == '8') { /** Backspace key */
+        document.querySelector('.review-button__cancel').click();
+
+        return false;
+      }
+    }
   };
 
   document.querySelector('.order-button__submit').onclick = () => {
-    const quantity =document.querySelector('.order-quantity__data').value,
+    if (eggup.input_threshold === true) return;
+    eggup.input_threshold = true;
+
+    const submit_button = document.querySelector('.order-button__submit'),
+      quantity =document.querySelector('.order-quantity__data').value,
       variant = document.querySelector('.order-variant__data').value;
     let variant_data;
+
+    submit_button.classList.add('process');
+    submit_button.disabled = true;
 
     /** Ensure we have input data */
     if (!quantity.length > 0
       || !variant.length > 0) {
 
       eggup.error();
+
+      submit_button.classList.remove('process');
+      submit_button.disabled = false;
 
       return false;
     }
@@ -450,6 +527,9 @@ document.addEventListener('DOMContentLoaded', function() {
       variant_data = 2;
     } else {
       eggup.error();
+
+      submit_button.classList.remove('process');
+      submit_button.disabled = false;
 
       return false;
     }
@@ -480,6 +560,51 @@ document.addEventListener('DOMContentLoaded', function() {
         eggup.error();
       }
     });
+
+    setTimeout(function() {
+      submit_button.classList.remove('process');
+      submit_button.disabled = false;
+    }, 1000);
+    return false;
+  };
+
+  document.querySelector('.review-button__cancel').onclick = () => {
+    if (eggup.input_threshold === true) return;
+    eggup.input_threshold = true;
+
+    cancel_button = document.querySelector('.review-button__cancel');
+
+    let set_request = new Promise(function(resolve, reject) {
+      const token = JSON.parse(localStorage.getItem('token'));
+
+      cancel_button.classList.add('process');
+      cancel_button.disabled = true;
+
+      fetch('/delete', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: serialize({ 'token': token })
+      }).then(function(response) {
+        return response.json().then(function(json) {
+          resolve(json);
+        });
+      });
+    });
+
+    set_request.then((response) => {
+      if (response['status'] == true) {
+        eggup.load('order');
+      } else {
+        eggup.error();
+      }
+    });
+
+    setTimeout(function() {
+      cancel_button.classList.remove('process');
+      cancel_button.disabled = false;
+    }, 1000);
 
     return false;
   };

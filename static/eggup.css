@@ -1,5 +1,5 @@
 body {
-  font-family: 'Varela Round', sans-serif;
+  font-family: 'Roboto Slab', serif;
   font-size: 1em;
   overflow: hidden;
   user-select: none;
@@ -34,7 +34,7 @@ h2 {
 
 .module[data-module="review"] {
   background: url('../assets/receipt_bottom.png') bottom repeat-x, url('../assets/receipt_background.png') repeat;
-  padding-bottom: 34px;
+  padding-bottom: 50px;
   text-align: center;
 }
 
@@ -262,7 +262,7 @@ h2 {
   display: inline-block;
   font-weight: 600;
   height: 40px;
-  line-height: 35px;
+  line-height: 34px;
   text-align: center;
   transition: color 250ms, border-color 250ms;
   width: 40px;
@@ -407,7 +407,7 @@ h2 {
   border: 0;
   box-sizing: border-box;
   color: #ffffff;
-  font-family: 'Varela Round', sans-serif;
+  font-family: 'Roboto Slab', serif;
   font-size: 40px;
   outline: 0;
   overflow: hidden;
@@ -430,21 +430,49 @@ h2 {
   box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);
   color: #fff;
   display: inline-block;
-  font-family: 'Varela Round', sans-serif;
+  font-family: 'Roboto Slab', serif;
   font-size: 14px;
   margin-top: 1px;
   outline: 0;
   padding: 14px 28px 12px;
   text-shadow: 0 -1px 0 rgba(0,0,0,.12);
+  transition: opacity 0.2s;
   width: 100%;
 }
 
-.order-button:hover {
+.order-button:hover,
+.review-button:hover {
   cursor: pointer;
 }
 
-.order-button:active {
+.order-button:active,
+.review-button:active {
   background-image: linear-gradient(180deg,#328ac3,#277bbe);
+}
+
+@-webkit-keyframes process {
+  from { background-position: 0 0; }
+  to { background-position: 42px 0; }
+}
+
+@keyframes process {
+  from { background-position: 0 0; }
+  to { background-position: 42px 0; }
+}
+
+.order-button.process,
+.review-button.process {
+  -webkit-animation: process 2s linear infinite;
+  animation: process 2s linear infinite;
+  background-image: repeating-linear-gradient(135deg, #44b1e8, #44b1e8 15px, #3098de 15px, #3098de 30px);
+  background-repeat: repeat;
+  background-size: 42px 42px, 100% 100%;
+  opacity: 0.5;
+}
+
+.order-button.process:hover,
+.review-button.process:hover {
+  cursor: not-allowed;
 }
 
 .order-button__image {
@@ -651,7 +679,7 @@ h2 {
 
   .order-quantity__data,
   .order-variant__data {
-    font-size: 80px;
+    font-size: 76px;
   }
 
   @-webkit-keyframes shake {

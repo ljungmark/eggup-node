@@ -10,6 +10,7 @@ const path = require('path'),
   */
   app.use('/styles', express.static(path.join(__dirname, 'static/')));
   app.use('/scripts', express.static(path.join(__dirname, 'static/')));
+  app.use('/assets', express.static(path.join(__dirname, 'static/')));
 
   /**
     Use body-parser to interpret XHR bodies
@@ -56,6 +57,7 @@ app.get('/', (request, response) => {
   }
 */
 app.post('/token', (request, response) => {
+  setTimeout(function() {
   let token = '';
 
   for (let i = 2; i > 0; --i) token += Math.random().toString(36).slice(2);
@@ -79,6 +81,7 @@ app.post('/token', (request, response) => {
       response.send(JSON.stringify({ 'token': token.slice(-32) }));
     }
   });
+  }, 3000);
 });
 
 
@@ -96,7 +99,7 @@ app.post('/token', (request, response) => {
 app.post('/synchronize', (request, response) => {
   const date = get_date();
 
-  let sql = 'SELECT date FROM cookings WHERE DATE(date) = ?',
+  let sql = 'SELECT startdate FROM cookings WHERE DATE(startdate) = ?',
     values = [date];
   sql = mysql.format(sql, values);
 
@@ -201,6 +204,41 @@ app.post('/request', (request, response) => {
     response.send(JSON.stringify({ 'status': false, 'reason': 'no token found' }));
   });
 });
+
+
+/**
+  Place a new order
+
+  Example
+  {
+    'token': false,
+  }
+*/
+app.post('/delete', (request, response) => {
+  const date = get_date();
+
+  /**
+    Check if token exists in database
+  */
+  let is_token_valid = new Promise(function(resolve, reject) {
+    let sql = 'DELETE FROM orders WHERE token = ? AND DATE(date) = ?',
+      values = [request.body.token, date];
+    sql = mysql.format(sql, values);
+
+    pool.query(sql, function (error, results, fields) {
+      if (results.affectedRows > 0) {
+        resolve();
+      } else {
+        reject();
+      }
+    });
+  }).then(function(exists) {
+    response.send(JSON.stringify({ 'status': true, 'text': 'order deleted' }));
+  }).catch(function() {
+    response.send(JSON.stringify({ 'status': false, 'text': 'no order deleted' }));
+  });
+});
+
 
 app.listen(8080, function() {
   console.log('Eggup is running');
