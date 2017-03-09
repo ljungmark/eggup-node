@@ -179,7 +179,7 @@ const Eggup = function() {
   */
   instance.thread = JSON.parse(localStorage.getItem('thread')) || (function() {
     const thread =  {
-      'last_known_order': null,
+      'tokenstamp': null,
       'variant': null,
       'quantity': null,
       'heap_1': 0,
@@ -592,6 +592,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelector('.review-text__order').innerHTML = eggup.cache['quantity'] + ' ' + eggup.cache['variant'].toLowerCase();
 
+        let thread = JSON.parse(localStorage.getItem('thread'));
+        thread.variant = eggup.cache['variant'];
+        thread.quantity = eggup.cache['quantity'];
+        localStorage.setItem('thread', JSON.stringify(thread));
+
         eggup.load('review');
       } else {
         eggup.error();
@@ -632,6 +637,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     set_request.then((response) => {
       if (response['status'] == true) {
+
+        let thread = JSON.parse(localStorage.getItem('thread'));
+        thread.variant = null;
+        thread.quantity = null;
+        localStorage.setItem('thread', JSON.stringify(thread));
+
         eggup.load('order');
       } else {
         eggup.error();
