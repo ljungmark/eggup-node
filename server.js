@@ -57,12 +57,14 @@ app.get('/', (request, response) => {
   }
 */
 app.post('/token', (request, response) => {
-  let token = '';
+  const model = {
+    'token': ''
+  }
 
-  for (let i = 2; i > 0; --i) token += Math.random().toString(36).slice(2);
+  for (let i = 2; i > 0; --i) model.token += Math.random().toString(36).slice(2);
 
   let sql = 'INSERT INTO tokens (`token`) VALUES (?)',
-    values = [token.slice(-32)];
+    values = [model.token.slice(-32)];
   sql = mysql.format(sql, values);
 
   pool.query(sql, function (error, results, fields) {
@@ -77,7 +79,7 @@ app.post('/token', (request, response) => {
     /**
       Token has been successfully generated
     */
-      response.send(JSON.stringify({ 'token': token.slice(-32) }));
+      response.send(JSON.stringify({ 'token': model.token.slice(-32) }));
     }
   });
 });
@@ -205,32 +207,36 @@ app.post('/request', (request, response) => {
 
 
 /**
-  Place a new order
+  Delete a order
 
   Example
   {
-    'token': false,
+    'status': true,
+    'tokenstamp': '2017-03-10 09:10:00'
   }
 */
 app.post('/delete', (request, response) => {
   const date = get_date();
 
-  let returns = {
+  /**
+    Default model
+  */
+  const model = {
     'status': false,
     'tokenstamp': null
   }
 
   /**
-    Check if token exists in database
+    Remove the order from the database
   */
-  let is_token_valid = new Promise(function(resolve, reject) {
+  let delete_order = new Promise(function(resolve, reject) {
     let sql = 'DELETE FROM `orders` WHERE `token` = ? AND DATE(date) = ?',
       values = [request.body.token, date];
     sql = mysql.format(sql, values);
 
     pool.query(sql, function (error, results, fields) {
       if (results.affectedRows > 0) {
-        returns.status = true;
+        model.status = true;
 
         resolve();
       } else {
@@ -238,14 +244,19 @@ app.post('/delete', (request, response) => {
       }
     });
   }).then(function(exists) {
+    /**
+      See if there's a previous order made by this user
+      If so, set the tokenstamp to that date
+      If not, reject the prmoise and send default tokenstamp
+    */
     let tokenstamp = new Promise(function(resolve, reject) {
-      sql = 'SELECT date FROM `orders` WHERE `token` = ?',
+      sql = 'SELECT date FROM `orders` WHERE `token` = ? ORDER BY `date` DESC LIMIT 1',
         values = [request.body.token];
       sql = mysql.format(sql, values);
 
       pool.query(sql, function (error, results, fields) {
         if (results.length > 0) {
-          returns.tokenstamp = results[0].date.slice(0, 10);
+          model.tokenstamp = results[0].date.slice(0, 10);
 
           resolve();
         } else {
@@ -253,16 +264,16 @@ app.post('/delete', (request, response) => {
         }
       });
     }).then(function(exists) {
-      response.send(JSON.stringify(returns));
+      response.send(JSON.stringify(model));
     }).catch(function() {
-      response.send(JSON.stringify(returns));
+      response.send(JSON.stringify(model));
     });
   }).catch(function() {
-    response.send(JSON.stringify(returns));
+    response.send(JSON.stringify(model));
   });
 });
 
 
-app.listen(8080, function() {
+app.listen(1337, function() {
   console.log('Eggup is running');
 });

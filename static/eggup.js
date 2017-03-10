@@ -389,6 +389,8 @@ Eggup.prototype.map = function(node) {
 document.addEventListener('DOMContentLoaded', function() {
   window.eggup = new Eggup();
 
+  let sequence  = [];
+
   /**
     Intercept attempts to submit the form through GET
   */
@@ -529,11 +531,98 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   document.onkeydown = (event) => {
+    const sequences = [
+      [49, 49], /** 1 + 1 */
+      [49, 50], /** 1 + 2 */
+      [50, 49], /** 2 + 1 */
+      [50, 50], /** 2 + 2 */
+      [49, 76], /** 1 + L */
+      [49, 72], /** 1 + H */
+      [50, 76], /** 2 + L */
+      [50, 72]  /** 2 + H */
+    ];
+
     if (eggup.module == 'order') {
       if (event.keyCode == '13' || event.keyCode == '32') { /** Return & Space keys */
         document.querySelector('.order-button__submit').click();
 
         return false;
+      }
+
+      if (event.keyCode == '49' || event.keyCode == '50' || event.keyCode == '72' || event.keyCode == '76') {
+        sequence.push(event.keyCode);
+
+        let eq = function(a, b) { return !(a < b || b < a) }
+        for (let sequence_index = 0; sequence_index < sequences.length; sequence_index++) {
+          if (eq(sequence, sequences[sequence_index].slice(0, sequence.length))) {
+            if (eq(sequence, sequences[sequence_index])) {
+              const quantity_element = document.querySelector('.order-quantity__data'),
+                variant_element = document.querySelector('.order-variant__data');
+              let quantity_value, variant_value;
+
+              /**
+                Firefox specific hack to remove input caret:
+                http://stackoverflow.com/questions/5443952/remove-text-caret-pointer-from-focused-readonly-input
+              */
+              quantity_element.blur();
+
+              if (quantity_element.classList.contains('swap')) {
+                quantity_element.classList.remove('swap');
+                void quantity_element.offsetWidth;
+              }
+
+              if (variant_element.classList.contains('swap')) {
+                variant_element.classList.remove('swap');
+                void variant_element.offsetWidth;
+              }
+
+              if (sequence_index === 0 || sequence_index === 4) {
+                quantity_value = 1;
+                variant_value = 'Löskokt';
+              } else if (sequence_index === 1 || sequence_index === 5) {
+                quantity_value = 1;
+                variant_value = 'Hårdkokt';
+              } else if (sequence_index === 2 || sequence_index === 6) {
+                quantity_value = 2;
+                variant_value = 'Löskokta';
+              } else if (sequence_index === 3 || sequence_index === 7) {
+                quantity_value = 2;
+                variant_value = 'Hårdkokta';
+              }
+
+              quantity_element.classList.add('swap');
+
+              quantity_element.addEventListener('webkitAnimationEnd', function(e) {
+                e.target.removeEventListener(e.type, arguments.callee);
+
+                quantity_element.classList.remove('swap');
+              });
+
+              quantity_element.value = quantity_value;
+
+              variant_element.classList.add('swap');
+
+              variant_element.addEventListener('webkitAnimationEnd', function(e) {
+                e.target.removeEventListener(e.type, arguments.callee);
+
+                variant_element.classList.remove('swap');
+              });
+
+              variant_element.value = variant_value;
+
+              const cache =  { 'variant': variant_value, 'quantity': quantity_value };
+
+              eggup.cache = cache;
+              localStorage.setItem('cache', JSON.stringify(cache));
+
+              sequence = [];
+            }
+
+            return false;
+          }
+        }
+
+        sequence = [];
       }
     }
 
