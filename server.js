@@ -103,7 +103,9 @@ app.post('/synchronize', (request, response) => {
       'startdate': null,
       'quantity': 0,
       'variant': 0,
-      'tokenstamp': null
+      'tokenstamp': null,
+      'heap_1': 0,
+      'heap_2': 0
     }
 
   let sql = 'SELECT startdate FROM cookings WHERE DATE(startdate) = ?',
@@ -141,7 +143,22 @@ app.post('/synchronize', (request, response) => {
         model.tokenstamp = results[0].date.substring(0, 10);
       }
 
-      response.send(JSON.stringify(model));
+
+      sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
+        values = [date];
+      sql = mysql.format(sql, values);
+
+      pool.query(sql, function (error, results, fields) {
+        for (var index = 0; index < results.length; index++) {
+          if (results[index].variant == 1) {
+            model.heap_1 = model.heap_1 + results[index].quantity;
+          } else {
+            model.heap_2 = model.heap_2 + results[index].quantity;
+          }
+        }
+
+        response.send(JSON.stringify(model));
+      })
     });
   });
 });

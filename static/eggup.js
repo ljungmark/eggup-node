@@ -220,17 +220,17 @@ Eggup.prototype.synchronize = function() {
         document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
         document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
 
+        eggup.thread.tokenstamp = json.tokenstamp;
+        eggup.thread.variant = json.variant;
+        eggup.thread.quantity = json.quantity;
+        eggup.thread.heap_1 = json.heap_1;
+        eggup.thread.heap_2 = json.heap_2;
+        localStorage.setItem('thread', JSON.stringify(eggup.thread));
+
         if (json.quantity == 0) {
           instance.load('order');
         } else {
           document.querySelector('.review-text__order').innerHTML = eggup.cache['quantity'] + ' ' + eggup.cache['variant'].toLowerCase();
-
-          eggup.thread.tokenstamp = json.tokenstamp;
-          eggup.thread.variant = json.variant;
-          eggup.thread.quantity = json.quantity;
-          localStorage.setItem('thread', JSON.stringify(eggup.thread));
-
-
 
           instance.load('review');
         }
