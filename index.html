@@ -20,11 +20,11 @@
   </style>
 
   <link rel="stylesheet" href="styles/eggup.css" media="screen">
- <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto+Slab" rel="stylesheet">
 </head>
 
 <body>
+  <canvas id="canvas" style="background: #21272c"></canvas>
   <main class="application">
     <div class="map">
       <div class="node" data-desc="Beställ ägg">1</div>
@@ -66,6 +66,15 @@
       </div>
       <div class="module module--hidden" data-module="cooking">
         Cooking
+        <div class="cooking-text__countdown"></div>
+        <div class="progress">
+          <div class="progress-bar">
+            <div class="progress-bar__variant_1"></div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-bar__variant_2"></div>
+          </div>
+        </div>
       </div>
       <div class="module module--hidden" data-module="docket">
         Docket

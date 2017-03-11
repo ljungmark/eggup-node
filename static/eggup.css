@@ -511,6 +511,37 @@ h2 {
   text-align: left;
 }
 
+.cooking-text__countdown {
+  color: #21272c;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 70px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 1px 1px 0 rgba(140, 140, 140, 0.08), -1px -1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+  height: 44px;
+  line-height: 48px;
+  position: relative;
+  width: 100%;
+}
+
+.progress-bar__variant_1,
+.progress-bar__variant_2 {
+  background: linear-gradient(130deg, #0eec76, #0eec76);
+  border-radius: 3px;
+  box-shadow: inset 2px 0px 2px rgba(0, 0, 0, 0.2);
+  color: #2b2b2b;
+  height: 100%;
+  position: absolute;
+  width: 0%;
+}
+
 
 /**
   DESKTOP
@@ -564,6 +595,10 @@ h2 {
 
   .review-block__receipt {
     font-size: 50px;
+  }
+
+  .cooking-text__countdown {
+    font-size: 130px;
   }
 
   @-webkit-keyframes fade_out_to_left {
