@@ -205,17 +205,35 @@ const Eggup = function() {
   Eggup.prototype.synchronize: Syncronize the local application with the server
 */
 Eggup.prototype.synchronize = function() {
-  const instance = this;
+  const instance = this,
+    token = JSON.parse(localStorage.getItem('token'));
 
   fetch('/synchronize', {
-    method: 'post'
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: serialize({ 'token': token })
   }).then(function(response) {
     return response.json().then(function(json) {
       if (json['available']) {
         document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
         document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
 
-        instance.load('order');
+        if (json.quantity == 0) {
+          instance.load('order');
+        } else {
+          document.querySelector('.review-text__order').innerHTML = eggup.cache['quantity'] + ' ' + eggup.cache['variant'].toLowerCase();
+
+          eggup.thread.tokenstamp = json.tokenstamp;
+          eggup.thread.variant = json.variant;
+          eggup.thread.quantity = json.quantity;
+          localStorage.setItem('thread', JSON.stringify(eggup.thread));
+
+
+
+          instance.load('review');
+        }
       } else {
         instance.load(json['status']);
 
@@ -659,14 +677,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelector('.review-text__order').innerHTML = eggup.cache['quantity'] + ' ' + eggup.cache['variant'].toLowerCase();
 
-        let thread = JSON.parse(localStorage.getItem('thread'));
-        thread.tokenstamp = get_date();
-        thread.variant = eggup.cache['variant'];
-        thread.quantity = eggup.cache['quantity'];
-        thread.heap_1 = response.heap_1;
-        thread.heap_2 = response.heap_2;
-        localStorage.setItem('thread', JSON.stringify(thread));
-        eggup.thread = thread;
+        eggup.thread.tokenstamp = get_date();
+        eggup.thread.variant = eggup.cache['variant'];
+        eggup.thread.quantity = eggup.cache['quantity'];
+        eggup.thread.heap_1 = response.heap_1;
+        eggup.thread.heap_2 = response.heap_2;
+        localStorage.setItem('thread', JSON.stringify(eggup.thread));
 
         eggup.load('review');
       } else {

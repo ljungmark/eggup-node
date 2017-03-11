@@ -97,7 +97,14 @@ app.post('/token', (request, response) => {
   }
 */
 app.post('/synchronize', (request, response) => {
-  const date = get_date();
+  const date = get_date(),
+    model = {
+      'available': false,
+      'startdate': null,
+      'quantity': 0,
+      'variant': 0,
+      'tokenstamp': null
+    }
 
   let sql = 'SELECT startdate FROM cookings WHERE DATE(startdate) = ?',
     values = [date];
@@ -111,16 +118,31 @@ app.post('/synchronize', (request, response) => {
       The app is available for additional orders
     */
     if (!results.length) {
-      response.send(JSON.stringify({ 'available': true }));
+      model.available = true;
     } else {
     /**
       Else the cooking has already commenced
       No futher orders will be accepted
       Returns the datetime when the cooking started to process further actions
     */
-      const return_values = Object.assign({ 'available': false }, results[0]);
-      response.send(JSON.stringify(return_values));
+      model.startdate = results[0].startdate;
     }
+
+    sql = 'SELECT date, quantity, variant FROM orders WHERE token = ? AND DATE(date) = ?',
+      values = [request.body.token, date];
+    sql = mysql.format(sql, values);
+
+    pool.query(sql, function(error, results, fields) {
+      if (error) throw error;
+
+      if (results.length) {
+        model.quantity = results[0].quantity;
+        model.variant = results[0].variant;
+        model.tokenstamp = results[0].date.substring(0, 10);
+      }
+
+      response.send(JSON.stringify(model));
+    });
   });
 });
 
