@@ -137,6 +137,17 @@ app.post('/request', (request, response) => {
   const date = get_date();
 
   /**
+    Default model
+  */
+  const model = {
+    'status': false,
+    'data': null,
+    'heap_1': 0,
+    'heap_2': 0
+  }
+
+
+  /**
     Check if token exists in database
   */
   let is_token_valid = new Promise(function(resolve, reject) {
@@ -184,7 +195,10 @@ app.post('/request', (request, response) => {
       pool.query(sql, function (error, results, fields) {
         if (error) throw error;
 
-        response.send(JSON.stringify({ 'status': true, 'reason': 'updated' }));
+        model.status = true;
+        model.data ='updated';
+
+        response.send(JSON.stringify(model));
       });
     }).catch(function() {
       /**
@@ -197,11 +211,30 @@ app.post('/request', (request, response) => {
       pool.query(sql, function (error, results, fields) {
         if (error) throw error;
 
-        response.send(JSON.stringify({ 'status': true, 'reason': 'inserted' }));
+        model.status = true;
+        model.data ='inserted';
+
+        sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
+          values = [date];
+        sql = mysql.format(sql, values);
+
+        pool.query(sql, function (error, results, fields) {
+          for (var index = 0; index < results.length; index++) {
+            if (results[index].variant == 1) {
+              model.heap_1 = model.heap_1 + results[index].quantity;
+            } else {
+              model.heap_2 = model.heap_2 + results[index].quantity;
+            }
+          }
+
+          response.send(JSON.stringify(model));
+        });
       });
     });
   }).catch(function() {
-    response.send(JSON.stringify({ 'status': false, 'reason': 'no token found' }));
+    model.data = 'no token found';
+
+    response.send(JSON.stringify(model));
   });
 });
 
@@ -223,7 +256,9 @@ app.post('/delete', (request, response) => {
   */
   const model = {
     'status': false,
-    'tokenstamp': null
+    'tokenstamp': null,
+    'heap_1': 0,
+    'heap_2': 0
   }
 
   /**
@@ -264,9 +299,37 @@ app.post('/delete', (request, response) => {
         }
       });
     }).then(function(exists) {
-      response.send(JSON.stringify(model));
+      sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
+        values = [date];
+      sql = mysql.format(sql, values);
+
+      pool.query(sql, function (error, results, fields) {
+        for (var index = 0; index < results.length; index++) {
+          if (results[index].variant == 1) {
+            model.heap_1 = model.heap_1 + results[index].quantity;
+          } else {
+            model.heap_2 = model.heap_2 + results[index].quantity;
+          }
+        }
+
+        response.send(JSON.stringify(model));
+      });
     }).catch(function() {
-      response.send(JSON.stringify(model));
+      sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
+        values = [date];
+      sql = mysql.format(sql, values);
+
+      pool.query(sql, function (error, results, fields) {
+        for (var index = 0; index < results.length; index++) {
+          if (results[index].variant == 1) {
+            model.heap_1 = model.heap_1 + results[index].quantity;
+          } else {
+            model.heap_2 = model.heap_2 + results[index].quantity;
+          }
+        }
+
+        response.send(JSON.stringify(model));
+      });
     });
   }).catch(function() {
     response.send(JSON.stringify(model));
