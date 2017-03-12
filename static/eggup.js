@@ -232,6 +232,10 @@ Eggup.prototype.synchronize = function() {
         } else {
           document.querySelector('.review-text__order').innerHTML = eggup.cache['quantity'] + ' ' + eggup.cache['variant'].toLowerCase();
 
+          document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
+          document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
+          document.querySelector('.review-text__heap_2').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_2'] + (JSON.parse(localStorage.getItem('thread'))['heap_2'] == 1 ? ' hårdkokt' : ' hårdkokta');
+
           instance.load('review');
         }
       } else {
@@ -378,137 +382,9 @@ Eggup.prototype.start = function() {
 
   format(split.minutes, split.seconds);
 
-  countdown.onTick(format).onTick(progressbars(null, soft, hard)).onTick(checkCompletion).start();
+  countdown.onTick(format).onTick(checkCompletion).start(soft, hard);
 };
 
-function Background(){
-  this.colors = [
-    '255, 255, 255',
-    '64, 172, 230',
-    '255, 255, 0',
-    '19, 19, 19'
-  ]
-  this.blurry = true
-  this.border = false
-  this.canvas = document.getElementById('canvas')
-  this.ctx = this.canvas.getContext('2d')
-  this.fps = 60
-  this.maxOpacity = .5
-  this.maxRadius = 35
-  this.maxSpeed = .5
-  this.minRadius = 30
-  this.minOpacity = .005
-  this.minSpeed = .05
-  this.numParticles = 14
-}
-
-Background.prototype.init = function() {
-  this.render()
-  this.createParticle()
-}
-
-Background.prototype._rand = function(min, max) {
-  return Math.random() * (max - min) + min
-}
-
-Background.prototype.render = function(){
-  let self = this,
-    wHeight =  window.innerHeight,
-    wWidth = window.innerWidth;
-
-  self.canvas.width = wWidth
-  self.canvas.height = wHeight
-
-  if (window.innerWidth < 960) this.clearCanvas();
-
-  window.addEventListener('resize', self.render)
-}
-
-Background.prototype.createParticle = function() {
-  window.particle = []
-
-  for (let i = 0; i < this.numParticles; i++) {
-    var self = this
-    let color = self.colors[~~(self._rand(0, self.colors.length))]
-
-    particle[i] = {
-      radius: self._rand(self.minRadius, self.maxRadius),
-      xPos: self._rand(0, canvas.width),
-      yPos: self._rand(0, canvas.height),
-      xVelocity: self._rand(self.minSpeed, self.maxSpeed),
-      yVelocity: self._rand(self.minSpeed, self.maxSpeed),
-      color: 'rgba(' + color + ',' + self._rand(self.minOpacity, self.maxOpacity) + ')'
-    }
-
-    self.draw(particle, i)
-  }
-
-  self.animate(particle)
-}
-
-Background.prototype.draw = function(particle, i) {
-  let self = this,
-    ctx = self.ctx
-
-  if (self.blurry === true ) {
-    let grd = ctx.createRadialGradient(particle[i].xPos, particle[i].yPos, particle[i].radius, particle[i].xPos, particle[i].yPos, particle[i].radius/1.25)
-
-    grd.addColorStop(1.000, particle[i].color)
-    grd.addColorStop(0.000, 'rgba(34, 34, 34, 0)')
-    ctx.fillStyle = grd
-  } else {
-    ctx.fillStyle = particle[i].color
-  }
-
-  if (self.border === true) {
-    ctx.strokeStyle = '#ffffff'
-    ctx.stroke()
-  }
-
-  ctx.beginPath()
-  ctx.arc(particle[i].xPos, particle[i].yPos, particle[i].radius, 0, 2 * Math.PI, false)
-  ctx.fill()
-}
-
-Background.prototype.animate = function(particle) {
-  let self = this,
-    ctx = self.ctx
-
-  setInterval(function() {
-    self.clearCanvas()
-
-    for (let i = 0; i < self.numParticles; i++) {
-      particle[i].xPos += particle[i].xVelocity
-      particle[i].yPos -= particle[i].yVelocity
-
-      if (particle[i].xPos > self.canvas.width + particle[i].radius || particle[i].yPos > self.canvas.height + particle[i].radius) {
-        self.resetParticle(particle, i)
-      } else {
-        self.draw(particle, i)
-      }
-    }
-  }, (window.innerWidth < 960 ? 30000 : 1000 / self.fps))
-}
-
-Background.prototype.resetParticle = function(particle, i) {
-  let self = this
-
-  let random = self._rand(0, 1)
-
-  if (random > .5) {
-    particle[i].xPos = -particle[i].radius
-    particle[i].yPos = self._rand(0, canvas.height)
-  } else {
-    particle[i].xPos = self._rand(0, canvas.width)
-    particle[i].yPos = canvas.height + particle[i].radius
-  }
-
-  self.draw(particle, i)
-}
-
-Background.prototype.clearCanvas = function(){
-  this.ctx.clearRect(0, 0, canvas.width, canvas.height)
-}
 
 function Countdown(duration, granularity) {
   this.duration = duration;
@@ -517,7 +393,7 @@ function Countdown(duration, granularity) {
   this.running = false;
 }
 
-Countdown.prototype.start = function() {
+Countdown.prototype.start = function(soft, hard) {
   if (this.running) {
     return false;
   }
@@ -536,6 +412,27 @@ Countdown.prototype.start = function() {
     } else {
       difference = 0
       instance.running = false
+    }
+
+    let soft_bar = ((soft - (difference - hard)) / soft) * 100,
+      soft_percent = soft_bar.toFixed(1),
+      hard_bar = ((soft + hard) - difference) / (soft + hard) * 100,
+      hard_percent = hard_bar.toFixed(1);
+
+    if(soft_percent < 100) {
+      document.querySelector('.progress-bar__variant_1').style.width = soft_percent + '%';
+      //$('.progressbar .softboiled_text').text(soft_percent + '%');
+    } else {
+      document.querySelector('.progress-bar__variant_1').style.width = '100%';
+      //$('.progressbar .softboiled_text').text('Färdiga');
+    }
+
+    if(hard_percent < 100) {
+      document.querySelector('.progress-bar__variant_2').style.width = hard_percent + '%';
+      //$('.progressbar .hardboiled_text').text(hard_percent + '%');
+    } else {
+      document.querySelector('.progress-bar__variant_2').style.width = '100%';
+      //$('.progressbar .hardboiled_text').text('Färdiga');
     }
 
     object = Countdown.parse(difference)
@@ -564,31 +461,8 @@ Countdown.parse = function(seconds) {
   }
 }
 
-function progressbars(diff, soft, hard) {
-  let soft_bar = ((soft - (diff - hard)) / soft) * 100,
-    soft_percent = soft_bar.toFixed(1),
-    hard_bar = ((soft + hard) - diff) / (soft + hard) * 100,
-    hard_percent = hard_bar.toFixed(1);
-
-  if(soft_percent < 100) {
-    document.querySelector('.progress-bar__variant_1').style.width = soft_percent + '%';
-    //$('.progressbar .softboiled_text').text(soft_percent + '%');
-  } else {
-    //$('.progressbar .softboiled').css('width', '100%');
-    //$('.progressbar .softboiled_text').text('Färdiga');
-  }
-
-  if(hard_percent < 100) {
-    document.querySelector('.progress-bar__variant_2').style.width = hard_percent + '%';
-    //$('.progressbar .hardboiled_text').text(hard_percent + '%');
-  } else {
-    //$('.progressbar .hardboiled').css('width', '100%');
-    //$('.progressbar .hardboiled_text').text('Färdiga');
-  }
-}
-
-function checkCompletion(diff) {
-  if (diff <= 0) {
+function checkCompletion(difference) {
+  if (difference <= 0) {
     eggup.load('docket');
   }
 }
@@ -604,7 +478,6 @@ function format(diff, minutes, seconds) {
 
 document.addEventListener('DOMContentLoaded', function() {
   window.eggup = new Eggup();
-  const background = new Background().init();
 
   let sequence  = [];
 
@@ -993,5 +866,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
     document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
     document.querySelector('.review-text__heap_2').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_2'] + (JSON.parse(localStorage.getItem('thread'))['heap_2'] == 1 ? ' hårdkokt' : ' hårdkokta');
+  });
+
+  window.addEventListener('resize', function(event) {
+    if (window.innerWidth < 960) {
+      document.querySelector('video').pause();
+    } else {
+      document.querySelector('video').play();
+    }
   });
 });

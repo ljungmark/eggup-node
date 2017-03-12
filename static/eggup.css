@@ -5,6 +5,20 @@ body {
   user-select: none;
 }
 
+.background {
+  height: auto;
+  left: 50%;
+  min-height: 100%;
+  min-width: 100%;
+  opacity: 0.3;
+  position: fixed;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  transition: 1s opacity;
+  width: auto;
+  z-index: -100;
+}
+
 h2 {
   margin-top: 0;
 }
@@ -553,7 +567,7 @@ h2 {
     border-bottom: 3px solid #c3c3c3;
     border-radius: 6px;
     bottom: initial;
-    box-shadow: inset 0 3px 2px rgba(255, 255, 255, .02);
+    box-shadow: 0 7px 10px rgba(62, 9, 11, 0.3);
     box-sizing: border-box;
     left: 50%;
     max-height: calc(100vh - 60px);
