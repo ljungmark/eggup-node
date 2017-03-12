@@ -12,7 +12,7 @@
   <style>
     /** Critical Rendering Path */
     body {
-      background: #21272c;
+      background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #21272c 100%);
       color: #000000;
       height: 100vh;
       margin: 0;
@@ -24,9 +24,6 @@
 </head>
 
 <body>
-  <video class="background" playsinline autoplay muted loop>
-    <source src="assets/background.mp4" type="video/mp4">
-  </video>
   <main class="application">
     <div class="map">
       <div class="node" data-desc="Beställ ägg">1</div>
@@ -83,6 +80,15 @@
       </div>
     </div>
   </main>
+  <script>
+    if (window.innerWidth >= 960) {
+      let markup = `<video class="background" playsinline="" autoplay="" muted="" loop="">
+        <source src="assets/background.mp4" type="video/mp4">
+      </video>`;
+
+      document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
+    }
+  </script>
   <script src="scripts/eggup.js"></script>
 </body>
 </html>

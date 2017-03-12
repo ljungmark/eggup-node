@@ -870,8 +870,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
   window.addEventListener('resize', function(event) {
     if (window.innerWidth < 960) {
-      document.querySelector('video').pause();
+      if (document.querySelector('.background')) {
+        document.querySelector('body').removeChild(document.querySelector('.background'));
+      }
     } else {
+      if (!document.querySelector('.background')) {
+        let markup = `<video class="background" playsinline="" autoplay="" muted="" loop="">
+            <source src="assets/background.mp4" type="video/mp4">
+          </video>`;
+
+        document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
+      }
+
       document.querySelector('video').play();
     }
   });

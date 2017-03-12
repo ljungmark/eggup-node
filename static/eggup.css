@@ -10,7 +10,7 @@ body {
   left: 50%;
   min-height: 100%;
   min-width: 100%;
-  opacity: 0.3;
+  opacity: 0.2;
   position: fixed;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
