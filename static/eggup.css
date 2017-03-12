@@ -568,15 +568,15 @@ h2 {
 
 .progress-bar__variant_1,
 .progress-bar__variant_2 {
-  background: linear-gradient(130deg, #0eec76, #0eec76);
   border-radius: 3px;
-  box-shadow: inset 2px 0px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -3px 4px rgba(216, 26, 110, 0.4);
   color: #2b2b2b;
   height: 100%;
+  overflow: hidden;
   position: absolute;
+  transition-property: width;
+  transition: 1s linear;
   width: 0%;
-  transition-property: width, background;
-  transition: 0.4s linear;
 }
 
 .progress-bar__text_1,
@@ -585,6 +585,16 @@ h2 {
   position: absolute;
   text-shadow: 1px 1px 0 rgba(140, 140, 140, 0.08), -1px -1px 1px rgba(0, 0, 0, 0.3);
   width: 100%;
+}
+
+.progress-bar__background_1,
+.progress-bar__background_2 {
+  background: linear-gradient(to right, #42a8e0 30%, #0ee673 100%);
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
 }
 
 
