@@ -420,19 +420,40 @@ Countdown.prototype.start = function(soft, hard) {
       hard_percent = hard_bar.toFixed(1);
 
     if(soft_percent < 100) {
+      if (soft_percent > 75) {
+        document.querySelector('.progress-bar__variant_1').style.background = '#f2d31b';
+      } else if (soft_percent > 50) {
+        document.querySelector('.progress-bar__variant_1').style.background = '#f2b01e';
+      } else if (soft_percent > 25) {
+        document.querySelector('.progress-bar__variant_1').style.background = '#f27011';
+      } else if (soft_percent > 0) {
+        document.querySelector('.progress-bar__variant_1').style.background = '#f63a0f';
+      }
       document.querySelector('.progress-bar__variant_1').style.width = soft_percent + '%';
-      //$('.progressbar .softboiled_text').text(soft_percent + '%');
+      document.querySelector('.progress-bar__text_1').textContent =  soft_percent + '%';
     } else {
       document.querySelector('.progress-bar__variant_1').style.width = '100%';
-      //$('.progressbar .softboiled_text').text('Färdiga');
+      document.querySelector('.progress-bar__variant_1').style.background = '#86e01e';
+      document.querySelector('.progress-bar__text_1').textContent = 'Färdiga';
     }
 
     if(hard_percent < 100) {
+      if (hard_percent > 75) {
+        document.querySelector('.progress-bar__variant_2').style.background = '#f2d31b';
+      } else if (hard_percent > 50) {
+        document.querySelector('.progress-bar__variant_2').style.background = '#f2b01e';
+      } else if (hard_percent > 25) {
+        document.querySelector('.progress-bar__variant_2').style.background = '#f27011';
+      } else if (hard_percent > 0) {
+        document.querySelector('.progress-bar__variant_2').style.background = '#f63a0f';
+      }
       document.querySelector('.progress-bar__variant_2').style.width = hard_percent + '%';
+      document.querySelector('.progress-bar__text_2').textContent =  hard_percent + '%';
       //$('.progressbar .hardboiled_text').text(hard_percent + '%');
     } else {
       document.querySelector('.progress-bar__variant_2').style.width = '100%';
-      //$('.progressbar .hardboiled_text').text('Färdiga');
+      document.querySelector('.progress-bar__variant_2').style.background = '#86e01e';
+      document.querySelector('.progress-bar__text_2').textContent = 'Färdiga';
     }
 
     object = Countdown.parse(difference)
