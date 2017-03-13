@@ -425,7 +425,7 @@ Countdown.prototype.start = function(soft, hard) {
 
     if(soft_percent < 100) {
       document.querySelector('.progress-bar__variant_1').style.width = soft_percent + '%';
-      document.querySelector('.progress-bar__text_1').textContent =  soft_percent + '%';
+      document.querySelector('.progress-bar__text_1').textContent =  'Löskokta: ' + soft_percent + '%';
     } else {
       document.querySelector('.progress-bar__variant_1').style.width = '100%';
       document.querySelector('.progress-bar__background_1').style.background = '#0ee573';
@@ -434,7 +434,7 @@ Countdown.prototype.start = function(soft, hard) {
 
     if(hard_percent < 100) {
       document.querySelector('.progress-bar__variant_2').style.width = hard_percent + '%';
-      document.querySelector('.progress-bar__text_2').textContent =  hard_percent + '%';
+      document.querySelector('.progress-bar__text_2').textContent =  'Hårdkokta: ' + hard_percent + '%';
     } else {
       document.querySelector('.progress-bar__variant_2').style.width = '100%';
       document.querySelector('.progress-bar__background_2').style.background = '#0ee573';

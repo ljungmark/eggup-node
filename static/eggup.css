@@ -14,7 +14,6 @@ body {
   position: fixed;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-  transition: 1s opacity;
   width: auto;
   z-index: -100;
 }
@@ -575,7 +574,6 @@ h2 {
   overflow: hidden;
   position: absolute;
   transition-property: width;
-  transition: 1s linear;
   width: 0%;
 }
 
@@ -589,7 +587,7 @@ h2 {
 
 .progress-bar__background_1,
 .progress-bar__background_2 {
-  background: linear-gradient(to right, #42a8e0 30%, #0ee673 100%);
+  background: linear-gradient(to right, #42a8e0 0%, #0ee673 100%);
   display: block;
   height: 100%;
   left: 0;
