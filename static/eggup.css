@@ -595,6 +595,21 @@ h2 {
   top: 0;
 }
 
+.albin {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-190px, -255px);
+  transition: all 0.4s;
+}
+
+.party .albin {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-190px, -321px);
+}
+
 
 /**
   DESKTOP
@@ -836,5 +851,230 @@ h2 {
   .order-variant__data.swap {
     animation: swapping 400ms;
     transform-origin: center;
+  }
+
+  @-webkit-keyframes party {
+    from, to {
+      background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #21272c 100%);
+    }
+
+    5% {
+      background: radial-gradient(ellipse farthest-corner at center top, #f44336 0%, #21272c 100%);
+    }
+
+    10% {
+      background: radial-gradient(ellipse farthest-corner at center top, #e91e63 0%, #21272c 100%);
+    }
+
+    15% {
+      background: radial-gradient(ellipse farthest-corner at center top, #9c27b0 0%, #21272c 100%);
+    }
+
+    20% {
+      background: radial-gradient(ellipse farthest-corner at center top, #673ab7 0%, #21272c 100%);
+    }
+
+    25% {
+      background: radial-gradient(ellipse farthest-corner at center top, #2196f3 0%, #21272c 100%);
+    }
+
+    30% {
+      background: radial-gradient(ellipse farthest-corner at center top, #00bcd4 0%, #21272c 100%);
+    }
+
+    35% {
+      background: radial-gradient(ellipse farthest-corner at center top, #009688 0%, #21272c 100%);
+    }
+
+    40% {
+      background: radial-gradient(ellipse farthest-corner at center top, #4caf50 0%, #21272c 100%);
+    }
+
+    45% {
+      background: radial-gradient(ellipse farthest-corner at center top, #8bc34a 0%, #21272c 100%);
+    }
+
+    50% {
+      background: radial-gradient(ellipse farthest-corner at center top, #cddc39 0%, #21272c 100%);
+    }
+
+    55% {
+      background: radial-gradient(ellipse farthest-corner at center top, #ffeb3b 0%, #21272c 100%);
+    }
+
+    60% {
+      background: radial-gradient(ellipse farthest-corner at center top, #ffc107 0%, #21272c 100%);
+    }
+
+    65% {
+      background: radial-gradient(ellipse farthest-corner at center top, #ff9800 0%, #21272c 100%);
+    }
+
+    70% {
+      background: radial-gradient(ellipse farthest-corner at center top, #ff5722 0%, #21272c 100%);
+    }
+
+    75% {
+      background: radial-gradient(ellipse farthest-corner at center top, #795548 0%, #21272c 100%);
+    }
+
+    80% {
+      background: radial-gradient(ellipse farthest-corner at center top, #9e9e9e 0%, #21272c 100%);
+    }
+
+    85% {
+      background: radial-gradient(ellipse farthest-corner at center top, #607d8b 0%, #21272c 100%);
+    }
+
+    90% {
+      background: radial-gradient(ellipse farthest-corner at center top, #4caf50 0%, #21272c 100%);
+    }
+
+    95% {
+      background: radial-gradient(ellipse farthest-corner at center top, #ffeb3b 0%, #21272c 100%);
+    }
+  }
+
+  @keyframes party {
+    from, to {
+      background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #21272c 100%);
+    }
+
+    5% {
+      background: radial-gradient(ellipse farthest-corner at center top, #f44336 0%, #21272c 100%);
+    }
+
+    10% {
+      background: radial-gradient(ellipse farthest-corner at center top, #e91e63 0%, #21272c 100%);
+    }
+
+    15% {
+      background: radial-gradient(ellipse farthest-corner at center top, #9c27b0 0%, #21272c 100%);
+    }
+
+    20% {
+      background: radial-gradient(ellipse farthest-corner at center top, #673ab7 0%, #21272c 100%);
+    }
+
+    25% {
+      background: radial-gradient(ellipse farthest-corner at center top, #2196f3 0%, #21272c 100%);
+    }
+
+    30% {
+      background: radial-gradient(ellipse farthest-corner at center top, #00bcd4 0%, #21272c 100%);
+    }
+
+    35% {
+      background: radial-gradient(ellipse farthest-corner at center top, #009688 0%, #21272c 100%);
+    }
+
+    40% {
+      background: radial-gradient(ellipse farthest-corner at center top, #4caf50 0%, #21272c 100%);
+    }
+
+    45% {
+      background: radial-gradient(ellipse farthest-corner at center top, #8bc34a 0%, #21272c 100%);
+    }
+
+    50% {
+      background: radial-gradient(ellipse farthest-corner at center top, #cddc39 0%, #21272c 100%);
+    }
+
+    55% {
+      background: radial-gradient(ellipse farthest-corner at center top, #ffeb3b 0%, #21272c 100%);
+    }
+
+    60% {
+      background: radial-gradient(ellipse farthest-corner at center top, #ffc107 0%, #21272c 100%);
+    }
+
+    65% {
+      background: radial-gradient(ellipse farthest-corner at center top, #ff9800 0%, #21272c 100%);
+    }
+
+    70% {
+      background: radial-gradient(ellipse farthest-corner at center top, #ff5722 0%, #21272c 100%);
+    }
+
+    75% {
+      background: radial-gradient(ellipse farthest-corner at center top, #795548 0%, #21272c 100%);
+    }
+
+    80% {
+      background: radial-gradient(ellipse farthest-corner at center top, #9e9e9e 0%, #21272c 100%);
+    }
+
+    85% {
+      background: radial-gradient(ellipse farthest-corner at center top, #607d8b 0%, #21272c 100%);
+    }
+
+    90% {
+      background: radial-gradient(ellipse farthest-corner at center top, #4caf50 0%, #21272c 100%);
+    }
+
+    95% {
+      background: radial-gradient(ellipse farthest-corner at center top, #ffeb3b 0%, #21272c 100%);
+    }
+  }
+
+
+  @keyframes partycontainer{
+    10% {
+      transform:translate(3px, 3px) rotate(.5deg) translate(-50%, -50%);
+
+    }
+
+    20% {
+      transform:translate(-1px, 0px) rotate(-.5deg) translate(-50%, -50%);
+
+    }
+
+    30% {
+      transform:translate(-1px, -3px) rotate(-1.5deg) translate(-50%, -50%);
+
+    }
+
+    40% {
+      transform:translate(3px, -2px) rotate(.5deg) translate(-50%, -50%);
+
+    }
+
+    50% {transform:translate(0px, 1px) rotate(.5deg) translate(-50%, -50%);
+
+    }
+
+    60% {
+      transform:translate(0px, -3px) rotate(-1.5deg) translate(-50%, -50%);
+
+    }
+
+    70% {
+      transform:translate(0px, -4px) rotate(.5deg) translate(-50%, -50%);
+
+    }
+
+    80% {
+      transform:translate(-3px, -1px) rotate(.5deg) translate(-50%, -50%);
+
+    }
+
+    90% {
+      transform:translate(-4px, 2px) rotate(.5deg) translate(-50%, -50%);
+
+    }
+
+    0%, 100% {
+      transform:translate(0, 0) rotate(0) translate(-50%, -50%);
+    }
+  }
+
+  .party {
+    animation: party 5s infinite;
+  }
+
+  .party main {
+    animation: partycontainer 0.5s infinite;
+    animation-timing-function: ease-in-out;
+    transform-origin: -25% -25%;
   }
 }
