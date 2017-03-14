@@ -259,6 +259,18 @@ Eggup.prototype.load = function(target_module) {
   const instance = this;
   const current_module = instance.module;
 
+
+  if (window.location.hash == '#start'
+    && current_module == 'init'
+    && (target_module == 'order'
+      || target_module == 'review')) {
+    const popup = document.querySelector('.initiate');
+
+    if (!popup.classList.contains('initiate__open')) {
+      popup.classList.add('initiate__open');
+    }
+  }
+
   /** Allowed targets */
   const module_array = [];
   document.querySelectorAll('.module').forEach((element) => {
@@ -350,6 +362,10 @@ Eggup.prototype.error = function() {
 };
 
 
+/**
+  Eggup.prototype.map: Remap application when needed
+  Usually triggered inside eggup.load() to match current module
+*/
 Eggup.prototype.map = function(node) {
   current_node = 0;
 
@@ -373,15 +389,14 @@ Eggup.prototype.map = function(node) {
 };
 
 
-Eggup.prototype.start = function() {
-  let soft = 270,
-    hard = 240,
-    timer = soft + hard,
+Eggup.prototype.start = function(soft = 270, hard = 240) {
+  let timer = soft + hard,
     countdown = new Countdown(timer),
     split = Countdown.parse(timer);
 
   format(split.minutes, split.seconds);
 
+  /** Static background for progress bars */
   const barwidth = document.querySelector('.progress-bar__v1').offsetWidth;
   document.querySelector('.progress-bar__background_1').style.width = barwidth + 'px';
   document.querySelector('.progress-bar__background_2').style.width = barwidth + 'px';
@@ -921,9 +936,12 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('.close-start').onclick = () => {
     document.querySelector('.initiate').classList.remove('initiate__open');
 
+    history.replaceState('', document.title, window.location.pathname);
+
     return false;
   };
 
+  /** Add scrolled effect on containers */
   document.querySelectorAll('.container').forEach(function(element) {
     let current_element = element;
 
@@ -932,12 +950,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  /**
+    Watch changes in the thread and update the DOM accordingly
+  */
   watch(eggup, 'thread', function(){
     document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
     document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
     document.querySelector('.review-text__heap_2').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_2'] + (JSON.parse(localStorage.getItem('thread'))['heap_2'] == 1 ? ' hårdkokt' : ' hårdkokta');
   });
 
+  /**
+    Append or remove video background based on inner width of window
+  */
   window.addEventListener('resize', function(event) {
     if (window.innerWidth < 960) {
       if (document.querySelector('.background')) {
@@ -949,6 +973,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <source src="assets/background.mp4" type="video/mp4">
           </video>`;
 
+        /** Append directly after the body tag */
         document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
       }
 
@@ -956,10 +981,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+
+  /**
+    Long press click to fire popup to start cooking
+  */
   let pressTimer;
 
   document.onmousedown = (event) => {
-    if (event.which == 1) {
+    if (event.which == 1) { /** Only trigger on left clicks */
       if (eggup.module == 'order' || eggup.module == 'review') {
         clearTimeout(pressTimer);
 
@@ -969,6 +998,8 @@ document.addEventListener('DOMContentLoaded', function() {
           if (!popup.classList.contains('initiate__open')) {
             popup.classList.add('initiate__open');
           }
+
+          history.replaceState('', document.title, window.location.pathname + '#start');
 
           return false;
         }, 1000);

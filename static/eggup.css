@@ -621,6 +621,9 @@ h2 {
   width: 100%;
 }
 
+/**
+  Needed for static background
+*/
 .progress-bar__background_1,
 .progress-bar__background_2 {
   background: linear-gradient(to right, #42a8e0 0%, #0ee673 100%);
