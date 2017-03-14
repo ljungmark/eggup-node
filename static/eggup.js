@@ -876,12 +876,50 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         eggup.error();
       }
+
+      setTimeout(function() {
+        cancel_button.classList.remove('process');
+        cancel_button.disabled = false;
+      }, 500);
     });
 
-    setTimeout(function() {
-      cancel_button.classList.remove('process');
-      cancel_button.disabled = false;
-    }, 1000);
+    return false;
+  };
+
+  document.querySelector('.initiate-button').onclick = () => {
+    if (eggup.input_threshold === true) return;
+    eggup.input_threshold = true;
+
+    initiate_button = document.querySelector('.initiate-button');
+
+    let init_request = new Promise(function(resolve, reject) {
+      initiate_button.classList.add('process');
+      initiate_button.disabled = true;
+
+      resolve();
+    });
+
+    init_request.then((response) => {
+      const popup = document.querySelector('.initiate');
+
+      if (popup.classList.contains('initiate__open')) {
+        popup.classList.remove('initiate__open');
+      }
+
+      eggup.load('cooking');
+      eggup.start();
+
+       setTimeout(function() {
+        initiate_button.classList.remove('process');
+        initiate_button.disabled = false;
+      }, 1000);
+    });
+
+    return false;
+  };
+
+  document.querySelector('.close-start').onclick = () => {
+    document.querySelector('.initiate').classList.remove('initiate__open');
 
     return false;
   };
@@ -907,7 +945,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     } else {
       if (!document.querySelector('.background')) {
-        let markup = `<video class="background" playsinline="" autoplay="" muted="" loop="">
+        let markup = `<video class="background" playsinline autoplay muted loop>
             <source src="assets/background.mp4" type="video/mp4">
           </video>`;
 
@@ -920,21 +958,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   let pressTimer;
 
-
   document.onmousedown = (event) => {
     if (event.which == 1) {
       if (eggup.module == 'order' || eggup.module == 'review') {
         clearTimeout(pressTimer);
 
         pressTimer = window.setTimeout(function() {
-          console.log('pressed');
-
           const popup = document.querySelector('.initiate');
 
           if (!popup.classList.contains('initiate__open')) {
             popup.classList.add('initiate__open');
-          } else {
-            popup.classList.remove('initiate__open');
           }
 
           return false;
