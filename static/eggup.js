@@ -922,22 +922,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   document.onmousedown = (event) => {
-    if (eggup.module == 'init' || eggup.module == 'review') {
-      clearTimeout(pressTimer);
+    if (event.which == 1) {
+      if (eggup.module == 'order' || eggup.module == 'review') {
+        clearTimeout(pressTimer);
 
-      pressTimer = window.setTimeout(function() {
-        console.log('pressed');
+        pressTimer = window.setTimeout(function() {
+          console.log('pressed');
 
-        const popup = document.querySelector('.initiate');
+          const popup = document.querySelector('.initiate');
 
-        if (!popup.classList.contains('initiate__open')) {
-          popup.classList.add('initiate__open');
-        } else {
-          popup.classList.remove('initiate__open');
-        }
+          if (!popup.classList.contains('initiate__open')) {
+            popup.classList.add('initiate__open');
+          } else {
+            popup.classList.remove('initiate__open');
+          }
 
-        return false;
-      }, 1000);
+          return false;
+        }, 1000);
+      }
     }
   };
 

@@ -83,23 +83,33 @@ h2 {
 }
 
 .initiate {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   bottom: 0;
   left: 0;
   max-height: 0;
   opacity: 0;
   padding: 0;
+  pointer-events: none;
   position: fixed;
   right: 0;
   top: 0;
   transition: opacity 200ms, max-height 1ms 225ms, padding 1ms 225ms; /** Delay max-height & padding animations with 225ms */
 }
 
+.initiate:not(.initiate__open) * {
+  display: none;
+}
+
 .initiate__open {
   max-height: 1600px;
   opacity: 1;
   padding: 20px;
-  transition: opacity 200s;
+  pointer-events: initial;
+  transition: opacity 200ms;
+}
+
+.initiate__open * {
+  display: initial;
 }
 
 
@@ -880,8 +890,6 @@ h2 {
   }
 
   .initiate {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #c3c3c3;
     border-bottom: 3px solid #c3c3c3;
     border-radius: 4px;
     bottom: initial;
@@ -889,12 +897,11 @@ h2 {
     left: 50%;
     max-height: 0;
     opacity: 0;
-    padding: 20px;
     position: fixed;
     right: initial;
     top: calc(50% + 10px);
     transform: translate(-50%, -50%);
-    transition: top 250ms, opacity 200ms, max-height 1ms 225ms;
+    transition: top 250ms, opacity 200ms, max-height 1ms 225ms, padding 1ms 225ms; /** Delay max-height & padding animations with 225ms */
   }
 
   .initiate__open {
