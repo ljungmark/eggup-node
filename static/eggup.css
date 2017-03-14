@@ -82,6 +82,26 @@ h2 {
   width: 100%;
 }
 
+.initiate {
+  background: rgba(255, 255, 255, 0.9);
+  bottom: 0;
+  left: 0;
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: opacity 200ms, max-height 1ms 225ms, padding 1ms 225ms; /** Delay max-height & padding animations with 225ms */
+}
+
+.initiate__open {
+  max-height: 1600px;
+  opacity: 1;
+  padding: 20px;
+  transition: opacity 200s;
+}
+
 
 /**
   MODULE TRANSITIONS
@@ -437,8 +457,9 @@ h2 {
 }
 
 .order-button,
-.review-button {
-  background-image: linear-gradient(-180deg,#44b1e8,#3098de);
+.review-button,
+.initiate-button {
+  background-image: linear-gradient(-180deg, #44b1e8, #3098de);
   border: 0;
   border-radius: 3px;
   box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);
@@ -455,13 +476,15 @@ h2 {
 }
 
 .order-button:hover,
-.review-button:hover {
+.review-button:hover,
+.initiate-button:hover {
   cursor: pointer;
 }
 
 .order-button:active,
-.review-button:active {
-  background-image: linear-gradient(180deg,#328ac3,#277bbe);
+.review-button:active,
+.initiate-button:active {
+  background-image: linear-gradient(180deg, #328ac3, #277bbe);
 }
 
 @-webkit-keyframes process {
@@ -475,7 +498,8 @@ h2 {
 }
 
 .order-button.process,
-.review-button.process {
+.review-button.process,
+.initiate-button.process {
   -webkit-animation: process 2s linear infinite;
   animation: process 2s linear infinite;
   background-image: repeating-linear-gradient(135deg, #44b1e8, #44b1e8 15px, #3098de 15px, #3098de 30px);
@@ -485,11 +509,13 @@ h2 {
 }
 
 .order-button.process:hover,
-.review-button.process:hover {
+.review-button.process:hover,
+.initiate-button.process:hover {
   cursor: not-allowed;
 }
 
-.order-button__image {
+.order-button__image,
+.initiate-button__image {
   margin-left: 10px;
   vertical-align: middle;
 }
@@ -851,6 +877,32 @@ h2 {
   .order-variant__data.swap {
     animation: swapping 400ms;
     transform-origin: center;
+  }
+
+  .initiate {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #c3c3c3;
+    border-bottom: 3px solid #c3c3c3;
+    border-radius: 4px;
+    bottom: initial;
+    box-shadow: 0 7px 10px rgba(62, 9, 11, 0.3);
+    left: 50%;
+    max-height: 0;
+    opacity: 0;
+    padding: 20px;
+    position: fixed;
+    right: initial;
+    top: calc(50% + 10px);
+    transform: translate(-50%, -50%);
+    transition: top 250ms, opacity 200ms, max-height 1ms 225ms;
+  }
+
+  .initiate__open {
+    max-height: 600px;
+    opacity: 1;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: top 250ms, opacity 200ms;
   }
 
   @-webkit-keyframes party {
