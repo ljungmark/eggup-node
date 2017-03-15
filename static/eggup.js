@@ -270,6 +270,8 @@ Eggup.prototype.load = function(target_module) {
 
     if (!popup.classList.contains('initiate__open')) {
       popup.classList.add('initiate__open');
+
+      if (document.querySelector('.background')) document.querySelector('.background').pause();
     }
   }
 
@@ -408,7 +410,7 @@ Eggup.prototype.start = function(soft = 270, hard = 240) {
 
 
 Eggup.prototype.notify = function(sound = null) {
-  if (sound !== null) {
+  if (sound !== null && ['done', 'start'].includes(sound)) {
     const audio = document.querySelector('.audio'),
       source = document.querySelector('.audio-source');
 
@@ -944,6 +946,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (popup.classList.contains('initiate__open')) {
         popup.classList.remove('initiate__open');
+        if (document.querySelector('.background')) document.querySelector('.background').play();
       }
 
       eggup.load('cooking');
@@ -960,6 +963,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.querySelector('.close-start').onclick = () => {
     document.querySelector('.initiate').classList.remove('initiate__open');
+
+    if (document.querySelector('.background')) document.querySelector('.background').play();
 
     history.replaceState('', document.title, window.location.pathname);
 
@@ -1022,6 +1027,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
           if (!popup.classList.contains('initiate__open')) {
             popup.classList.add('initiate__open');
+            if (document.querySelector('.background')) document.querySelector('.background').pause();
           }
 
           history.replaceState('', document.title, window.location.pathname + '#start');
