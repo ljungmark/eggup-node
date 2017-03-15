@@ -112,6 +112,25 @@ h2 {
   display: initial;
 }
 
+.initiate h2 {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.close-start {
+  display: block;
+  float: right;
+}
+
+.initiate-tip {
+  color: grey;
+  display: block;
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 20px;
+  margin-top: 2px;
+}
+
 
 /**
   MODULE TRANSITIONS
@@ -468,7 +487,8 @@ h2 {
 
 .order-button,
 .review-button,
-.initiate-button {
+.initiate-button,
+.lock-button {
   background-image: linear-gradient(-180deg, #44b1e8, #3098de);
   border: 0;
   border-radius: 3px;
@@ -487,13 +507,15 @@ h2 {
 
 .order-button:hover,
 .review-button:hover,
-.initiate-button:hover {
+.initiate-button:hover,
+.lock-button:hover {
   cursor: pointer;
 }
 
 .order-button:active,
 .review-button:active,
-.initiate-button:active {
+.initiate-button:active,
+.lock-button:active {
   background-image: linear-gradient(180deg, #328ac3, #277bbe);
 }
 
@@ -509,7 +531,8 @@ h2 {
 
 .order-button.process,
 .review-button.process,
-.initiate-button.process {
+.initiate-button.process,
+.lock-button.process {
   -webkit-animation: process 2s linear infinite;
   animation: process 2s linear infinite;
   background-image: repeating-linear-gradient(135deg, #44b1e8, #44b1e8 15px, #3098de 15px, #3098de 30px);
@@ -520,7 +543,8 @@ h2 {
 
 .order-button.process:hover,
 .review-button.process:hover,
-.initiate-button.process:hover {
+.initiate-button.process:hover,
+.lock-button.process:hover {
   cursor: not-allowed;
 }
 
@@ -530,7 +554,8 @@ h2 {
   vertical-align: middle;
 }
 
-.review-button__image {
+.review-button__image,
+.lock-button__image {
   margin-right: 10px;
   vertical-align: middle;
 }

@@ -842,12 +842,13 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         eggup.error();
       }
+
+      setTimeout(function() {
+        submit_button.classList.remove('process');
+        submit_button.disabled = false;
+      }, 1000);
     });
 
-    setTimeout(function() {
-      submit_button.classList.remove('process');
-      submit_button.disabled = false;
-    }, 1000);
     return false;
   };
 
