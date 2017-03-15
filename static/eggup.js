@@ -12,6 +12,8 @@
     - load
     - error
     - map
+    - start
+    - notify
 
   4. DOMContentLoaded
     - event listeners
@@ -398,13 +400,35 @@ Eggup.prototype.start = function(soft = 270, hard = 240) {
 
   /** Static background for progress bars */
   const barwidth = document.querySelector('.progress-bar__v1').offsetWidth;
-  document.querySelector('.progress-bar__background_1').style.width = barwidth + 'px';
-  document.querySelector('.progress-bar__background_2').style.width = barwidth + 'px';
+  document.querySelector('.progress-bar__background_1').style.width = `${barwidth}px`;
+  document.querySelector('.progress-bar__background_2').style.width = `${barwidth}px`;
 
   countdown.onTick(format).onTick(checkCompletion).start(soft, hard);
 };
 
 
+Eggup.prototype.notify = function(sound = null) {
+  if (sound !== null) {
+    const audio = document.querySelector('.audio'),
+      source = document.querySelector('.audio-source');
+
+    source.src = `assets/${sound}.mp3`;
+    audio.load();
+    audio.play();
+  }
+
+  return false;
+};
+
+
+/**
+  Set up default Countdown object
+
+  this.duration defines for how long the countdown should run
+  this.granularity defines how often the countdown should tick
+  this.function appends functions to be run every tick
+  this.running indicates whether the countdown is already running
+*/
 function Countdown(duration, granularity) {
   this.duration = duration;
   this.granularity = granularity || 1000;
@@ -439,21 +463,21 @@ Countdown.prototype.start = function(soft, hard) {
       hard_percent = hard_bar.toFixed(1);
 
     if(soft_percent < 100) {
-      document.querySelector('.progress-bar__variant_1').style.width = soft_percent + '%';
-      document.querySelector('.progress-bar__text_1').textContent =  'Löskokta: ' + soft_percent + '%';
+      document.querySelector('.progress-bar__variant_1').style.width = `${soft_percent}%`;
+      document.querySelector('.progress-bar__text_1').textContent =  `Löskokta: ${soft_percent}%`;
     } else {
-      document.querySelector('.progress-bar__variant_1').style.width = '100%';
-      document.querySelector('.progress-bar__background_1').style.background = '#0ee573';
-      document.querySelector('.progress-bar__text_1').textContent = 'Färdiga';
+      document.querySelector('.progress-bar__variant_1').style.width = `100%`;
+      document.querySelector('.progress-bar__background_1').style.background = `#0ee573`;
+      document.querySelector('.progress-bar__text_1').textContent = `Färdiga`;
     }
 
     if(hard_percent < 100) {
-      document.querySelector('.progress-bar__variant_2').style.width = hard_percent + '%';
-      document.querySelector('.progress-bar__text_2').textContent =  'Hårdkokta: ' + hard_percent + '%';
+      document.querySelector('.progress-bar__variant_2').style.width = `${hard_percent}%`;
+      document.querySelector('.progress-bar__text_2').textContent =  `Hårdkokta: ${hard_percent}%`;
     } else {
-      document.querySelector('.progress-bar__variant_2').style.width = '100%';
-      document.querySelector('.progress-bar__background_2').style.background = '#0ee573';
-      document.querySelector('.progress-bar__text_2').textContent = 'Färdiga';
+      document.querySelector('.progress-bar__variant_2').style.width = `100%`;
+      document.querySelector('.progress-bar__background_2').style.background = `#0ee573`;
+      document.querySelector('.progress-bar__text_2').textContent = `Färdiga`;
     }
 
     object = Countdown.parse(difference)
