@@ -13,7 +13,7 @@ body {
   opacity: 0.2;
   position: fixed;
   top: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  transform: translate(-50%, -50%);
   width: auto;
   z-index: -100;
 }
@@ -46,7 +46,9 @@ h2 {
 }
 
 .module[data-module="review"] {
-  background: url('../assets/receipt_bottom.png') bottom repeat-x, url('../assets/receipt_background.png') repeat;
+  background:
+    url('../assets/receipt_bottom.png') bottom repeat-x,
+    url('../assets/receipt_background.png') repeat;
   padding-bottom: 50px;
   text-align: center;
 }
@@ -83,7 +85,7 @@ h2 {
 }
 
 .overlay {
-  background: radial-gradient(ellipse farthest-corner at center bottom, #6beace, #2e9aa4);
+  background: radial-gradient(ellipse farthest-corner at center bottom, #ea6b6b, #a42e5a);
   bottom: 0;
   left: 0;
   opacity: 0;
@@ -531,11 +533,7 @@ h2 {
   text-align: right;
 }
 
-.order-button,
-.review-button,
-.initiate-button,
-.lock-button {
-  background-image: linear-gradient(-180deg, #44b1e8, #3098de);
+.button {
   border: 0;
   border-radius: 3px;
   box-shadow:
@@ -554,18 +552,36 @@ h2 {
   width: 100%;
 }
 
-.order-button:hover,
-.review-button:hover,
-.initiate-button:hover,
-.lock-button:hover {
+.order-button,
+.review-button,
+.initiate-button {
+  background-image: linear-gradient(-180deg, #44b1e8, #3098de);
+}
+
+.lock-button:not(.locked) {
+  background-image: linear-gradient(-180deg, #e84444, #de3030);
+}
+
+.lock-button.locked {
+  background-image: linear-gradient(-180deg, #44e858, #6bde30);
+}
+
+.button:hover {
   cursor: pointer;
 }
 
 .order-button:active,
 .review-button:active,
-.initiate-button:active,
-.lock-button:active {
+.initiate-button:active {
   background-image: linear-gradient(180deg, #328ac3, #277bbe);
+}
+
+.lock-button:not(.locked):active {
+  background-image: linear-gradient(180deg, #c33232, #be2727);
+}
+
+.lock-button.locked:active {
+  background-image: linear-gradient(180deg, #32c336, #30be27);
 }
 
 @-webkit-keyframes process {
@@ -584,16 +600,19 @@ h2 {
 .lock-button.process {
   -webkit-animation: process 2s linear infinite;
   animation: process 2s linear infinite;
-  background-image: repeating-linear-gradient(135deg, #44b1e8, #44b1e8 15px, #3098de 15px, #3098de 30px);
   background-repeat: repeat;
   background-size: 42px 42px, 100% 100%;
   opacity: 0.5;
 }
 
-.order-button.process:hover,
-.review-button.process:hover,
-.initiate-button.process:hover,
-.lock-button.process:hover {
+.order-button.process,
+.review-button.process,
+.initiate-button.process,
+.lock-button.process {
+  background-image: repeating-linear-gradient(135deg, #44b1e8, #44b1e8 15px, #3098de 15px, #3098de 30px);
+}
+
+.button.process:hover {
   cursor: not-allowed;
 }
 

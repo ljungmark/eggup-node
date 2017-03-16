@@ -432,12 +432,11 @@ Eggup.prototype.notify = function(sound = null) {
   Set up default Countdown object
 
   this.duration defines for how long the countdown should run
-  this.granularity defines how often the countdown should tick
   this.function appends functions to be run every tick
 */
 function Countdown(duration, granularity) {
   this.duration = duration;
-  this.granularity = granularity || 1000;
+  this.granularity = granularity || 1000; /** Defines the tick frequency */
   this.functions = [];
 }
 
@@ -446,12 +445,12 @@ Countdown.prototype.start = function(soft, hard) {
     instance = this,
     difference, object;
 
-  (function timer() {
+  (function runtime() {
     difference = instance.duration - (((Date.now() - start) / 1000) | 0)
     let date = Date.now();
 
     if (difference > 0) {
-      setTimeout(timer, (instance.granularity - 1) - (date % (instance.granularity - 1)));
+      setTimeout(runtime, (instance.granularity - 1) - (date % (instance.granularity - 1)));
     } else {
       difference = 0;
       eggup.load('docket');
@@ -462,22 +461,28 @@ Countdown.prototype.start = function(soft, hard) {
       hard_bar = ((soft + hard) - difference) / (soft + hard) * 100,
       hard_percent = hard_bar.toFixed(1);
 
+    const bar_variant_1 = document.querySelector('.progress-bar__variant_1'),
+      bar_text_1 = document.querySelector('.progress-bar__text_1'),
+      bar_variant_2 = document.querySelector('.progress-bar__variant_2'),
+      bar_text_2 = document.querySelector('.progress-bar__text_2');
+
+
     if(soft_percent < 100) {
-      document.querySelector('.progress-bar__variant_1').style.width = `${soft_percent}%`;
-      document.querySelector('.progress-bar__text_1').textContent =  `Löskokta: ${soft_percent}%`;
+      bar_variant_1.style.width = `${soft_percent}%`;
+      bar_text_1.textContent =  `Löskokta: ${soft_percent}%`;
     } else {
-      document.querySelector('.progress-bar__variant_1').style.width = `100%`;
-      document.querySelector('.progress-bar__variant_1').style.background = `#0ee573`;
-      document.querySelector('.progress-bar__text_1').textContent = `Färdiga`;
+      bar_variant_1.style.width = `100%`;
+      bar_variant_1.style.background = `#0ee573`;
+      bar_text_1.textContent = `Färdiga`;
     }
 
     if(hard_percent < 100) {
-      document.querySelector('.progress-bar__variant_2').style.width = `${hard_percent}%`;
-      document.querySelector('.progress-bar__text_2').textContent =  `Hårdkokta: ${hard_percent}%`;
+      bar_variant_2.style.width = `${hard_percent}%`;
+      bar_text_2.textContent =  `Hårdkokta: ${hard_percent}%`;
     } else {
-      document.querySelector('.progress-bar__variant_2').style.width = `100%`;
-      document.querySelector('.progress-bar__variant_2').style.background = `#0ee573`;
-      document.querySelector('.progress-bar__text_2').textContent = `Färdiga`;
+      bar_variant_2.style.width = `100%`;
+      bar_variant_2.style.background = `#0ee573`;
+      bar_text_2.textContent = `Färdiga`;
     }
 
     time = Countdown.parse(difference);
@@ -931,18 +936,46 @@ document.addEventListener('DOMContentLoaded', function() {
     if (eggup.input_threshold === true) return;
     eggup.input_threshold = true;
 
+    const timer1 = document.querySelector('.soft-timer').value,
+      timer2 = document.querySelector('.hard-timer').value;
+
+    let timer1_min,
+      timer1_sec,
+      timer1_tot,
+      timer2_min,
+      timer2_sec,
+      timer2_tot,
+      timers_tot;
+
     initiate_button = document.querySelector('.initiate-button');
 
     let init_request = new Promise(function(resolve, reject) {
       initiate_button.classList.add('process');
       initiate_button.disabled = true;
 
-      resolve();
+      timer1_min = parseInt(timer1.substr(0,2)),
+      timer1_sec = parseInt(timer1.substr(3,2)),
+      timer1_tot = (timer1_min * 60) + timer1_sec,
+      timer2_min = parseInt(timer2.substr(0,2)),
+      timer2_sec = parseInt(timer2.substr(3,2)),
+      timer2_tot = ((timer2_min * 60) + timer2_sec) - timer1_tot,
+      timers_tot = timer1_tot + timer2_tot;
+
+
+      console.log('sat', timer1_tot, timer2_tot);
+
+      if (timer2_tot < 0) {
+        reject();
+      } else {
+        resolve();
+      }
     });
 
     init_request.then((response) => {
-      const overlay = document.querySelector('.overlay');
-      const popup = document.querySelector('.initiate');
+      const overlay = document.querySelector('.overlay'),
+        popup = document.querySelector('.initiate');
+      console.log(timer1_tot, timer2_tot);
+
 
       if (popup.classList.contains('initiate__open')) {
         overlay.classList.remove('overlay__open');
@@ -950,13 +983,17 @@ document.addEventListener('DOMContentLoaded', function() {
         if (document.querySelector('.background')) document.querySelector('.background').play();
       }
 
+      history.replaceState('', document.title, window.location.pathname);
+
       eggup.load('cooking');
-      eggup.start();
+      eggup.start(timer1_tot, timer2_tot);
 
        setTimeout(function() {
         initiate_button.classList.remove('process');
         initiate_button.disabled = false;
-      }, 1000);
+      }, 500);
+    }).catch((response) => {
+      console.log('oh noes');
     });
 
     return false;
@@ -978,11 +1015,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (eggup.thread.gateway == true) {
       event.target.innerHTML = '<img class="lock-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAeFBMVEUAAAAAAAAEBAQDAwMEBAQAAACXl5diYmLk5OQvLy////8AAAAAAAD4+Pj4+Pjp6en9/f36+vr////6+vr39/fu7u7x8fHt7e319fXx8fHh4eHl5eWmpqarq6uqqqqkpKSjo6O2trZHR0f////4+PjKysoAAAD///922e8XAAAAJ3RSTlMPABgTHCUZFBIRBAQ34yAc9fMk6NzIx8O3taufZ1tLOy8cGRXVhy9wMUj8AAAAvklEQVQY00XQ1xbCIBAE0KUjmGpNb2r+/w9lF4zzNjdDDgdgGC+kUkoKT42MhwoA4QNP5iWHX7j0ZLSh0BZNEP1RMPDx4Pwsn3M87iGu1ub6vjZrXEKcTZf+01+mOIw7MWaDHLIxlvTjbs9e2d6leqL5fcfcOUmyB9kjmSa7kd3QgliytqyqqmzRgjiNps4YhaYdMGsABJcYLgCMxTcoAh4xBUNzhT5IFw4tZMsXE25llnzDSsaczeu6zq2j9gU0PQpDXifJRwAAAABJRU5ErkJggg=="> Lås upp';
-      event.target.style.backgroundImage = 'linear-gradient(-180deg, rgb(232, 189, 68), rgb(222, 168, 48))';
     } else {
       event.target.innerHTML = '<img class="lock-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAgVBMVEUAAAAAAAADAwMFBQUAAAAAAAD8/PwEBARiYmL39/cvLy////8AAAD4+Pjp6emvr6+Ojo79/f3o6OgAAAD////z8/P39/fk5ORkZGTCwsJycnLGxsb+/v77+/v7+/v7+/v5+fn29vb09PTt7e3t7e3g4OCoqKi6urrBwcG4uLj///8c+D2hAAAAKnRSTlMPABQYHRv0JRQTEQQ3IBwbGfiLKyTZxpxEPyIS/PDq5uDd0b28c2RcV0uaguLjAAAAu0lEQVQY0z2Q1xKDIBAATw4FQtTErum9/P8H5kp0X/DWZYY5SARjnXPW6CAOaQQA+oGzswgzaNVxo0jLzqhapCGnF8cu60a9noBW0/n+vJ0mLUGz93Goh+tHQ+3M6+LQuvTf6dEf+qqqHqCsJN9+mT2KUZdm4rJU3YYPq93W0jeZnXRtxrTckYkcYr1mauQsQhI8gMGUQQPgA++gILngC9lLLMpFlUVkR4S89PQqX+Zh3imlIW+aJg9Rph/UqQne+6rr8AAAAABJRU5ErkJggg=="> Lås ner';
-      event.target.style.backgroundImage = 'linear-gradient(-180deg, #44b1e8, #3098de)';
     }
+
+    event.target.classList.toggle('locked', eggup.thread.gateway == true);
 
     let thread = JSON.parse(localStorage.getItem('thread'));
     eggup.thread.gateway = !eggup.thread.gateway;
@@ -992,7 +1029,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return false;
   };
 
-  /** Add scrolled effect on containers */
+  /** Add shadow on containers when scrolled */
   document.querySelectorAll('.container').forEach(function(element) {
     let current_element = element;
 
@@ -1005,7 +1042,6 @@ document.addEventListener('DOMContentLoaded', function() {
     Watch changes in the thread's heaps and update the DOM accordingly
   */
   watch(eggup.thread, ['heap_1', 'heap_2'], function(){
-    console.log('heap watcher');
     document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
     document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
     document.querySelector('.review-text__heap_2').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_2'] + (JSON.parse(localStorage.getItem('thread'))['heap_2'] == 1 ? ' hårdkokt' : ' hårdkokta');
@@ -1044,15 +1080,15 @@ document.addEventListener('DOMContentLoaded', function() {
   /**
     Long press click to fire popup to start cooking
   */
-  let pressTimer;
+  let persistency;
 
   document.onmousedown = (event) => {
     if (event.which == 1 /** Only trigger on left clicks */
       && (eggup.module == 'order' || eggup.module == 'review')
       && eggup.thread.gateway == true) {
-      clearTimeout(pressTimer);
+      clearTimeout(persistency);
 
-      pressTimer = window.setTimeout(function() {
+      persistency = window.setTimeout(function() {
         const overlay = document.querySelector('.overlay');
         const popup = document.querySelector('.initiate');
 
@@ -1070,6 +1106,6 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.onmouseup = (event) => {
-    clearTimeout(pressTimer);
+    clearTimeout(persistency);
   };
 });
