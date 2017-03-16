@@ -87,29 +87,28 @@
     </div>
   </main>
   <div class="overlay">
+  </div>
     <div class="initiate">
       <h2>
         Påbörja kokning <a class="close-start" href="#start"><img src="assets/cross.svg" /></a>
       </h2>
-      <button class="lock-button" tabindex="1"><img class="lock-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Lås ner</button>
+      <button class="lock-button" tabindex="-1"><img class="lock-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAgVBMVEUAAAAAAAADAwMFBQUAAAAAAAD8/PwEBARiYmL39/cvLy////8AAAD4+Pjp6emvr6+Ojo79/f3o6OgAAAD////z8/P39/fk5ORkZGTCwsJycnLGxsb+/v77+/v7+/v7+/v5+fn29vb09PTt7e3t7e3g4OCoqKi6urrBwcG4uLj///8c+D2hAAAAKnRSTlMPABQYHRv0JRQTEQQ3IBwbGfiLKyTZxpxEPyIS/PDq5uDd0b28c2RcV0uaguLjAAAAu0lEQVQY0z2Q1xKDIBAATw4FQtTErum9/P8H5kp0X/DWZYY5SARjnXPW6CAOaQQA+oGzswgzaNVxo0jLzqhapCGnF8cu60a9noBW0/n+vJ0mLUGz93Goh+tHQ+3M6+LQuvTf6dEf+qqqHqCsJN9+mT2KUZdm4rJU3YYPq93W0jeZnXRtxrTckYkcYr1mauQsQhI8gMGUQQPgA++gILngC9lLLMpFlUVkR4S89PQqX+Zh3imlIW+aJg9Rph/UqQne+6rr8AAAAABJRU5ErkJggg=="> Lås ner</button>
       <p class="initiate-tip">
-        Om du låser ner Eggup:en för dagen så kan inga fler beställningar läggas idag.
+        Om du låser ner appen för vidare beställningar så kan inga nya beställningar komma in under dagen.
       </p>
+      <div class="start-container">
+        Löskokta:<br>
+        <input class="start-input" type="text" value="04:30">
+      </div>
+      <div class="start-container">
+        Hårdkokta:<br>
+        <input class="start-input" type="text" value="08:30">
+      </div>
       <button class="initiate-button" tabindex="-1" type="submit">Påbörja kokning <img class="initiate-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAclBMVEUAAAAAAAAEBAQBAQEAAAAJCQliYmL///8AAACOjo7////p6eny8vIiIiL////4+Pj///9DQ0Pw8PD///+2tranp6f////Gxsb+/v739/f7+/vs7Oz39/fj4+Ph4eH19fXy8vJubm5GRkYjIyOgoKD////gy5wGAAAAJXRSTlMPABQdJRkUBAQZ+hwTEALAJBMiHhwaFRL008+xqZ2YkowzLCQj8f+kPwAAAK1JREFUGNNNkFkShCAMBQPIoiA6brPvw/2vODERyveTStOBCiDWOKmqqlLSUUdMYwsAeKA35pSGHK0cMXIo5K5MMipQCnB58JnHHRQr3Q6bCbqw1NUssvdqUpNSuvzYo5wSp+O2BcyDvfObCV28bobWBzBI6vLG9UsVyTGzu+KKxGYxo9qCCAb2MQH3jd7skY/IhPVzQbO3/KdxGSbTQmumYYmCGaph7Pt+DJa6P73VCGq32yoQAAAAAElFTkSuQmCC"></button>
     </div>
-  </div>
   <audio class="audio">
     <source class="audio-source" src="" type="audio/mpeg">
   </audio>
-  <script>
-    if (window.innerWidth >= 960) {
-      let markup = `<video class="background" playsinline autoplay muted loop>
-        <source src="assets/background.mp4" type="video/mp4">
-      </video>`;
-
-      document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
-    }
-  </script>
   <script src="scripts/eggup.js"></script>
 </body>
 </html>

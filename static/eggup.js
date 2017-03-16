@@ -195,6 +195,12 @@ const Eggup = function() {
 
 
   /**
+    instance.gateway: Current connection for managing orders
+  */
+  instance.gateway = true;
+
+
+  /**
     Wait until instantiation is complete before synchronizing
   */
   get_token.then(_ => {
@@ -266,9 +272,11 @@ Eggup.prototype.load = function(target_module) {
     && current_module == 'init'
     && (target_module == 'order'
       || target_module == 'review')) {
+    const overlay = document.querySelector('.overlay');
     const popup = document.querySelector('.initiate');
 
     if (!popup.classList.contains('initiate__open')) {
+      overlay.classList.add('overlay__open');
       popup.classList.add('initiate__open');
 
       if (document.querySelector('.background')) document.querySelector('.background').pause();
@@ -527,6 +535,15 @@ document.addEventListener('DOMContentLoaded', function() {
   window.eggup = new Eggup();
 
   let sequence  = [];
+
+  /** Append video background if on desktop */
+  if (window.innerWidth >= 960) {
+    let markup = `<video class="background" playsinline autoplay muted loop>
+      <source src="assets/background.mp4" type="video/mp4">
+    </video>`;
+
+    document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
+  }
 
   /**
     Intercept attempts to submit the form through GET
@@ -942,9 +959,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     init_request.then((response) => {
+      const overlay = document.querySelector('.overlay');
       const popup = document.querySelector('.initiate');
 
       if (popup.classList.contains('initiate__open')) {
+        overlay.classList.remove('overlay__open');
         popup.classList.remove('initiate__open');
         if (document.querySelector('.background')) document.querySelector('.background').play();
       }
@@ -962,11 +981,24 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.querySelector('.close-start').onclick = () => {
+    document.querySelector('.overlay').classList.remove('overlay__open');
     document.querySelector('.initiate').classList.remove('initiate__open');
 
     if (document.querySelector('.background')) document.querySelector('.background').play();
 
     history.replaceState('', document.title, window.location.pathname);
+
+    return false;
+  };
+
+  document.querySelector('.lock-button').onclick = (event) => {
+    if (eggup.gateway == true) {
+      event.target.innerHTML = '<img class="lock-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAeFBMVEUAAAAAAAAEBAQDAwMEBAQAAACXl5diYmLk5OQvLy////8AAAAAAAD4+Pj4+Pjp6en9/f36+vr////6+vr39/fu7u7x8fHt7e319fXx8fHh4eHl5eWmpqarq6uqqqqkpKSjo6O2trZHR0f////4+PjKysoAAAD///922e8XAAAAJ3RSTlMPABgTHCUZFBIRBAQ34yAc9fMk6NzIx8O3taufZ1tLOy8cGRXVhy9wMUj8AAAAvklEQVQY00XQ1xbCIBAE0KUjmGpNb2r+/w9lF4zzNjdDDgdgGC+kUkoKT42MhwoA4QNP5iWHX7j0ZLSh0BZNEP1RMPDx4Pwsn3M87iGu1ub6vjZrXEKcTZf+01+mOIw7MWaDHLIxlvTjbs9e2d6leqL5fcfcOUmyB9kjmSa7kd3QgliytqyqqmzRgjiNps4YhaYdMGsABJcYLgCMxTcoAh4xBUNzhT5IFw4tZMsXE25llnzDSsaczeu6zq2j9gU0PQpDXifJRwAAAABJRU5ErkJggg=="> Lås upp';
+    } else {
+      event.target.innerHTML = '<img class="lock-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAgVBMVEUAAAAAAAADAwMFBQUAAAAAAAD8/PwEBARiYmL39/cvLy////8AAAD4+Pjp6emvr6+Ojo79/f3o6OgAAAD////z8/P39/fk5ORkZGTCwsJycnLGxsb+/v77+/v7+/v7+/v5+fn29vb09PTt7e3t7e3g4OCoqKi6urrBwcG4uLj///8c+D2hAAAAKnRSTlMPABQYHRv0JRQTEQQ3IBwbGfiLKyTZxpxEPyIS/PDq5uDd0b28c2RcV0uaguLjAAAAu0lEQVQY0z2Q1xKDIBAATw4FQtTErum9/P8H5kp0X/DWZYY5SARjnXPW6CAOaQQA+oGzswgzaNVxo0jLzqhapCGnF8cu60a9noBW0/n+vJ0mLUGz93Goh+tHQ+3M6+LQuvTf6dEf+qqqHqCsJN9+mT2KUZdm4rJU3YYPq93W0jeZnXRtxrTckYkcYr1mauQsQhI8gMGUQQPgA++gILngC9lLLMpFlUVkR4S89PQqX+Zh3imlIW+aJg9Rph/UqQne+6rr8AAAAABJRU5ErkJggg=="> Lås ner';
+    }
+
+    eggup.gateway = !eggup.gateway;
 
     return false;
   };
@@ -1018,23 +1050,25 @@ document.addEventListener('DOMContentLoaded', function() {
   let pressTimer;
 
   document.onmousedown = (event) => {
-    if (event.which == 1) { /** Only trigger on left clicks */
-      if (eggup.module == 'order' || eggup.module == 'review') {
-        clearTimeout(pressTimer);
+    if (event.which == 1 /** Only trigger on left clicks */
+      && (eggup.module == 'order' || eggup.module == 'review')
+      && eggup.gateway == true) {
+      clearTimeout(pressTimer);
 
-        pressTimer = window.setTimeout(function() {
-          const popup = document.querySelector('.initiate');
+      pressTimer = window.setTimeout(function() {
+        const overlay = document.querySelector('.overlay');
+        const popup = document.querySelector('.initiate');
 
-          if (!popup.classList.contains('initiate__open')) {
-            popup.classList.add('initiate__open');
-            if (document.querySelector('.background')) document.querySelector('.background').pause();
-          }
+        if (!popup.classList.contains('initiate__open')) {
+          overlay.classList.add('overlay__open');
+          popup.classList.add('initiate__open');
+          if (document.querySelector('.background')) document.querySelector('.background').pause();
+        }
 
-          history.replaceState('', document.title, window.location.pathname + '#start');
+        history.replaceState('', document.title, window.location.pathname + '#start');
 
-          return false;
-        }, 1000);
-      }
+        return false;
+      }, 1000);
     }
   };
 
