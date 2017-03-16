@@ -400,16 +400,17 @@ Eggup.prototype.map = function(node) {
 Eggup.prototype.start = function(soft = 270, hard = 240) {
   let timer = soft + hard,
     countdown = new Countdown(timer),
-    split = Countdown.parse(timer);
+    time = Countdown.parse(timer);
 
-  format(split.minutes, split.seconds);
+  Countdown.format(time.minutes, time.seconds);
 
   /** Static background for progress bars */
-  const barwidth = document.querySelector('.progress-bar__v1').offsetWidth;
-  document.querySelector('.progress-bar__background_1').style.width = `${barwidth}px`;
-  document.querySelector('.progress-bar__background_2').style.width = `${barwidth}px`;
+  const barwidth = document.querySelector('.progress-bar__v1').offsetWidth,
+    barheight = document.querySelector('.progress-bar__v1').offsetHeight;
+  document.querySelector('.progress-bar__variant_1').style.backgroundSize = `${barwidth}px ${barheight}px`;
+  document.querySelector('.progress-bar__variant_2').style.backgroundSize = `${barwidth}px ${barheight}px`;
 
-  countdown.onTick(format).onTick(checkCompletion).start(soft, hard);
+  countdown.onTick(Countdown.format).start(soft, hard);
 };
 
 
@@ -433,21 +434,14 @@ Eggup.prototype.notify = function(sound = null) {
   this.duration defines for how long the countdown should run
   this.granularity defines how often the countdown should tick
   this.function appends functions to be run every tick
-  this.running indicates whether the countdown is already running
 */
 function Countdown(duration, granularity) {
   this.duration = duration;
   this.granularity = granularity || 1000;
   this.functions = [];
-  this.running = false;
 }
 
 Countdown.prototype.start = function(soft, hard) {
-  if (this.running) {
-    return false;
-  }
-
-  this.running = true;
   let start = Date.now(),
     instance = this,
     difference, object;
@@ -457,10 +451,10 @@ Countdown.prototype.start = function(soft, hard) {
     let date = Date.now();
 
     if (difference > 0) {
-      setTimeout(timer, (instance.granularity - 1) - (date % (instance.granularity - 1)))
+      setTimeout(timer, (instance.granularity - 1) - (date % (instance.granularity - 1)));
     } else {
-      difference = 0
-      instance.running = false
+      difference = 0;
+      eggup.load('docket');
     }
 
     let soft_bar = ((soft - (difference - hard)) / soft) * 100,
@@ -473,7 +467,7 @@ Countdown.prototype.start = function(soft, hard) {
       document.querySelector('.progress-bar__text_1').textContent =  `Löskokta: ${soft_percent}%`;
     } else {
       document.querySelector('.progress-bar__variant_1').style.width = `100%`;
-      document.querySelector('.progress-bar__background_1').style.background = `#0ee573`;
+      document.querySelector('.progress-bar__variant_1').style.background = `#0ee573`;
       document.querySelector('.progress-bar__text_1').textContent = `Färdiga`;
     }
 
@@ -482,27 +476,24 @@ Countdown.prototype.start = function(soft, hard) {
       document.querySelector('.progress-bar__text_2').textContent =  `Hårdkokta: ${hard_percent}%`;
     } else {
       document.querySelector('.progress-bar__variant_2').style.width = `100%`;
-      document.querySelector('.progress-bar__background_2').style.background = `#0ee573`;
+      document.querySelector('.progress-bar__variant_2').style.background = `#0ee573`;
       document.querySelector('.progress-bar__text_2').textContent = `Färdiga`;
     }
 
-    object = Countdown.parse(difference)
-    instance.functions.forEach(function(ftn) {
-      ftn.call(this, difference, object.minutes, object.seconds)
-    }, instance)
-  }())
+    time = Countdown.parse(difference);
+
+    instance.functions.forEach(function(functions) {
+      functions.call(this, difference, time.minutes, time.seconds)
+    }, instance);
+  }());
 }
 
-Countdown.prototype.onTick = function(ftn) {
-  if (typeof ftn === 'function') {
-    this.functions.push(ftn)
+Countdown.prototype.onTick = function(functions) {
+  if (typeof functions === 'function') {
+    this.functions.push(functions)
   }
 
   return this;
-}
-
-Countdown.prototype.expired = function() {
-  return !this.running;
 }
 
 Countdown.parse = function(seconds) {
@@ -512,17 +503,12 @@ Countdown.parse = function(seconds) {
   }
 }
 
-function checkCompletion(difference) {
-  if (difference <= 0) {
-    eggup.load('docket');
-  }
-}
-
-function format(diff, minutes, seconds) {
+Countdown.format = function(difference, minutes, seconds) {
   const cooking_countdown = document.querySelector('.cooking-text__countdown');
 
   minutes = minutes < 10 ? "0" + minutes : minutes;
   seconds = seconds < 10 ? "0" + seconds : seconds;
+
   cooking_countdown.textContent = `${minutes}:${seconds}`;
 }
 
@@ -988,6 +974,8 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.querySelector('.lock-button').onclick = (event) => {
+    eggup.notify('start');
+
     if (eggup.thread.gateway == true) {
       event.target.innerHTML = '<img class="lock-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAeFBMVEUAAAAAAAAEBAQDAwMEBAQAAACXl5diYmLk5OQvLy////8AAAAAAAD4+Pj4+Pjp6en9/f36+vr////6+vr39/fu7u7x8fHt7e319fXx8fHh4eHl5eWmpqarq6uqqqqkpKSjo6O2trZHR0f////4+PjKysoAAAD///922e8XAAAAJ3RSTlMPABgTHCUZFBIRBAQ34yAc9fMk6NzIx8O3taufZ1tLOy8cGRXVhy9wMUj8AAAAvklEQVQY00XQ1xbCIBAE0KUjmGpNb2r+/w9lF4zzNjdDDgdgGC+kUkoKT42MhwoA4QNP5iWHX7j0ZLSh0BZNEP1RMPDx4Pwsn3M87iGu1ub6vjZrXEKcTZf+01+mOIw7MWaDHLIxlvTjbs9e2d6leqL5fcfcOUmyB9kjmSa7kd3QgliytqyqqmzRgjiNps4YhaYdMGsABJcYLgCMxTcoAh4xBUNzhT5IFw4tZMsXE25llnzDSsaczeu6zq2j9gU0PQpDXifJRwAAAABJRU5ErkJggg=="> Lås upp';
       event.target.style.backgroundImage = 'linear-gradient(-180deg, rgb(232, 189, 68), rgb(222, 168, 48))';
