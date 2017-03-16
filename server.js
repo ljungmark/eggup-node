@@ -105,7 +105,8 @@ app.post('/synchronize', (request, response) => {
       'variant': 0,
       'tokenstamp': null,
       'heap_1': 0,
-      'heap_2': 0
+      'heap_2': 0,
+      'gateway': true
     }
 
   let sql = 'SELECT startdate FROM cookings WHERE DATE(startdate) = ?',
@@ -157,8 +158,18 @@ app.post('/synchronize', (request, response) => {
           }
         }
 
-        response.send(JSON.stringify(model));
-      })
+        sql = 'SELECT lockdate FROM cookings WHERE DATE(startdate) = ?',
+          values = [date];
+        sql = mysql.format(sql, values);
+
+        pool.query(sql, function (error, results, fields) {
+          if (results.length) {
+            model.gateway = false;
+          }
+
+          response.send(JSON.stringify(model));
+        });
+      });
     });
   });
 });

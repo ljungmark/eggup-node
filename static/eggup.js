@@ -169,7 +169,8 @@ const Eggup = function() {
       'variant': null,
       'quantity': null,
       'heap_1': 0,
-      'heap_2': 0
+      'heap_2': 0,
+      'gateway': true
     };
 
     localStorage.setItem('thread', JSON.stringify(thread));
@@ -192,12 +193,6 @@ const Eggup = function() {
     Will prevent race condition between module transitions
   */
   instance.input_threshold = true;
-
-
-  /**
-    instance.gateway: Current connection for managing orders
-  */
-  instance.gateway = true;
 
 
   /**
@@ -233,12 +228,13 @@ Eggup.prototype.synchronize = function() {
         eggup.thread.quantity = json.quantity;
         eggup.thread.heap_1 = json.heap_1;
         eggup.thread.heap_2 = json.heap_2;
+        eggup.thread.gateway = json.gateway;
         localStorage.setItem('thread', JSON.stringify(eggup.thread));
 
         if (json.quantity == 0) {
           instance.load('order');
         } else {
-          document.querySelector('.review-text__order').innerHTML = eggup.cache['quantity'] + ' ' + eggup.cache['variant'].toLowerCase();
+          document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
 
           document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
           document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
@@ -527,7 +523,7 @@ function format(diff, minutes, seconds) {
 
   minutes = minutes < 10 ? "0" + minutes : minutes;
   seconds = seconds < 10 ? "0" + seconds : seconds;
-  cooking_countdown.textContent = minutes + ':' + seconds;
+  cooking_countdown.textContent = `${minutes}:${seconds}`;
 }
 
 
@@ -872,7 +868,7 @@ document.addEventListener('DOMContentLoaded', function() {
     set_request.then((response) => {
       if (response['status'] == true) {
 
-        document.querySelector('.review-text__order').innerHTML = eggup.cache['quantity'] + ' ' + eggup.cache['variant'].toLowerCase();
+        document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
 
         eggup.thread.tokenstamp = get_date();
         eggup.thread.variant = eggup.cache['variant'];
@@ -992,13 +988,18 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.querySelector('.lock-button').onclick = (event) => {
-    if (eggup.gateway == true) {
+    if (eggup.thread.gateway == true) {
       event.target.innerHTML = '<img class="lock-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAeFBMVEUAAAAAAAAEBAQDAwMEBAQAAACXl5diYmLk5OQvLy////8AAAAAAAD4+Pj4+Pjp6en9/f36+vr////6+vr39/fu7u7x8fHt7e319fXx8fHh4eHl5eWmpqarq6uqqqqkpKSjo6O2trZHR0f////4+PjKysoAAAD///922e8XAAAAJ3RSTlMPABgTHCUZFBIRBAQ34yAc9fMk6NzIx8O3taufZ1tLOy8cGRXVhy9wMUj8AAAAvklEQVQY00XQ1xbCIBAE0KUjmGpNb2r+/w9lF4zzNjdDDgdgGC+kUkoKT42MhwoA4QNP5iWHX7j0ZLSh0BZNEP1RMPDx4Pwsn3M87iGu1ub6vjZrXEKcTZf+01+mOIw7MWaDHLIxlvTjbs9e2d6leqL5fcfcOUmyB9kjmSa7kd3QgliytqyqqmzRgjiNps4YhaYdMGsABJcYLgCMxTcoAh4xBUNzhT5IFw4tZMsXE25llnzDSsaczeu6zq2j9gU0PQpDXifJRwAAAABJRU5ErkJggg=="> Lås upp';
+      event.target.style.backgroundImage = 'linear-gradient(-180deg, rgb(232, 189, 68), rgb(222, 168, 48))';
     } else {
       event.target.innerHTML = '<img class="lock-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAgVBMVEUAAAAAAAADAwMFBQUAAAAAAAD8/PwEBARiYmL39/cvLy////8AAAD4+Pjp6emvr6+Ojo79/f3o6OgAAAD////z8/P39/fk5ORkZGTCwsJycnLGxsb+/v77+/v7+/v7+/v5+fn29vb09PTt7e3t7e3g4OCoqKi6urrBwcG4uLj///8c+D2hAAAAKnRSTlMPABQYHRv0JRQTEQQ3IBwbGfiLKyTZxpxEPyIS/PDq5uDd0b28c2RcV0uaguLjAAAAu0lEQVQY0z2Q1xKDIBAATw4FQtTErum9/P8H5kp0X/DWZYY5SARjnXPW6CAOaQQA+oGzswgzaNVxo0jLzqhapCGnF8cu60a9noBW0/n+vJ0mLUGz93Goh+tHQ+3M6+LQuvTf6dEf+qqqHqCsJN9+mT2KUZdm4rJU3YYPq93W0jeZnXRtxrTckYkcYr1mauQsQhI8gMGUQQPgA++gILngC9lLLMpFlUVkR4S89PQqX+Zh3imlIW+aJg9Rph/UqQne+6rr8AAAAABJRU5ErkJggg=="> Lås ner';
+      event.target.style.backgroundImage = 'linear-gradient(-180deg, #44b1e8, #3098de)';
     }
 
-    eggup.gateway = !eggup.gateway;
+    let thread = JSON.parse(localStorage.getItem('thread'));
+    eggup.thread.gateway = !eggup.thread.gateway;
+    thread.gateway = eggup.thread.gateway;
+    localStorage.setItem('thread', JSON.stringify(thread));
 
     return false;
   };
@@ -1013,12 +1014,20 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   /**
-    Watch changes in the thread and update the DOM accordingly
+    Watch changes in the thread's heaps and update the DOM accordingly
   */
-  watch(eggup, 'thread', function(){
+  watch(eggup.thread, ['heap_1', 'heap_2'], function(){
+    console.log('heap watcher');
     document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
     document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
     document.querySelector('.review-text__heap_2').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_2'] + (JSON.parse(localStorage.getItem('thread'))['heap_2'] == 1 ? ' hårdkokt' : ' hårdkokta');
+  });
+
+  /**
+    Watch hanges in the thread's gateway settings and update the DOM accordingly
+  */
+  watch(eggup.thread, ['gateway'], function(){
+    console.log('gateway watcher');
   });
 
   /**
@@ -1052,7 +1061,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.onmousedown = (event) => {
     if (event.which == 1 /** Only trigger on left clicks */
       && (eggup.module == 'order' || eggup.module == 'review')
-      && eggup.gateway == true) {
+      && eggup.thread.gateway == true) {
       clearTimeout(pressTimer);
 
       pressTimer = window.setTimeout(function() {
