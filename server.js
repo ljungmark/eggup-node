@@ -387,6 +387,75 @@ app.post('/delete', (request, response) => {
 });
 
 
+/**
+  Lock down app from receiveing more
+
+  Example
+  {
+    'token': false,
+  }
+*/
+app.post('/lock', (request, response) => {
+  const date = get_date(),
+    token = request.body.token,
+    state = request.body.state;
+
+  const model = {
+    'status': false,
+    'data': null
+  }
+
+  /**
+    Check if token exists in database
+  */
+  let is_token_valid = new Promise(function(resolve, reject) {
+    let sql = 'SELECT token FROM tokens WHERE token = ?';
+    sql = mysql.format(sql, token);
+
+    pool.query(sql, function (error, results, fields) {
+      if (!results.length) {
+        reject();
+      } else {
+        resolve();
+      }
+    });
+  }).then(function(valid) {
+    /**
+      The token exists, lock the app
+    */
+    let lock_the_app = new Promise(function(resolve, reject) {
+      if (state === 'true') {
+        sql = 'INSERT INTO cookings (token) VALUES (?)';
+        sql = mysql.format(sql, token);
+      } else {
+        sql = 'DELETE FROM cookings WHERE DATE(lockdate) = ?';
+        sql = mysql.format(sql, date);
+      }
+
+      pool.query(sql, function (error, results, fields) {
+        if (error) reject();
+
+        if (results.affectedRows > 0) {
+          model.status = true;
+
+          resolve();
+        } else {
+          reject();
+        }
+      });
+    }).then(function(exists) {
+      response.send(JSON.stringify(model));
+    }).catch(function() {
+      response.send(JSON.stringify(model));
+    });
+  }).catch(function() {
+    model.data = 'token not found';
+
+    response.send(JSON.stringify(model));
+  });
+});
+
+
 app.listen(1337, function() {
   console.log('Eggup is running');
 });
