@@ -983,7 +983,7 @@ document.addEventListener('DOMContentLoaded', function() {
       timer2_tot = ((timer2_min * 60) + timer2_sec) - timer1_tot,
       timers_tot = timer1_tot + timer2_tot;
 
-      if (timer2_tot < 0) {
+      if (timer2_tot < 0 || !(/([0][0-9]:[0-5][0-9])/.test(timer1)) || !(/([0][0-9]:[0-5][0-9])/.test(timer2))) {
         reject();
       } else {
         resolve();
@@ -1071,6 +1071,14 @@ document.addEventListener('DOMContentLoaded', function() {
     Watch hanges in the thread's gateway settings and update the DOM accordingly
   */
   watch(eggup.thread, ['gateway'], function(){
+    if (eggup.module == 'order') eggup.load('review');
+
+
+    if (eggup.thread.gateway == false) {
+      console.log('gateway is closed');
+    } else {
+      console.log('gateway is open');
+    }
   });
 
   /**
