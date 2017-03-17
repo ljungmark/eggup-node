@@ -346,8 +346,14 @@ Eggup.prototype.load = function(target_module) {
   Eggup.prototype.error: Visual feedback to indicate an error in the application
 */
 Eggup.prototype.error = function() {
-  const instance = this,
+  const instance = this;
+  let current_module;
+
+  if (document.querySelector('.initiate__open')) {
+    current_module = document.querySelector('.initiate');
+  } else {
     current_module = document.querySelector('.application');
+  }
 
   /** Abort any ongoing animation */
   if (current_module.classList.contains('application--error')) {
@@ -806,8 +812,11 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.querySelectorAll('.start-input').forEach((element) => element.onkeyup = (event) => {
-    /** Add : after HH */
-    if (event.target.value.length === 2) event.target.value = `${event.target.value}:`;
+
+    /** Repalce HHMM with HH:MM */
+    if (event.target.value.length === 4 && event.target.value.charAt(2) !== ':') {
+      if (event.target.value.substr(0,2).indexOf(':') == -1) event.target.value = `${event.target.value.substr(0,2)}:${event.target.value.substr(2,2)}`;
+    }
 
     /** Repalce HHXMM with HH:MM */
     if (event.target.value.length === 5 && event.target.value.charAt(2) !== ':') {
@@ -974,9 +983,6 @@ document.addEventListener('DOMContentLoaded', function() {
       timer2_tot = ((timer2_min * 60) + timer2_sec) - timer1_tot,
       timers_tot = timer1_tot + timer2_tot;
 
-
-      console.log('sat', timer1_tot, timer2_tot);
-
       if (timer2_tot < 0) {
         reject();
       } else {
@@ -987,8 +993,6 @@ document.addEventListener('DOMContentLoaded', function() {
     init_request.then((response) => {
       const overlay = document.querySelector('.overlay'),
         popup = document.querySelector('.initiate');
-      console.log(timer1_tot, timer2_tot);
-
 
       if (popup.classList.contains('initiate__open')) {
         overlay.classList.remove('overlay__open');
@@ -1006,7 +1010,10 @@ document.addEventListener('DOMContentLoaded', function() {
         initiate_button.disabled = false;
       }, 500);
     }).catch((response) => {
-      console.log('oh noes');
+      eggup.error();
+
+      initiate_button.classList.remove('process');
+      initiate_button.disabled = false;
     });
 
     return false;
@@ -1064,7 +1071,6 @@ document.addEventListener('DOMContentLoaded', function() {
     Watch hanges in the thread's gateway settings and update the DOM accordingly
   */
   watch(eggup.thread, ['gateway'], function(){
-    console.log('gateway watcher');
   });
 
   /**

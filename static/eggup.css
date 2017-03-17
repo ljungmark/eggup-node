@@ -165,14 +165,21 @@ h2 {
 .start-input {
   background: transparent;
   border: 0;
+  border-radius: 6px;
   color: #21272c;
   font-family: 'Roboto Mono', monospace;
   font-size: 50px;
   font-weight: bold;
   outline: 0;
-  padding: 10px 0 20px;
+  padding: 10px 0 6px;
   text-align: center;
+  transition: background-color 300ms linear;
   width: 100%;
+}
+
+.application--error .start-input {
+  background: #e74242;
+  transition: background-color 100ms linear;
 }
 
 
@@ -556,6 +563,10 @@ h2 {
 .review-button,
 .initiate-button {
   background-image: linear-gradient(-180deg, #44b1e8, #3098de);
+}
+
+.initiate-button {
+  margin-top: 15px;
 }
 
 .lock-button:not(.locked) {
