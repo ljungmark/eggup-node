@@ -563,7 +563,7 @@ h2 {
 }
 
 .lock-button.locked {
-  background-image: linear-gradient(-180deg, #44e858, #6bde30);
+  background-image: repeating-linear-gradient(135deg, #e84444, #e84444 15px, #de3030 15px, #de3030 30px);
 }
 
 .button:hover {
@@ -581,7 +581,7 @@ h2 {
 }
 
 .lock-button.locked:active {
-  background-image: linear-gradient(180deg, #32c336, #30be27);
+  background-image: linear-gradient(180deg, #c33232, #be2727);
 }
 
 @-webkit-keyframes process {
