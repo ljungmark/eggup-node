@@ -1035,9 +1035,15 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.querySelector('.close-start').onclick = () => {
-    document.querySelector('.wrapper').classList.remove('wrapper__open');
-    document.querySelector('.overlay').classList.remove('overlay__open');
-    document.querySelector('.initiate').classList.remove('initiate__open');
+    document.querySelector('.initiate').classList.add('initiate__closing');
+
+    document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
+      e.target.removeEventListener(e.type, arguments.callee)
+      document.querySelector('.wrapper').classList.remove('wrapper__open');
+      document.querySelector('.overlay').classList.remove('overlay__open');
+      document.querySelector('.initiate').classList.remove('initiate__closing');
+      document.querySelector('.initiate').classList.remove('initiate__open');
+    });
 
     if (document.querySelector('.background')) document.querySelector('.background').play();
 
