@@ -104,6 +104,7 @@ app.post('/synchronize', (request, response) => {
       'quantity': 0,
       'variant': 0,
       'tokenstamp': null,
+      'head': null,
       'heap_1': 0,
       'heap_2': 0,
       'gateway': true
@@ -158,12 +159,13 @@ app.post('/synchronize', (request, response) => {
           }
         }
 
-        sql = 'SELECT lockdate FROM cookings WHERE DATE(startdate) = ?',
+        sql = 'SELECT token, lockdate FROM cookings WHERE DATE(lockdate) = ?',
           values = [date];
         sql = mysql.format(sql, values);
 
         pool.query(sql, function (error, results, fields) {
           if (results.length) {
+            model.head = results[0].token;
             model.gateway = false;
           }
 

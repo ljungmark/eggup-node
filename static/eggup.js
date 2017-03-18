@@ -226,6 +226,7 @@ Eggup.prototype.synchronize = function() {
         eggup.thread.tokenstamp = json.tokenstamp;
         eggup.thread.variant = json.variant;
         eggup.thread.quantity = json.quantity;
+        eggup.thread.head = json.head;
         eggup.thread.heap_1 = json.heap_1;
         eggup.thread.heap_2 = json.heap_2;
         eggup.thread.gateway = json.gateway;
@@ -264,20 +265,29 @@ Eggup.prototype.load = function(target_module) {
   const current_module = instance.module;
 
 
-  if (window.location.hash == '#start'
-    && current_module == 'init'
-    && (target_module == 'order'
-      || target_module == 'review')) {
-    const wrapper = document.querySelector('.wrapper');
-    const overlay = document.querySelector('.overlay');
-    const popup = document.querySelector('.initiate');
+  /**
+    Open popup if the URL contains #start and the application has an open gateway
+    or if the user is the author of the closed gate.
 
-    if (!popup.classList.contains('initiate__open')) {
-      wrapper.classList.add('wrapper__open');
-      overlay.classList.add('overlay__open');
-      popup.classList.add('initiate__open');
+    Otherwise, remove the #start from the URL
+  */
+  if (window.location.hash == '#start') {
+    if (current_module == 'init'
+      && (target_module == 'order' || target_module == 'review')
+      && (eggup.thread.gateway == true || eggup.thread.head == JSON.parse(localStorage.getItem('token')))) {
+      const wrapper = document.querySelector('.wrapper');
+      const overlay = document.querySelector('.overlay');
+      const popup = document.querySelector('.initiate');
 
-      if (document.querySelector('.background')) document.querySelector('.background').pause();
+      if (!popup.classList.contains('initiate__open')) {
+        wrapper.classList.add('wrapper__open');
+        overlay.classList.add('overlay__open');
+        popup.classList.add('initiate__open');
+
+        if (document.querySelector('.background')) document.querySelector('.background').pause();
+      }
+    } else {
+      history.replaceState('', document.title, window.location.pathname);
     }
   }
 
@@ -1144,7 +1154,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.onmousedown = (event) => {
     if (event.which == 1 /** Only trigger on left clicks */
       && (eggup.module == 'order' || eggup.module == 'review')
-      && eggup.thread.gateway == true) {
+      && (eggup.thread.gateway == true || eggup.thread.head == JSON.parse(localStorage.getItem('token')))) {
       clearTimeout(persistency);
 
       persistency = window.setTimeout(function() {
