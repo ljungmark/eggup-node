@@ -85,7 +85,7 @@ h2 {
 }
 
 .overlay {
-  background: radial-gradient(ellipse farthest-corner at center bottom, #ea6b6b, #a42e5a);
+  background: rgba(0, 0, 0, 0.5);
   bottom: 0;
   left: 0;
   opacity: 0;
@@ -984,6 +984,10 @@ h2 {
     transform-origin: center;
   }
 
+  .wrapper__open {
+    filter: blur(3px);
+  }
+
   .initiate {
     border-bottom: 3px solid #c3c3c3;
     border-radius: 4px;
@@ -994,18 +998,28 @@ h2 {
     opacity: 0;
     position: fixed;
     right: initial;
-    top: calc(50% + 10px);
+    top: 50%;
     transform: translate(-50%, -50%);
-    transition: top 250ms, opacity 200ms, max-height 1ms 225ms, padding 1ms 225ms; /** Delay max-height & padding animations with 225ms */
   }
 
   .initiate__open {
+    animation-duration: 0.3s;
+    animation-name: initiate-popup;
     max-height: 600px;
     max-width: 400px;
     opacity: 1;
-    top: 50%;
     transform: translate(-50%, -50%);
-    transition: top 250ms, opacity 200ms;
+  }
+
+  @keyframes initiate-popup {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translate(-50%, -50%);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translate(-50%, -50%);
+    }
   }
 
   @-webkit-keyframes party {

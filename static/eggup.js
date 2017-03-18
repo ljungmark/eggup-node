@@ -268,10 +268,12 @@ Eggup.prototype.load = function(target_module) {
     && current_module == 'init'
     && (target_module == 'order'
       || target_module == 'review')) {
+    const wrapper = document.querySelector('.wrapper');
     const overlay = document.querySelector('.overlay');
     const popup = document.querySelector('.initiate');
 
     if (!popup.classList.contains('initiate__open')) {
+      wrapper.classList.add('wrapper__open');
       overlay.classList.add('overlay__open');
       popup.classList.add('initiate__open');
 
@@ -992,10 +994,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     init_request.then((response) => {
-      const overlay = document.querySelector('.overlay'),
+      const wrapper = document.querySelector('.wrapper'),
+        overlay = document.querySelector('.overlay'),
         popup = document.querySelector('.initiate');
 
       if (popup.classList.contains('initiate__open')) {
+        wrapper.classList.remove('wrapper__open');
         overlay.classList.remove('overlay__open');
         popup.classList.remove('initiate__open');
         if (document.querySelector('.background')) document.querySelector('.background').play();
@@ -1021,6 +1025,7 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.querySelector('.close-start').onclick = () => {
+    document.querySelector('.wrapper').classList.remove('wrapper__open');
     document.querySelector('.overlay').classList.remove('overlay__open');
     document.querySelector('.initiate').classList.remove('initiate__open');
 
@@ -1143,10 +1148,12 @@ document.addEventListener('DOMContentLoaded', function() {
       clearTimeout(persistency);
 
       persistency = window.setTimeout(function() {
+        const wrapper = document.querySelector('.wrapper');
         const overlay = document.querySelector('.overlay');
         const popup = document.querySelector('.initiate');
 
         if (!popup.classList.contains('initiate__open')) {
+          wrapper.classList.add('wrapper__open');
           overlay.classList.add('overlay__open');
           popup.classList.add('initiate__open');
           if (document.querySelector('.background')) document.querySelector('.background').pause();
