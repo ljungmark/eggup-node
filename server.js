@@ -2,7 +2,9 @@
 const path = require('path'),
   express = require('express'),
   bodyParser = require('body-parser'),
-  app = express();
+  app = express(),
+  http = require('http').Server(app),
+  io = require('socket.io')(http);
 
   /**
     Map static resources
@@ -458,6 +460,6 @@ app.post('/lock', (request, response) => {
 });
 
 
-app.listen(1337, function() {
+http.listen(1337, function() {
   console.log('Eggup is running');
 });
