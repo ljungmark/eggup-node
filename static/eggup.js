@@ -1086,9 +1086,9 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
     if (eggup.thread.gateway == true) {
-      event.target.innerHTML = '<img class="lock-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAeFBMVEUAAAAAAAAEBAQDAwMEBAQAAACXl5diYmLk5OQvLy////8AAAAAAAD4+Pj4+Pjp6en9/f36+vr////6+vr39/fu7u7x8fHt7e319fXx8fHh4eHl5eWmpqarq6uqqqqkpKSjo6O2trZHR0f////4+PjKysoAAAD///922e8XAAAAJ3RSTlMPABgTHCUZFBIRBAQ34yAc9fMk6NzIx8O3taufZ1tLOy8cGRXVhy9wMUj8AAAAvklEQVQY00XQ1xbCIBAE0KUjmGpNb2r+/w9lF4zzNjdDDgdgGC+kUkoKT42MhwoA4QNP5iWHX7j0ZLSh0BZNEP1RMPDx4Pwsn3M87iGu1ub6vjZrXEKcTZf+01+mOIw7MWaDHLIxlvTjbs9e2d6leqL5fcfcOUmyB9kjmSa7kd3QgliytqyqqmzRgjiNps4YhaYdMGsABJcYLgCMxTcoAh4xBUNzhT5IFw4tZMsXE25llnzDSsaczeu6zq2j9gU0PQpDXifJRwAAAABJRU5ErkJggg=="> Lås upp';
+      event.target.innerHTML = 'Tillåt fler beställningar';
     } else {
-      event.target.innerHTML = '<img class="lock-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAgVBMVEUAAAAAAAADAwMFBQUAAAAAAAD8/PwEBARiYmL39/cvLy////8AAAD4+Pjp6emvr6+Ojo79/f3o6OgAAAD////z8/P39/fk5ORkZGTCwsJycnLGxsb+/v77+/v7+/v7+/v5+fn29vb09PTt7e3t7e3g4OCoqKi6urrBwcG4uLj///8c+D2hAAAAKnRSTlMPABQYHRv0JRQTEQQ3IBwbGfiLKyTZxpxEPyIS/PDq5uDd0b28c2RcV0uaguLjAAAAu0lEQVQY0z2Q1xKDIBAATw4FQtTErum9/P8H5kp0X/DWZYY5SARjnXPW6CAOaQQA+oGzswgzaNVxo0jLzqhapCGnF8cu60a9noBW0/n+vJ0mLUGz93Goh+tHQ+3M6+LQuvTf6dEf+qqqHqCsJN9+mT2KUZdm4rJU3YYPq93W0jeZnXRtxrTckYkcYr1mauQsQhI8gMGUQQPgA++gILngC9lLLMpFlUVkR4S89PQqX+Zh3imlIW+aJg9Rph/UqQne+6rr8AAAAABJRU5ErkJggg=="> Lås ner';
+      event.target.innerHTML = 'Ta inte emot fler beställningar';
     }
 
     return false;

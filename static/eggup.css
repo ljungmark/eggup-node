@@ -151,8 +151,17 @@ h2 {
   float: right;
 }
 
+.lockdown {
+  background:
+    linear-gradient(to right, #f8f8f8 0, transparent 6px) left repeat-y,
+    linear-gradient(to left, #f8f8f8 0, transparent 6px) right repeat-y,
+    linear-gradient(to top, #f8f8f8 0, transparent 6px) bottom repeat-x,
+    repeating-linear-gradient(135deg, rgb(248, 248, 248), rgb(248, 248, 248) 15px, rgba(255, 0, 0, 0.05) 15px, rgba(255, 0, 0, 0.05) 30px);
+  border-radius: 16px;
+}
+
 .initiate-tip {
-  color: grey;
+  color: #d63737;
   display: block;
   font-size: 12px;
   font-style: italic;
@@ -160,6 +169,7 @@ h2 {
   margin-top: 2px;
   max-width: 400px;
   padding: 10px;
+  text-shadow: 0 1px 0px rgba(0, 0, 0, 0.2);
 }
 
 .start-container {
@@ -578,7 +588,7 @@ h2 {
 }
 
 .lock-button:not(.locked) {
-  background-image: linear-gradient(-180deg, #e84444, #de3030);
+  background-image: repeating-linear-gradient(135deg, rgba(232, 68, 68, 0.75), rgba(232, 68, 68, 0.75) 15px, rgba(222, 48, 48, 0.75) 15px, rgba(222, 48, 48, 0.75) 30px);
 }
 
 .lock-button.locked {
@@ -596,11 +606,11 @@ h2 {
 }
 
 .lock-button:not(.locked):active {
-  background-image: linear-gradient(180deg, #c33232, #be2727);
+  background-image: repeating-linear-gradient(135deg, #e84444, #e84444 15px, #de3030 15px, #de3030 30px);
 }
 
 .lock-button.locked:active {
-  background-image: linear-gradient(180deg, #c33232, #be2727);
+  background-image: repeating-linear-gradient(135deg, rgba(232, 68, 68, 0.75), rgba(232, 68, 68, 0.75) 15px, rgba(222, 48, 48, 0.75) 15px, rgba(222, 48, 48, 0.75) 30px);
 }
 
 @-webkit-keyframes process {
