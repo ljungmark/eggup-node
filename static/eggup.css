@@ -746,6 +746,7 @@ h2 {
 }
 
 .albin {
+  display: none;
   left: 50%;
   position: absolute;
   top: 50%;
@@ -766,7 +767,7 @@ h2 {
   Modifiers and heavier animations to already existing elements
   Only utilized on machines with more computional power
 */
-@media only screen and (min-width: 960px){
+@media only screen and (min-width: 960px) {
   .application {
     border-bottom: 3px solid #c3c3c3;
     border-radius: 6px;
@@ -1291,5 +1292,14 @@ h2 {
     animation: partycontainer 0.5s infinite;
     animation-timing-function: ease-in-out;
     transform-origin: -25% -25%;
+  }
+}
+
+/**
+  Display .albin if the screen have enough height
+*/
+@media only screen and (min-height: 960px) {
+  .albin {
+    display: block;
   }
 }
