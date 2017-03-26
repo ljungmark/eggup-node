@@ -1158,27 +1158,41 @@ document.addEventListener('DOMContentLoaded', function() {
   let persistency;
 
   document.onmousedown = (event) => {
-    if (event.which == 1 /** Only trigger on left clicks */
-      && (eggup.module == 'order' || eggup.module == 'review')
-      && (eggup.thread.gateway == true || eggup.thread.head == JSON.parse(localStorage.getItem('token')))) {
-      clearTimeout(persistency);
+    if (event.which == 1 && (eggup.module == 'order' || eggup.module == 'review')) { /** Only trigger on left clicks */
+      const token = JSON.parse(localStorage.getItem('token'));
 
-      persistency = window.setTimeout(function() {
-        const wrapper = document.querySelector('.wrapper');
-        const overlay = document.querySelector('.overlay');
-        const popup = document.querySelector('.initiate');
+      fetch('/amicontroller', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: serialize({ 'token': token })
+      }).then(function(response) {
+        return response.json().then(function(json) {
+          const status = json['status'];
 
-        if (!popup.classList.contains('initiate__open')) {
-          wrapper.classList.add('wrapper__open');
-          overlay.classList.add('overlay__open');
-          popup.classList.add('initiate__open');
-          if (document.querySelector('.background')) document.querySelector('.background').pause();
-        }
+          if (eggup.thread.gateway == true || status == true) {
+            clearTimeout(persistency);
 
-        history.replaceState('', document.title, window.location.pathname + '#start');
+            persistency = window.setTimeout(function() {
+              const wrapper = document.querySelector('.wrapper');
+              const overlay = document.querySelector('.overlay');
+              const popup = document.querySelector('.initiate');
 
-        return false;
-      }, 1000);
+              if (!popup.classList.contains('initiate__open')) {
+                wrapper.classList.add('wrapper__open');
+                overlay.classList.add('overlay__open');
+                popup.classList.add('initiate__open');
+                if (document.querySelector('.background')) document.querySelector('.background').pause();
+              }
+
+              history.replaceState('', document.title, window.location.pathname + '#start');
+
+              return false;
+            }, 1000);
+          }
+        });
+      });
     }
   };
 

@@ -460,6 +460,69 @@ app.post('/lock', (request, response) => {
 });
 
 
+/**
+  Is the user the controller?
+
+  Example
+  {
+    'amicontroller': false,
+  }
+*/
+app.post('/amicontroller', (request, response) => {
+  const date = get_date(),
+    token = request.body.token;
+
+  const model = {
+    'status': false,
+    'data': null
+  }
+
+  /**
+    Check if token exists in database
+  */
+  let is_token_valid = new Promise(function(resolve, reject) {
+    let sql = 'SELECT token FROM tokens WHERE token = ?';
+    sql = mysql.format(sql, token);
+
+    pool.query(sql, function (error, results, fields) {
+      if (!results.length) {
+        reject();
+      } else {
+        resolve();
+      }
+    });
+  }).then(function(valid) {
+    /**
+      The token exists, check if user has locked the app
+    */
+    let check = new Promise(function(resolve, reject) {
+      sql = 'SELECT token FROM cookings WHERE token = ? AND DATE(lockdate) = ?';
+      sql = mysql.format(sql, [token, date]);
+
+      pool.query(sql, function (error, results, fields) {
+        if (error) reject();
+
+        if (results.length > 0) {
+          if (token == results[0].token) model.status = true;
+
+          resolve();
+        } else {
+          reject();
+        }
+      });
+    }).then(function(exists) {
+      response.send(JSON.stringify(model));
+    }).catch(function() {
+      response.send(JSON.stringify(model));
+    });
+  }).catch(function() {
+    model.data = 'token not found';
+
+    response.send(JSON.stringify(model));
+  });
+});
+
+
 http.listen(1337, function() {
   console.log('Eggup is running');
 });
