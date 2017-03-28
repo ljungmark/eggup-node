@@ -1158,41 +1158,28 @@ document.addEventListener('DOMContentLoaded', function() {
   let persistency;
 
   document.onmousedown = (event) => {
-    if (event.which == 1 && (eggup.module == 'order' || eggup.module == 'review')) { /** Only trigger on left clicks */
-      const token = JSON.parse(localStorage.getItem('token'));
+    if (event.which == 1 /** Only trigger on left clicks */
+      && (eggup.module == 'order' || eggup.module == 'review')
+      && eggup.thread.gateway == true /** || controller == true */) {
 
-      fetch('/amicontroller', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: serialize({ 'token': token })
-      }).then(function(response) {
-        return response.json().then(function(json) {
-          const status = json['status'];
+      clearTimeout(persistency);
 
-          if (eggup.thread.gateway == true || status == true) {
-            clearTimeout(persistency);
+      persistency = window.setTimeout(function() {
+        const wrapper = document.querySelector('.wrapper');
+        const overlay = document.querySelector('.overlay');
+        const popup = document.querySelector('.initiate');
 
-            persistency = window.setTimeout(function() {
-              const wrapper = document.querySelector('.wrapper');
-              const overlay = document.querySelector('.overlay');
-              const popup = document.querySelector('.initiate');
+        if (!popup.classList.contains('initiate__open')) {
+          wrapper.classList.add('wrapper__open');
+          overlay.classList.add('overlay__open');
+          popup.classList.add('initiate__open');
+          if (document.querySelector('.background')) document.querySelector('.background').pause();
+        }
 
-              if (!popup.classList.contains('initiate__open')) {
-                wrapper.classList.add('wrapper__open');
-                overlay.classList.add('overlay__open');
-                popup.classList.add('initiate__open');
-                if (document.querySelector('.background')) document.querySelector('.background').pause();
-              }
+        history.replaceState('', document.title, window.location.pathname + '#start');
 
-              history.replaceState('', document.title, window.location.pathname + '#start');
-
-              return false;
-            }, 1000);
-          }
-        });
-      });
+        return false;
+      }, 1000);
     }
   };
 
