@@ -12,7 +12,8 @@ Eggup can listen to hotkeys to perform actions.
 The actions differ depending on the current module.
 
 
-Module: Order
+### Module: Order
+
 | Key combination  | Action               |
 | ---------------- |:--------------------:|
 | 1, 1 or 1, L     | Set to 1 soft-boiled |
