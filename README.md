@@ -21,3 +21,9 @@ The actions differ depending on the current module.
 | 2, 1 or 2, L     | Set to 2 soft-boiled |
 | 2, 2 or 2, H     | Set to 2 hard-boiled |
 | Space or Return  | Confirm/send order   |
+
+### Module: Review
+
+| Key combination  | Action       |
+| ---------------- |:------------:|
+| Backspace        | Revert order |
