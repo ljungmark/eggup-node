@@ -318,26 +318,26 @@ Eggup.prototype.load = function(target_module) {
   /** Decide animation direction and perform navigation */
   if (current_module_index < target_module_index) {
     current_module_element.classList.add('fade_out_to_left');
-    target_module_element.classList.remove('module--hidden');
+    target_module_element.classList.remove('_hidden');
     target_module_element.classList.add('fade_in_from_right');
 
     current_module_element.addEventListener('webkitAnimationEnd', function(e) {
       e.target.removeEventListener(e.type, arguments.callee)
       current_module_element.classList.remove('fade_out_to_left');
-      current_module_element.classList.add('module--hidden');
+      current_module_element.classList.add('_hidden');
       target_module_element.classList.remove('fade_in_from_right');
 
       instance.input_threshold = false;
     });
   } else {
     current_module_element.classList.add('fade_out_to_right');
-    target_module_element.classList.remove('module--hidden');
+    target_module_element.classList.remove('_hidden');
     target_module_element.classList.add('fade_in_from_left');
 
     current_module_element.addEventListener('webkitAnimationEnd', function(e) {
       e.target.removeEventListener(e.type, arguments.callee)
       current_module_element.classList.remove('fade_out_to_right');
-      current_module_element.classList.add('module--hidden');
+      current_module_element.classList.add('_hidden');
       target_module_element.classList.remove('fade_in_from_left');
 
       instance.input_threshold = false;
