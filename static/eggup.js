@@ -21,6 +21,12 @@
 
 
 /**
+  Web sockets
+*/
+var socket = io();
+
+
+/**
   HELPER FUNCTIONS
 */
 
@@ -226,7 +232,6 @@ Eggup.prototype.synchronize = function() {
         eggup.thread.tokenstamp = json.tokenstamp;
         eggup.thread.variant = json.variant;
         eggup.thread.quantity = json.quantity;
-        eggup.thread.head = json.head;
         eggup.thread.heap_1 = json.heap_1;
         eggup.thread.heap_2 = json.heap_2;
         eggup.thread.gateway = json.gateway;
@@ -243,6 +248,12 @@ Eggup.prototype.synchronize = function() {
 
           instance.load('review');
         }
+
+        if (json.gateway === false) {
+          document.querySelector('.review-button__cancel').textContent = 'Låst';
+          document.querySelector('.review-button__cancel').disabled = true;
+        }
+
       } else {
         instance.load(json['status']);
 
@@ -1113,7 +1124,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   /**
-    Watch hanges in the thread's gateway settings and update the DOM accordingly
+    Watch changes in the thread's gateway settings and update the DOM accordingly
   */
   watch(eggup.thread, ['gateway'], function(){
     if (eggup.thread.gateway == false) {
