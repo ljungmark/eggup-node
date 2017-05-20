@@ -2,7 +2,9 @@
   EGGUP
 
   1. Helper Functions
+    - get_date()
     - serialize()
+    - gateway()
     - Object.watch()
 
   2. The Constructor
@@ -23,7 +25,7 @@
 /**
   Web sockets
 */
-var socket = io();
+const socket = io.connect();;
 
 
 /**
@@ -66,6 +68,21 @@ function serialize(object) {
   }
 
   return str.join("&");
+}
+
+/**
+  Update UI to reflect gateway status
+*/
+function gateway(action) {
+  const review_button = document.querySelector('.review-button__cancel');
+
+  if (action === 'lock') {
+    review_button.textContent = 'Låst';
+    review_button.disabled = true;
+  } else if (action === 'unlock') {
+    review_button.innerHTML = '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Ändra/avbeställ';
+    review_button.disabled = false;
+  }
 }
 
 /**
@@ -250,8 +267,7 @@ Eggup.prototype.synchronize = function() {
         }
 
         if (json.gateway === false) {
-          document.querySelector('.review-button__cancel').textContent = 'Låst';
-          document.querySelector('.review-button__cancel').disabled = true;
+          gateway('lock');
         }
 
       } else {
@@ -549,6 +565,10 @@ Countdown.format = function(difference, minutes, seconds) {
 
 document.addEventListener('DOMContentLoaded', function() {
   window.eggup = new Eggup();
+
+  socket.on('gateway', function(action) {
+    gateway(action);
+  })
 
   let sequence  = [];
 
