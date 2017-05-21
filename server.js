@@ -6,6 +6,7 @@ const path = require('path'),
   http = require('http').Server(app),
   io = require('socket.io')(http);
 
+
   /**
     Map static resources
     Static resources should be stored in the 'public' folder
@@ -102,7 +103,10 @@ app.post('/synchronize', (request, response) => {
   const date = get_date(),
     model = {
       'available': false,
+      'lockdate': null,
       'startdate': null,
+      'softboiled': null,
+      'hardboiled': null,
       'quantity': 0,
       'variant': 0,
       'tokenstamp': null,
@@ -110,9 +114,9 @@ app.post('/synchronize', (request, response) => {
       'heap_1': 0,
       'heap_2': 0,
       'gateway': true
-    }
+    };
 
-  let sql = 'SELECT startdate FROM cookings WHERE DATE(startdate) = ?',
+  let sql = 'SELECT lockdate, startdate, softboiled, hardboiled FROM cookings WHERE DATE(lockdate) = ?',
     values = [date];
   sql = mysql.format(sql, values);
 
@@ -131,7 +135,10 @@ app.post('/synchronize', (request, response) => {
       No futher orders will be accepted
       Returns the datetime when the cooking started to process further actions
     */
+      model.lockdate = results[0].lockdate;
       model.startdate = results[0].startdate;
+      model.softboiled = results[0].softboiled;
+      model.hardboiled = results[0].hardboiled;
     }
 
     sql = 'SELECT date, quantity, variant FROM orders WHERE token = ? AND DATE(date) = ?',
@@ -458,6 +465,7 @@ app.post('/lock', (request, response) => {
     response.send(JSON.stringify(model));
   });
 });
+
 
 
 /**

@@ -25,7 +25,7 @@
 /**
   Web sockets
 */
-const socket = io.connect();;
+const socket = io.connect('');;
 
 
 /**
@@ -271,7 +271,43 @@ Eggup.prototype.synchronize = function() {
         }
 
       } else {
-        instance.load(json['status']);
+        if (json.startdate) {
+          let startdate = new Date(json.startdate),
+            current_date = new Date();
+
+          /** Compensate for MySQL offset */
+          startdate.setMinutes(startdate.getMinutes() + 120);
+          /** Add timers */
+          startdate.setSeconds(startdate.getSeconds() + json.softboiled + json.hardboiled);
+
+          console.log(startdate);
+          console.log(current_date);
+
+          if (startdate < current_date) {
+            /** Countdown is finished */
+            instance.load('docket');
+          } else {
+            /** There's still time left on the timer */
+            let left_diff = (json.softboiled + json.hardboiled) - Math.trunc((startdate - current_date) / 1000),
+              left_softboiled = (json.softboiled - left_diff < 0) ? 0 : json.softboiled - left_diff,
+              left_hardboiled = (json.softboiled + json.hardboiled) - left_diff;
+
+              console.log(left_diff);
+
+
+
+            console.log(left_softboiled);
+            console.log(left_hardboiled);
+
+            instance.load('cooking');
+            instance.start(left_softboiled, left_hardboiled);
+          }
+
+        } else if (json.lockdate) {
+          /** Application is locked, but boiling hasn't commenced yet */
+          gateway('lock');
+          instance.load('review');
+        }
 
         /** Show when the eggs were started */
         //document.querySelector('.module-closed__timer').innerHTML = json['date'].slice(11,16);
