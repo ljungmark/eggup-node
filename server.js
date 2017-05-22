@@ -174,7 +174,6 @@ app.post('/synchronize', (request, response) => {
 
         pool.query(sql, function (error, results, fields) {
           if (results.length) {
-            model.head = results[0].token;
             model.gateway = false;
           }
 

@@ -280,9 +280,6 @@ Eggup.prototype.synchronize = function() {
           /** Add timers */
           startdate.setSeconds(startdate.getSeconds() + json.softboiled + json.hardboiled);
 
-          console.log(startdate);
-          console.log(current_date);
-
           if (startdate < current_date) {
             /** Countdown is finished */
             instance.load('docket');
@@ -290,14 +287,7 @@ Eggup.prototype.synchronize = function() {
             /** There's still time left on the timer */
             let left_diff = (json.softboiled + json.hardboiled) - Math.trunc((startdate - current_date) / 1000),
               left_softboiled = (json.softboiled - left_diff < 0) ? 0 : json.softboiled - left_diff,
-              left_hardboiled = (json.softboiled + json.hardboiled) - left_diff;
-
-              console.log(left_diff);
-
-
-
-            console.log(left_softboiled);
-            console.log(left_hardboiled);
+              left_hardboiled = (json.softboiled + json.hardboiled) - (left_softboiled + left_diff);
 
             instance.load('cooking');
             instance.start(left_softboiled, left_hardboiled);
@@ -305,6 +295,15 @@ Eggup.prototype.synchronize = function() {
 
         } else if (json.lockdate) {
           /** Application is locked, but boiling hasn't commenced yet */
+          eggup.thread.heap_1 = response.heap_1;
+          eggup.thread.heap_2 = response.heap_2;
+
+          if (eggup.thread.quantity) {
+            document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
+          } else {
+            document.querySelector('.review-text__order').innerHTML = `Du har inte beställt några`;
+          }
+
           gateway('lock');
           instance.load('review');
         }
