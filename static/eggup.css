@@ -670,9 +670,14 @@ h2 {
   vertical-align: middle;
 }
 
+.review-button__cancel {
+  display: initial;
+}
+
 .review-button__cancel:not(.process):disabled {
   background-image: linear-gradient(-180deg, #e0e0e0, #c3c3c3);
   color: #f7f7f7;
+  display: none;
 }
 
 .review-block__receipt {

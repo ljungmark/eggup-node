@@ -79,9 +79,27 @@ function gateway(action) {
   if (action === 'lock') {
     review_button.textContent = 'Låst';
     review_button.disabled = true;
+
+    if (eggup.module == 'order') {
+      if (eggup.thread.quantity) {
+        document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
+      } else {
+        document.querySelector('.review-text__order').innerHTML = `Du har inte beställt några`;
+      }
+
+      document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
+      document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
+      document.querySelector('.review-text__heap_2').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_2'] + (JSON.parse(localStorage.getItem('thread'))['heap_2'] == 1 ? ' hårdkokt' : ' hårdkokta');
+
+      eggup.load('review');
+    }
   } else if (action === 'unlock') {
     review_button.innerHTML = '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Ändra/avbeställ';
     review_button.disabled = false;
+
+    if (eggup.module == 'review' && !eggup.thread.variant) {
+      eggup.load('order');
+    }
   }
 }
 
@@ -242,10 +260,10 @@ Eggup.prototype.synchronize = function() {
     body: serialize({ 'token': token })
   }).then(function(response) {
     return response.json().then(function(json) {
-      if (json['available']) {
-        document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
-        document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
+      document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
+      document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
 
+      if (json['available']) {
         eggup.thread.tokenstamp = json.tokenstamp;
         eggup.thread.variant = json.variant;
         eggup.thread.quantity = json.quantity;
