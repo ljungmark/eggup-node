@@ -406,8 +406,7 @@ app.post('/delete', (request, response) => {
   }
 */
 app.post('/lock', (request, response) => {
-  const date = get_date(),
-    token = request.body.token,
+  const token = request.body.token,
     state = request.body.state;
 
   const model = {
@@ -435,11 +434,15 @@ app.post('/lock', (request, response) => {
     */
     let lock_the_app = new Promise(function(resolve, reject) {
       if (state === 'true') {
-        sql = 'INSERT INTO cookings (token) VALUES (?)';
-        sql = mysql.format(sql, token);
+        const date = new Date();
+
+        sql = 'INSERT INTO cookings (token, lockdate) VALUES (?, ?)';
+        sql = mysql.format(sql, [token, date]);
       } else {
-        sql = 'DELETE FROM cookings WHERE DATE(lockdate) = ?';
-        sql = mysql.format(sql, date);
+        const date = get_date();
+
+        sql = 'DELETE FROM cookings WHERE token = ? AND DATE(lockdate) = ?';
+        sql = mysql.format(sql, [token, date]);
       }
 
       pool.query(sql, function (error, results, fields) {
@@ -459,7 +462,7 @@ app.post('/lock', (request, response) => {
       response.send(JSON.stringify(model));
     });
   }).catch(function() {
-    model.data = 'token not found';
+    model.data = 'Token not found';
 
     response.send(JSON.stringify(model));
   });
@@ -523,12 +526,17 @@ app.post('/amicontroller', (request, response) => {
       response.send(JSON.stringify(model));
     });
   }).catch(function() {
-    model.data = 'token not found';
+    model.data = 'Token not found';
 
     response.send(JSON.stringify(model));
   });
 });
 
+io.sockets.on('connection', function (socket) {
+  socket.on('gateway', function (data) {
+    socket.broadcast.emit('gateway', data);
+  });
+});
 
 http.listen(1337, function() {
   console.log('Eggup is running');

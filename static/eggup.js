@@ -25,7 +25,7 @@
 /**
   Web sockets
 */
-const socket = io.connect('');;
+var socket = io.connect('');;
 
 
 /**
@@ -74,6 +74,7 @@ function serialize(object) {
   Update UI to reflect gateway status
 */
 function gateway(action) {
+  console.log('geajgea' + action);
   const review_button = document.querySelector('.review-button__cancel');
 
   if (action === 'lock') {
@@ -620,6 +621,7 @@ document.addEventListener('DOMContentLoaded', function() {
   window.eggup = new Eggup();
 
   socket.on('gateway', function(action) {
+    action = (action == true) ? 'unlock' : 'lock';
     gateway(action);
   })
 
@@ -1163,6 +1165,8 @@ document.addEventListener('DOMContentLoaded', function() {
           eggup.thread.gateway = !eggup.thread.gateway;
           thread.gateway = eggup.thread.gateway;
           localStorage.setItem('thread', JSON.stringify(thread));
+
+          socket.emit('gateway', thread.gateway);
 
         } else {
           eggup.error();
