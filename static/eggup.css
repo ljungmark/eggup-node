@@ -604,8 +604,8 @@ h2 {
 }
 
 .lock-button.locked {
-  background-image: repeating-linear-gradient(135deg, #eaeaea, #eaeaea 15px, #c7c7c7 15px, #c7c7c7 30px);
-  color: #000000;
+  background-image: repeating-linear-gradient(135deg, #dadada, #dadada 15px, #c7c7c7 15px, #c7c7c7 30px);
+  color: #616161;
 }
 
 .button:hover {
@@ -689,6 +689,11 @@ h2 {
   display: initial;
   font-size: 14px;
   font-weight: bold;
+}
+
+.initiate-button:not(.process):disabled {
+  background-image: linear-gradient(-180deg, #e0e0e0, #c3c3c3);
+  color: #f7f7f7;
 }
 
 .review-block__receipt {

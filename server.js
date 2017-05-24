@@ -469,6 +469,72 @@ app.post('/lock', (request, response) => {
 });
 
 
+/**
+  Lock down app from receiveing more
+
+  Example
+  {
+    'token': false,
+  }
+*/
+app.post('/start', (request, response) => {
+  const token = request.body.token,
+    softboiled = request.body.softboiled,
+    hardboiled = request.body.hardboiled;
+
+  const model = {
+    'status': false
+  }
+
+  /**
+    Check if token exists in database
+  */
+  let is_token_valid = new Promise(function(resolve, reject) {
+    let sql = 'SELECT token FROM tokens WHERE token = ?';
+    sql = mysql.format(sql, token);
+
+    pool.query(sql, function (error, results, fields) {
+      if (!results.length) {
+        reject();
+      } else {
+        resolve();
+      }
+    });
+  }).then(function(valid) {
+    /**
+      The token exists, lock the app
+    */
+    let initiate = new Promise(function(resolve, reject) {
+      const startdate = new Date(),
+        date = get_date();
+
+      sql = 'UPDATE cookings SET startdate = ?, softboiled = ?, hardboiled = ? WHERE token = ? AND DATE(lockdate) = ?';
+      sql = mysql.format(sql, [startdate, softboiled, hardboiled, token, date]);
+
+      pool.query(sql, function (error, results, fields) {
+        if (error) reject();
+
+        if (results.affectedRows > 0) {
+          model.status = true;
+
+          resolve();
+        } else {
+          reject();
+        }
+      });
+    }).then(function(exists) {
+      response.send(JSON.stringify(model));
+    }).catch(function() {
+      response.send(JSON.stringify(model));
+    });
+  }).catch(function() {
+    model.data = 'Token not found';
+
+    response.send(JSON.stringify(model));
+  });
+});
+
+
 
 /**
   Is the user the controller?
@@ -532,9 +598,45 @@ app.post('/amicontroller', (request, response) => {
   });
 });
 
+/**
+ * Set up broadcasting emitters
+ */
 io.sockets.on('connection', function (socket) {
   socket.on('gateway', function (data) {
     socket.broadcast.emit('gateway', data);
+  });
+
+  socket.on('start', function (data) {
+    socket.broadcast.emit('start', data);
+  });
+
+  socket.on('heap', function(data) {
+    const date = get_date();
+    let heap_1, heap_2;
+
+    let check_heap = new Promise(function(resolve, reject) {
+      sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
+        values = [date];
+      sql = mysql.format(sql, values);
+
+      pool.query(sql, function (error, results, fields) {
+        for (var index = 0; index < results.length; index++) {
+          if (results[index].variant == 1) {
+            heap_1 = heap_1 + results[index].quantity;
+          } else {
+            heap_2 = heap_2 + results[index].quantity;
+          }
+        }
+      });
+    });
+
+    Promise.all(['check_heap']).then(() =>
+      socket.broadcast.emit('heap', {
+        heap_1: heap_1,
+        heap_2: heap_2
+      })
+    );
+
   });
 });
 

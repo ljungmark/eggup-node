@@ -70,39 +70,6 @@ function serialize(object) {
   return str.join("&");
 }
 
-/**
-  Update UI to reflect gateway status
-*/
-function gateway(action) {
-  console.log('geajgea' + action);
-  const review_button = document.querySelector('.review-button__cancel');
-
-  if (action === 'lock') {
-    review_button.textContent = 'Låst';
-    review_button.disabled = true;
-
-    if (eggup.module == 'order') {
-      if (eggup.thread.quantity) {
-        document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
-      } else {
-        document.querySelector('.review-text__order').innerHTML = `Du har inte beställt några`;
-      }
-
-      document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
-      document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
-      document.querySelector('.review-text__heap_2').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_2'] + (JSON.parse(localStorage.getItem('thread'))['heap_2'] == 1 ? ' hårdkokt' : ' hårdkokta');
-
-      eggup.load('review');
-    }
-  } else if (action === 'unlock') {
-    review_button.innerHTML = '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Ändra/avbeställ';
-    review_button.disabled = false;
-
-    if (eggup.module == 'review' && !eggup.thread.variant) {
-      eggup.load('order');
-    }
-  }
-}
 
 /**
   Object.watch polyfill
@@ -295,7 +262,7 @@ Eggup.prototype.synchronize = function() {
             current_date = new Date();
 
           /** Compensate for MySQL offset */
-          startdate.setMinutes(startdate.getMinutes() + 120);
+          /** startdate.setMinutes(startdate.getMinutes() + 120); */
           /** Add timers */
           startdate.setSeconds(startdate.getSeconds() + json.softboiled + json.hardboiled);
 
@@ -323,7 +290,7 @@ Eggup.prototype.synchronize = function() {
             document.querySelector('.review-text__order').innerHTML = `Du har inte beställt några`;
           }
 
-          gateway('lock');
+          instance.gateway('lock');
           instance.load('review');
         }
 
@@ -496,6 +463,42 @@ Eggup.prototype.map = function(node) {
 };
 
 
+/**
+  Update UI to reflect gateway status
+*/
+Eggup.prototype.gateway = function(action) {
+  const instance = this,
+    review_button = document.querySelector('.review-button__cancel'),
+    initiate_button = document.querySelector('.initiate-button');
+
+  if (action === 'lock') {
+    review_button.disabled = true;
+    initiate_button.disabled = false;
+
+    if (instance.module == 'order') {
+      if (instance.thread.quantity) {
+        document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
+      } else {
+        document.querySelector('.review-text__order').innerHTML = `Du har inte beställt några`;
+      }
+
+      document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
+      document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
+      document.querySelector('.review-text__heap_2').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_2'] + (JSON.parse(localStorage.getItem('thread'))['heap_2'] == 1 ? ' hårdkokt' : ' hårdkokta');
+
+      instance.load('review');
+    }
+  } else if (action === 'unlock') {
+    review_button.disabled = false;
+    initiate_button.disabled = true;
+
+    if (instance.module == 'review' && !instance.thread.variant) {
+      instance.load('order');
+    }
+  }
+}
+
+
 Eggup.prototype.start = function(soft = 270, hard = 240) {
   let timer = soft + hard,
     countdown = new Countdown(timer),
@@ -622,8 +625,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
   socket.on('gateway', function(action) {
     action = (action == true) ? 'unlock' : 'lock';
-    gateway(action);
-  })
+    eggup.gateway(action);
+  });
+
+  socket.on('start', function(timers) {
+    eggup.load('cooking');
+    eggup.start(timers.timer1_tot, timers.timer2_tot);
+  });
+
+  socket.on('heap', function(heap) {
+    document.querySelector('.review-text__total').innerHTML = parseInt(heap.heap_1) + parseInt(heap.heap_2);
+    document.querySelector('.review-text__heap_1').innerHTML = heap.heap_1 + (heap.heap_1 == 1 ? ' löskokt' : ' löskokta');
+    document.querySelector('.review-text__heap_2').innerHTML = heap.heap_2 + (heap.heap_2 == 1 ? ' hårdkokt' : ' hårdkokta');
+  });
 
   let sequence  = [];
 
@@ -988,6 +1002,8 @@ document.addEventListener('DOMContentLoaded', function() {
         eggup.thread.heap_2 = response.heap_2;
         localStorage.setItem('thread', JSON.stringify(eggup.thread));
 
+        socket.emit('heap');
+
         eggup.load('review');
       } else {
         eggup.error();
@@ -1037,6 +1053,8 @@ document.addEventListener('DOMContentLoaded', function() {
         thread.heap_1 = response.heap_1;
         thread.heap_2 = response.heap_2;
         localStorage.setItem('thread', JSON.stringify(thread));
+
+        socket.emit('heap');
 
         eggup.load('order');
       } else {
@@ -1090,26 +1108,54 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     init_request.then((response) => {
-      const wrapper = document.querySelector('.wrapper'),
-        overlay = document.querySelector('.overlay'),
-        popup = document.querySelector('.initiate');
+      let send_request = new Promise(function(resolve, reject) {
+        const token = JSON.parse(localStorage.getItem('token'));
 
-      if (popup.classList.contains('initiate__open')) {
-        wrapper.classList.remove('wrapper__open');
-        overlay.classList.remove('overlay__open');
-        popup.classList.remove('initiate__open');
-        if (document.querySelector('.background')) document.querySelector('.background').play();
-      }
+        fetch('/start', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: serialize({ 'token': token, 'softboiled': timer1_tot, 'hardboiled': timer2_tot })
+        }).then(function(response) {
+          return response.json().then(function(json) {
+            resolve(json);
+          });
+        });
+      });
 
-      history.replaceState('', document.title, window.location.pathname);
+      send_request.then((response) => {
+        if (response['status'] == true) {
+          const wrapper = document.querySelector('.wrapper'),
+            overlay = document.querySelector('.overlay'),
+            popup = document.querySelector('.initiate');
 
-      eggup.load('cooking');
-      eggup.start(timer1_tot, timer2_tot);
+          if (popup.classList.contains('initiate__open')) {
+            wrapper.classList.remove('wrapper__open');
+            overlay.classList.remove('overlay__open');
+            popup.classList.remove('initiate__open');
+            if (document.querySelector('.background')) document.querySelector('.background').play();
+          }
 
-       setTimeout(function() {
-        initiate_button.classList.remove('process');
-        initiate_button.disabled = false;
-      }, 500);
+          history.replaceState('', document.title, window.location.pathname);
+
+          eggup.load('cooking');
+          eggup.start(timer1_tot, timer2_tot);
+
+          socket.emit('start', {
+            timer1_tot: timer1_tot,
+            timer2_tot: timer2_tot
+          });
+
+           setTimeout(function() {
+            initiate_button.classList.remove('process');
+            initiate_button.disabled = false;
+          }, 500);
+
+        } else {
+          eggup.error();
+        }
+      });
     }).catch((response) => {
       eggup.error();
 
@@ -1166,6 +1212,10 @@ document.addEventListener('DOMContentLoaded', function() {
           thread.gateway = eggup.thread.gateway;
           localStorage.setItem('thread', JSON.stringify(thread));
 
+
+          action = (eggup.thread.gateway == true) ? 'unlock' : 'lock';
+          eggup.gateway(action);
+
           socket.emit('gateway', thread.gateway);
 
         } else {
@@ -1198,17 +1248,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
     document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
     document.querySelector('.review-text__heap_2').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_2'] + (JSON.parse(localStorage.getItem('thread'))['heap_2'] == 1 ? ' hårdkokt' : ' hårdkokta');
-  });
-
-  /**
-    Watch changes in the thread's gateway settings and update the DOM accordingly
-  */
-  watch(eggup.thread, ['gateway'], function(){
-    if (eggup.thread.gateway == false) {
-      console.log('gateway is closed');
-    } else {
-      console.log('gateway is open');
-    }
   });
 
   /**
