@@ -69,6 +69,20 @@ h2 {
   text-shadow: 1px 1px rgb(0, 144, 67);
 }
 
+.module[data-module="docket"] {
+  text-align: center;
+}
+
+.module[data-module="docket"] h2 {
+  color: #4d3d36;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+.module[data-module="docket"] svg {
+  height: 200px;
+}
+
+
 .module._hidden {
   display: none;
   pointer-events: none;

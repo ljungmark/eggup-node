@@ -574,7 +574,6 @@ Countdown.prototype.start = function(soft, hard) {
       bar_text_1.textContent =  `Löskokta: ${soft_percent}%`;
     } else {
       bar_variant_1.style.width = `100%`;
-      bar_variant_1.style.background = `#0ee573`;
       bar_text_1.textContent = `Färdiga`;
     }
 
@@ -583,7 +582,6 @@ Countdown.prototype.start = function(soft, hard) {
       bar_text_2.textContent =  `Hårdkokta: ${hard_percent}%`;
     } else {
       bar_variant_2.style.width = `100%`;
-      bar_variant_2.style.background = `#0ee573`;
       bar_text_2.textContent = `Färdiga`;
     }
 
