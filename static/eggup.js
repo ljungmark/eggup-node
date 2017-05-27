@@ -477,7 +477,7 @@ Eggup.prototype.gateway = function(action) {
 
     if (instance.module == 'order') {
       if (instance.thread.quantity) {
-        document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
+        document.querySelector('.review-text__order').innerHTML = `${instance.cache['quantity']} ${instance.cache['variant'].toLowerCase()}`;
       } else {
         document.querySelector('.review-text__order').innerHTML = `Du har inte beställt några`;
       }
@@ -1045,12 +1045,13 @@ document.addEventListener('DOMContentLoaded', function() {
       if (response.status == true) {
 
         let thread = JSON.parse(localStorage.getItem('thread'));
-        thread.tokenstamp = response.tokenstamp;
-        thread.variant = null;
-        thread.quantity = null;
-        thread.heap_1 = response.heap_1;
-        thread.heap_2 = response.heap_2;
-        localStorage.setItem('thread', JSON.stringify(thread));
+        eggup.thread.tokenstamp = response.tokenstamp;
+        eggup.thread.variant = null;
+        eggup.thread.quantity = null;
+        eggup.thread.heap_1 = response.heap_1;
+        eggup.thread.heap_2 = response.heap_2;
+        eggup.thread.gateway = thread.gateway;
+        localStorage.setItem('thread', JSON.stringify(eggup.thread));
 
         socket.emit('heap');
 

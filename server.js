@@ -612,7 +612,8 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('heap', function(data) {
     const date = get_date();
-    let heap_1, heap_2;
+    let heap_1 = 0,
+      heap_2 = 0;
 
     let check_heap = new Promise(function(resolve, reject) {
       sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
@@ -627,16 +628,15 @@ io.sockets.on('connection', function (socket) {
             heap_2 = heap_2 + results[index].quantity;
           }
         }
-      });
-    });
 
-    Promise.all(['check_heap']).then(() =>
+        resolve();
+      });
+    }).then(function() {
       socket.broadcast.emit('heap', {
         heap_1: heap_1,
         heap_2: heap_2
-      })
-    );
-
+      });
+    });
   });
 });
 
