@@ -1318,4 +1318,37 @@ document.addEventListener('DOMContentLoaded', function() {
   document.onmouseup = (event) => {
     clearTimeout(persistency);
   };
+
+  document.ontouchstart = (event) => {
+    if ((eggup.module == 'order' || eggup.module == 'review')
+      && eggup.thread.gateway == true /** || controller == true */) {
+
+      clearTimeout(persistency);
+
+      persistency = window.setTimeout(function() {
+        const wrapper = document.querySelector('.wrapper'),
+          initiate = document.querySelector('.initiate');
+
+        if (!wrapper.classList.contains('_open')) {
+          wrapper.classList.add('_open');
+          initiate.classList.add('_opening');
+
+          document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
+            e.target.removeEventListener(e.type, arguments.callee);
+            document.querySelector('.initiate').classList.remove('_opening');
+          });
+
+          history.replaceState('', document.title, window.location.pathname + '#start');
+
+          if (document.querySelector('.background')) document.querySelector('.background').pause();
+        }
+
+        return false;
+      }, 2000);
+    }
+  }
+
+  document.ontouchend = (event) => {
+    clearTimeout(persistency);
+  };
 });
