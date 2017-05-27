@@ -323,17 +323,23 @@ Eggup.prototype.load = function(target_module) {
     if (current_module == 'init'
       && (target_module == 'order' || target_module == 'review')
       && (eggup.thread.gateway == true || eggup.thread.head == JSON.parse(localStorage.getItem('token')))) {
-      const wrapper = document.querySelector('.wrapper');
-      const overlay = document.querySelector('.overlay');
-      const popup = document.querySelector('.initiate');
+      const wrapper = document.querySelector('.wrapper'),
+          initiate = document.querySelector('.initiate');
 
-      if (!popup.classList.contains('initiate__open')) {
-        wrapper.classList.add('wrapper__open');
-        overlay.classList.add('overlay__open');
-        popup.classList.add('initiate__open');
+        if (!wrapper.classList.contains('_open')) {
+          wrapper.classList.add('_open');
+          initiate.classList.add('_opening');
 
-        if (document.querySelector('.background')) document.querySelector('.background').pause();
-      }
+          document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
+            e.target.removeEventListener(e.type, arguments.callee);
+            document.querySelector('.initiate').classList.remove('_opening');
+          });
+
+          history.replaceState('', document.title, window.location.pathname + '#start');
+
+          if (document.querySelector('.background')) document.querySelector('.background').pause();
+        }
+
     } else {
       history.replaceState('', document.title, window.location.pathname);
     }
@@ -409,7 +415,7 @@ Eggup.prototype.error = function() {
   const instance = this;
   let current_module;
 
-  if (document.querySelector('.initiate__open')) {
+  if (document.querySelector('.wrapper._open')) {
     current_module = document.querySelector('.initiate');
   } else {
     current_module = document.querySelector('.application');
@@ -1126,13 +1132,10 @@ document.addEventListener('DOMContentLoaded', function() {
       send_request.then((response) => {
         if (response['status'] == true) {
           const wrapper = document.querySelector('.wrapper'),
-            overlay = document.querySelector('.overlay'),
             popup = document.querySelector('.initiate');
 
-          if (popup.classList.contains('initiate__open')) {
-            wrapper.classList.remove('wrapper__open');
-            overlay.classList.remove('overlay__open');
-            popup.classList.remove('initiate__open');
+          if (wrapper.classList.contains('_open')) {
+            wrapper.classList.remove('_open');
             if (document.querySelector('.background')) document.querySelector('.background').play();
           }
 
@@ -1166,14 +1169,13 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.querySelector('.close-start').onclick = () => {
-    document.querySelector('.initiate').classList.add('initiate__closing');
+    document.querySelector('.wrapper').classList.add('_closing');
 
     document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
-      e.target.removeEventListener(e.type, arguments.callee)
-      document.querySelector('.wrapper').classList.remove('wrapper__open');
-      document.querySelector('.overlay').classList.remove('overlay__open');
-      document.querySelector('.initiate').classList.remove('initiate__closing');
-      document.querySelector('.initiate').classList.remove('initiate__open');
+      e.target.removeEventListener(e.type, arguments.callee);
+
+      document.querySelector('.wrapper').classList.remove('_open');
+      document.querySelector('.wrapper').classList.remove('_closing');
     });
 
     if (document.querySelector('.background')) document.querySelector('.background').play();
@@ -1291,21 +1293,25 @@ document.addEventListener('DOMContentLoaded', function() {
       clearTimeout(persistency);
 
       persistency = window.setTimeout(function() {
-        const wrapper = document.querySelector('.wrapper');
-        const overlay = document.querySelector('.overlay');
-        const popup = document.querySelector('.initiate');
+        const wrapper = document.querySelector('.wrapper'),
+          initiate = document.querySelector('.initiate');
 
-        if (!popup.classList.contains('initiate__open')) {
-          wrapper.classList.add('wrapper__open');
-          overlay.classList.add('overlay__open');
-          popup.classList.add('initiate__open');
+        if (!wrapper.classList.contains('_open')) {
+          wrapper.classList.add('_open');
+          initiate.classList.add('_opening');
+
+          document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
+            e.target.removeEventListener(e.type, arguments.callee);
+            document.querySelector('.initiate').classList.remove('_opening');
+          });
+
+          history.replaceState('', document.title, window.location.pathname + '#start');
+
           if (document.querySelector('.background')) document.querySelector('.background').pause();
         }
 
-        history.replaceState('', document.title, window.location.pathname + '#start');
-
         return false;
-      }, 1000);
+      }, 2000);
     }
   };
 
