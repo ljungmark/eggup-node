@@ -71,13 +71,13 @@ app.post('/token', (request, response) => {
   sql = mysql.format(sql, values);
 
   pool.query(sql, function (error, results, fields) {
-    if (error) throw error;
+    if (error) response.send(JSON.stringify(model));
 
     /**
       Something went wrong
     */
     if (results.affectedRows == 0) {
-      response.send(JSON.stringify({ 'status': 'token generation failed' }));
+      response.send(JSON.stringify({ 'status': 'Token generation failed' }));
     } else {
     /**
       Token has been successfully generated
@@ -110,7 +110,6 @@ app.post('/synchronize', (request, response) => {
       'quantity': 0,
       'variant': 0,
       'tokenstamp': null,
-      'head': null,
       'heap_1': 0,
       'heap_2': 0,
       'gateway': true
@@ -121,7 +120,7 @@ app.post('/synchronize', (request, response) => {
   sql = mysql.format(sql, values);
 
   pool.query(sql, function(error, results, fields) {
-    if (error) throw error;
+    if (error) response.send(JSON.stringify(model));
 
     /**
       If there isn't a result, it means that the cooking hasn't commenced yet
@@ -146,7 +145,7 @@ app.post('/synchronize', (request, response) => {
     sql = mysql.format(sql, values);
 
     pool.query(sql, function(error, results, fields) {
-      if (error) throw error;
+      if (error) response.send(JSON.stringify(model));
 
       if (results.length) {
         model.quantity = results[0].quantity;
@@ -235,7 +234,7 @@ app.post('/request', (request, response) => {
       sql = mysql.format(sql, values);
 
       pool.query(sql, function (error, results, fields) {
-        if (error) throw error;
+        if (error) response.send(JSON.stringify(model));
 
         if (!results.length) {
           reject();
@@ -253,7 +252,7 @@ app.post('/request', (request, response) => {
       sql = mysql.format(sql, values);
 
       pool.query(sql, function (error, results, fields) {
-        if (error) throw error;
+        if (error) response.send(JSON.stringify(model));
 
         model.status = true;
         model.data ='updated';
@@ -269,7 +268,7 @@ app.post('/request', (request, response) => {
       sql = mysql.format(sql, values);
 
       pool.query(sql, function (error, results, fields) {
-        if (error) throw error;
+        if (error) response.send(JSON.stringify(model));
 
         model.status = true;
         model.data ='inserted';
@@ -305,7 +304,9 @@ app.post('/request', (request, response) => {
   Example
   {
     'status': true,
-    'tokenstamp': '2017-03-10 09:10:00'
+    'tokenstamp': '2017-03-10 09:10:00',
+    'heap_1': 4,
+    'heap_2': 8
   }
 */
 app.post('/delete', (request, response) => {
@@ -541,15 +542,15 @@ app.post('/start', (request, response) => {
 
   Example
   {
-    'amicontroller': false,
+    'result': false,
   }
 */
-app.post('/amicontroller', (request, response) => {
+app.post('/controller', (request, response) => {
   const date = get_date(),
     token = request.body.token;
 
   const model = {
-    'status': false,
+    'result': false,
     'data': null
   }
 
@@ -579,7 +580,7 @@ app.post('/amicontroller', (request, response) => {
         if (error) reject();
 
         if (results.length > 0) {
-          if (token == results[0].token) model.status = true;
+          if (token == results[0].token) model.result = true;
 
           resolve();
         } else {
