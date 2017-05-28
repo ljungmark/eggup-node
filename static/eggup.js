@@ -70,6 +70,9 @@ function serialize(object) {
   return str.join("&");
 }
 
+/**
+  Returns true or false depending on if the sending token is also the current controller
+*/
 async function controller() {
   const instance = this,
     token = JSON.parse(localStorage.getItem('token'));
@@ -82,7 +85,6 @@ async function controller() {
     body: serialize({ 'token': token })
   }).then(function(response) {
     return response.json().then(function(json) {
-      console.log(json.result);
       return json.result;
     });
   });
@@ -317,6 +319,28 @@ Eggup.prototype.synchronize = function() {
       }
     });
   });
+
+  console.log('%c Eggup power! ', [
+    'background: linear-gradient(-180deg, #44b1e8, #3098de)',
+    'border: #3e0e02 1px solid',
+    'border-radius: 3px',
+    'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
+    'color: white',
+    'display: block',
+    'font-size: 40px',
+    'font-weight: bold',
+    'line-height: 80px',
+    'padding: 10px',
+    'text-align: center',
+    'text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3)'
+  ].join(';'));
+
+  console.log('%c by @ljungmark (https://www.github.com/ljungmark) ', [,
+    'font-size: 20px',
+    'font-weight: bold',
+    'line-height: 30px',
+    'padding: 10px'
+  ].join(';'));
 }
 
 
