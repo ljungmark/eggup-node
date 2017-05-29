@@ -306,6 +306,9 @@ Eggup.prototype.synchronize = function() {
           eggup.thread.heap_1 = response.heap_1;
           eggup.thread.heap_2 = response.heap_2;
 
+          document.querySelector('.lock-button').innerHTML = 'Tillåt fler beställningar';
+          document.querySelector('.lock-button').classList.add('locked');
+
           if (eggup.thread.quantity) {
             document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
           } else {
@@ -334,7 +337,7 @@ Eggup.prototype.synchronize = function() {
     'line-height: 80px',
     'padding: 10px',
     'text-align: center',
-    'text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3)'
+    'text-shadow: 0 -1px 0 rgba(0,0,0,.12)'
   ].join(';'));
 
   console.log('%c by @ljungmark (https://www.github.com/ljungmark) ', [,
@@ -959,6 +962,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
           return false;
         }
+      }
+
+      if (event.keyCode == 27 && document.querySelector('.wrapper').classList.contains('_open')) {
+        document.querySelector('.close-start').click();
       }
 
       if (event.keyCode == '80' || event.keyCode == '65' || event.keyCode == '82' || event.keyCode == '84' || event.keyCode == '89') { /** p, a, r, t, y */
