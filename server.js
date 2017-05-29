@@ -4,7 +4,8 @@ const path = require('path'),
   bodyParser = require('body-parser'),
   app = express(),
   http = require('http').Server(app),
-  io = require('socket.io')(http);
+  io = require('socket.io')(http),
+  credentials = require('./static/credentials');
 
 
   /**
@@ -25,10 +26,10 @@ const path = require('path'),
 const mysql = require('mysql');
 const pool  = mysql.createPool({
   connectionLimit: 10,
-  host: '',
-  user: '',
-  password: '',
-  database: '',
+  host: credentials.host,
+  user: credentials.user,
+  password: credentials.password,
+  database: credentials.database,
   dateStrings: true /** Don't return dates as actual dates, but rather as strings */
 });
 

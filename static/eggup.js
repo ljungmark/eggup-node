@@ -25,7 +25,7 @@
 /**
   Web sockets
 */
-var socket = io.connect('');;
+var socket = io.connect();
 
 
 /**
