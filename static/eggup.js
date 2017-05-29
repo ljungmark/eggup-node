@@ -599,6 +599,12 @@ Countdown.prototype.start = function(soft, hard) {
     difference = instance.duration - (((Date.now() - start) / 1000) | 0)
     let date = Date.now();
 
+    let current_soft = (soft - (soft - (difference - hard))),
+      current_hard = ((soft + hard) - ((soft + hard) - difference));
+
+    if (current_soft == 3 && eggup.thread.variant == '1') eggup.notify('done');
+    if (current_hard == 3 && eggup.thread.variant == '2') eggup.notify('done');
+
     if (difference > 0) {
       setTimeout(runtime, (instance.granularity - 1) - (date % (instance.granularity - 1)));
     } else {
@@ -1047,7 +1053,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
 
         eggup.thread.tokenstamp = get_date();
-        eggup.thread.variant = eggup.cache['variant'];
+        eggup.thread.variant = variant_data;
         eggup.thread.quantity = eggup.cache['quantity'];
         eggup.thread.heap_1 = response.heap_1;
         eggup.thread.heap_2 = response.heap_2;
