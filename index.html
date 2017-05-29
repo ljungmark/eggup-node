@@ -95,24 +95,28 @@
   <div class="overlay">
   </div>
     <div class="initiate">
-      <h2>
-        Påbörja kokning <a class="close-start" href="#start"><img src="assets/cross.svg" /></a>
-      </h2>
-      <div class="lockdown">
-        <button class="button lock-button" tabindex="-1">Ta inte emot fler beställningar</button>
-        <p class="initiate-tip">
-          Om du låser ner appen för vidare beställningar så kan inga nya beställningar komma in under dagen.
-        </p>
+      <div class="-instructions">
+        <h2>
+          Påbörja kokning <a class="close-start" href="#start"><img src="assets/cross.svg" /></a>
+        </h2>
+        <div class="lockdown">
+          <button class="button lock-button" tabindex="-1">Ta inte emot fler beställningar</button>
+          <p class="initiate-tip">
+            Om du låser ner appen för vidare beställningar så kan inga nya beställningar komma in under dagen.
+          </p>
+        </div>
       </div>
-      <div class="start-container">
-        Löskokta:<br>
-        <input class="start-input soft-timer" maxlength="5" type="text" value="04:30">
+      <div class="-timers">
+        <div class="start-container">
+          Löskokta:<br>
+          <input class="start-input soft-timer" maxlength="5" type="text" value="04:30">
+        </div>
+        <div class="start-container">
+          Hårdkokta:<br>
+          <input class="start-input hard-timer" maxlength="5" type="text" value="08:30">
+        </div>
+        <button class="button initiate-button" disabled="disabled" tabindex="-1" type="submit">Påbörja kokning <img class="initiate-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAclBMVEUAAAAAAAAEBAQBAQEAAAAJCQliYmL///8AAACOjo7////p6eny8vIiIiL////4+Pj///9DQ0Pw8PD///+2tranp6f////Gxsb+/v739/f7+/vs7Oz39/fj4+Ph4eH19fXy8vJubm5GRkYjIyOgoKD////gy5wGAAAAJXRSTlMPABQdJRkUBAQZ+hwTEALAJBMiHhwaFRL008+xqZ2YkowzLCQj8f+kPwAAAK1JREFUGNNNkFkShCAMBQPIoiA6brPvw/2vODERyveTStOBCiDWOKmqqlLSUUdMYwsAeKA35pSGHK0cMXIo5K5MMipQCnB58JnHHRQr3Q6bCbqw1NUssvdqUpNSuvzYo5wSp+O2BcyDvfObCV28bobWBzBI6vLG9UsVyTGzu+KKxGYxo9qCCAb2MQH3jd7skY/IhPVzQbO3/KdxGSbTQmumYYmCGaph7Pt+DJa6P73VCGq32yoQAAAAAElFTkSuQmCC"></button>
       </div>
-      <div class="start-container">
-        Hårdkokta:<br>
-        <input class="start-input hard-timer" maxlength="5" type="text" value="08:30">
-      </div>
-      <button class="button initiate-button" disabled="disabled" tabindex="-1" type="submit">Påbörja kokning <img class="initiate-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAclBMVEUAAAAAAAAEBAQBAQEAAAAJCQliYmL///8AAACOjo7////p6eny8vIiIiL////4+Pj///9DQ0Pw8PD///+2tranp6f////Gxsb+/v739/f7+/vs7Oz39/fj4+Ph4eH19fXy8vJubm5GRkYjIyOgoKD////gy5wGAAAAJXRSTlMPABQdJRkUBAQZ+hwTEALAJBMiHhwaFRL008+xqZ2YkowzLCQj8f+kPwAAAK1JREFUGNNNkFkShCAMBQPIoiA6brPvw/2vODERyveTStOBCiDWOKmqqlLSUUdMYwsAeKA35pSGHK0cMXIo5K5MMipQCnB58JnHHRQr3Q6bCbqw1NUssvdqUpNSuvzYo5wSp+O2BcyDvfObCV28bobWBzBI6vLG9UsVyTGzu+KKxGYxo9qCCAb2MQH3jd7skY/IhPVzQbO3/KdxGSbTQmumYYmCGaph7Pt+DJa6P73VCGq32yoQAAAAAElFTkSuQmCC"></button>
     </div>
   <audio class="audio">
     <source class="audio-source" src="" type="audio/mpeg">

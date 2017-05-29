@@ -73,19 +73,21 @@ function serialize(object) {
 /**
   Returns true or false depending on if the sending token is also the current controller
 */
-async function controller() {
+function controller() {
   const instance = this,
     token = JSON.parse(localStorage.getItem('token'));
 
-  await fetch('/controller', {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: serialize({ 'token': token })
-  }).then(function(response) {
-    return response.json().then(function(json) {
-      return json.result;
+  return new Promise(function (resolve, reject) {
+    fetch('/controller', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: serialize({ 'token': token })
+    }).then(function(response) {
+      return response.json().then(function(json) {
+        resolve(json.result);
+      });
     });
   });
 }
@@ -362,29 +364,31 @@ Eggup.prototype.load = function(target_module) {
     Otherwise, remove the #start from the URL
   */
   if (window.location.hash == '#start') {
-    if (current_module == 'init'
-      && (target_module == 'order' || target_module == 'review')
-      && (eggup.thread.gateway == true || eggup.thread.head == JSON.parse(localStorage.getItem('token')))) {
-      const wrapper = document.querySelector('.wrapper'),
-          initiate = document.querySelector('.initiate');
+    controller().then(function(result) {
+      if (current_module == 'init'
+        && (target_module == 'order' || target_module == 'review')
+        && (eggup.thread.gateway == true || result)) {
+        const wrapper = document.querySelector('.wrapper'),
+            initiate = document.querySelector('.initiate');
 
-        if (!wrapper.classList.contains('_open')) {
-          wrapper.classList.add('_open');
-          initiate.classList.add('_opening');
+          if (!wrapper.classList.contains('_open')) {
+            wrapper.classList.add('_open');
+            initiate.classList.add('_opening');
 
-          document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
-            e.target.removeEventListener(e.type, arguments.callee);
-            document.querySelector('.initiate').classList.remove('_opening');
-          });
+            document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
+              e.target.removeEventListener(e.type, arguments.callee);
+              document.querySelector('.initiate').classList.remove('_opening');
+            });
 
-          history.replaceState('', document.title, window.location.pathname + '#start');
+            history.replaceState('', document.title, window.location.pathname + '#start');
 
-          if (document.querySelector('.background')) document.querySelector('.background').pause();
-        }
+            if (document.querySelector('.background')) document.querySelector('.background').pause();
+          }
 
-    } else {
-      history.replaceState('', document.title, window.location.pathname);
-    }
+      } else {
+        history.replaceState('', document.title, window.location.pathname);
+      }
+    });
   }
 
   /** Allowed targets */
@@ -681,6 +685,8 @@ document.addEventListener('DOMContentLoaded', function() {
     thread.gateway = eggup.thread.gateway;
     localStorage.setItem('thread', JSON.stringify(thread));
 
+    if (document.querySelector('.wrapper').classList.contains('_open')) document.querySelector('.close-start').click();
+
     action = (action == true) ? 'unlock' : 'lock';
     eggup.gateway(action);
   });
@@ -946,7 +952,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       if (eggup.module == 'review') {
-        if (event.keyCode == '8') { /** Backspace key */
+        if (event.keyCode == '8' /** Backspace key */
+          && (document.querySelector('.start-input.soft-timer') != document.activeElement
+            || document.querySelector('.start-input.soft-timer') != document.activeElement)) {
           document.querySelector('.review-button__cancel').click();
 
           return false;
@@ -1344,41 +1352,9 @@ document.addEventListener('DOMContentLoaded', function() {
       clearTimeout(persistency);
 
       persistency = window.setTimeout(function() {
-        if (eggup.thread.gateway == true || controller()) {
+        controller().then(function(result) {
+          if (eggup.thread.gateway == true || result) {
 
-          const wrapper = document.querySelector('.wrapper'),
-            initiate = document.querySelector('.initiate');
-
-          if (!wrapper.classList.contains('_open')) {
-            wrapper.classList.add('_open');
-            initiate.classList.add('_opening');
-
-            document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
-              e.target.removeEventListener(e.type, arguments.callee);
-              document.querySelector('.initiate').classList.remove('_opening');
-            });
-
-            history.replaceState('', document.title, window.location.pathname + '#start');
-
-            if (document.querySelector('.background')) document.querySelector('.background').pause();
-          }
-        }
-
-        return false;
-      }, 2000);
-    }
-  };
-
-  document.onmouseup = (event) => {
-    clearTimeout(persistency);
-  };
-
-  document.ontouchstart = (event) => {
-    if ((eggup.module == 'order' || eggup.module == 'review')) {
-        clearTimeout(persistency);
-
-        persistency = window.setTimeout(function() {
-          if (eggup.thread.gateway == true || controller()) {
             const wrapper = document.querySelector('.wrapper'),
               initiate = document.querySelector('.initiate');
 
@@ -1396,6 +1372,43 @@ document.addEventListener('DOMContentLoaded', function() {
               if (document.querySelector('.background')) document.querySelector('.background').pause();
             }
           }
+        });
+
+        return false;
+      }, 2000);
+    }
+  };
+
+  document.onmouseup = (event) => {
+    clearTimeout(persistency);
+  };
+
+  document.ontouchstart = (event) => {
+    if ((eggup.module == 'order' || eggup.module == 'review')) {
+      clearTimeout(persistency);
+
+      persistency = window.setTimeout(function() {
+
+        controller().then(function(result) {
+          if (eggup.thread.gateway == true || result) {
+            const wrapper = document.querySelector('.wrapper'),
+              initiate = document.querySelector('.initiate');
+
+            if (!wrapper.classList.contains('_open')) {
+              wrapper.classList.add('_open');
+              initiate.classList.add('_opening');
+
+              document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
+                e.target.removeEventListener(e.type, arguments.callee);
+                document.querySelector('.initiate').classList.remove('_opening');
+              });
+
+              history.replaceState('', document.title, window.location.pathname + '#start');
+
+              if (document.querySelector('.background')) document.querySelector('.background').pause();
+            }
+          }
+        });
 
         return false;
       }, 2000);

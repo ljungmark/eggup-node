@@ -141,9 +141,9 @@ h2 {
   bottom: 0;
   left: -10px;
   min-height: 100vh;
-  min-width: calc(100vw - 60px); /** Compensate for left, right and padding */
+  min-width: 100vw; /** Compensate for left, right and padding */
   opacity: 1;
-  padding: 40px;
+  padding: 0 10px;
   right: -10px;
   top: 0;
 }
@@ -176,6 +176,18 @@ h2 {
   }
 }
 
+.initiate .-instructions {
+  background: #f6f7f9;
+  border-bottom: 1px dashed rgba(225, 226, 227, 0.55);
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+
+.initiate .-timers {
+  padding: 20px;
+}
+
 .initiate h2 {
   display: block;
   margin-bottom: 28px;
@@ -188,10 +200,10 @@ h2 {
 
 .lockdown {
   background:
-    linear-gradient(to right, #ffffff 0, transparent 6px) left repeat-y,
-    linear-gradient(to left, #ffffff 0, transparent 6px) right repeat-y,
-    linear-gradient(to top, #ffffff 0, transparent 6px) bottom repeat-x,
-    repeating-linear-gradient(135deg, rgb(255, 255, 255), rgb(255, 255, 255) 15px, rgba(255, 0, 0, 0.05) 15px, rgba(255, 0, 0, 0.05) 30px);
+    linear-gradient(to right, #f6f7f9 0, transparent 6px) left repeat-y,
+    linear-gradient(to left, #f6f7f9 0, transparent 6px) right repeat-y,
+    linear-gradient(to top, #f6f7f9 0, transparent 6px) bottom repeat-x,
+    repeating-linear-gradient(135deg, #f6f7f9, #f6f7f9 15px, rgba(255, 0, 0, 0.05) 15px, rgba(255, 0, 0, 0.05) 30px);
   border-radius: 16px;
 }
 
@@ -208,10 +220,10 @@ h2 {
 }
 
 .start-container {
-  border-top: 1px dashed #21272c;
   display: inline-block;
-  padding-top: 15px;
-  width: 49.5%;
+  padding-bottom: 5px;
+  text-align: center;
+  width: 100%;
 }
 
 .start-input {
@@ -230,7 +242,7 @@ h2 {
 }
 
 .application--error .start-input {
-  background: #e74242;
+  background: rgba(232, 68, 68, 0.75);
   color: #efefef;
   transition: background-color 100ms linear;
 }
@@ -634,9 +646,9 @@ h2 {
 .lock-button.locked {
   background-image: repeating-linear-gradient(135deg, #dadada, #dadada 15px, #c7c7c7 15px, #c7c7c7 30px);
   box-shadow:
-    0 1px 0 0 rgba(46,86,153,.15),
-    inset 0 1px 0 0 rgba(46,86,153,.1),
-    inset 0 -1px 0 0 rgba(46,86,153,.4);
+    0 1px 0 0 rgba(138, 138, 138, 0.41),
+    inset 0 1px 0 0 #d0d0d0,
+    inset 0 -1px 0 0 rgba(183, 183, 183, 0.3);
   color: #616161;
 }
 
@@ -1092,13 +1104,14 @@ h2 {
   }
 
   .initiate {
+    border: 2px solid #ffffff;
     border-bottom: 3px solid #c3c3c3;
     border-radius: 6px;
     box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.2);
     max-height: 0;
     max-width: 400px;
     opacity: 0;
-    padding: 16px;
+    padding: 0;
     position: fixed;
     right: initial;
     top: 500%;
@@ -1113,6 +1126,7 @@ h2 {
     min-height: initial;
     min-width: 400px;
     opacity: 1;
+    padding: 0;
     top: 50%;
     transform: translate(-50%, -50%);
   }
@@ -1216,6 +1230,10 @@ h2 {
     animation-fill-mode: both;
     -webkit-animation-name: shake;
     animation-name: shake;
+  }
+
+  .start-container {
+    width: 49.5%;
   }
 
   @-webkit-keyframes party {
