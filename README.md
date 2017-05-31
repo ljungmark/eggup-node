@@ -3,13 +3,17 @@ Eggup Node
 
 
 * [About the app](#user-content-about-the-app)
-  * [Terminology](#user-content-terminology)
+  * [Technical](#user-content-technical)
+    * [Cache](#user-content-cache)
+    * [Thread](#user-content-thread)
+    * [Token](#user-content-token)
 * [Settings](#user-content-settings)
 * [Hotkeys](#user-content-hotkeys)
 * [Contribute](#user-content-contribute)
   * [General](#user-content-general)
   * [CSS](#user-content-js)
   * [Tools](#user-content-tools)
+* [License](#user-content-license)
 
 
 # About the app
@@ -17,9 +21,35 @@ Eggup Node
 This app is used by the office to order eggs in the morning.
 
 
-## Terminology
+## Technical
 
 The application has a local storage cache and application thread. The purpose of the thread is to keep a application state so even if a user reloads their applicaiton, the state will be persitent. On each load, a syncronization with the server is performed, providing the latest state to the client.
+
+
+### Cache
+
+| Key      | Type    | Values                                 | Default value |
+| -------- | ------- | -------------------------------------- | ------------- |
+| variant  | String  | Löskokt, Löskokta, Hårdkokt, Hårdkokta | Löskokt       |
+| quantity | Integer | 1, 2                                   | 1             |
+
+### Thread
+
+| Key        | Type    | Values                                 | Default value |
+| ---------- | ------- | -------------------------------------- | ------------- |
+| tokenstamp | Date    | DATE, NULL                             | NULL          |
+| variant    | Integer | 1, 2, NULL                             | NULL          |
+| quantity   | Integer | 1, 2, NULL                             | NULL          |
+| heap_1     | Integer | 0-N                                    | 0             |
+| heap_2     | Integer | 0-N                                    | 0             |
+| gateway    | Boolean | TRUE, FALSE                            | TRUE          |
+| notify     | Boolean | TRUE, FALSE                            | TRUEokt       |
+
+### Token
+
+| Key   | Type   | Values  | Default value |
+| ----- | ------ | ------- | ------------- |
+| token | String | {token} | {token}       |
 
 
 # Settings
@@ -27,7 +57,7 @@ The application has a local storage cache and application thread. The purpose of
 ```javascript
 set_notify();
 ```
-Turn on or off the notification sound for your device.
+Turn on or off the notification sounds for your device.
 
 
 # Hotkeys
@@ -61,25 +91,32 @@ To keep the project clean, please strive to forfill the following:
 ## General
 
 * Tabs are two spaces.
-* ID attribute has first priority.
-* Class attribute has second priority.
-* All other attributes are attached in a alphabetical order.
+* ID attribute has first priority on a element.
+* Class attribute has second priority on a element.
+  * All other attributes are attached in a alphabetical order.
 
 ## CSS
 
 * Keep class names consitent
+* A components name should be as descriptive as possible
 * -element is a element in a component
 * _state is a state
 * Use data attributes where applicable
 
 Example selectors:
 ```css
-.review.-cancel:not(.process):disabled + .-gate
+.review.-cancel:not(._processing):disabled + .-gate
 ```
 
 ## Tools
 
-* Node.js & Express
-* Body Parser
-* Node.js MySQL
-* Socket.io
+* [Node.js](https://nodejs.org/en/)
+* [Express](https://expressjs.com/)
+* [Body Parser](https://github.com/expressjs/body-parser)
+* [MySQL](https://github.com/mysqljs/mysql)
+* [Socket.io](https://socket.io/)
+
+
+
+# Contribute
+[CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)
