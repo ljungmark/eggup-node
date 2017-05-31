@@ -298,7 +298,7 @@ Eggup.prototype.synchronize = function() {
               left_hardboiled = (json.softboiled + json.hardboiled) - (left_softboiled + left_diff);
 
             instance.load('cooking');
-            instance.start(left_softboiled, left_hardboiled);
+            instance.start(left_softboiled, left_hardboiled, json.softboiled, json.hardboiled);
           }
 
         } else if (json.lockdate) {
@@ -327,7 +327,6 @@ Eggup.prototype.synchronize = function() {
 
   console.log('%c Eggup power! ', [
     'background: linear-gradient(-180deg, #44b1e8, #3098de)',
-    'border: #3e0e02 1px solid',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
     'color: white',
@@ -340,11 +339,24 @@ Eggup.prototype.synchronize = function() {
     'text-shadow: 0 -1px 0 rgba(0,0,0,.12)'
   ].join(';'));
 
-  console.log('%c by @ljungmark (https://www.github.com/ljungmark) ', [,
+  console.log('%c by @ljungmark, 2017 ', [,
     'font-size: 20px',
-    'font-weight: bold',
-    'line-height: 30px',
-    'padding: 10px'
+    'font-weight: bold'
+  ].join(';'));
+
+  console.log('%c  https://www.github.com/ljungmark ', [,
+    'font-size: 11px',
+    'font-weight: bold'
+  ].join(';'));
+
+  console.log('%c  https://www.twitter.com/ljungmark ', [,
+    'font-size: 11px',
+    'font-weight: bold'
+  ].join(';'));
+
+  console.log('%c  https://m.me/ljungmark ', [,
+    'font-size: 11px',
+    'font-weight: bold'
   ].join(';'));
 }
 
@@ -597,7 +609,7 @@ function Countdown(duration, granularity) {
   this.functions = [];
 }
 
-Countdown.prototype.start = function(soft, hard) {
+Countdown.prototype.start = function(soft, hard, start_soft = 240, start_hard = 270) {
   let start = Date.now(),
     instance = this,
     difference, object;
@@ -619,9 +631,9 @@ Countdown.prototype.start = function(soft, hard) {
       eggup.load('docket');
     }
 
-    let soft_bar = ((soft - (difference - hard)) / soft) * 100,
+    let soft_bar = ((start_soft - (difference - start_hard)) / start_soft) * 100,
       soft_percent = soft_bar.toFixed(1),
-      hard_bar = ((soft + hard) - difference) / (soft + hard) * 100,
+      hard_bar = ((start_soft + start_hard) - difference) / (start_soft + start_hard) * 100,
       hard_percent = hard_bar.toFixed(1);
 
     const bar_variant_1 = document.querySelector('.progress-bar__variant_1'),

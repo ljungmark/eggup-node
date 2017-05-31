@@ -177,15 +177,22 @@ h2 {
 }
 
 .initiate .-instructions {
-  background: #f6f7f9;
-  border-bottom: 1px dashed rgba(225, 226, 227, 0.55);
+  background: #e8e9eb;
+  border-bottom: 1px solid #d2d2d3;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
   margin: 0;
-  margin-bottom: 10px;
   padding: 20px;
 }
 
 .initiate .-timers {
+  background: #f5f5f7;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-top: #ffffff 1px solid;
+  height: 100%;;
   padding: 20px;
+  width: calc(100% - 40px);
 }
 
 .initiate h2 {
@@ -200,10 +207,10 @@ h2 {
 
 .lockdown {
   background:
-    linear-gradient(to right, #f6f7f9 0, transparent 6px) left repeat-y,
-    linear-gradient(to left, #f6f7f9 0, transparent 6px) right repeat-y,
-    linear-gradient(to top, #f6f7f9 0, transparent 6px) bottom repeat-x,
-    repeating-linear-gradient(135deg, #f6f7f9, #f6f7f9 15px, rgba(255, 0, 0, 0.05) 15px, rgba(255, 0, 0, 0.05) 30px);
+    linear-gradient(to right, #e8e9eb 0, transparent 6px) left repeat-y,
+    linear-gradient(to left, #e8e9eb 0, transparent 6px) right repeat-y,
+    linear-gradient(to top, #e8e9eb 0, transparent 6px) bottom repeat-x,
+    repeating-linear-gradient(135deg, #e8e9eb, #e8e9eb 15px, rgba(255, 0, 0, 0.05) 15px, rgba(255, 0, 0, 0.05) 30px);
   border-radius: 16px;
 }
 
@@ -1104,9 +1111,9 @@ h2 {
   }
 
   .initiate {
-    border: 2px solid #ffffff;
-    border-bottom: 3px solid #c3c3c3;
-    border-radius: 6px;
+    border-bottom: 2px solid #c3c3c3;
+    border-radius: 3px;
+    border-top: 1px solid #ffffff;
     box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.2);
     max-height: 0;
     max-width: 400px;
