@@ -92,6 +92,17 @@ function controller() {
   });
 }
 
+/**
+  Update notify setting
+*/
+function set_notify(knob = false) {
+  console.log(knob);
+  let thread = JSON.parse(localStorage.getItem('thread'));
+  eggup.thread.notify = knob;
+  thread.notify = eggup.thread.notify;
+  localStorage.setItem('thread', JSON.stringify(thread));
+}
+
 
 /**
   Object.watch polyfill
@@ -201,7 +212,8 @@ const Eggup = function() {
       'quantity': null,
       'heap_1': 0,
       'heap_2': 0,
-      'gateway': true
+      'gateway': true,
+      'notify': false
     };
 
     localStorage.setItem('thread', JSON.stringify(thread));
@@ -325,12 +337,13 @@ Eggup.prototype.synchronize = function() {
     });
   });
 
-  console.log('%c Eggup power! ', [
+  console.log('%c Eggup 2.0 ', [
     'background: linear-gradient(-180deg, #44b1e8, #3098de)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
     'color: white',
     'display: block',
+    'font-family: "Roboto Slab", serif',
     'font-size: 40px',
     'font-weight: bold',
     'line-height: 80px',
@@ -339,24 +352,48 @@ Eggup.prototype.synchronize = function() {
     'text-shadow: 0 -1px 0 rgba(0,0,0,.12)'
   ].join(';'));
 
-  console.log('%c by @ljungmark, 2017 ', [,
+  console.log('%c  by @ljungmark, 2017 ', [,
+    'font-family: "Roboto Slab", serif',
     'font-size: 20px',
     'font-weight: bold'
   ].join(';'));
 
-  console.log('%c  https://www.github.com/ljungmark ', [,
-    'font-size: 11px',
+  console.log('%c   https://www.github.com/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
     'font-weight: bold'
   ].join(';'));
 
-  console.log('%c  https://www.twitter.com/ljungmark ', [,
-    'font-size: 11px',
+  console.log('%c   https://www.twitter.com/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
     'font-weight: bold'
   ].join(';'));
 
-  console.log('%c  https://m.me/ljungmark ', [,
-    'font-size: 11px',
+  console.log('%c   https://m.me/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
     'font-weight: bold'
+  ].join(';'));
+
+  console.log('%c 2017 Ljungmark, CC BY-NC-SA 3.0 ', [,
+    'background: linear-gradient(-180deg, #FB7928, #EE5B32)',
+    'border-radius: 3px',
+    'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
+    'color: white',
+    'display: block',
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
+    'line-height: 30px',
+    'margin-left: 8px',
+    'padding: 3px 4px',
+    'text-align: center',
+    'text-shadow: 0 -1px 0 rgba(0,0,0,.12)'
+  ].join(';'));
+
+  console.log('%c   (https://creativecommons.org/licenses/by-nc-sa/3.0/) ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 11px'
   ].join(';'));
 }
 
@@ -584,7 +621,9 @@ Eggup.prototype.start = function(soft = 270, hard = 240) {
 
 
 Eggup.prototype.notify = function(sound = null) {
-  if (sound !== null && ['done', 'start'].includes(sound)) {
+  const instance = this;
+
+  if (instance.thread.notify && sound !== null && ['done', 'start'].includes(sound)) {
     const audio = document.querySelector('.audio'),
       source = document.querySelector('.audio-source');
 
@@ -622,7 +661,16 @@ Countdown.prototype.start = function(soft, hard, start_soft = 240, start_hard = 
       current_hard = ((soft + hard) - ((soft + hard) - difference));
 
     if (current_soft == 3 && eggup.thread.variant == '1') eggup.notify('done');
-    if (current_hard == 3 && eggup.thread.variant == '2') eggup.notify('done');
+
+    if (current_hard == 3) {
+      controller().then(function(result) {
+        if (result) {
+          eggup.notify('done');
+        } else if (!result && eggup.thread.variant == '2') {
+          eggup.notify('done');
+        }
+      });
+    }
 
     if (difference > 0) {
       setTimeout(runtime, (instance.granularity - 1) - (date % (instance.granularity - 1)));
