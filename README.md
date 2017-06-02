@@ -4,6 +4,7 @@ Eggup Node
 
 * [About the app](#user-content-about-the-app)
   * [Technical](#user-content-technical)
+    * [State management](#user-content-state-management)
     * [Cache](#user-content-cache)
     * [Thread](#user-content-thread)
     * [Token](#user-content-token)
@@ -22,6 +23,8 @@ This app is used by the office to order eggs in the morning.
 
 
 ## Technical
+
+### State management
 
 The application has a local storage cache and application thread. The purpose of the thread is to keep a application state so even if a user reloads their applicaiton, the state will be persitent. On each load, a syncronization with the server is performed, providing the latest state to the client.
 
