@@ -96,11 +96,10 @@ function controller() {
   Update notify setting
 */
 function set_notify(knob = false) {
-  console.log(knob);
-  let thread = JSON.parse(localStorage.getItem('thread'));
-  eggup.thread.notify = knob;
-  thread.notify = eggup.thread.notify;
-  localStorage.setItem('thread', JSON.stringify(thread));
+  let cache = JSON.parse(localStorage.getItem('cache'));
+  eggup.cache.notify = knob;
+  cache.notify = eggup.cache.notify;
+  localStorage.setItem('cache', JSON.stringify(cache));
 }
 
 
@@ -185,7 +184,7 @@ const Eggup = function() {
     }
   */
   instance.cache = JSON.parse(localStorage.getItem('cache')) || (function() {
-    const cache =  { 'variant': 'Löskokt', 'quantity': 1 };
+    const cache =  { 'variant': 'Löskokt', 'quantity': 1, 'notify': true };
 
     localStorage.setItem('cache', JSON.stringify(cache));
 
@@ -212,8 +211,7 @@ const Eggup = function() {
       'quantity': null,
       'heap_1': 0,
       'heap_2': 0,
-      'gateway': true,
-      'notify': false
+      'gateway': true
     };
 
     localStorage.setItem('thread', JSON.stringify(thread));
@@ -623,7 +621,7 @@ Eggup.prototype.start = function(soft = 270, hard = 240) {
 Eggup.prototype.notify = function(sound = null) {
   const instance = this;
 
-  if (instance.thread.notify && sound !== null && ['done', 'start'].includes(sound)) {
+  if (instance.cache.notify && sound !== null && ['done', 'start'].includes(sound)) {
     const audio = document.querySelector('.audio'),
       source = document.querySelector('.audio-source');
 
@@ -843,7 +841,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     variant_element.value = variant_value;
 
-    const cache =  { 'variant': variant_value, 'quantity': quantity_value };
+    const cache =  { 'variant': variant_value, 'quantity': quantity_value, 'notify': eggup.cache.notify };
 
     eggup.cache = cache;
     localStorage.setItem('cache', JSON.stringify(cache));
@@ -906,7 +904,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     variant_element.value = variant_value;
 
-    const cache =  { 'variant': variant_value, 'quantity': quantity_value };
+    const cache =  { 'variant': variant_value, 'quantity': quantity_value, 'notify': eggup.cache.notify };
 
     eggup.cache = cache;
     localStorage.setItem('cache', JSON.stringify(cache));
@@ -998,7 +996,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 variant_element.value = variant_value;
 
-                const cache =  { 'variant': variant_value, 'quantity': quantity_value };
+                const cache =  { 'variant': variant_value, 'quantity': quantity_value, 'notify': eggup.cache.noti };
 
                 eggup.cache = cache;
                 localStorage.setItem('cache', JSON.stringify(cache));

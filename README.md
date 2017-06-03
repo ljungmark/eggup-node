@@ -8,6 +8,7 @@ Eggup Node
     * [Cache](#user-content-cache)
     * [Thread](#user-content-thread)
     * [Token](#user-content-token)
+    * [Environment](#user-content-environment)
 * [Settings](#user-content-settings)
 * [Hotkeys](#user-content-hotkeys)
 * [Contribute](#user-content-contribute)
@@ -53,6 +54,11 @@ The application has a local storage cache and application thread. The purpose of
 | Key   | Type   | Values  | Default value |
 | ----- | ------ | ------- | ------------- |
 | token | String | {token} | {token}       |
+
+### Environment
+
+* [Nginx Reverse Proxy](https://nginx.org/en/)
+* [pm2](http://pm2.keymetrics.io/)
 
 
 # Settings
@@ -118,6 +124,7 @@ Example selectors:
 * [Body Parser](https://github.com/expressjs/body-parser)
 * [MySQL](https://github.com/mysqljs/mysql)
 * [Socket.io](https://socket.io/)
+* [Path](https://nodejs.org/api/path.html)
 
 
 

@@ -10,7 +10,7 @@ const path = require('path'),
 
   /**
     Map static resources
-    Static resources should be stored in the 'public' folder
+    Static resources should be stored in the 'static' folder
   */
   app.use('/styles', express.static(path.join(__dirname, 'static/')));
   app.use('/scripts', express.static(path.join(__dirname, 'static/')));
