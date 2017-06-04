@@ -744,6 +744,9 @@ Countdown.format = function(difference, minutes, seconds) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
+  /**
+   * Eggup is attached to window since we want it globally accessible and we'll never run more than one instance
+   */
   window.eggup = new Eggup();
 
   socket.on('gateway', function(action) {
@@ -1041,10 +1044,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (eq(sequence, sequences[sequence_index])) {
               const body = document.querySelector('body');
 
-              if (body.classList.contains('party')) {
-                body.classList.remove('party');
+              if (body.classList.contains('_party')) {
+                body.classList.remove('_party');
               } else {
-                body.classList.add('party');
+                body.classList.add('_party');
               }
 
               sequence = [];

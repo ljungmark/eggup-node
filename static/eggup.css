@@ -842,19 +842,43 @@ h2 {
 .albin {
   display: none;
   left: 50%;
+  opacity: 0;
   position: absolute;
   top: 50%;
   transform: translate(-190px, -255px);
-  transition: all 0.4s;
+  transition: all 1000ms;
 }
 
-.party .albin {
+._party .albin {
+  animation-duration: 2500ms;
+  animation-fill-mode: backwards;
+  animation-iteration-count: infinite;
+  animation-name: albin-swing;
   left: 50%;
+  opacity: 1;
   position: absolute;
   top: 50%;
   transform: translate(-190px, -321px);
+  transition: opacity 250ms;
 }
 
+@keyframes albin-swing {
+  20% {
+    transform: translate(-190px, -321px) rotate(4deg);
+  }
+  40% {
+    transform: translate(-190px, -318px) rotate(-2deg);
+  }
+  60% {
+    transform: translate(-190px, -321px) rotate(2deg);
+  }
+  80% {
+    transform: translate(-190px, -320px) rotate(-3deg);
+  }
+  100% {
+    transform: translate(-190px, -321px) rotate(0deg);
+  }
+}
 
 /**
   DESKTOP
@@ -1458,11 +1482,11 @@ h2 {
     }
   }
 
-  .party {
+  ._party {
     animation: party 5s infinite;
   }
 
-  .party main {
+  ._party main {
     animation: partycontainer 0.5s infinite;
     animation-timing-function: ease-in-out;
     transform-origin: -25% -25%;
