@@ -32,30 +32,32 @@ The application has a local storage cache and application thread. The purpose of
 
 ### Cache
 
-| Key      | Type    | Values                                 | Default value |
-| -------- | ------- | -------------------------------------- | ------------- |
-| variant  | String  | Löskokt, Löskokta, Hårdkokt, Hårdkokta | Löskokt       |
-| quantity | Integer | 1, 2                                   | 1             |
+| Key      | Type    | Values                                 | Default value | Description                       |
+| -------- | ------- | -------------------------------------- | ------------- | --------------------------------- |
+| variant  | String  | Löskokt, Löskokta, Hårdkokt, Hårdkokta | Löskokt       | What variant does the user perfer |
+| quantity | Integer | 1, 2                                   | 1             | What quanity does the user perfer |
+| notify   | Boolean | TRUE, FALSE                            | TRUE          | Receive sound notifications       |
 
 ### Thread
 
-| Key        | Type    | Values                                 | Default value |
-| ---------- | ------- | -------------------------------------- | ------------- |
-| tokenstamp | Date    | DATE, NULL                             | NULL          |
-| variant    | Integer | 1, 2, NULL                             | NULL          |
-| quantity   | Integer | 1, 2, NULL                             | NULL          |
-| heap_1     | Integer | 0-N                                    | 0             |
-| heap_2     | Integer | 0-N                                    | 0             |
-| gateway    | Boolean | TRUE, FALSE                            | TRUE          |
-| notify     | Boolean | TRUE, FALSE                            | TRUEokt       |
+| Key        | Type    | Values                                 | Default value | Description                                  |
+| ---------- | ------- | -------------------------------------- | ------------- | -------------------------------------------- |
+| tokenstamp | Date    | DATE, NULL                             | NULL          | At which date was the user's order requested |
+| variant    | Integer | 1, 2, NULL                             | NULL          | User's perfered variant                      |
+| quantity   | Integer | 1, 2, NULL                             | NULL          | User's perfered quantity                     |
+| heap_1     | Integer | 0-N                                    | 0             | Egg pool for soft boiled eggs                |
+| heap_2     | Integer | 0-N                                    | 0             | Egg pool for hard boiled eggs                |
+| gateway    | Boolean | TRUE, FALSE                            | TRUE          | Can new orders be requested?                 |
 
 ### Token
 
-| Key   | Type   | Values  | Default value |
-| ----- | ------ | ------- | ------------- |
-| token | String | {token} | {token}       |
+| Key   | Type   | Values  | Default value | Description                    |
+| ----- | ------ | ------- | ------------- | ------------------------------ |
+| token | String | {token} | {token}       | User's unique token identifier |
 
 ### Environment
+
+The application is runned on a Ubuntu machine with Nginx and Process Manager 2. Given that there are other application (that is not built on Nodejs) on the same IP address, a reverse proxy is utilized for routing.
 
 * [Nginx Reverse Proxy](https://nginx.org/en/)
 * [pm2](http://pm2.keymetrics.io/)
@@ -66,7 +68,7 @@ The application has a local storage cache and application thread. The purpose of
 ```javascript
 set_notify();
 ```
-Turn on or off the notification sounds for your device.
+Turn on or off the notification sounds for your device. If this is set to true, the app will send a sound notification when your eggs are done (when soft boiled are done if that's what you chose, or when hard boiled are done if that's your perference). As a controller, you'll always get a sound for both soft- and hard boiled eggs.
 
 
 # Hotkeys

@@ -25,7 +25,7 @@
 /**
   Web sockets
 */
-var socket = io.connect();
+var socket = io.connect('http://127.0.0.1:1337');
 
 
 /**
@@ -134,6 +134,12 @@ const Eggup = function() {
 
     return false;
   }
+
+
+  /**
+    Clear any Eggup 1.0 legacy storage
+  */
+  if (localStorage.getItem('storedvalues')) localStorage.removeItem('storedvalues');
 
 
   /**
