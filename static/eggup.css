@@ -17,6 +17,10 @@ body::after {
   z-index: -1;
 }
 
+::selection {
+  background: transparent;
+}
+
 .background {
   height: auto;
   left: 50%;
@@ -246,6 +250,10 @@ h2 {
   text-align: center;
   transition: background-color 300ms linear;
   width: 100%;
+}
+
+.start-input::selection {
+  background: #ffb7b7;
 }
 
 .application--error .start-input {
@@ -652,10 +660,7 @@ h2 {
 
 .lock-button.locked {
   background-image: repeating-linear-gradient(135deg, #dadada, #dadada 15px, #c7c7c7 15px, #c7c7c7 30px);
-  box-shadow:
-    0 1px 0 0 rgba(138, 138, 138, 0.41),
-    inset 0 1px 0 0 #d0d0d0,
-    inset 0 -1px 0 0 rgba(183, 183, 183, 0.3);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.2);
   color: #616161;
 }
 
@@ -743,11 +748,8 @@ h2 {
 }
 
 .initiate-button:not(.process):disabled {
-  background-image: linear-gradient(-180deg, #e0e0e0, #c3c3c3);
-  box-shadow:
-    0 1px 0 0 rgba(214, 230, 255, 0.15),
-    inset 0 1px 0 0 rgba(46,86,153,.1),
-    inset 0 -1px 0 0 rgba(173, 173, 173, 0.4);
+  background-image: linear-gradient(-180deg, #b3b3b3, #9a9a9a);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.2);
   color: #f7f7f7;
 }
 
