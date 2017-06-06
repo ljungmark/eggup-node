@@ -187,7 +187,7 @@ const Eggup = function() {
       'language': 'sv',
       'notify': true,
       'quantity': 1,
-      'variant': 'Löskokt'
+      'variant': 1
     };
 
     localStorage.setItem('cache', JSON.stringify(cache));
@@ -265,7 +265,16 @@ Eggup.prototype.synchronize = function() {
   }).then(function(response) {
     return response.json().then(function(json) {
       document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
-      document.querySelector('.order-variant__data').value = JSON.parse(localStorage.getItem('cache'))['variant'];
+
+      if (JSON.parse(localStorage.getItem('cache'))['variant'] == 2 && JSON.parse(localStorage.getItem('cache'))['quantity'] == 1) {
+        document.querySelector('.order-variant__data').value = eggup.i18n('get', 'order.hardboiled.singular');
+      } else if (JSON.parse(localStorage.getItem('cache'))['variant'] == 2 && JSON.parse(localStorage.getItem('cache'))['quantity'] == 2) {
+        document.querySelector('.order-variant__data').value = eggup.i18n('get', 'order.hardboiled.plural');
+      } else if (JSON.parse(localStorage.getItem('cache'))['variant'] == 1 && JSON.parse(localStorage.getItem('cache'))['quantity'] == 1) {
+        document.querySelector('.order-variant__data').value = eggup.i18n('get', 'order.softboiled.singular');
+      } else {
+        document.querySelector('.order-variant__data').value = eggup.i18n('get', 'order.softboiled.plural');
+      }
 
       if (json['available']) {
         eggup.thread.tokenstamp = json.tokenstamp;
@@ -279,7 +288,7 @@ Eggup.prototype.synchronize = function() {
         if (json.quantity == 0) {
           instance.load('order');
         } else {
-          document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
+          document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${document.querySelector('.order-variant__data').value.toLowerCase()}`;
 
           document.querySelector('.review-text__total').innerHTML = parseInt(JSON.parse(localStorage.getItem('thread'))['heap_1']) + parseInt(JSON.parse(localStorage.getItem('thread'))['heap_2']);
           document.querySelector('.review-text__heap_1').innerHTML = JSON.parse(localStorage.getItem('thread'))['heap_1'] + (JSON.parse(localStorage.getItem('thread'))['heap_1'] == 1 ? ' löskokt' : ' löskokta');
@@ -912,7 +921,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let quantity_element = document.querySelector('.order-quantity__data'),
       variant_element = document.querySelector('.order-variant__data'),
       quantity_value = quantity_element.value,
-      variant_value = variant_element.value;
+      variant_value = eggup.cache.variant;
+      variant_text = quantity_element.value;
 
     /**
       Firefox specific hack to remove input caret:
@@ -933,17 +943,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (quantity_value == 1) {
       quantity_value = 2
-      if (variant_value == eggup.i18n('get', 'order.hardboiled.singular')) {
-        variant_value = eggup.i18n('get', 'order.hardboiled.plural');
+      if (variant_value == 2) {
+        variant_text = eggup.i18n('get', 'order.hardboiled.plural');
       } else {
-        variant_value = eggup.i18n('get', 'order.softboiled.plural');
+        variant_text = eggup.i18n('get', 'order.softboiled.plural');
       }
     } else {
       quantity_value = 1
-      if (variant_value == eggup.i18n('get', 'order.hardboiled.plural')) {
-        variant_value = eggup.i18n('get', 'order.hardboiled.singular');
+      if (variant_value == 2) {
+        variant_text = eggup.i18n('get', 'order.hardboiled.singular');
       } else {
-        variant_value = eggup.i18n('get', 'order.softboiled.singular');
+        variant_text = eggup.i18n('get', 'order.softboiled.singular');
       }
     }
 
@@ -965,7 +975,7 @@ document.addEventListener('DOMContentLoaded', function() {
       variant_element.classList.remove('swap');
     });
 
-    variant_element.value = variant_value;
+    variant_element.value = variant_text;
 
     const cache =  {
       'language': eggup.cache.language,
@@ -985,7 +995,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let quantity_element = document.querySelector('.order-quantity__data'),
       variant_element = document.querySelector('.order-variant__data'),
       quantity_value = quantity_element.value,
-      variant_value = variant_element.value;
+      variant_value = eggup.cache.variant;
+      variant_text = variant_element.value;
 
     /**
       Firefox specific hack to remove input caret:
@@ -1003,14 +1014,18 @@ document.addEventListener('DOMContentLoaded', function() {
       void variant_element.offsetWidth;
     }
 
-    if (variant_value == eggup.i18n('get', 'order.hardboiled.singular')) {
-      variant_value = eggup.i18n('get', 'order.softboiled.singular');
-    } else if (variant_value == eggup.i18n('get', 'order.hardboiled.plural')) {
-      variant_value = eggup.i18n('get', 'order.softboiled.plural');
-    } else if (variant_value == eggup.i18n('get', 'order.softboiled.singular')) {
-      variant_value = eggup.i18n('get', 'order.hardboiled.singular');
+    if (variant_value == 2 && quantity_value == 1) {
+      variant_text = eggup.i18n('get', 'order.softboiled.singular');
+      variant_value = 1;
+    } else if (variant_value == 2 && quantity_value == 2) {
+      variant_text = eggup.i18n('get', 'order.softboiled.plural');
+      variant_value = 1;
+    } else if (variant_value == 1 && quantity_value == 1) {
+      variant_text = eggup.i18n('get', 'order.hardboiled.singular');
+      variant_value = 2;
     } else {
-      variant_value = eggup.i18n('get', 'order.hardboiled.plural');
+      variant_text = eggup.i18n('get', 'order.hardboiled.plural');
+      variant_value = 2;
     }
 
     if (typeof quantity_value === 'undefined' || !quantity_value) {
@@ -1033,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', function() {
       variant_element.classList.remove('swap');
     })
 
-    variant_element.value = variant_value;
+    variant_element.value = variant_text;
 
     const cache =  {
       'language': eggup.cache.language,
@@ -1213,8 +1228,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const submit_button = document.querySelector('.order-button__submit'),
       quantity =document.querySelector('.order-quantity__data').value,
-      variant = document.querySelector('.order-variant__data').value;
-    let variant_data;
+      variant = document.querySelector('.order-variant__data').value,
+      variant_data = eggup.cache.variant;
 
     submit_button.classList.add('process');
     submit_button.disabled = true;
@@ -1223,20 +1238,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!quantity.length > 0
       || !variant.length > 0) {
 
-      eggup.error();
-
-      submit_button.classList.remove('process');
-      submit_button.disabled = false;
-
-      return false;
-    }
-
-    /** Convert variant into integer */
-    if (variant === eggup.i18n('get', 'order.softboiled.singular') || variant === eggup.i18n('get', 'order.softboiled.plural')) {
-      variant_data = 1;
-    } else if (variant === eggup.i18n('get', 'order.hardboiled.singular') || variant === eggup.i18n('get', 'order.hardboiled.plural')) {
-      variant_data = 2;
-    } else {
       eggup.error();
 
       submit_button.classList.remove('process');
@@ -1264,7 +1265,7 @@ document.addEventListener('DOMContentLoaded', function() {
     set_request.then((response) => {
       if (response['status'] == true) {
 
-        document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
+        document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${document.querySelector('.order-variant__data').value.toLowerCase()}`;
 
         eggup.thread.tokenstamp = get_date();
         eggup.thread.variant = variant_data;
