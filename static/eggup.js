@@ -4,6 +4,7 @@
   1. Helper Functions
     - get_date()
     - serialize()
+    - controller()
     - gateway()
     - Object.watch()
 
@@ -16,8 +17,10 @@
     - map
     - start
     - notify
+    - i18n
 
   4. DOMContentLoaded
+    - web sockets
     - event listeners
 */
 
@@ -25,7 +28,7 @@
 /**
   Web sockets
 */
-var socket = io.connect('http://127.0.0.1:1337');
+var socket = io.connect('');
 
 
 /**
@@ -92,16 +95,6 @@ function controller() {
   });
 }
 
-/**
-  Update notify setting
-*/
-function set_notify(knob = false) {
-  let cache = JSON.parse(localStorage.getItem('cache'));
-  eggup.cache.notify = knob;
-  cache.notify = eggup.cache.notify;
-  localStorage.setItem('cache', JSON.stringify(cache));
-}
-
 
 /**
   Object.watch polyfill
@@ -137,7 +130,7 @@ const Eggup = function() {
 
 
   /**
-    Clear any Eggup 1.0 legacy storage
+    Clear Eggup 1.0 legacy storage
   */
   if (localStorage.getItem('storedvalues')) localStorage.removeItem('storedvalues');
 
@@ -190,7 +183,12 @@ const Eggup = function() {
     }
   */
   instance.cache = JSON.parse(localStorage.getItem('cache')) || (function() {
-    const cache =  { 'variant': 'Löskokt', 'quantity': 1, 'notify': true };
+    const cache =  {
+      'language': 'sv',
+      'notify': true,
+      'quantity': 1,
+      'variant': 'Löskokt'
+    };
 
     localStorage.setItem('cache', JSON.stringify(cache));
 
@@ -252,8 +250,8 @@ const Eggup = function() {
 
 
 /**
-  Eggup.prototype.synchronize: Syncronize the local application with the server
-*/
+ * Eggup.prototype.synchronize: Syncronize the local application with the server
+ */
 Eggup.prototype.synchronize = function() {
   const instance = this,
     token = JSON.parse(localStorage.getItem('token'));
@@ -334,9 +332,6 @@ Eggup.prototype.synchronize = function() {
           instance.gateway('lock');
           instance.load('review');
         }
-
-        /** Show when the eggs were started */
-        //document.querySelector('.module-closed__timer').innerHTML = json['date'].slice(11,16);
       }
     });
   });
@@ -403,22 +398,22 @@ Eggup.prototype.synchronize = function() {
 
 
 /**
-  Eggup.prototype.load: Load a specific module
-
-  Example:
-  eggup.load('docket');
-*/
+ * Eggup.prototype.load: Load a specific module
+ *
+ * Example:
+ * eggup.load('docket');
+ */
 Eggup.prototype.load = function(target_module) {
   const instance = this;
   const current_module = instance.module;
 
 
   /**
-    Open popup if the URL contains #start and the application has an open gateway
-    or if the user is the author of the closed gate.
-
-    Otherwise, remove the #start from the URL
-  */
+   * Open popup if the URL contains #start and the application has an open gateway
+   * or if the user is the author of the closed gate.
+   *
+   * Otherwise, remove the #start from the URL
+   */
   if (window.location.hash == '#start') {
     controller().then(function(result) {
       if (current_module == 'init'
@@ -459,10 +454,10 @@ Eggup.prototype.load = function(target_module) {
     target_module_index = module_array.indexOf(target_module);
 
   /**
-    Deny load if the target is the same as current module,
-    if the target module doesn't exist
-    or if the application is closed
-  */
+   * Deny load if the target is the same as current module,
+   * if the target module doesn't exist
+   * or if the application is closed
+   */
   if (target_module_index == current_module_index
     || target_module_index == -1
     || current_module === 'closed') {
@@ -511,8 +506,8 @@ Eggup.prototype.load = function(target_module) {
 
 
 /**
-  Eggup.prototype.error: Visual feedback to indicate an error in the application
-*/
+ * Eggup.prototype.error: Visual feedback to indicate an error in the application
+ */
 Eggup.prototype.error = function() {
   const instance = this;
   let current_module;
@@ -545,9 +540,9 @@ Eggup.prototype.error = function() {
 
 
 /**
-  Eggup.prototype.map: Remap application when needed
-  Usually triggered inside eggup.load() to match current module
-*/
+ * Eggup.prototype.map: Remap application when needed
+ * Usually triggered inside eggup.load() to match current module
+ */
 Eggup.prototype.map = function(node) {
   current_node = 0;
 
@@ -572,8 +567,8 @@ Eggup.prototype.map = function(node) {
 
 
 /**
-  Update UI to reflect gateway status
-*/
+ * Update UI to reflect gateway status
+ */
 Eggup.prototype.gateway = function(action) {
   const instance = this,
     review_button = document.querySelector('.review-button__cancel'),
@@ -634,6 +629,76 @@ Eggup.prototype.notify = function(sound = null) {
     source.src = `assets/${sound}.mp3`;
     audio.load();
     audio.play();
+  }
+
+  return false;
+};
+
+
+Eggup.prototype.settings = function(setting = null, value = null) {
+  const instance = this;
+
+  if (setting === 'notify') {
+    let cache = JSON.parse(localStorage.getItem('cache'));
+    eggup.cache.notify = value;
+    cache.notify = eggup.cache.notify;
+    localStorage.setItem('cache', JSON.stringify(cache));
+
+    return true;
+  }
+
+  return false;
+};
+
+
+Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
+  if (!pointer) return false;
+
+  const instance = this,
+    language = instance.cache.language;
+
+  let langmap = {
+      'en' : {
+        'map': {
+          '1': 'Order eggs',
+          '2': 'Preparing',
+          '3': 'Boiling',
+          '4': 'All done',
+        }
+      },
+      'sv' : {
+        'map': {
+          '1': 'Beställ ägg',
+          '2': 'Invänta kokning',
+          '3': 'Äggen kokar',
+          '4': 'Klart',
+        }
+      }
+    };
+
+  if (operation === 'set' && ['sv', 'en'].includes(pointer)) {
+    let cache = JSON.parse(localStorage.getItem('cache'));
+    eggup.cache.language = pointer;
+    cache.language = eggup.cache.language;
+    localStorage.setItem('cache', JSON.stringify(cache));
+
+    return true;
+
+  } else if (operation === 'get') {
+    /** Construct path to langmap */
+    pointer = (language + '.' + pointer).split('.');
+
+    /** Iterate through langmap to find the translation string */
+    for (let index = 0, n = pointer.length; index < n; ++index) {
+      let key = pointer[index];
+      if (key in langmap) {
+        langmap = langmap[key];
+      } else {
+        return false;
+      }
+    }
+
+    return langmap;
   }
 
   return false;
@@ -850,7 +915,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     variant_element.value = variant_value;
 
-    const cache =  { 'variant': variant_value, 'quantity': quantity_value, 'notify': eggup.cache.notify };
+    const cache =  {
+      'language': eggup.cache.language,
+      'notify': eggup.cache.notify,
+      'quantity': quantity_value,
+      'variant': variant_value
+    };
 
     eggup.cache = cache;
     localStorage.setItem('cache', JSON.stringify(cache));
@@ -913,7 +983,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     variant_element.value = variant_value;
 
-    const cache =  { 'variant': variant_value, 'quantity': quantity_value, 'notify': eggup.cache.notify };
+    const cache =  {
+      'language': eggup.cache.language,
+      'notify': eggup.cache.notify,
+      'quantity': quantity_value,
+      'variant': variant_value,
+    };
 
     eggup.cache = cache;
     localStorage.setItem('cache', JSON.stringify(cache));
@@ -1005,7 +1080,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 variant_element.value = variant_value;
 
-                const cache =  { 'variant': variant_value, 'quantity': quantity_value, 'notify': eggup.cache.noti };
+                const cache =  {
+                  'language': eggup.cache.language,
+                  'notify': eggup.cache.notify,
+                  'quantity': quantity_value,
+                  'variant': variant_value
+                };
 
                 eggup.cache = cache;
                 localStorage.setItem('cache', JSON.stringify(cache));

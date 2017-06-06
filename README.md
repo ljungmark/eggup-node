@@ -3,6 +3,7 @@ Eggup Node
 
 
 * [About the app](#user-content-about-the-app)
+  * [Modules](#user-content-modules)
   * [Technical](#user-content-technical)
     * [State management](#user-content-state-management)
     * [Cache](#user-content-cache)
@@ -14,6 +15,7 @@ Eggup Node
 * [Contribute](#user-content-contribute)
   * [General](#user-content-general)
   * [CSS](#user-content-js)
+  * [Comments](#user-content-comments)
   * [Tools](#user-content-tools)
 * [License](#user-content-license)
 
@@ -21,6 +23,14 @@ Eggup Node
 # About the app
 
 This app is used by the office to order eggs in the morning.
+
+
+## Technical
+* Init
+* Order
+* Review
+* Cooking
+* Docket
 
 
 ## Technical
@@ -66,7 +76,7 @@ The application is runned on a Ubuntu machine with Nginx and Process Manager 2. 
 # Settings
 
 ```javascript
-set_notify();
+eggup.settings('notify', false);
 ```
 Turn on or off the notification sounds for your device. If this is set to true, the app will send a sound notification when your eggs are done (when soft boiled are done if that's what you chose, or when hard boiled are done if that's your perference). As a controller, you'll always get a sound for both soft- and hard boiled eggs.
 
@@ -96,7 +106,7 @@ The actions differ depending on the current module.
 
 # Contribute
 
-I welcome any contribution that you can think off. Just fork the code, make your changes and then pull request back again.
+To contribute to this project; fork the code, make your changes and then create a pull request detailing the changes and their pros.
 To keep the project clean, please strive to forfill the following:
 
 ## General
@@ -113,10 +123,25 @@ To keep the project clean, please strive to forfill the following:
 * -element is a element in a component
 * _state is a state
 * Use data attributes where applicable
+* CSS properties are in alphabetical order
 
 Example selectors:
 ```css
 .review.-cancel:not(._processing):disabled + .-gate
+```
+
+## Comments
+
+Inline comments:
+```js
+/** Comment */
+```
+
+Multi-line comments:
+```js
+/**
+ * Comment
+ */
 ```
 
 ## Tools
@@ -130,5 +155,5 @@ Example selectors:
 
 
 
-# Contribute
+# License
 [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)
