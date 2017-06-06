@@ -652,26 +652,51 @@ Eggup.prototype.settings = function(setting = null, value = null) {
 
 
 Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
-  if (!pointer) return false;
-
   const instance = this,
-    language = instance.cache.language;
-
-  let langmap = {
+    language = instance.cache.language,
+    translations = {
+      /** English */
       'en' : {
         'map': {
           '1': 'Order eggs',
           '2': 'Preparing',
           '3': 'Boiling',
           '4': 'All done',
+        },
+        'order': {
+          'quantity': '# of eggs',
+          'variant': 'Boiling time',
+          'button': 'Order <img class="order-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAclBMVEUAAAAAAAAEBAQBAQEAAAAJCQliYmL///8AAACOjo7////p6eny8vIiIiL////4+Pj///9DQ0Pw8PD///+2tranp6f////Gxsb+/v739/f7+/vs7Oz39/fj4+Ph4eH19fXy8vJubm5GRkYjIyOgoKD////gy5wGAAAAJXRSTlMPABQdJRkUBAQZ+hwTEALAJBMiHhwaFRL008+xqZ2YkowzLCQj8f+kPwAAAK1JREFUGNNNkFkShCAMBQPIoiA6brPvw/2vODERyveTStOBCiDWOKmqqlLSUUdMYwsAeKA35pSGHK0cMXIo5K5MMipQCnB58JnHHRQr3Q6bCbqw1NUssvdqUpNSuvzYo5wSp+O2BcyDvfObCV28bobWBzBI6vLG9UsVyTGzu+KKxGYxo9qCCAb2MQH3jd7skY/IhPVzQbO3/KdxGSbTQmumYYmCGaph7Pt+DJa6P73VCGq32yoQAAAAAElFTkSuQmCC">',
+          'softboiled': {
+            'singular': 'Soft boiled',
+            'plural': 'Soft-boiled'
+          },
+          'hardboiled': {
+            'singular': 'Hard boiled',
+            'plural': 'Hard-boiled'
+          }
         }
       },
+      /** Swedish */
       'sv' : {
         'map': {
           '1': 'Beställ ägg',
           '2': 'Invänta kokning',
           '3': 'Äggen kokar',
           '4': 'Klart',
+        },
+        'order': {
+          'quantity': 'Antal ägg',
+          'variant': 'Koktid',
+          'button': 'Beställ <img class="order-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAclBMVEUAAAAAAAAEBAQBAQEAAAAJCQliYmL///8AAACOjo7////p6eny8vIiIiL////4+Pj///9DQ0Pw8PD///+2tranp6f////Gxsb+/v739/f7+/vs7Oz39/fj4+Ph4eH19fXy8vJubm5GRkYjIyOgoKD////gy5wGAAAAJXRSTlMPABQdJRkUBAQZ+hwTEALAJBMiHhwaFRL008+xqZ2YkowzLCQj8f+kPwAAAK1JREFUGNNNkFkShCAMBQPIoiA6brPvw/2vODERyveTStOBCiDWOKmqqlLSUUdMYwsAeKA35pSGHK0cMXIo5K5MMipQCnB58JnHHRQr3Q6bCbqw1NUssvdqUpNSuvzYo5wSp+O2BcyDvfObCV28bobWBzBI6vLG9UsVyTGzu+KKxGYxo9qCCAb2MQH3jd7skY/IhPVzQbO3/KdxGSbTQmumYYmCGaph7Pt+DJa6P73VCGq32yoQAAAAAElFTkSuQmCC">',
+          'softboiled': {
+            'singular': 'Löskokt',
+            'plural': 'Löskokta'
+          },
+          'hardboiled': {
+            'singular': 'Hårdkokt',
+            'plural': 'Hårdkokta'
+          }
         }
       }
     };
@@ -682,11 +707,16 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
     cache.language = eggup.cache.language;
     localStorage.setItem('cache', JSON.stringify(cache));
 
+    eggup.i18n('update');
+
     return true;
 
   } else if (operation === 'get') {
+    if (!pointer) return false;
+
+    let langmap = translations;
     /** Construct path to langmap */
-    pointer = (language + '.' + pointer).split('.');
+    pointer = (`${language}.${pointer}`).split('.');
 
     /** Iterate through langmap to find the translation string */
     for (let index = 0, n = pointer.length; index < n; ++index) {
@@ -699,6 +729,23 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
     }
 
     return langmap;
+
+  } else if (operation === 'update') {
+    /** Map */
+    document.querySelectorAll('.node')[0].setAttribute('data-desc', eggup.i18n('get', 'map.1'));
+    document.querySelectorAll('.node')[1].setAttribute('data-desc', eggup.i18n('get', 'map.2'));
+    document.querySelectorAll('.node')[2].setAttribute('data-desc', eggup.i18n('get', 'map.3'));
+    document.querySelectorAll('.node')[3].setAttribute('data-desc', eggup.i18n('get', 'map.4'));
+
+    /** Order */
+    document.querySelector('.order-quantity__label').textContent = eggup.i18n('get', 'order.quantity');
+    document.querySelector('.order-variant__label').textContent = eggup.i18n('get', 'order.variant');
+    document.querySelector('.order-button__submit').innerHTML = eggup.i18n('get', 'order.button');
+
+    /** WIP */
+    /** document.querySelector('.order-variant__data').value = (eggup.cache.quantity === 1) ? eggup.i18n('get', 'order.softboiled.singular') : eggup.i18n('get', 'order.softboiled.plural'); */
+
+    return true;
   }
 
   return false;
@@ -814,6 +861,11 @@ document.addEventListener('DOMContentLoaded', function() {
    */
   window.eggup = new Eggup();
 
+  /**
+   * Update DOM
+   */
+  eggup.i18n('update');
+
   socket.on('gateway', function(action) {
     let thread = JSON.parse(localStorage.getItem('thread'));
     eggup.thread.gateway = action;
@@ -881,17 +933,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (quantity_value == 1) {
       quantity_value = 2
-      if (variant_value == 'Hårdkokt') {
-        variant_value = 'Hårdkokta';
+      if (variant_value == eggup.i18n('get', 'order.hardboiled.singular')) {
+        variant_value = eggup.i18n('get', 'order.hardboiled.plural');
       } else {
-        variant_value = 'Löskokta';
+        variant_value = eggup.i18n('get', 'order.softboiled.plural');
       }
     } else {
       quantity_value = 1
-      if (variant_value == 'Hårdkokta') {
-        variant_value = 'Hårdkokt';
+      if (variant_value == eggup.i18n('get', 'order.hardboiled.plural')) {
+        variant_value = eggup.i18n('get', 'order.hardboiled.singular');
       } else {
-        variant_value = 'Löskokt';
+        variant_value = eggup.i18n('get', 'order.softboiled.singular');
       }
     }
 
@@ -951,14 +1003,14 @@ document.addEventListener('DOMContentLoaded', function() {
       void variant_element.offsetWidth;
     }
 
-    if (variant_value == 'Hårdkokt') {
-      variant_value = 'Löskokt';
-    } else if (variant_value == 'Hårdkokta') {
-      variant_value = 'Löskokta';
-    } else if (variant_value == 'Löskokt') {
-      variant_value = 'Hårdkokt';
+    if (variant_value == eggup.i18n('get', 'order.hardboiled.singular')) {
+      variant_value = eggup.i18n('get', 'order.softboiled.singular');
+    } else if (variant_value == eggup.i18n('get', 'order.hardboiled.plural')) {
+      variant_value = eggup.i18n('get', 'order.softboiled.plural');
+    } else if (variant_value == eggup.i18n('get', 'order.softboiled.singular')) {
+      variant_value = eggup.i18n('get', 'order.hardboiled.singular');
     } else {
-      variant_value = 'Hårdkokta';
+      variant_value = eggup.i18n('get', 'order.hardboiled.plural');
     }
 
     if (typeof quantity_value === 'undefined' || !quantity_value) {
@@ -1180,9 +1232,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /** Convert variant into integer */
-    if (variant === 'Löskokt' || variant === 'Löskokta') {
+    if (variant === eggup.i18n('get', 'order.softboiled.singular') || variant === eggup.i18n('get', 'order.softboiled.plural')) {
       variant_data = 1;
-    } else if (variant === 'Hårdkokt' || variant === 'Hårdkokta') {
+    } else if (variant === eggup.i18n('get', 'order.hardboiled.singular') || variant === eggup.i18n('get', 'order.hardboiled.plural')) {
       variant_data = 2;
     } else {
       eggup.error();

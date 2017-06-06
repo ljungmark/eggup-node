@@ -25,7 +25,7 @@ Eggup Node
 This app is used by the office to order eggs in the morning.
 
 
-## Technical
+## Modules
 * Init
 * Order
 * Review
