@@ -333,7 +333,7 @@ Eggup.prototype.synchronize = function() {
           document.querySelector('.lock-button').classList.add('locked');
 
           if (eggup.thread.quantity) {
-            document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${eggup.cache['variant'].toLowerCase()}`;
+            document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${document.querySelector('.order-variant__data').value.toLowerCase()}`;
           } else {
             document.querySelector('.review-text__order').innerHTML = `Du har inte beställt några`;
           }
@@ -678,11 +678,11 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'button': 'Order <img class="order-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAclBMVEUAAAAAAAAEBAQBAQEAAAAJCQliYmL///8AAACOjo7////p6eny8vIiIiL////4+Pj///9DQ0Pw8PD///+2tranp6f////Gxsb+/v739/f7+/vs7Oz39/fj4+Ph4eH19fXy8vJubm5GRkYjIyOgoKD////gy5wGAAAAJXRSTlMPABQdJRkUBAQZ+hwTEALAJBMiHhwaFRL008+xqZ2YkowzLCQj8f+kPwAAAK1JREFUGNNNkFkShCAMBQPIoiA6brPvw/2vODERyveTStOBCiDWOKmqqlLSUUdMYwsAeKA35pSGHK0cMXIo5K5MMipQCnB58JnHHRQr3Q6bCbqw1NUssvdqUpNSuvzYo5wSp+O2BcyDvfObCV28bobWBzBI6vLG9UsVyTGzu+KKxGYxo9qCCAb2MQH3jd7skY/IhPVzQbO3/KdxGSbTQmumYYmCGaph7Pt+DJa6P73VCGq32yoQAAAAAElFTkSuQmCC">',
           'softboiled': {
             'singular': 'Soft boiled',
-            'plural': 'Soft-boiled'
+            'plural': 'Soft boiled'
           },
           'hardboiled': {
             'singular': 'Hard boiled',
-            'plural': 'Hard-boiled'
+            'plural': 'Hard boiled'
           }
         }
       },
@@ -740,19 +740,28 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
     return langmap;
 
   } else if (operation === 'update') {
-    /** Map */
-    document.querySelectorAll('.node')[0].setAttribute('data-desc', eggup.i18n('get', 'map.1'));
-    document.querySelectorAll('.node')[1].setAttribute('data-desc', eggup.i18n('get', 'map.2'));
-    document.querySelectorAll('.node')[2].setAttribute('data-desc', eggup.i18n('get', 'map.3'));
-    document.querySelectorAll('.node')[3].setAttribute('data-desc', eggup.i18n('get', 'map.4'));
+    /** HTML Elements */
+    document.querySelectorAll('[data-lang]').forEach(function(element) {
+      let pointer = element.getAttribute('data-lang');
 
-    /** Order */
-    document.querySelector('.order-quantity__label').textContent = eggup.i18n('get', 'order.quantity');
-    document.querySelector('.order-variant__label').textContent = eggup.i18n('get', 'order.variant');
-    document.querySelector('.order-button__submit').innerHTML = eggup.i18n('get', 'order.button');
+      if (element.hasAttribute('data-lang-target')) {
+        element.setAttribute(element.getAttribute('data-lang-target'), eggup.i18n('get', pointer));
+      } else {
+        element.innerHTML = eggup.i18n('get', pointer);
+      }
+    });
 
-    /** WIP */
-    /** document.querySelector('.order-variant__data').value = (eggup.cache.quantity === 1) ? eggup.i18n('get', 'order.softboiled.singular') : eggup.i18n('get', 'order.softboiled.plural'); */
+    /** Variant text handled separately */
+    let variant_text = document.querySelector('.order-variant__data');
+    if (eggup.cache.quantity === 1 && eggup.cache.variant === 1) {
+      variant_text.value = eggup.i18n('get', 'order.softboiled.singular');
+    } else if (eggup.cache.quantity === 2 && eggup.cache.variant === 1) {
+      variant_text.value = eggup.i18n('get', 'order.softboiled.plural');
+    } else if (eggup.cache.quantity === 1 && eggup.cache.variant === 2) {
+      variant_text.value = eggup.i18n('get', 'order.hardboiled.singular');
+    } else {
+      variant_text.value = eggup.i18n('get', 'order.hardboiled.plural');
+    }
 
     return true;
   }

@@ -28,10 +28,10 @@
   <div class="wrapper">
     <main class="application">
       <div class="map">
-        <div class="node" data-desc="Beställ ägg">1</div>
-        <div class="node" data-desc="Invänta kokning">2</div>
-        <div class="node" data-desc="Äggen kokar">3</div>
-        <div class="node" data-desc="Klart">4</div>
+        <div class="node" data-lang="map.1" data-lang-target="data-desc" data-desc="">1</div>
+        <div class="node" data-lang="map.2" data-lang-target="data-desc" data-desc="">2</div>
+        <div class="node" data-lang="map.3" data-lang-target="data-desc" data-desc="">3</div>
+        <div class="node" data-lang="map.4" data-lang-target="data-desc" data-desc="">4</div>
       </div>
       <div class="container">
         <div class="module" data-module="init">
@@ -40,15 +40,15 @@
         <div class="module _hidden" data-module="order">
           <form class="order">
             <div class="order-quantity">
-              <label class="order-quantity__label" for="order-quantity__data">Antal ägg</label>
+              <label class="order-quantity__label" data-lang="order.quantity" for="order-quantity__data"></label>
               <input class="order-quantity__data" name="order-quantity__data" readonly="" tabindex="-1" type="text">
             </div>
             <div class="order-variant">
-              <label class="order-variant__label" for="order-variant__data">Koktid</label>
+              <label class="order-variant__label" data-lang="order.variant" for="order-variant__data"></label>
               <input class="order-variant__data" name="order-variant__data" readonly="" tabindex="-1" type="text">
             </div>
             <div class="order-buttons">
-              <button class="button order-button order-button__submit" tabindex="1" type="submit">Beställ <img class="order-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAclBMVEUAAAAAAAAEBAQBAQEAAAAJCQliYmL///8AAACOjo7////p6eny8vIiIiL////4+Pj///9DQ0Pw8PD///+2tranp6f////Gxsb+/v739/f7+/vs7Oz39/fj4+Ph4eH19fXy8vJubm5GRkYjIyOgoKD////gy5wGAAAAJXRSTlMPABQdJRkUBAQZ+hwTEALAJBMiHhwaFRL008+xqZ2YkowzLCQj8f+kPwAAAK1JREFUGNNNkFkShCAMBQPIoiA6brPvw/2vODERyveTStOBCiDWOKmqqlLSUUdMYwsAeKA35pSGHK0cMXIo5K5MMipQCnB58JnHHRQr3Q6bCbqw1NUssvdqUpNSuvzYo5wSp+O2BcyDvfObCV28bobWBzBI6vLG9UsVyTGzu+KKxGYxo9qCCAb2MQH3jd7skY/IhPVzQbO3/KdxGSbTQmumYYmCGaph7Pt+DJa6P73VCGq32yoQAAAAAElFTkSuQmCC"></button>
+              <button class="button order-button order-button__submit" data-lang="order.button" tabindex="1" type="submit"></button>
             </div>
           </form>
         </div>
