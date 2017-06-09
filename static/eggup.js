@@ -699,8 +699,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'gate': 'The cooking is commencing shortly and you cannot place or change any of todays orders! :)'
         },
         'boiling': {
-          'softboiled': 'Soft boiled:',
-          'hardboiled': 'Hard boiled:'
+          'softboiled': 'Soft boiled',
+          'hardboiled': 'Hard boiled',
+          'done': 'All done'
         },
         'docket': {
           'done': 'The eggs are done, enjoy!'
@@ -741,8 +742,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'gate': 'Äggkokning är på gång och du kan inte längre ändra dagens order! :)'
         },
         'boiling': {
-          'softboiled': 'Löskokta:',
-          'hardboiled': 'Hårdkokta:'
+          'softboiled': 'Löskokta',
+          'hardboiled': 'Hårdkokta',
+          'done': 'Färdiga'
         },
         'docket': {
           'done': 'Äggen är klara, hugg in!'
@@ -866,18 +868,18 @@ Countdown.prototype.start = function(soft, hard, start_soft = 240, start_hard = 
 
     if(soft_percent < 100) {
       bar_variant_1.style.width = `${soft_percent}%`;
-      bar_text_1.textContent =  `Löskokta: ${soft_percent}%`;
+      bar_text_1.textContent =  `${eggup.i18n('get', 'boiling.softboiled')}: ${soft_percent}%`;
     } else {
       bar_variant_1.style.width = `100%`;
-      bar_text_1.textContent = `Färdiga`;
+      bar_text_1.textContent = `${eggup.i18n('get', 'boiling.done')}`;
     }
 
     if(hard_percent < 100) {
       bar_variant_2.style.width = `${hard_percent}%`;
-      bar_text_2.textContent =  `Hårdkokta: ${hard_percent}%`;
+      bar_text_2.textContent =  `${eggup.i18n('get', 'boiling.hardboiled')}: ${hard_percent}%`;
     } else {
       bar_variant_2.style.width = `100%`;
-      bar_text_2.textContent = `Färdiga`;
+      bar_text_2.textContent = `${eggup.i18n('get', 'boiling.done')}`;
     }
 
     time = Countdown.parse(difference);
@@ -1144,7 +1146,7 @@ document.addEventListener('DOMContentLoaded', function() {
               if (eq(sequence, sequences[sequence_index])) {
                 const quantity_element = document.querySelector('.order-quantity__data'),
                   variant_element = document.querySelector('.order-variant__data');
-                let quantity_value, variant_value;
+                let quantity_value, variant_value, variant_data;
 
                 /**
                   Firefox specific hack to remove input caret:
@@ -1164,16 +1166,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (sequence_index === 0 || sequence_index === 4) {
                   quantity_value = 1;
-                  variant_value = 'Löskokt';
+                  variant_value = eggup.i18n('get', 'order.softboiled.singular');
+                  variant_data = 1;
                 } else if (sequence_index === 1 || sequence_index === 5) {
                   quantity_value = 1;
-                  variant_value = 'Hårdkokt';
+                  variant_value = eggup.i18n('get', 'order.hardboiled.singular');
+                  variant_data = 2;
                 } else if (sequence_index === 2 || sequence_index === 6) {
                   quantity_value = 2;
-                  variant_value = 'Löskokta';
+                  variant_value = eggup.i18n('get', 'order.softboiled.plural');
+                  variant_data = 1;
                 } else if (sequence_index === 3 || sequence_index === 7) {
                   quantity_value = 2;
-                  variant_value = 'Hårdkokta';
+                  variant_value = eggup.i18n('get', 'order.hardboiled.plural');
+                  variant_data = 2;
                 }
 
                 quantity_element.classList.add('swap');
@@ -1200,7 +1206,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   'language': eggup.cache.language,
                   'notify': eggup.cache.notify,
                   'quantity': quantity_value,
-                  'variant': variant_value
+                  'variant': variant_data
                 };
 
                 eggup.cache = cache;
