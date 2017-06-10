@@ -306,8 +306,6 @@ Eggup.prototype.synchronize = function() {
           let startdate = new Date(json.startdate),
             current_date = new Date();
 
-          /** Compensate for MySQL offset */
-          /** startdate.setMinutes(startdate.getMinutes() + 120); */
           /** Add timers */
           startdate.setSeconds(startdate.getSeconds() + json.softboiled + json.hardboiled);
 
@@ -320,8 +318,8 @@ Eggup.prototype.synchronize = function() {
               left_softboiled = (json.softboiled - left_diff < 0) ? 0 : json.softboiled - left_diff,
               left_hardboiled = (json.softboiled + json.hardboiled) - (left_softboiled + left_diff);
 
-            instance.load('cooking');
             instance.start(left_softboiled, left_hardboiled, json.softboiled, json.hardboiled);
+            instance.load('cooking');
           }
 
         } else if (json.lockdate) {
@@ -373,12 +371,6 @@ Eggup.prototype.synchronize = function() {
   ].join(';'));
 
   console.log('%c   https://www.twitter.com/ljungmark ', [,
-    'font-family: "Roboto Slab", serif',
-    'font-size: 13px',
-    'font-weight: bold'
-  ].join(';'));
-
-  console.log('%c   https://m.me/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
     'font-weight: bold'
@@ -611,7 +603,7 @@ Eggup.prototype.gateway = function(action) {
 }
 
 
-Eggup.prototype.start = function(soft = 270, hard = 240) {
+Eggup.prototype.start = function(soft = 270, hard = 240, start_soft = null, start_hard = null) {
   let timer = soft + hard,
     countdown = new Countdown(timer),
     time = Countdown.parse(timer);
@@ -624,7 +616,7 @@ Eggup.prototype.start = function(soft = 270, hard = 240) {
   document.querySelector('.progress-bar__variant_1').style.backgroundSize = `${barwidth}px ${barheight}px`;
   document.querySelector('.progress-bar__variant_2').style.backgroundSize = `${barwidth}px ${barheight}px`;
 
-  countdown.onTick(Countdown.format).start(soft, hard);
+  countdown.onTick(Countdown.format).start(soft, hard, start_soft, start_hard);
 };
 
 
@@ -830,6 +822,11 @@ Countdown.prototype.start = function(soft, hard, start_soft = 240, start_hard = 
     difference, object;
 
   (function runtime() {
+    const barwidth = document.querySelector('.progress-bar__v1').offsetWidth,
+      barheight = document.querySelector('.progress-bar__v1').offsetHeight;
+    document.querySelector('.progress-bar__variant_1').style.backgroundSize = `${barwidth}px ${barheight}px`;
+    document.querySelector('.progress-bar__variant_2').style.backgroundSize = `${barwidth}px ${barheight}px`;
+
     difference = instance.duration - (((Date.now() - start) / 1000) | 0)
     let date = Date.now();
 
