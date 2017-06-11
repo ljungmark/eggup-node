@@ -11,6 +11,7 @@ Eggup Node
     * [Token](#user-content-token)
     * [Environment](#user-content-environment)
 * [Settings](#user-content-settings)
+  * [i18n](#user-content-i18n)
 * [Hotkeys](#user-content-hotkeys)
 * [Contribute](#user-content-contribute)
   * [General](#user-content-general)
@@ -79,6 +80,24 @@ The application is runned on a Ubuntu machine with Nginx and Process Manager 2. 
 eggup.settings('notify', false);
 ```
 Turn on or off the notification sounds for your device. If this is set to true, the app will send a sound notification when your eggs are done (when soft boiled are done if that's what you chose, or when hard boiled are done if that's your perference). As a controller, you'll always get a sound for both soft- and hard boiled eggs.
+
+
+# i18n
+
+```javascript
+eggup.i18n('set', 'en');
+```
+Will change the application language internally. 'sv' and 'en' available.
+
+```javascript
+eggup.i18n('get', 'pointer.to.key');
+```
+Will get a translated string from the langmap.
+
+```javascript
+eggup.i18n('update');
+```
+Will update the DOM with whatever language is chosen internally. Is called within 'set'.
 
 
 # Hotkeys
