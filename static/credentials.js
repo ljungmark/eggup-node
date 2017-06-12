@@ -1,7 +1,8 @@
 const host = '',
   user = '',
   password = '',
-  database = '';
+  database = '',
+  secret = '';
 
 exports.host = host;
 exports.user = user;

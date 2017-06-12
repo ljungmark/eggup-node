@@ -5,8 +5,21 @@ const path = require('path'),
   app = express(),
   http = require('http').Server(app),
   io = require('socket.io')(http),
-  credentials = require('./static/credentials');
+  credentials = require('./static/credentials'),
+  passport = require('passport'),
+  Strategy = require('passport-facebook').Strategy;
 
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  passport.use(new Strategy({
+    clientID: '699933403531388',
+    clientSecret: credentials.secret,
+    callbackURL: ''
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    console.log(profile.id);
+  }));
 
   /**
     Map static resources
@@ -50,6 +63,15 @@ function get_date(date) {
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname + '/index.html'));
 });
+
+app.get('/auth/facebook',
+  passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/');
+  });
 
 
 /**

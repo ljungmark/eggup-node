@@ -119,5 +119,30 @@
   </audio>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
   <script src="scripts/eggup.js"></script>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: '699933403531388',
+        cookie: true,
+        xfbml: true,
+        version: 'v2.8'
+      });
+
+      FB.AppEvents.logPageView();
+
+      FB.getLoginStatus(function(response) {
+      });
+    };
+
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+
+      if (d.getElementById(id)) {return;}
+
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
 </body>
 </html>
