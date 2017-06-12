@@ -12,6 +12,14 @@ const path = require('path'),
   app.use(passport.initialize());
   app.use(passport.session());
 
+  passport.serializeUser(function(user, done) {
+    done(null, user);
+  });
+
+  passport.deserializeUser(function(user, done) {
+    done(null, user);
+  });
+
   passport.use(new Strategy({
     clientID: '699933403531388',
     clientSecret: credentials.secret,
