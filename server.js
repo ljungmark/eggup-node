@@ -7,7 +7,8 @@ const path = require('path'),
   io = require('socket.io')(http),
   credentials = require('./static/credentials'),
   passport = require('passport'),
-  Strategy = require('passport-facebook').Strategy;
+  Strategy = require('passport-facebook').Strategy,
+  expressSession = require('express-session');
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -23,11 +24,22 @@ const path = require('path'),
   passport.use(new Strategy({
     clientID: '699933403531388',
     clientSecret: credentials.secret,
-    callbackURL: ''
+    callbackURL: '',
+    enableProof: true
   },
-  function(accessToken, refreshToken, profile, cb) {
-    console.log(profile.id);
+  function(accessToken, refreshToken, profile, done) {
+    done(null, profile);
   }));
+
+  function checkAuthentication(request, response, next){
+    if (request.isAuthenticated()) {
+      console.log('next');
+      next();
+    } else {
+      console.log('fb');
+      response.redirect('/auth/facebook');
+    }
+  }
 
   /**
     Map static resources
@@ -68,18 +80,17 @@ function get_date(date) {
 
 
 /** ROUTING */
-app.get('/', (request, response) => {
+app.get('/', checkAuthentication, (request, response) => {
   response.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.get('/auth/facebook',
-  passport.authenticate('facebook'));
+app.get('/auth/facebook', passport.authenticate('facebook'));
 
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/' }),
+app.get('/auth/facebook/callback', passport.authenticate('facebook'),
   function(req, res) {
     res.redirect('/');
-  });
+  }
+);
 
 
 /**
