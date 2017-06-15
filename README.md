@@ -68,7 +68,7 @@ The application has a local storage cache and application thread. The purpose of
 
 ### Environment
 
-The application is runned on a Ubuntu machine with Nginx and Process Manager 2. Given that there are other application (that is not built on Nodejs) on the same IP address, a reverse proxy is utilized for routing.
+The application is runned on a Ubuntu machine with Nginx and Process Manager 2. Given that there are other applications (that is not built on Nodejs) on the same IP address, a reverse proxy is utilized for routing.
 
 * [Nginx Reverse Proxy](https://nginx.org/en/)
 * [pm2](http://pm2.keymetrics.io/)

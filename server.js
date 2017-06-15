@@ -10,8 +10,14 @@ const path = require('path'),
   passport = require('passport'),
   Strategy = require('passport-facebook').Strategy;
 
-  app.use(passport.initialize());
-  app.use(passport.session());
+  passport.use(new Strategy({
+    clientID: strategies.facebook.client,
+    clientSecret: strategies.facebook.secret,
+    callbackURL: strategies.facebook.callback
+  },
+  function(accessToken, refreshToken, profile, done) {
+    return done(null, profile);
+  }));
 
   passport.serializeUser(function(user, done) {
     done(null, user);
@@ -20,24 +26,6 @@ const path = require('path'),
   passport.deserializeUser(function(user, done) {
     done(null, user);
   });
-
-  passport.use(new Strategy({
-    clientID: strategies.facebook.client,
-    clientSecret: strategies.facebook.secret,
-    callbackURL: strategies.facebook.callback,
-    enableProof: true
-  },
-  function(accessToken, refreshToken, profile, done) {
-    done(null, profile);
-  }));
-
-  function checkAuthentication(request, response, next){
-    if (request.isAuthenticated()) {
-      next();
-    } else {
-      response.redirect('/auth/facebook');
-    }
-  }
 
   /**
     Map static resources
@@ -51,6 +39,12 @@ const path = require('path'),
     Use body-parser to interpret XHR bodies
   */
   app.use(bodyParser.urlencoded({ extended: true }));
+
+  app.use(require('cookie-parser')());
+  app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+
+  app.use(passport.initialize());
+  app.use(passport.session());
 
 
 /** DATABASE */
@@ -78,17 +72,27 @@ function get_date(date) {
 
 
 /** ROUTING */
-app.get('/', (request, response) => {
+app.get('/', require('connect-ensure-login').ensureLoggedIn('/auth/facebook'), (request, response) => {
   response.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/login', (request, response) => {
+  response.sendFile(path.join(__dirname + '/authenticate.html'));
+});
 
-app.get('/auth/facebook/callback', passport.authenticate('facebook'),
-  function (request, response) {
+app.get('/logout', function(request, response){
+  request.logout();
+  response.redirect('/');
+});
+
+app.get('/auth/facebook',
+  passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(request, response) {
     response.redirect('/');
-  }
-);
+  });
 
 
 /**
