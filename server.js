@@ -46,6 +46,13 @@ const path = require('path'),
   app.use(passport.initialize());
   app.use(passport.session());
 
+  function verify(request, response, next) {
+    if (request.user) {
+      next();
+    } else {
+      response.redirect('/login');
+    }
+  }
 
 /** DATABASE */
 const mysql = require('mysql');
@@ -72,7 +79,7 @@ function get_date(date) {
 
 
 /** ROUTING */
-app.get('/', require('connect-ensure-login').ensureLoggedIn('/auth/facebook'), (request, response) => {
+app.get('/', verify, (request, response) => {
   response.sendFile(path.join(__dirname + '/index.html'));
 });
 
