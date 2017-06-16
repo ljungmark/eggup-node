@@ -10,6 +10,9 @@ const path = require('path'),
   passport = require('passport'),
   Strategy = require('passport-facebook').Strategy;
 
+  /**
+   * Set up Facebook strategy
+   */
   passport.use(new Strategy({
     clientID: strategies.facebook.client,
     clientSecret: strategies.facebook.secret,
@@ -46,6 +49,9 @@ const path = require('path'),
   app.use(passport.initialize());
   app.use(passport.session());
 
+  /**
+   * Middleware check to verify valid credentials
+   */
   function verify(request, response, next) {
     if (request.user) {
       next();
@@ -419,10 +425,8 @@ app.post('/lock', (request, response) => {
 
   let lock_the_app = new Promise(function(resolve, reject) {
     if (state === 'true') {
-      const date = new Date();
-
-      sql = 'INSERT INTO cookings (token, lockdate) VALUES (?, ?)';
-      sql = mysql.format(sql, [request.user.id, date]);
+      sql = 'INSERT INTO cookings (token) VALUES (?)';
+      sql = mysql.format(sql, [request.user.id]);
     } else {
       const date = get_date();
 
@@ -431,14 +435,12 @@ app.post('/lock', (request, response) => {
     }
 
     pool.query(sql, function (error, results, fields) {
-      if (error) reject();
-
-      if (results.affectedRows > 0) {
+      if (error) {
+        reject();
+      } else {
         model.status = true;
 
         resolve();
-      } else {
-        reject();
       }
     });
   }).then(function(exists) {
@@ -504,8 +506,7 @@ app.post('/start', (request, response) => {
   }
 */
 app.post('/controller', (request, response) => {
-  const date = get_date(),
-    token = request.body.token;
+  const date = get_date();
 
   const model = {
     'result': false,
@@ -519,8 +520,8 @@ app.post('/controller', (request, response) => {
     pool.query(sql, function (error, results, fields) {
       if (error) reject();
 
-      if (results.length > 0) {
-        if (token == results[0].token) model.result = true;
+      if (results.length) {
+        if (request.user.id == results[0].token) model.result = true;
 
         resolve();
       } else {

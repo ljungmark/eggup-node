@@ -72,11 +72,6 @@ h2 {
   text-align: center;
 }
 
-.module[data-module="docket"] h2 {
-  color: #4d3d36;
-  text-shadow: 1px 1px rgba(0, 0, 0, 0.6);
-}
-
 .module[data-module="docket"] svg {
   height: 200px;
 }

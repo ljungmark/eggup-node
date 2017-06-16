@@ -11,7 +11,7 @@
   2. The Constructor
 
   3. Prototypes
-    - syncronize
+    - synchronize
     - load
     - error
     - map
@@ -129,9 +129,16 @@ const Eggup = function() {
 
 
   /**
-    Clear Eggup 1.0 legacy storage
-  */
+   * Clear legacy storage
+   */
   if (localStorage.getItem('storedvalues')) localStorage.removeItem('storedvalues');
+  if (localStorage.getItem('token')) localStorage.removeItem('token');
+
+
+  /**
+   * Refresh thread
+   */
+  if (localStorage.getItem('thread')) localStorage.removeItem('thread');
 
 
   /**
@@ -212,7 +219,7 @@ const Eggup = function() {
 
 
 /**
- * Eggup.prototype.synchronize: Syncronize the local application with the server
+ * Eggup.prototype.synchronize: Synchronize the local application with the server
  */
 Eggup.prototype.synchronize = function() {
   const instance = this;
@@ -237,15 +244,15 @@ Eggup.prototype.synchronize = function() {
         document.querySelector('.order-variant__data').value = eggup.i18n('get', 'order.softboiled.plural');
       }
 
-      if (json['available']) {
-        eggup.thread.tokenstamp = json.tokenstamp;
-        eggup.thread.variant = json.variant;
-        eggup.thread.quantity = json.quantity;
-        eggup.thread.heap_1 = json.heap_1;
-        eggup.thread.heap_2 = json.heap_2;
-        eggup.thread.gateway = json.gateway;
-        localStorage.setItem('thread', JSON.stringify(eggup.thread));
+      instance.thread.tokenstamp = json.tokenstamp;
+      instance.thread.variant = json.variant;
+      instance.thread.quantity = json.quantity;
+      instance.thread.heap_1 = json.heap_1;
+      instance.thread.heap_2 = json.heap_2;
+      instance.thread.gateway = json.gateway;
+      localStorage.setItem('thread', JSON.stringify(instance.thread));
 
+      if (json['available']) {
         if (json.quantity == 0) {
           instance.load('order');
         } else {
