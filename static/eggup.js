@@ -77,8 +77,7 @@ function serialize(object) {
   Returns true or false depending on if the sending token is also the current controller
 */
 function controller() {
-  const instance = this,
-    token = JSON.parse(localStorage.getItem('token'));
+  const instance = this;
 
   return new Promise(function (resolve, reject) {
     fetch('/controller', {
@@ -86,7 +85,7 @@ function controller() {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: serialize({ 'token': token })
+      credentials: 'include'
     }).then(function(response) {
       return response.json().then(function(json) {
         resolve(json.result);
@@ -133,41 +132,6 @@ const Eggup = function() {
     Clear Eggup 1.0 legacy storage
   */
   if (localStorage.getItem('storedvalues')) localStorage.removeItem('storedvalues');
-
-
-  /**
-    instance.token: Unique client identifier (String(32))
-    Used to associate the user to an action, such as an placed order
-
-    Example:
-    instance.token = 'fojdpzu2kodx95lh75zbl0rmef1d81acm'
-  */
-  instance.token = '';
-
-  let get_token = new Promise(function(resolve, reject) {
-    let token = JSON.parse(localStorage.getItem('token'));
-
-    if (token) {
-      instance.token = token;
-
-      resolve(token);
-    } else {
-      token = '';
-
-      fetch('/token', {
-        method: 'post'
-      }).then(function(response) {
-        return response.json().then(function(json) {
-          token = json['token'];
-          localStorage.setItem('token', JSON.stringify(token));
-
-          instance.token = token;
-
-          resolve(token);
-        });
-      });
-    }
-  });
 
 
   /**
@@ -243,9 +207,7 @@ const Eggup = function() {
   /**
     Wait until instantiation is complete before synchronizing
   */
-  get_token.then(_ => {
-    instance.synchronize();
-  });
+  instance.synchronize();
 }
 
 
@@ -253,15 +215,14 @@ const Eggup = function() {
  * Eggup.prototype.synchronize: Syncronize the local application with the server
  */
 Eggup.prototype.synchronize = function() {
-  const instance = this,
-    token = JSON.parse(localStorage.getItem('token'));
+  const instance = this;
 
   fetch('/synchronize', {
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: serialize({ 'token': token })
+    credentials: 'include'
   }).then(function(response) {
     return response.json().then(function(json) {
       document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
@@ -1299,14 +1260,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let set_request = new Promise(function(resolve, reject) {
-      const token = JSON.parse(localStorage.getItem('token'));
-
       fetch('/request', {
         method: 'post',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: serialize({ 'token': token, 'quantity': quantity, 'variant': variant_data })
+        body: serialize({ 'quantity': quantity, 'variant': variant_data }),
+        credentials: 'include'
       }).then(function(response) {
         return response.json().then(function(json) {
           resolve(json);
@@ -1349,8 +1309,6 @@ document.addEventListener('DOMContentLoaded', function() {
     cancel_button = document.querySelector('.review-button__cancel');
 
     let set_request = new Promise(function(resolve, reject) {
-      const token = JSON.parse(localStorage.getItem('token'));
-
       cancel_button.classList.add('process');
       cancel_button.disabled = true;
 
@@ -1359,7 +1317,7 @@ document.addEventListener('DOMContentLoaded', function() {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: serialize({ 'token': token })
+        credentials: 'include'
       }).then(function(response) {
         return response.json().then(function(json) {
           resolve(json);
@@ -1434,14 +1392,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     init_request.then((response) => {
       let send_request = new Promise(function(resolve, reject) {
-        const token = JSON.parse(localStorage.getItem('token'));
 
         fetch('/start', {
           method: 'post',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: serialize({ 'token': token, 'softboiled': timer1_tot, 'hardboiled': timer2_tot })
+          body: serialize({ 'softboiled': timer1_tot, 'hardboiled': timer2_tot }),
+          credentials: 'include'
         }).then(function(response) {
           return response.json().then(function(json) {
             resolve(json);
@@ -1509,14 +1467,13 @@ document.addEventListener('DOMContentLoaded', function() {
     eggup.notify('start');
 
       let lock_request = new Promise(function(resolve, reject) {
-        const token = JSON.parse(localStorage.getItem('token'));
-
         fetch('/lock', {
           method: 'post',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: serialize({ 'token': token, 'state': eggup.thread.gateway })
+          body: serialize({ 'state': eggup.thread.gateway }),
+          credentials: 'include'
         }).then(function(response) {
           return response.json().then(function(json) {
             resolve(json);

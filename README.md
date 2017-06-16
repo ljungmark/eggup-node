@@ -8,7 +8,6 @@ Eggup Node
     * [State management](#user-content-state-management)
     * [Cache](#user-content-cache)
     * [Thread](#user-content-thread)
-    * [Token](#user-content-token)
     * [Environment](#user-content-environment)
 * [Settings](#user-content-settings)
   * [i18n](#user-content-i18n)
@@ -59,12 +58,6 @@ The application has a local storage cache and application thread. The purpose of
 | heap_1     | Integer | 0-N                                    | 0             | Egg pool for soft boiled eggs                |
 | heap_2     | Integer | 0-N                                    | 0             | Egg pool for hard boiled eggs                |
 | gateway    | Boolean | TRUE, FALSE                            | TRUE          | Can new orders be requested?                 |
-
-### Token
-
-| Key   | Type   | Values  | Default value | Description                    |
-| ----- | ------ | ------- | ------------- | ------------------------------ |
-| token | String | {token} | {token}       | User's unique token identifier |
 
 ### Environment
 
@@ -167,6 +160,7 @@ Multi-line comments:
 
 * [Node.js](https://nodejs.org/en/)
 * [Express](https://expressjs.com/)
+* [Passport](https://github.com/jaredhanson/passport)
 * [Body Parser](https://github.com/expressjs/body-parser)
 * [MySQL](https://github.com/mysqljs/mysql)
 * [Socket.io](https://socket.io/)
