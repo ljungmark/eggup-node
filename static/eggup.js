@@ -898,7 +898,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   socket.on('start', function(timers) {
     eggup.load('cooking');
-    eggup.start(timers.timer1_tot, timers.timer2_tot);
+    eggup.start(timers.timer1_tot, timers.timer2_tot, timers.timer1_tot, timers.timer2_tot);
   });
 
   socket.on('heap', function(heap) {
@@ -1420,7 +1420,7 @@ document.addEventListener('DOMContentLoaded', function() {
           history.replaceState('', document.title, window.location.pathname);
 
           eggup.load('cooking');
-          eggup.start(timer1_tot, timer2_tot);
+          eggup.start(timer1_tot, timer2_tot, timer1_tot, timer2_tot);
 
           socket.emit('start', {
             timer1_tot: timer1_tot,
