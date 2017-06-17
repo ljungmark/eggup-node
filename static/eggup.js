@@ -252,6 +252,19 @@ Eggup.prototype.synchronize = function() {
       instance.thread.gateway = json.gateway;
       localStorage.setItem('thread', JSON.stringify(instance.thread));
 
+      let soft_minutes = (Math.floor(json.past_soft / 60)),
+        soft_seconds = (json.past_soft - soft_minutes * 60),
+        hard_minutes = (Math.floor(json.past_hard / 60)),
+        hard_seconds = (json.past_hard - hard_minutes * 60);
+
+      soft_minutes = ('0' + soft_minutes).substr(-2);
+      soft_seconds = ('0' + soft_seconds).substr(-2);
+      hard_minutes = ('0' + hard_minutes).substr(-2);
+      hard_seconds = ('0' + hard_seconds).substr(-2);
+
+      document.querySelector('.soft-timer').value = `${soft_minutes}:${soft_seconds}`;
+      document.querySelector('.hard-timer').value = `${hard_minutes}:${hard_seconds}`;
+
       if (json['available']) {
         if (json.quantity == 0) {
           instance.load('order');
@@ -311,7 +324,7 @@ Eggup.prototype.synchronize = function() {
     });
   });
 
-  console.log('%c Eggup 2.0 ', [
+  console.log('%c Eggup 2.1 ', [
     'background: linear-gradient(-180deg, #44b1e8, #3098de)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',

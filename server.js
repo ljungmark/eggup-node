@@ -127,6 +127,8 @@ app.post('/synchronize', (request, response) => {
       'startdate': null,
       'softboiled': null,
       'hardboiled': null,
+      'past_soft': null,
+      'past_hard': null,
       'quantity': 0,
       'variant': 0,
       'tokenstamp': null,
@@ -205,7 +207,14 @@ app.post('/synchronize', (request, response) => {
                 model.gateway = false;
               }
 
-              response.send(JSON.stringify(model));
+              sql = 'SELECT softboiled, hardboiled FROM cookings ORDER BY startdate DESC LIMIT 1';
+
+              pool.query(sql, function (error, results, fields) {
+                model.past_soft = results[0].softboiled;
+                model.past_hard = results[0].hardboiled;
+
+                response.send(JSON.stringify(model));
+              });
             });
           });
         });
