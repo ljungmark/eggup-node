@@ -254,8 +254,8 @@ Eggup.prototype.synchronize = function() {
 
       let soft_minutes = (Math.floor(json.past_soft / 60)),
         soft_seconds = (json.past_soft - soft_minutes * 60),
-        hard_minutes = (Math.floor(json.past_hard / 60)),
-        hard_seconds = (json.past_hard - hard_minutes * 60);
+        hard_minutes = (Math.floor((json.past_soft + json.past_hard) / 60)),
+        hard_seconds = ((json.past_soft + json.past_hard) - hard_minutes * 60);
 
       soft_minutes = ('0' + soft_minutes).substr(-2);
       soft_seconds = ('0' + soft_seconds).substr(-2);
