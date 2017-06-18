@@ -172,7 +172,7 @@ app.post('/synchronize', (request, response) => {
         }
 
         sql = 'SELECT date, quantity, variant FROM orders WHERE token = ? AND DATE(date) = ?',
-          values = [request.body.token, date];
+          values = [request.user.id, date];
         sql = mysql.format(sql, values);
 
         pool.query(sql, function(error, results, fields) {

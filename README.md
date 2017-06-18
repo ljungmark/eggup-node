@@ -39,7 +39,6 @@ This app is used by the office to order eggs in the morning.
 
 The application has a local storage cache and application thread. The purpose of the thread is to keep a application state so even if a user reloads their applicaiton, the state will be persitent. On each load, a syncronization with the server is performed, providing the latest state to the client.
 
-
 ### Cache
 
 | Key      | Type    | Values                                 | Default value | Description                       |
@@ -115,7 +114,6 @@ The actions differ depending on the current module.
 | Backspace        | Revert order |
 
 
-
 # Contribute
 
 To contribute to this project; fork the code, make your changes and then create a pull request detailing the changes and their pros.
@@ -165,7 +163,6 @@ Multi-line comments:
 * [MySQL](https://github.com/mysqljs/mysql)
 * [Socket.io](https://socket.io/)
 * [Path](https://nodejs.org/api/path.html)
-
 
 
 # License
