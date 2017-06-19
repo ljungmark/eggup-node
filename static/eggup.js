@@ -644,6 +644,17 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
     translations = {
       /** English */
       'en' : {
+        'egg': {
+          'back': 'Woohoo! I\'m back! <3',
+          'bubble': {
+            '0': 'What an amazing day!',
+            '1': 'This is going to be sooo tasty!',
+            '2': 'Aren\'t eggs the best ever?',
+            '3': 'For every egg I become stronger!',
+            '4': 'The most important meal of the day!',
+            '5': 'Om nom nom nam nam!'
+          }
+        },
         'map': {
           '1': 'Order eggs',
           '2': 'Preparing',
@@ -691,6 +702,17 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
       },
       /** Swedish */
       'sv' : {
+        'egg': {
+          'back': 'Woohoo! Jag är tillbaka! <3',
+          'bubble': {
+            '0': 'Vilken fantastisk dag!',
+            '1': 'Det här kommer bli sååå smarrigt!',
+            '2': 'Är inte ägg det bästa som finns?',
+            '3': 'För varje ägg så blir jag starkare!',
+            '4': 'Frukost är dagens viktigaste måltid!',
+            '5': 'Om nom nom nam nam!'
+          }
+        },
         'map': {
           '1': 'Beställ ägg',
           '2': 'Invänta kokning',
@@ -772,6 +794,10 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
     document.querySelectorAll('[data-lang]').forEach(function(element) {
       let pointer = element.getAttribute('data-lang');
 
+      /**
+       * Set the translation content on something else than innerHTML
+       * Eg. on a data-* attribute
+       */
       if (element.hasAttribute('data-lang-target')) {
         element.setAttribute(element.getAttribute('data-lang-target'), eggup.i18n('get', pointer));
       } else {
@@ -942,11 +968,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /** Append video background if on desktop */
   if (window.innerWidth >= 960) {
-    let markup = `<video class="background" playsinline autoplay muted loop>
+    const video_markup = `<video class="background" playsinline autoplay muted loop>
       <source src="assets/background.mp4" type="video/mp4">
-    </video>`;
+    </video>`,
+      egg_markup = `
+      <div class="egg">
+        <div class="bubble" data-lang="egg.back"></div>
+        <div class="yolk">
+          <div class="face">
+            <div class="eyes"></div>
+            <div class="mouth"></div>
+          </div>
+        </div>
+      </div>`;
 
-    document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
+    document.querySelector('body').insertAdjacentHTML('afterbegin', video_markup);
+    document.querySelector('.wrapper').insertAdjacentHTML('afterbegin', egg_markup);
+
+    document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.back');
+
+    document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.back');
+
+    window.bubble = setInterval(function(){
+      document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
+    }, 20000);
   }
 
   /**
@@ -1565,14 +1610,35 @@ document.addEventListener('DOMContentLoaded', function() {
       if (document.querySelector('.background')) {
         document.querySelector('body').removeChild(document.querySelector('.background'));
       }
+      if (document.querySelector('.egg')) {
+        document.querySelector('.wrapper').removeChild(document.querySelector('.egg'));
+        clearTimeout(window.bubble);
+      }
     } else {
       if (!document.querySelector('.background')) {
-        let markup = `<video class="background" playsinline autoplay muted loop>
+        const video_markup = `<video class="background" playsinline autoplay muted loop>
             <source src="assets/background.mp4" type="video/mp4">
-          </video>`;
+          </video>`,
+          egg_markup = `
+          <div class="egg">
+            <div class="bubble" data-lang="egg.back"></div>
+            <div class="yolk">
+              <div class="face">
+                <div class="eyes"></div>
+                <div class="mouth"></div>
+              </div>
+            </div>
+          </div>`;
 
         /** Append directly after the body tag */
-        document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
+        document.querySelector('body').insertAdjacentHTML('afterbegin', video_markup);
+        document.querySelector('.wrapper').insertAdjacentHTML('afterbegin', egg_markup);
+
+        document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
+
+        window.bubble = setInterval(function(){
+          document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
+        }, 20000);
       }
 
       document.querySelector('video').play();
@@ -1584,7 +1650,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.progress-bar__variant_1').style.backgroundSize = `${barwidth}px ${barheight}px`;
     document.querySelector('.progress-bar__variant_2').style.backgroundSize = `${barwidth}px ${barheight}px`;
   });
-
 
   /**
     Long press click to fire popup to start cooking

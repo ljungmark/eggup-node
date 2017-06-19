@@ -210,8 +210,10 @@ app.post('/synchronize', (request, response) => {
               sql = 'SELECT softboiled, hardboiled FROM cookings ORDER BY startdate DESC LIMIT 1';
 
               pool.query(sql, function (error, results, fields) {
-                model.past_soft = results[0].softboiled;
-                model.past_hard = results[0].hardboiled;
+                if (results.length) {
+                  model.past_soft = results[0].softboiled;
+                  model.past_hard = results[0].hardboiled;
+                }
 
                 response.send(JSON.stringify(model));
               });
