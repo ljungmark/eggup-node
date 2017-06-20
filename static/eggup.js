@@ -133,6 +133,13 @@ const Eggup = function() {
    */
   if (localStorage.getItem('storedvalues')) localStorage.removeItem('storedvalues');
   if (localStorage.getItem('token')) localStorage.removeItem('token');
+  if (localStorage.getItem('cache')) {
+    const cache = JSON.parse(localStorage.getItem('cache'));
+
+    if (!cache.language) {
+      localStorage.removeItem('cache');
+    }
+  }
 
 
   /**
