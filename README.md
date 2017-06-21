@@ -27,6 +27,10 @@ This app is used by the office to order eggs in the morning.
 
 ## Modules
 * Init
+  * Loads cache or creates new one
+  * Loads thread or creates new one
+    * Performs synchronization to fetch the latest application state
+  * Sets input threshold
 * Order
 * Review
 * Cooking

@@ -319,7 +319,7 @@ Eggup.prototype.synchronize = function() {
           if (eggup.thread.quantity) {
             document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${document.querySelector('.order-variant__data').value.toLowerCase()}`;
           } else {
-            document.querySelector('.review-text__order').innerHTML = `Du har inte beställt några`;
+            document.querySelector('.review-text__order').innerHTML = eggup.i18n('get', 'review.empty');
           }
 
           instance.gateway('lock');
@@ -652,7 +652,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
       /** English */
       'en' : {
         'egg': {
-          'back': 'Woohoo! I\'m back! <3',
+          'back': 'Hübsch! I\'m back! <3',
           'bubble': {
             '0': 'What an amazing day!',
             '1': 'This is going to be sooo tasty!',
@@ -692,7 +692,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'hardboiled_plural': ' hard boiled eggs',
           'summary': '<span class="review-text__total">[total]</span> ordered today, <span class="review-text__heap_1">[soft]</span> and <span class="review-text__heap_2">[hard]</span>.',
           'cancel': '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Change/cancel',
-          'gate': 'The cooking is commencing shortly and you cannot place or change any of todays orders! :)'
+          'gate': 'The cooking is commencing shortly and you cannot place or change any of todays orders! :)',
+          'empty': 'You haven\'t placed any order'
         },
         'controller': {
           'soft': 'soft boiled',
@@ -710,7 +711,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
       /** Swedish */
       'sv' : {
         'egg': {
-          'back': 'Woohoo! Jag är tillbaka! <3',
+          'back': 'Hübsch! Jag är tillbaka! <3',
           'bubble': {
             '0': 'Vilken fantastisk dag!',
             '1': 'Det här kommer bli sååå smarrigt!',
@@ -750,7 +751,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'hardboiled_plural': ' hårdkokta ägg',
           'summary': 'Totalt har det beställts <span class="review-text__total">[total]</span> idag, varav <span class="review-text__heap_1">[soft]</span> och <span class="review-text__heap_2">[hard]</span>.',
           'cancel': '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Ändra/avbeställ',
-          'gate': 'Äggkokning är på gång och du kan inte längre ändra dagens order! :)'
+          'gate': 'Äggkokning är på gång och du kan inte längre ändra dagens order! :)',
+          'empty': 'Du har inte beställt några ägg'
         },
         'controller': {
           'soft': 'löskokta',
@@ -823,6 +825,15 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
     } else {
       variant_text.value = eggup.i18n('get', 'order.hardboiled.plural');
     }
+
+    /** Handle review order text separately */
+    if (JSON.parse(localStorage.getItem('thread'))['variant'] && JSON.parse(localStorage.getItem('thread'))['quantity']) {
+      document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${document.querySelector('.order-variant__data').value.toLowerCase()} ${(eggup.cache['quantity'] == 1) ? eggup.i18n('get', 'review.eggs_singular') : eggup.i18n('get', 'review.eggs_plural')}`;
+    } else {
+      document.querySelector('.review-text__order').textContent = eggup.i18n('get', 'review.empty');
+    }
+
+    eggup.heap(JSON.parse(localStorage.getItem('thread'))['heap_1'], JSON.parse(localStorage.getItem('thread'))['heap_2']);
 
     return true;
   }
