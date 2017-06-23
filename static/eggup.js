@@ -239,6 +239,24 @@ Eggup.prototype.synchronize = function() {
     credentials: 'include'
   }).then(function(response) {
     return response.json().then(function(json) {
+      instance.thread.tokenstamp = json.tokenstamp;
+      instance.thread.variant = json.variant;
+      instance.thread.quantity = json.quantity;
+      instance.thread.heap_1 = json.heap_1;
+      instance.thread.heap_2 = json.heap_2;
+      instance.thread.gateway = json.gateway;
+      localStorage.setItem('thread', JSON.stringify(instance.thread));
+
+      /**
+       * Update cache if there's a update in the thread
+       */
+      let cache = JSON.parse(localStorage.getItem('cache'));
+      eggup.cache.variant = (json.variant) ? json.variant : cache.variant;
+      eggup.cache.quantity = (json.quantity) ? json.quantity : cache.quantity;
+      cache.variant = eggup.cache.variant;
+      cache.quantity = eggup.cache.quantity;
+      localStorage.setItem('cache', JSON.stringify(cache));
+
       document.querySelector('.order-quantity__data').value = JSON.parse(localStorage.getItem('cache'))['quantity'];
 
       if (JSON.parse(localStorage.getItem('cache'))['variant'] == 2 && JSON.parse(localStorage.getItem('cache'))['quantity'] == 1) {
@@ -250,14 +268,6 @@ Eggup.prototype.synchronize = function() {
       } else {
         document.querySelector('.order-variant__data').value = eggup.i18n('get', 'order.softboiled.plural');
       }
-
-      instance.thread.tokenstamp = json.tokenstamp;
-      instance.thread.variant = json.variant;
-      instance.thread.quantity = json.quantity;
-      instance.thread.heap_1 = json.heap_1;
-      instance.thread.heap_2 = json.heap_2;
-      instance.thread.gateway = json.gateway;
-      localStorage.setItem('thread', JSON.stringify(instance.thread));
 
       let soft_minutes = (Math.floor(json.past_soft / 60)),
         soft_seconds = (json.past_soft - soft_minutes * 60),
