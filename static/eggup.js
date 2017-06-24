@@ -913,18 +913,18 @@ Countdown.prototype.start = function(soft, hard, start_soft = 240, start_hard = 
 
     if(soft_percent < 100) {
       bar_variant_1.style.width = `${soft_percent}%`;
-      bar_text_1.textContent =  `${eggup.i18n('get', 'boiling.softboiled')}: ${soft_percent}%`;
+      bar_text_1.textContent =  `${JSON.parse(localStorage.getItem('thread'))['heap_1']} ${eggup.i18n('get', 'boiling.softboiled')}: ${soft_percent}%`;
     } else {
       bar_variant_1.style.width = `100%`;
-      bar_text_1.textContent = `${eggup.i18n('get', 'boiling.done')}`;
+      bar_text_1.textContent = `${eggup.i18n('get', 'boiling.done')}: ${JSON.parse(localStorage.getItem('thread'))['heap_1']}`;
     }
 
     if(hard_percent < 100) {
       bar_variant_2.style.width = `${hard_percent}%`;
-      bar_text_2.textContent =  `${eggup.i18n('get', 'boiling.hardboiled')}: ${hard_percent}%`;
+      bar_text_2.textContent =  `${JSON.parse(localStorage.getItem('thread'))['heap_2']} ${eggup.i18n('get', 'boiling.hardboiled')}: ${hard_percent}%`;
     } else {
       bar_variant_2.style.width = `100%`;
-      bar_text_2.textContent = `${eggup.i18n('get', 'boiling.done')}`;
+      bar_text_2.textContent = `${eggup.i18n('get', 'boiling.done')}: ${JSON.parse(localStorage.getItem('thread'))['heap_2']}`;
     }
 
     time = Countdown.parse(difference);
