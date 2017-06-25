@@ -65,6 +65,10 @@ h2 {
 }
 
 .module[data-module="docket"] .-eggs {
+  width: 200px;
+}
+
+.module[data-module="docket"] .-eggs .egg {
   animation-delay: -1s;
   animation-direction: alternate;
   animation-duration: 2s;

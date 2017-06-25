@@ -495,6 +495,25 @@ Eggup.prototype.load = function(target_module) {
   /** Finish all map nodes when orders are done */
   (target_module == 'docket') ? eggup.map(target_module_index + 1) : eggup.map(target_module_index);
 
+  if (target_module == 'docket' &&  !document.querySelector('.egg._docket')) {
+    if (document.querySelector('.wrapper > .egg')) {
+      document.querySelector('.wrapper').removeChild(document.querySelector('.egg'));
+      clearTimeout(window.bubble);
+    }
+
+    egg_markup = `
+      <div class="egg _docket">
+        <div class="yolk">
+          <div class="face">
+            <div class="eyes"></div>
+            <div class="mouth"></div>
+          </div>
+        </div>
+      </div>`;
+
+    document.querySelector('.-eggs').innerHTML = egg_markup;
+  }
+
   /** Never load a module while not scrolled to the top */
   document.querySelector('.container').scrollTop = 0;
 
@@ -999,7 +1018,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const video_markup = `<video class="background" playsinline autoplay muted loop>
       <source src="assets/background.mp4" type="video/mp4">
     </video>`,
-      egg_markup = `
+    egg_markup = `
       <div class="egg">
         <div class="bubble" data-lang="egg.back"></div>
         <div class="yolk">
@@ -1013,9 +1032,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('body').insertAdjacentHTML('afterbegin', video_markup);
     document.querySelector('.wrapper').insertAdjacentHTML('afterbegin', egg_markup);
 
-    document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.back');
-
-    document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.back');
+    document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
 
     window.bubble = setInterval(function(){
       document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
@@ -1638,7 +1655,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (document.querySelector('.background')) {
         document.querySelector('body').removeChild(document.querySelector('.background'));
       }
-      if (document.querySelector('.egg')) {
+      if (document.querySelector('.egg') && !document.querySelector('.egg._docket')) {
         document.querySelector('.wrapper').removeChild(document.querySelector('.egg'));
         clearTimeout(window.bubble);
       }
@@ -1646,20 +1663,26 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!document.querySelector('.background')) {
         const video_markup = `<video class="background" playsinline autoplay muted loop>
             <source src="assets/background.mp4" type="video/mp4">
-          </video>`,
-          egg_markup = `
-          <div class="egg">
-            <div class="bubble" data-lang="egg.back"></div>
-            <div class="yolk">
-              <div class="face">
-                <div class="eyes"></div>
-                <div class="mouth"></div>
-              </div>
-            </div>
-          </div>`;
+          </video>`;
 
         /** Append directly after the body tag */
         document.querySelector('body').insertAdjacentHTML('afterbegin', video_markup);
+
+        document.querySelector('video').play();
+      }
+
+      if (!document.querySelector('.egg')) {
+        egg_markup = `
+        <div class="egg">
+          <div class="bubble" data-lang="egg.back"></div>
+          <div class="yolk">
+            <div class="face">
+              <div class="eyes"></div>
+              <div class="mouth"></div>
+            </div>
+          </div>
+        </div>`;
+
         document.querySelector('.wrapper').insertAdjacentHTML('afterbegin', egg_markup);
 
         document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
@@ -1668,8 +1691,6 @@ document.addEventListener('DOMContentLoaded', function() {
           document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
         }, 20000);
       }
-
-      document.querySelector('video').play();
     }
 
     /** Static background for progress bars */
