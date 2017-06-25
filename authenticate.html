@@ -33,13 +33,12 @@
       background: white;
       bottom: 40px;
       border-bottom: 3px solid #c3c3c3;
-      border-radius: 6px;
       box-shadow: 0 7px 10px rgba(9, 13, 62, 0.3);
-      left: 40px;
+      left: 0;
       overflow-y: auto;
       padding: 20px;
       position: fixed;
-      right: 40px;
+      right: 0;
       text-align: left;
       top: 40px;
     }
@@ -74,11 +73,11 @@
       border: 1px solid #999;
       border-bottom-color: #888;
       border-color: #29447e #29447e #1a356e;
+      border-radius: 2px;
       box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #8a9cc2;
       color: #ffffff;
       cursor: pointer;
       display: inline-block;
-      font: bold 13px/normal 'Lucida Grande', Tahoma, Verdana, Arial, sans-serif;
       margin: 30px 0 20px;
       overflow: visible;
       padding: 10px 22px;
@@ -93,6 +92,14 @@
       background: #4F6AA3;
       box-shadow: none;
     }
+
+    @media only screen and (min-width: 960px) {
+      .faq {
+        border-radius: 6px;
+        left: 40px;
+        right: 40px;
+      }
+    }
   </style>
 
   <link rel="stylesheet" href="styles/eggup.css" media="screen">
@@ -106,11 +113,11 @@
       <a class="-login" href="/auth/facebook">Logga in med Facebook</a>
     </div>
     <h1 class="-question">Varför måste jag logga in? Jag behövde inte logga in tidigare!</h1>
-    <p class="-answer">Tekniskt sett har du alltid loggat in, men med hjälp av anonyma tokens för att kunna hantera din session och din cache. Detta fungerade dock inte så bra och gjorde att man kunde låsas ut från applikationen (sry Simon <3).</p>
+    <p class="-answer">Tidigare identifierades du med hjälp av anonyma tokens som hanterade din session och din cache. Detta fungerade dock inte så bra och gjorde att man kunde låsas ut från applikationen (sry Simon <3).</p>
     <h1 class="-question">Varför just Facebook?</h1>
-    <p class="-answer">Efter diskussioner vid frukosten stod klart att det var det alternativ som flest tyckte verkade rimligt.</p>
+    <p class="-answer">Det går snabbt, det är säkert och "alla har ett Facebook-konto". Efter diskussioner vid frukosten stod klart att det var det alternativ som flest tyckte verkade rimligt.</p>
     <h1 class="-question">Vilka uppgifter får Eggup tillgång till?</h1>
-    <p class="-answer">Facebook bidrar med din publika information. Av detta sparar Eggup ett unikt ID, ditt namn och din e-postadress. Eggup får <strong>inte</strong> tillgång till ditt Facebook-konto på något vis</p>
+    <p class="-answer">Facebook bidrar med din publika information. Av detta sparar Eggup ett unikt ID, ditt namn och din e-postadress. Eggup får <strong>inte</strong> tillgång till ditt Facebook-konto.</p>
     <h1 class="-question">Jag har en bra idé till Eggup!</h1>
     <p class="-answer">Forka koden på <a href="https://github.com/ljungmark/eggup-node">Github</a>, gör dina ändringar och skapa en pull request.</p>
   </div>
