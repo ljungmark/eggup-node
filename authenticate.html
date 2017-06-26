@@ -46,7 +46,7 @@
     .faq::after {
       content: "";
       background: url('assets/mesh.png') repeat;
-      opacity: 0.7;
+      opacity: 0.8;
       top: 0;
       left: 0;
       bottom: 0;
@@ -116,13 +116,13 @@
       <a class="-login" href="/auth/facebook">Logga in med Facebook</a>
     </div>
     <h1 class="-question">Varför måste jag logga in? Jag behövde inte logga in tidigare!</h1>
-    <p class="-answer">Tidigare identifierades du med hjälp av anonyma tokens som hanterade din session och din cache. Detta fungerade dock inte så bra och gjorde att man kunde låsas ut från applikationen (sry Simon <3).</p>
+    <p class="-answer">Tidigare identifierades du med hjälp av anonyma tokens som hanterade din session och sparades ner i din cache. Ibland kunde dessa hamna i konflikt med varandra vilket gjorde att man kunde låsas ut från applikationen (sry Simon <3). För att komma till bot med detta, och samtidigt stödja att du använder flera olika enheter på ett smidigt sätt, behöver du nu logga in via Facebook.</p>
     <h1 class="-question">Varför just Facebook?</h1>
-    <p class="-answer">Det går snabbt, det är säkert och "alla har ett Facebook-konto". Efter diskussioner vid frukosten stod klart att det var det alternativ som flest tyckte verkade rimligt.</p>
+    <p class="-answer">Det går snabbt, är enkelt, säkert och lättillgängligt. Efter diskussioner vid frukosten stod det klart att Facebook var det populäraste alternativet.</p>
     <h1 class="-question">Vilka uppgifter får Eggup tillgång till?</h1>
     <p class="-answer">Facebook bidrar med din publika information. Av detta sparar Eggup ett unikt ID, ditt namn och din e-postadress. Eggup får <strong>inte</strong> tillgång till ditt Facebook-konto.</p>
     <h1 class="-question">Jag har en bra idé till Eggup!</h1>
-    <p class="-answer">Forka koden på <a href="https://github.com/ljungmark/eggup-node">Github</a>, gör dina ändringar och skapa en pull request.</p>
+    <p class="-answer">Awesome! Forka koden på <a href="https://github.com/ljungmark/eggup-node">Github</a>, gör dina ändringar och skapa en pull request.</p>
   </div>
 </body>
 </html>

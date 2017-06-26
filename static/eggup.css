@@ -102,6 +102,18 @@ h2 {
   transition: background-position 500ms;
 }
 
+.container::after {
+  content: "";
+  background: url('../assets/mesh.png') repeat;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
 .container__scrolled:before {
   background: rgba(255, 0, 0, 0);
   border-radius: 250px / 60%;
