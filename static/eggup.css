@@ -41,6 +41,7 @@ h2 {
   position: absolute; /** Stack blocks upon each other */
   right: -10px; /** Compensate when shaking on device */
   top: 0;
+  transform: translate(0, 0);
 }
 
 .module[data-module="init"] {
@@ -65,6 +66,7 @@ h2 {
 }
 
 .module[data-module="docket"] .-eggs {
+  display:inline-block;
   width: 200px;
 }
 
@@ -76,6 +78,10 @@ h2 {
   animation-name: wobble;
   animation-timing-function: ease-in-out;
   transform-origin: 50% 100%;
+}
+
+.module[data-module="docket"] .-text {
+  margin-top: 14px;
 }
 
 

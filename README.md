@@ -11,6 +11,8 @@ Eggup Node
     * [Thread](#user-content-thread)
     * [Environment](#user-content-environment)
 * [Settings](#user-content-settings)
+  * [Login](#user-content-login)
+  * [Logout](#user-content-Logout)
   * [i18n](#user-content-i18n)
 * [Hotkeys](#user-content-hotkeys)
 * [Contribute](#user-content-contribute)
@@ -81,8 +83,15 @@ eggup.settings('notify', false);
 ```
 Turn on or off the notification sounds for your device. If this is set to true, the app will send a sound notification when your eggs are done (when soft boiled are done if that's what you chose, or when hard boiled are done if that's your perference). As a controller, you'll always get a sound for both soft- and hard boiled eggs.
 
+## Login
 
-# i18n
+Navigate to /login to login with your Facebook account.
+
+## Logout
+
+Navigate to /logout to logout from the application.
+
+## i18n
 
 ```javascript
 eggup.i18n('set', 'en');

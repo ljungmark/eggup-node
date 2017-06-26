@@ -1032,7 +1032,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('body').insertAdjacentHTML('afterbegin', video_markup);
     document.querySelector('.wrapper').insertAdjacentHTML('afterbegin', egg_markup);
 
-    document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
+    document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.back');
 
     window.bubble = setInterval(function(){
       document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
