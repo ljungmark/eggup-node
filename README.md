@@ -2,6 +2,7 @@ Eggup Node
 ==========
 
 
+* [License](#user-content-license)
 * [About the app](#user-content-about-the-app)
   * [Modules](#user-content-modules)
   * [Technical](#user-content-technical)
@@ -17,7 +18,10 @@ Eggup Node
   * [CSS](#user-content-js)
   * [Comments](#user-content-comments)
   * [Tools](#user-content-tools)
-* [License](#user-content-license)
+
+
+# License
+[CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)
 
 
 # About the app
@@ -167,7 +171,3 @@ Multi-line comments:
 * [MySQL](https://github.com/mysqljs/mysql)
 * [Socket.io](https://socket.io/)
 * [Path](https://nodejs.org/api/path.html)
-
-
-# License
-[CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)
