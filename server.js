@@ -137,8 +137,8 @@ app.post('/synchronize', (request, response) => {
       'gateway': true
     };
 
-  let sql = 'INSERT INTO tokens (token, name, created, last_sceen) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) ' +
-        'ON DUPLICATE KEY UPDATE last_sceen = CURRENT_TIMESTAMP',
+  let sql = 'INSERT INTO tokens (token, name, created, visit) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) ' +
+        'ON DUPLICATE KEY UPDATE visit = CURRENT_TIMESTAMP',
     values = [request.user.id, request.user.displayName];
   sql = mysql.format(sql, values);
 
