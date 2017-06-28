@@ -8,15 +8,28 @@ const path = require('path'),
   credentials = require('./static/credentials'),
   strategies = require('./static/strategies'),
   passport = require('passport'),
-  Strategy = require('passport-facebook').Strategy;
+  facebookStrategy = require('passport-facebook').Strategy,
+  twitterStrategy = require('passport-twitter').Strategy;
 
   /**
    * Set up Facebook strategy
    */
-  passport.use(new Strategy({
+  passport.use(new facebookStrategy({
     clientID: strategies.facebook.client,
     clientSecret: strategies.facebook.secret,
     callbackURL: strategies.facebook.callback
+  },
+  function(accessToken, refreshToken, profile, done) {
+    return done(null, profile);
+  }));
+
+  /**
+   * Set up Twitter strategy
+   */
+  passport.use(new twitterStrategy({
+    consumerKey: strategies.twitter.consumerKey,
+    consumerSecret: strategies.twitter.consumerSecret,
+    callbackURL: strategies.twitter.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
     return done(null, profile);
@@ -103,6 +116,15 @@ app.get('/auth/facebook',
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(request, response) {
+    response.redirect('/');
+  });
+
+app.get('/auth/twitter',
+  passport.authenticate('twitter'));
+
+app.get('/auth/twitter/callback',
+  passport.authenticate('twitter', { failureRedirect: '/login' }),
   function(request, response) {
     response.redirect('/');
   });
