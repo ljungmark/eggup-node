@@ -907,13 +907,11 @@ Countdown.prototype.start = function(soft, hard, start_soft = 240, start_hard = 
     let current_soft = (soft - (soft - (difference - hard))),
       current_hard = ((soft + hard) - ((soft + hard) - difference));
 
-    if (current_soft == 3 && eggup.thread.variant == '1') eggup.notify('done');
-
-    if (current_hard == 3) {
+    if (current_soft == 3 || current_hard == 3) {
       controller().then(function(result) {
-        if (result) {
-          eggup.notify('done');
-        } else if (!result && eggup.thread.variant == '2') {
+        if (result
+          || !result && current_soft == 3 && eggup.thread.variant == '1'
+          || !result && current_hard == 3 && eggup.thread.variant == '2') {
           eggup.notify('done');
         }
       });
