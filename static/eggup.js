@@ -588,6 +588,13 @@ Eggup.prototype.heap = function(soft, hard) {
   document.querySelector('.review-text__total').innerHTML = parseInt(soft) + parseInt(hard);
   document.querySelector('.review-text__heap_1').innerHTML = soft + (soft == 1 ? ` ${eggup.i18n('get', 'review.softboiled_singular')}` : ` ${eggup.i18n('get', 'review.softboiled_plural')}`);
   document.querySelector('.review-text__heap_2').innerHTML = hard + (hard == 1 ? ` ${eggup.i18n('get', 'review.hardboiled_singular')}` : ` ${eggup.i18n('get', 'review.hardboiled_plural')}`);
+
+  let thread = JSON.parse(localStorage.getItem('thread'));
+  eggup.thread.heap_1 = soft;
+  eggup.thread.heap_2 = hard;
+  thread.heap_1 = eggup.thread.heap_1;
+  thread.heap_2 = eggup.thread.heap_2;
+  localStorage.setItem('thread', JSON.stringify(thread));
 }
 
 
