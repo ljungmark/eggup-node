@@ -3,5 +3,10 @@ module.exports = {
     'client': '',
     'secret': '',
     'callback': ''
+  },
+  'twitter' : {
+    'consumerKey': '',
+    'consumerSecret': '',
+    'callbackURL': ''
   }
 };
