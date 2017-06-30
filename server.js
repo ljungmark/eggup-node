@@ -29,6 +29,7 @@ const path = require('path'),
   passport.use(new twitterStrategy({
     consumerKey: strategies.twitter.consumerKey,
     consumerSecret: strategies.twitter.consumerSecret,
+    userProfileURL: strategies.twitter.userProfileURL,
     callbackURL: strategies.twitter.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {

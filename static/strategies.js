@@ -7,6 +7,7 @@ module.exports = {
   'twitter' : {
     'consumerKey': '',
     'consumerSecret': '',
-    'callbackURL': ''
+    'callbackURL': '',
+    'userProfileURL': ''
   }
 };

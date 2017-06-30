@@ -111,7 +111,7 @@ h2 {
 .container::after {
   content: "";
   background: url('../assets/mesh.png') repeat;
-  opacity: 0.5;
+  opacity: 0.4;
   top: 0;
   left: 0;
   bottom: 0;
