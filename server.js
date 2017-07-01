@@ -17,10 +17,11 @@ const path = require('path'),
   passport.use(new facebookStrategy({
     clientID: strategies.facebook.client,
     clientSecret: strategies.facebook.secret,
+    profileFields: ['id', 'displayName', 'emails'],
     callbackURL: strategies.facebook.callback
   },
   function(accessToken, refreshToken, profile, done) {
-    return done(null, profile);
+    facebookParser(profile, done);
   }));
 
   /**
@@ -33,7 +34,7 @@ const path = require('path'),
     callbackURL: strategies.twitter.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
-    return done(null, profile);
+    twitterParser(profile, done);
   }));
 
   passport.serializeUser(function(user, done) {
@@ -43,6 +44,100 @@ const path = require('path'),
   passport.deserializeUser(function(user, done) {
     done(null, user);
   });
+
+  function facebookParser(profile, done) {
+    let sql = 'SELECT * FROM tokens WHERE facebook = ?',
+      values = [profile.id];
+    sql = mysql.format(sql, values);
+
+    pool.query(sql, function (error, results, fields) {
+      if (error) {
+        done(error)
+      } else {
+        sql = 'SELECT * FROM tokens WHERE email = ?',
+          values = [profile.emails[0].value];
+        sql = mysql.format(sql, values);
+
+        pool.query(sql, function (error, results, fields) {
+          if (error) {
+            done(error)
+          } else {
+            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 10);
+
+            sql = 'INSERT INTO tokens (token, email, name, created, visit, facebook) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ' +
+              'ON DUPLICATE KEY UPDATE visit = CURRENT_TIMESTAMP, facebook = ?',
+              values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.id];
+            sql = mysql.format(sql, values);
+
+            pool.query(sql, function (error, results, fields) {
+              if (error) {
+                done(error);
+              } else {
+                sql = 'SELECT * FROM tokens WHERE token = ?',
+                  values = [token];
+                sql = mysql.format(sql, values);
+
+                pool.query(sql, function (error, results, fields) {
+                  if (error) {
+                    done(error);
+                  } else {
+                    return done(null, results[0]);
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+
+  function twitterParser(profile, done) {
+    let sql = 'SELECT * FROM tokens WHERE twitter = ?',
+      values = [profile.id];
+    sql = mysql.format(sql, values);
+
+    pool.query(sql, function (error, results, fields) {
+      if (error) {
+        done(error)
+      } else {
+        sql = 'SELECT * FROM tokens WHERE email = ?',
+          values = [profile.emails[0].value];
+        sql = mysql.format(sql, values);
+
+        pool.query(sql, function (error, results, fields) {
+          if (error) {
+            done(error)
+          } else {
+            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 10);
+
+            sql = 'INSERT INTO tokens (token, email, name, created, visit, twitter) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ' +
+              'ON DUPLICATE KEY UPDATE visit = CURRENT_TIMESTAMP, twitter = ?',
+              values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.id];
+            sql = mysql.format(sql, values);
+
+            pool.query(sql, function (error, results, fields) {
+              if (error) {
+                done(error);
+              } else {
+                sql = 'SELECT * FROM tokens WHERE token = ?',
+                  values = [token];
+                sql = mysql.format(sql, values);
+
+                pool.query(sql, function (error, results, fields) {
+                  if (error) {
+                    done(error);
+                  } else {
+                    return done(null, results[0]);
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  }
 
   /**
     Map static resources
@@ -113,7 +208,7 @@ app.get('/logout', function(request, response){
 });
 
 app.get('/auth/facebook',
-  passport.authenticate('facebook'));
+  passport.authenticate('facebook', { scope: 'email'}));
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
@@ -160,91 +255,80 @@ app.post('/synchronize', (request, response) => {
       'gateway': true
     };
 
-  let sql = 'INSERT INTO tokens (token, name, created, visit) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) ' +
-        'ON DUPLICATE KEY UPDATE visit = CURRENT_TIMESTAMP',
-    values = [request.user.id, request.user.displayName];
+  let sql = 'SELECT lockdate, startdate, softboiled, hardboiled FROM cookings WHERE DATE(lockdate) = ?',
+    values = [date];
   sql = mysql.format(sql, values);
 
-  pool.query(sql, function (error, results, fields) {
-    if (error) {
-      response.send(JSON.stringify(model));
+  pool.query(sql, function(error, results, fields) {
+    if (error) response.send(JSON.stringify(model));
+
+    /**
+      If there isn't a result, it means that the cooking hasn't commenced yet
+      The app is available for additional orders
+    */
+    if (!results.length) {
+      model.available = true;
     } else {
-      let sql = 'SELECT lockdate, startdate, softboiled, hardboiled FROM cookings WHERE DATE(lockdate) = ?',
+    /**
+      Else the cooking has already commenced
+      No futher orders will be accepted
+      Returns the datetime when the cooking started to process further actions
+    */
+      model.lockdate = results[0].lockdate;
+      model.startdate = results[0].startdate;
+      model.softboiled = results[0].softboiled;
+      model.hardboiled = results[0].hardboiled;
+    }
+
+    sql = 'SELECT date, quantity, variant FROM orders WHERE token = ? AND DATE(date) = ?',
+      values = [request.user.token, date];
+    sql = mysql.format(sql, values);
+
+    pool.query(sql, function(error, results, fields) {
+      if (error) response.send(JSON.stringify(model));
+
+      if (results.length) {
+        model.quantity = results[0].quantity;
+        model.variant = results[0].variant;
+        model.tokenstamp = results[0].date.substring(0, 10);
+      }
+
+
+      sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
         values = [date];
       sql = mysql.format(sql, values);
 
-      pool.query(sql, function(error, results, fields) {
-        if (error) response.send(JSON.stringify(model));
-
-        /**
-          If there isn't a result, it means that the cooking hasn't commenced yet
-          The app is available for additional orders
-        */
-        if (!results.length) {
-          model.available = true;
-        } else {
-        /**
-          Else the cooking has already commenced
-          No futher orders will be accepted
-          Returns the datetime when the cooking started to process further actions
-        */
-          model.lockdate = results[0].lockdate;
-          model.startdate = results[0].startdate;
-          model.softboiled = results[0].softboiled;
-          model.hardboiled = results[0].hardboiled;
+      pool.query(sql, function (error, results, fields) {
+        for (var index = 0; index < results.length; index++) {
+          if (results[index].variant == 1) {
+            model.heap_1 = model.heap_1 + results[index].quantity;
+          } else {
+            model.heap_2 = model.heap_2 + results[index].quantity;
+          }
         }
 
-        sql = 'SELECT date, quantity, variant FROM orders WHERE token = ? AND DATE(date) = ?',
-          values = [request.user.id, date];
+        sql = 'SELECT token, lockdate FROM cookings WHERE DATE(lockdate) = ?',
+          values = [date];
         sql = mysql.format(sql, values);
 
-        pool.query(sql, function(error, results, fields) {
-          if (error) response.send(JSON.stringify(model));
-
+        pool.query(sql, function (error, results, fields) {
           if (results.length) {
-            model.quantity = results[0].quantity;
-            model.variant = results[0].variant;
-            model.tokenstamp = results[0].date.substring(0, 10);
+            model.gateway = false;
           }
 
-
-          sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
-            values = [date];
-          sql = mysql.format(sql, values);
+          sql = 'SELECT softboiled, hardboiled FROM cookings ORDER BY startdate DESC LIMIT 1';
 
           pool.query(sql, function (error, results, fields) {
-            for (var index = 0; index < results.length; index++) {
-              if (results[index].variant == 1) {
-                model.heap_1 = model.heap_1 + results[index].quantity;
-              } else {
-                model.heap_2 = model.heap_2 + results[index].quantity;
-              }
+            if (results.length) {
+              model.past_soft = results[0].softboiled;
+              model.past_hard = results[0].hardboiled;
             }
 
-            sql = 'SELECT token, lockdate FROM cookings WHERE DATE(lockdate) = ?',
-              values = [date];
-            sql = mysql.format(sql, values);
-
-            pool.query(sql, function (error, results, fields) {
-              if (results.length) {
-                model.gateway = false;
-              }
-
-              sql = 'SELECT softboiled, hardboiled FROM cookings ORDER BY startdate DESC LIMIT 1';
-
-              pool.query(sql, function (error, results, fields) {
-                if (results.length) {
-                  model.past_soft = results[0].softboiled;
-                  model.past_hard = results[0].hardboiled;
-                }
-
-                response.send(JSON.stringify(model));
-              });
-            });
+            response.send(JSON.stringify(model));
           });
         });
       });
-    }
+    });
   });
 });
 
@@ -278,7 +362,7 @@ app.post('/request', (request, response) => {
 
   let already_ordered = new Promise(function(resolve, reject) {
     sql = 'SELECT * FROM orders WHERE `token` = ? AND DATE(date) = ?',
-      values = [request.user.id, date];
+      values = [request.user.token, date];
     sql = mysql.format(sql, values);
 
     pool.query(sql, function (error, results, fields) {
@@ -296,7 +380,7 @@ app.post('/request', (request, response) => {
       Previous order today exists for this token, update already existing order
     */
     sql = 'UPDATE orders SET `quantity` = ?, `variant` = ? WHERE `token` = ? AND DATE(date) = ?',
-      values = [quantity, variant, request.user.id, date];
+      values = [quantity, variant, request.user.token, date];
     sql = mysql.format(sql, values);
 
     pool.query(sql, function (error, results, fields) {
@@ -312,7 +396,7 @@ app.post('/request', (request, response) => {
       No previous order for this token has been found today, create a new
     */
     sql = 'INSERT INTO orders (token, quantity, variant) VALUES (?, ?, ?)',
-      values = [request.user.id, quantity, variant];
+      values = [request.user.token, quantity, variant];
     sql = mysql.format(sql, values);
 
     pool.query(sql, function (error, results, fields) {
@@ -370,7 +454,7 @@ app.post('/delete', (request, response) => {
   */
   let delete_order = new Promise(function(resolve, reject) {
     let sql = 'DELETE FROM `orders` WHERE `token` = ? AND DATE(date) = ?',
-      values = [request.user.id, date];
+      values = [request.user.token, date];
     sql = mysql.format(sql, values);
 
     pool.query(sql, function (error, results, fields) {
@@ -390,7 +474,7 @@ app.post('/delete', (request, response) => {
     */
     let tokenstamp = new Promise(function(resolve, reject) {
       sql = 'SELECT date FROM `orders` WHERE `token` = ? ORDER BY `date` DESC LIMIT 1',
-        values = [request.user.id];
+        values = [request.user.token];
       sql = mysql.format(sql, values);
 
       pool.query(sql, function (error, results, fields) {
@@ -460,12 +544,12 @@ app.post('/lock', (request, response) => {
   let lock_the_app = new Promise(function(resolve, reject) {
     if (state === 'true') {
       sql = 'INSERT INTO cookings (token) VALUES (?)';
-      sql = mysql.format(sql, [request.user.id]);
+      sql = mysql.format(sql, [request.user.token]);
     } else {
       const date = get_date();
 
       sql = 'DELETE FROM cookings WHERE token = ? AND DATE(lockdate) = ?';
-      sql = mysql.format(sql, [request.user.id, date]);
+      sql = mysql.format(sql, [request.user.token, date]);
     }
 
     pool.query(sql, function (error, results, fields) {
@@ -509,7 +593,7 @@ app.post('/start', (request, response) => {
       date = get_date();
 
     sql = 'UPDATE cookings SET startdate = ?, softboiled = ?, hardboiled = ? WHERE token = ? AND DATE(lockdate) = ?';
-    sql = mysql.format(sql, [startdate, softboiled, hardboiled, request.user.id, date]);
+    sql = mysql.format(sql, [startdate, softboiled, hardboiled, request.user.token, date]);
 
     pool.query(sql, function (error, results, fields) {
       if (error) reject();
@@ -549,13 +633,13 @@ app.post('/controller', (request, response) => {
 
   let check = new Promise(function(resolve, reject) {
     sql = 'SELECT token FROM cookings WHERE token = ? AND DATE(lockdate) = ?';
-    sql = mysql.format(sql, [request.user.id, date]);
+    sql = mysql.format(sql, [request.user.token, date]);
 
     pool.query(sql, function (error, results, fields) {
       if (error) reject();
 
       if (results.length) {
-        if (request.user.id == results[0].token) model.result = true;
+        if (request.user.token == results[0].token) model.result = true;
 
         resolve();
       } else {

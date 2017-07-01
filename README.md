@@ -85,7 +85,7 @@ Turn on or off the notification sounds for your device. If this is set to true, 
 
 ## Login
 
-Navigate to /login to login with your Facebook account.
+Navigate to /login to login with your social media account.
 
 ## Logout
 
