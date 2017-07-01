@@ -62,11 +62,11 @@ const path = require('path'),
           if (error) {
             done(error)
           } else {
-            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 10);
+            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12);
 
             sql = 'INSERT INTO tokens (token, email, name, created, visit, facebook) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ' +
-              'ON DUPLICATE KEY UPDATE visit = CURRENT_TIMESTAMP, facebook = ?',
-              values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.id];
+              'ON DUPLICATE KEY UPDATE name = ?, visit = CURRENT_TIMESTAMP, facebook = ?',
+              values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.displayName, profile.id];
             sql = mysql.format(sql, values);
 
             pool.query(sql, function (error, results, fields) {
@@ -109,11 +109,11 @@ const path = require('path'),
           if (error) {
             done(error)
           } else {
-            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 10);
+            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12);
 
             sql = 'INSERT INTO tokens (token, email, name, created, visit, twitter) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ' +
-              'ON DUPLICATE KEY UPDATE visit = CURRENT_TIMESTAMP, twitter = ?',
-              values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.id];
+              'ON DUPLICATE KEY UPDATE name = ?, visit = CURRENT_TIMESTAMP, twitter = ?',
+              values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.displayName, profile.id];
             sql = mysql.format(sql, values);
 
             pool.query(sql, function (error, results, fields) {
