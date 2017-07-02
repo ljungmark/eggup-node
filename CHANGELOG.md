@@ -1,3 +1,8 @@
+## 2.2.0 [Publington](https://github.com/ljungmark/eggup-node/releases/tag/2.2.0) (2017-06-06)
+
+* Add TOS, Privacy Policy and Changelog
+* Bind users from different social media platforms
+
 ## 2.1.1 [Superie](https://github.com/ljungmark/eggup-node/releases/tag/2.1.1) (2017-06-05)
 
 * Heap prototype updates thread heaps
