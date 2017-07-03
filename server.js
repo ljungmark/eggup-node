@@ -9,7 +9,8 @@ const path = require('path'),
   strategies = require('./static/strategies'),
   passport = require('passport'),
   facebookStrategy = require('passport-facebook').Strategy,
-  twitterStrategy = require('passport-twitter').Strategy;
+  twitterStrategy = require('passport-twitter').Strategy,
+  spotifyStrategy = require('passport-spotify').Strategy;
 
   /**
    * Set up Facebook strategy
@@ -35,6 +36,19 @@ const path = require('path'),
   },
   function(accessToken, refreshToken, profile, done) {
     twitterParser(profile, done);
+  }));
+
+  /**
+   * Set up Spotify strategy
+   */
+  passport.use(new spotifyStrategy({
+    clientID: strategies.spotify.clientID,
+    clientSecret: strategies.spotify.clientSecret,
+    callbackURL: strategies.spotify.callbackURL
+  },
+  function(accessToken, refreshToken, profile, done) {
+    console.log(profile)
+    spotifyParser(profile, done);
   }));
 
   passport.serializeUser(function(user, done) {
@@ -65,7 +79,7 @@ const path = require('path'),
             let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12);
 
             sql = 'INSERT INTO tokens (token, email, name, created, visit, facebook) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ' +
-              'ON DUPLICATE KEY UPDATE name = ?, visit = CURRENT_TIMESTAMP, facebook = ?',
+              'ON DUPLICATE KEY UPDATE name = ?, visit = CURRENT_TIMESTAMP, facebook = COALESCE(facebook, ?)',
               values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.displayName, profile.id];
             sql = mysql.format(sql, values);
 
@@ -112,7 +126,54 @@ const path = require('path'),
             let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12);
 
             sql = 'INSERT INTO tokens (token, email, name, created, visit, twitter) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ' +
-              'ON DUPLICATE KEY UPDATE name = ?, visit = CURRENT_TIMESTAMP, twitter = ?',
+              'ON DUPLICATE KEY UPDATE name = COALESCE(name, ?), visit = CURRENT_TIMESTAMP, twitter = COALESCE(twitter, ?)',
+              values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.displayName, profile.id];
+            sql = mysql.format(sql, values);
+
+            pool.query(sql, function (error, results, fields) {
+              if (error) {
+                done(error);
+              } else {
+                sql = 'SELECT * FROM tokens WHERE token = ?',
+                  values = [token];
+                sql = mysql.format(sql, values);
+
+                pool.query(sql, function (error, results, fields) {
+                  if (error) {
+                    done(error);
+                  } else {
+                    return done(null, results[0]);
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+
+  function spotifyParser(profile, done) {
+    let sql = 'SELECT * FROM tokens WHERE spotify = ?',
+      values = [profile.id];
+    sql = mysql.format(sql, values);
+
+    pool.query(sql, function (error, results, fields) {
+      if (error) {
+        done(error)
+      } else {
+        sql = 'SELECT * FROM tokens WHERE email = ?',
+          values = [profile.emails[0].value];
+        sql = mysql.format(sql, values);
+
+        pool.query(sql, function (error, results, fields) {
+          if (error) {
+            done(error)
+          } else {
+            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12);
+
+            sql = 'INSERT INTO tokens (token, email, name, created, visit, spotify) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ' +
+              'ON DUPLICATE KEY UPDATE name = COALESCE(name, ?), visit = CURRENT_TIMESTAMP, spotify = COALESCE(spotify, ?)',
               values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.displayName, profile.id];
             sql = mysql.format(sql, values);
 
@@ -221,6 +282,15 @@ app.get('/auth/twitter',
 
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
+  function(request, response) {
+    response.redirect('/');
+  });
+
+app.get('/auth/spotify',
+  passport.authenticate('spotify', { scope: 'user-read-email'}));
+
+app.get('/auth/spotify/callback',
+  passport.authenticate('spotify', { failureRedirect: '/login' }),
   function(request, response) {
     response.redirect('/');
   });
