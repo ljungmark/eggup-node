@@ -107,10 +107,25 @@
         0 1px 0 rgba(0, 0, 0, 0.2),
         inset 0 1px 0 #90b4ff;
       color: #ffffff;
-      margin: 10px 0 20px;
+      margin: 10px 0 10px;
     }
     .-login.-twitter:active {
       background: #2795e9;
+      box-shadow: none;
+    }
+    .-login.-spotify {
+      background: linear-gradient(#1ed760, #1bcc5a);
+      border: 1px solid #999;
+      border-bottom-color: #888;
+      border-color: #0d8c3a #0d8c3a #086328;
+      box-shadow:
+        0 1px 0 rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 #34ea74;
+      color: #ffffff;
+      margin: 10px 0 20px;
+    }
+    .-login.-spotify:active {
+      background: #15b54e;
       box-shadow: none;
     }
 
@@ -133,7 +148,8 @@
     <div class="-logo">
       <img class="-image" src="data:image/png;base64,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" /><br>
       <a class="-login -facebook" href="/auth/facebook">Logga in med Facebook</a><br>
-      <a class="-login -twitter" href="/auth/twitter">Logga in med Twitter</a>
+      <a class="-login -twitter" href="/auth/twitter">Logga in med Twitter</a><br>
+      <a class="-login -spotify" href="/auth/spotify">Logga in med Spotify</a>
     </div>
     <h1 class="-question">Vilka uppgifter får Eggup tillgång till?</h1>
     <p class="-answer">Facebook/Twitter bidrar med din publika information samt din e-postadress. Av detta sparar Eggup ett unikt ID, ditt namn och din e-postadress. E-postadressen används för att knyta ihop konton från olika sociala medier till samma person. Eggup får <strong>inte</strong> tillgång till ditt Facebook- eller Twitter-konto.</p>

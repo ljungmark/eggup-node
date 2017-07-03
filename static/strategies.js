@@ -9,5 +9,10 @@ module.exports = {
     'consumerSecret': '',
     'callbackURL': '',
     'userProfileURL': ''
+  },
+  'spotify' : {
+    'clientID': '',
+    'clientSecret': '',
+    'callbackURL': '',
   }
 };
