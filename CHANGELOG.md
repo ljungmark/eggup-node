@@ -1,3 +1,7 @@
+## 2.2.1 [Appellie](https://github.com/ljungmark/eggup-node/releases/tag/2.2.1) (2017-06-06)
+
+* Add Spotify OAuth
+
 ## 2.2.0 [Publington](https://github.com/ljungmark/eggup-node/releases/tag/2.2.0) (2017-06-06)
 
 * Add TOS, Privacy Policy and Changelog
@@ -7,7 +11,7 @@
 
 * Heap prototype updates thread heaps
 * Controller notification is always sent
-* Twitter passport integration
+* Add Twitter OAuth
 
 ### Fixed bugs
 * [250244a](https://github.com/ljungmark/eggup-node/commit/250244a910a91675dcaf2574cd14aed935e725b6) resolves [#3 Progress bar text doesn't update](https://github.com/ljungmark/eggup-node/issues/3)
