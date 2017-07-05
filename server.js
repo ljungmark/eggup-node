@@ -22,7 +22,7 @@ const path = require('path'),
     callbackURL: strategies.facebook.callback
   },
   function(accessToken, refreshToken, profile, done) {
-    facebookParser(profile, done);
+    passportParser(profile, done, 'facebook');
   }));
 
   /**
@@ -35,7 +35,7 @@ const path = require('path'),
     callbackURL: strategies.twitter.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
-    twitterParser(profile, done);
+    passportParser(profile, done, 'twitter');
   }));
 
   /**
@@ -47,8 +47,7 @@ const path = require('path'),
     callbackURL: strategies.spotify.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log(profile)
-    spotifyParser(profile, done);
+    passportParser(profile, done, 'spotify');
   }));
 
   passport.serializeUser(function(user, done) {
@@ -59,8 +58,8 @@ const path = require('path'),
     done(null, user);
   });
 
-  function facebookParser(profile, done) {
-    let sql = 'SELECT * FROM tokens WHERE facebook = ?',
+  function passportParser(profile, done, strategy) {
+    let sql = `SELECT * FROM tokens WHERE ${strategy} = ?`,
       values = [profile.id];
     sql = mysql.format(sql, values);
 
@@ -76,104 +75,11 @@ const path = require('path'),
           if (error) {
             done(error)
           } else {
-            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12);
+            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12),
+              overwrite = (strategy == 'facebook') ? '?' : 'COALESCE(name, ?)' ;
 
-            sql = 'INSERT INTO tokens (token, email, name, created, visit, facebook) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ' +
-              'ON DUPLICATE KEY UPDATE name = ?, visit = CURRENT_TIMESTAMP, facebook = COALESCE(facebook, ?)',
-              values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.displayName, profile.id];
-            sql = mysql.format(sql, values);
-
-            pool.query(sql, function (error, results, fields) {
-              if (error) {
-                done(error);
-              } else {
-                sql = 'SELECT * FROM tokens WHERE token = ?',
-                  values = [token];
-                sql = mysql.format(sql, values);
-
-                pool.query(sql, function (error, results, fields) {
-                  if (error) {
-                    done(error);
-                  } else {
-                    return done(null, results[0]);
-                  }
-                });
-              }
-            });
-          }
-        });
-      }
-    });
-  }
-
-  function twitterParser(profile, done) {
-    let sql = 'SELECT * FROM tokens WHERE twitter = ?',
-      values = [profile.id];
-    sql = mysql.format(sql, values);
-
-    pool.query(sql, function (error, results, fields) {
-      if (error) {
-        done(error)
-      } else {
-        sql = 'SELECT * FROM tokens WHERE email = ?',
-          values = [profile.emails[0].value];
-        sql = mysql.format(sql, values);
-
-        pool.query(sql, function (error, results, fields) {
-          if (error) {
-            done(error)
-          } else {
-            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12);
-
-            sql = 'INSERT INTO tokens (token, email, name, created, visit, twitter) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ' +
-              'ON DUPLICATE KEY UPDATE name = COALESCE(name, ?), visit = CURRENT_TIMESTAMP, twitter = COALESCE(twitter, ?)',
-              values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.displayName, profile.id];
-            sql = mysql.format(sql, values);
-
-            pool.query(sql, function (error, results, fields) {
-              if (error) {
-                done(error);
-              } else {
-                sql = 'SELECT * FROM tokens WHERE token = ?',
-                  values = [token];
-                sql = mysql.format(sql, values);
-
-                pool.query(sql, function (error, results, fields) {
-                  if (error) {
-                    done(error);
-                  } else {
-                    return done(null, results[0]);
-                  }
-                });
-              }
-            });
-          }
-        });
-      }
-    });
-  }
-
-  function spotifyParser(profile, done) {
-    let sql = 'SELECT * FROM tokens WHERE spotify = ?',
-      values = [profile.id];
-    sql = mysql.format(sql, values);
-
-    pool.query(sql, function (error, results, fields) {
-      if (error) {
-        done(error)
-      } else {
-        sql = 'SELECT * FROM tokens WHERE email = ?',
-          values = [profile.emails[0].value];
-        sql = mysql.format(sql, values);
-
-        pool.query(sql, function (error, results, fields) {
-          if (error) {
-            done(error)
-          } else {
-            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12);
-
-            sql = 'INSERT INTO tokens (token, email, name, created, visit, spotify) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ' +
-              'ON DUPLICATE KEY UPDATE name = COALESCE(name, ?), visit = CURRENT_TIMESTAMP, spotify = COALESCE(spotify, ?)',
+            sql = `INSERT INTO tokens (token, email, name, created, visit, ${strategy}) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ` +
+              `ON DUPLICATE KEY UPDATE name = ${overwrite}, visit = CURRENT_TIMESTAMP, ${strategy} = COALESCE(${strategy}, ?)`,
               values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.displayName, profile.id];
             sql = mysql.format(sql, values);
 
