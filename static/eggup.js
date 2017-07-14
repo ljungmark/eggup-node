@@ -715,7 +715,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'hardboiled': {
             'singular': 'Hard boiled',
             'plural': 'Hard boiled'
-          }
+          },
+          'settings': 'Preferences'
         },
         'review': {
           'header': 'Lovely! Eggs for breakfast today!',
@@ -774,7 +775,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'hardboiled': {
             'singular': 'Hårdkokt',
             'plural': 'Hårdkokta'
-          }
+          },
+          'settings': 'Preferenser'
         },
         'review': {
           'header': 'Härligt! I dag blir det ägg till frukost!',
@@ -994,6 +996,26 @@ document.addEventListener('DOMContentLoaded', function() {
    * Update DOM
    */
   eggup.i18n('update');
+
+  if (eggup.cache.language === 'en') document.querySelector('.-switch').checked = true;
+  if (eggup.cache.notify === false) document.querySelector('.notify').classList.add('_mute');
+
+  document.querySelector('.-switch').onclick = function() {
+    if (document.querySelector('.-switch').checked === true) {
+      eggup.i18n('set', 'en');
+    } else {
+      eggup.i18n('set', 'sv');
+    }
+  };
+
+  document.querySelector('.notify').onclick = function() {
+    if (eggup.cache.notify === true) {
+      eggup.settings('notify', false);
+    } else {
+      eggup.settings('notify', true);
+    }
+    document.querySelector('.notify').classList.toggle('_mute');
+  };
 
   socket.on('gateway', function(action) {
     let thread = JSON.parse(localStorage.getItem('thread'));
