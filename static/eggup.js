@@ -716,7 +716,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             'singular': 'Hard boiled',
             'plural': 'Hard boiled'
           },
-          'settings': 'Preferences'
+          'settings': 'Language <span class="-coupling">&</span> Sounds'
         },
         'review': {
           'header': 'Lovely! Eggs for breakfast today!',
@@ -776,7 +776,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             'singular': 'Hårdkokt',
             'plural': 'Hårdkokta'
           },
-          'settings': 'Preferenser'
+          'settings': 'Språk <span class="-coupling">&</span> Ljud'
         },
         'review': {
           'header': 'Härligt! I dag blir det ägg till frukost!',
