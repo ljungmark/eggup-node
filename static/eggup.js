@@ -688,14 +688,14 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
       /** English */
       'en' : {
         'egg': {
-          'back': 'Hübsch! I\'m back! <3',
           'bubble': {
-            '0': 'What an amazing day!',
-            '1': 'This is going to be sooo tasty!',
-            '2': 'Aren\'t eggs the best ever?',
-            '3': 'For every egg I become stronger!',
-            '4': 'The most important meal of the day!',
-            '5': 'Om nom nom nam nam!'
+            '0': '"Everything has consequences, which is kind of inconvenient" -Anton',
+            '1': '"If the bird animals that provide us with eggs suddently disappear. Will we be happier?" -Viktor',
+            '2': '"If you have a seagull there\'ll be nothing left!" -Albin',
+            '3': '"Yeah, so I\'m kind of thinking this might work" -Anton',
+            '4': '"But what happens if you\'d use horse liniments on your forehead? Will the brain grow numb?" -Pontus',
+            '5': '"I am the eggman! I am the lizard king!" -Joakim',
+            '6': '"Variables are cumbersome" -Patrik'
           }
         },
         'map': {
@@ -748,14 +748,14 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
       /** Swedish */
       'sv' : {
         'egg': {
-          'back': 'Hübsch! Jag är tillbaka! <3',
           'bubble': {
-            '0': 'Vilken fantastisk dag!',
-            '1': 'Det här kommer bli sååå smarrigt!',
-            '2': 'Är inte ägg det bästa som finns?',
-            '3': 'För varje ägg så blir jag starkare!',
-            '4': 'Frukost är dagens viktigaste måltid!',
-            '5': 'Om nom nom nam nam!'
+            '0': '"Allting har ju konsekvenser hela jävla tiden, vilket är lite störande" -Anton',
+            '1': '"Om fågeldjur som ger oss ägg försvinner. Blir vi lyckligare då?" -Viktor',
+            '2': '"Om du rakar en fiskmås så finns det ju ingenting kvar!" -Albin',
+            '3': '"Ja, så jag tänker att det kanske typ kommer att fungera" -Anton',
+            '4': '"Men vad händer om man använder hästliniment i pannan? Domnar hjärnan bort då?" -Pontus',
+            '5': '"I am the eggman! I am the lizard king!" -Joakim',
+            '6': '"Variabler är jobbigt" -Patrik'
           }
         },
         'map': {
@@ -870,6 +870,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
     } else {
       document.querySelector('.review-text__order').textContent = eggup.i18n('get', 'review.empty');
     }
+
+    /** Handle bubble texts separately */
+    if (document.querySelector('.bubble')) document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
 
     eggup.heap(JSON.parse(localStorage.getItem('thread'))['heap_1'], JSON.parse(localStorage.getItem('thread'))['heap_2']);
 
@@ -1047,7 +1050,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </video>`,
     egg_markup = `
       <div class="egg">
-        <div class="bubble" data-lang="egg.back"></div>
+        <div class="bubble"></div>
         <div class="yolk">
           <div class="face">
             <div class="eyes"></div>
@@ -1059,11 +1062,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('body').insertAdjacentHTML('afterbegin', video_markup);
     document.querySelector('.wrapper').insertAdjacentHTML('afterbegin', egg_markup);
 
-    document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.back');
+    document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
 
     window.bubble = setInterval(function(){
       document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
-    }, 20000);
+    }, 10000);
   }
 
   /**
@@ -1701,7 +1704,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!document.querySelector('.egg')) {
         egg_markup = `
         <div class="egg">
-          <div class="bubble" data-lang="egg.back"></div>
+          <div class="bubble"></div>
           <div class="yolk">
             <div class="face">
               <div class="eyes"></div>
@@ -1716,7 +1719,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         window.bubble = setInterval(function(){
           document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
-        }, 20000);
+        }, 10000);
       }
     }
 
