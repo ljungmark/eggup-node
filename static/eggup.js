@@ -716,7 +716,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             'singular': 'Hard boiled',
             'plural': 'Hard boiled'
           },
-          'settings': 'Language <span class="-coupling">&</span> Sounds'
+          'settings': 'Language & Sounds'
         },
         'review': {
           'header': 'Lovely! Eggs for breakfast today!',
@@ -753,7 +753,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '1': '"Om fågeldjur som ger oss ägg försvinner. Blir vi lyckligare då?" -Viktor',
             '2': '"Om du rakar en fiskmås så finns det ju ingenting kvar!" -Albin',
             '3': '"Ja, så jag tänker att det kanske typ kommer att fungera" -Anton',
-            '4': '"Men vad händer om man använder hästliniment i pannan? Domnar hjärnan bort då?" -Pontus',
+            '4': '"Men vad händer om man använder hästliniment på pannan? Domnar hjärnan bort då?" -Pontus',
             '5': '"I am the eggman! I am the lizard king!" -Joakim',
             '6': '"Variabler är jobbigt" -Patrik'
           }
@@ -776,7 +776,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             'singular': 'Hårdkokt',
             'plural': 'Hårdkokta'
           },
-          'settings': 'Språk <span class="-coupling">&</span> Ljud'
+          'settings': 'Språk & Ljud'
         },
         'review': {
           'header': 'Härligt! I dag blir det ägg till frukost!',
@@ -1729,6 +1729,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.progress-bar__variant_1').style.backgroundSize = `${barwidth}px ${barheight}px`;
     document.querySelector('.progress-bar__variant_2').style.backgroundSize = `${barwidth}px ${barheight}px`;
   });
+
+  document.querySelector('.logout').onclick = function() {
+    window.location = '/logout';
+  };
 
   /**
     Long press click to fire popup to start cooking
