@@ -680,6 +680,74 @@ h2 {
   width: 300px;
 }
 
+.hamburger {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.25s;
+  user-select: none;
+}
+.hamburger .-icon:before,
+.hamburger .-icon:after {
+  transition: 0.25s;
+}
+.hamburger:hover {
+  transition: 0.5s;
+}
+.hamburger:hover .-icon:before,
+.hamburger:hover .-icon:after {
+  transition: 0.25s;
+}
+.hamburger:hover .-icon:before {
+  top: 7px;
+}
+.hamburger:hover .-icon:after {
+  top: -7px;
+}
+
+.-icon {
+  background: #FFF;
+  border-radius: 2.5rem;
+  height: 4px;
+  position: relative;
+  top: -3px;
+  transition: 0.5s;
+  width: 22px;
+}
+.-icon:before, .-icon:after {
+  background: #fdfdfd;
+  border-radius: 1rem;
+  content: "";
+  display: block;
+  height: 4px;
+  position: absolute;
+  transition: 0.5s 0.25s;
+  width: 22px;
+  z-index: -1;
+}
+.-icon:before {
+  top: 6px;
+}
+.-icon:after {
+  top: -6px;
+}
+
+.-trigger:checked + .-expander .-icon:before,
+.-trigger:checked + .-expander .-icon:after {
+  top: 0;
+  transition: 0.5s;
+}
+
+.-trigger:checked + .-expander .-icon {
+  background: transparent;
+}
+.-trigger:checked + .-expander .-icon:before {
+  transform: rotate(-45deg);
+}
+.-trigger:checked + .-expander .-icon:after {
+  transform: rotate(45deg);
+}
+
 .-option, .-expander {
   background: #fdfdfd;
   box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);
@@ -719,7 +787,6 @@ h2 {
 .-expander {
   background-image: linear-gradient(-180deg, #44b1e8, #3098de);
   cursor: pointer;
-  line-height: 52px;
   transform: scale(1.1, 1.1) translate3d(0, 0, 0);
   transition-duration: 400ms;
   transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
