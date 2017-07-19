@@ -1000,14 +1000,26 @@ document.addEventListener('DOMContentLoaded', function() {
    */
   eggup.i18n('update');
 
-  if (eggup.cache.language === 'en') document.querySelector('.-switch').checked = true;
+  if (eggup.cache.language === 'en') {
+   document.querySelector('.-flags').classList.add('_english');
+  } else {
+   document.querySelector('.-flags').classList.add('_swedish');
+  }
   if (eggup.cache.notify === false) document.querySelector('.notify').classList.add('_mute');
 
-  document.querySelector('.-switch').onclick = function() {
-    if (document.querySelector('.-switch').checked === true) {
-      eggup.i18n('set', 'en');
-    } else {
+  document.querySelector('.-flags').onclick = function(element) {
+    if (element.target.classList.contains('-english')) {
       eggup.i18n('set', 'sv');
+      document.querySelector('.-flags').classList.remove('_english');
+      document.querySelector('.-flags').classList.add('_swedish');
+    } else if (element.target.classList.contains('-swedish')) {
+      eggup.i18n('set', 'sv');
+      document.querySelector('.-flags').classList.remove('_swedish');
+      document.querySelector('.-flags').classList.add('_afrikaans');
+    } else {
+      eggup.i18n('set', 'en');
+      document.querySelector('.-flags').classList.remove('_afrikaans');
+      document.querySelector('.-flags').classList.add('_english');
     }
   };
 
