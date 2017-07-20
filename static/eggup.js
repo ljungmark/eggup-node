@@ -776,7 +776,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             'singular': 'Hårdkokt',
             'plural': 'Hårdkokta'
           },
-          'settings': 'Språk & Ljud'
+          'settings': 'Språk & ljud'
         },
         'review': {
           'header': 'Härligt! I dag blir det ägg till frukost!',
@@ -1013,12 +1013,8 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('.-flags').classList.remove('_english');
       document.querySelector('.-flags').classList.add('_swedish');
     } else if (element.target.classList.contains('-swedish')) {
-      eggup.i18n('set', 'sv');
-      document.querySelector('.-flags').classList.remove('_swedish');
-      document.querySelector('.-flags').classList.add('_afrikaans');
-    } else {
       eggup.i18n('set', 'en');
-      document.querySelector('.-flags').classList.remove('_afrikaans');
+      document.querySelector('.-flags').classList.remove('_swedish');
       document.querySelector('.-flags').classList.add('_english');
     }
   };
