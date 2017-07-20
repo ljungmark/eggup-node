@@ -18,14 +18,28 @@
       margin: 0;
     }
     body::before {
-      content: "";
       background: url(../assets/pattern.png);
-      opacity: 0.3;
-      top: 0;
-      left: 0;
       bottom: 0;
-      right: 0;
+      opacity: 0.3;
+      content: '';
+      left: 0;
       position: absolute;
+      right: 0;
+      top: 0;
+      z-index: -1;
+    }
+    body::after {
+      background:
+        url('../assets/clouds.png') center 5% no-repeat,
+        url('../assets/summer-floor.png') bottom center repeat-x;
+      bottom: 0;
+      content: '';
+      filter: grayscale(10%);
+      left: 0;
+      opacity: 1;
+      position: absolute;
+      right: 0;
+      top: 0;
       z-index: -1;
     }
     .egg {

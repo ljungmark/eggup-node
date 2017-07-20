@@ -689,13 +689,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
       'en' : {
         'egg': {
           'bubble': {
-            '0': '"Everything has consequences, which is kind of inconvenient" -Anton',
-            '1': '"If the bird animals that provide us with eggs suddently disappear. Will we be happier?" -Viktor',
-            '2': '"If you have a seagull there\'ll be nothing left!" -Albin',
-            '3': '"Yeah, so I\'m kind of thinking this might work" -Anton',
-            '4': '"But what happens if you\'d use horse liniments on your forehead? Will the brain grow numb?" -Pontus',
-            '5': '"I am the eggman! I am the lizard king!" -Joakim',
-            '6': '"Variables are cumbersome" -Patrik'
+            '0': 'Have a great summer, everybody!'
           }
         },
         'map': {
@@ -749,13 +743,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
       'sv' : {
         'egg': {
           'bubble': {
-            '0': '"Allting har ju konsekvenser hela jävla tiden, vilket är lite störande" -Anton',
-            '1': '"Om fågeldjur som ger oss ägg försvinner. Blir vi lyckligare då?" -Viktor',
-            '2': '"Om du rakar en fiskmås så finns det ju ingenting kvar!" -Albin',
-            '3': '"Ja, så jag tänker att det kanske typ kommer att fungera" -Anton',
-            '4': '"Men vad händer om man använder hästliniment på pannan? Domnar hjärnan bort då?" -Pontus',
-            '5': '"I am the eggman! I am the lizard king!" -Joakim',
-            '6': '"Variabler är jobbigt" -Patrik'
+            '0': 'Glad sommar, allesammans!'
           }
         },
         'map': {
