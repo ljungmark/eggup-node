@@ -667,7 +667,7 @@ h2 {
 }
 
 .settings {
-  bottom: 20px;
+  bottom: 30px;
   box-sizing: border-box;
   filter: url("#settings");
   height: 70px;
@@ -745,17 +745,20 @@ h2 {
 .-option,
 .-expander {
   background: #fdfdfd;
-  box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);
+  box-shadow:
+    0 1px 0 0 rgba(46,86,153,.15),
+    inset 0 1px 0 0 rgba(46,86,153,.1),
+    inset 0 -1px 0 0 rgba(46,86,153,.4);
   border-radius: 100%;
   color: white;
-  height: 40px;
-  line-height: 40px;
-  margin-left: -40px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: -50px;
   position: absolute;
   text-align: center;
   transform: translate3d(0, 0, 0);
   transition: transform ease-out 200ms;
-  width: 40px;
+  width: 50px;
 }
 
 .-trigger {
@@ -773,12 +776,12 @@ h2 {
   content: attr(data-tooltip);
   font-size: 11px;
   font-weight: bold;
-  left: 43px;
+  left: 54px;
   line-height: 20px;
   opacity: 1;
   padding: 6px 12px;
   position: absolute;
-  top: 3px;
+  top: 8px;
   white-space: nowrap;
   z-index: 1;
 }
@@ -802,15 +805,15 @@ h2 {
   transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 .-trigger:checked ~ .-option:nth-child(3) {
-  transform: translate3d(-38px, -16px, 0);
+  transform: translate3d(-48px, -16px, 0);
   transition-duration: 190ms;
 }
 .-trigger:checked ~ .-option:nth-child(4) {
-  transform: translate3d(0, -40px, 0);
+  transform: translate3d(0, -50px, 0);
   transition-duration: 290ms;
 }
 .-trigger:checked ~ .-option:nth-child(5) {
-  transform: translate3d(38px, -16px, 0);
+  transform: translate3d(48px, -16px, 0);
   transition-duration: 390ms;
 }
 
@@ -865,8 +868,6 @@ h2 {
   83.98% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
   100% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
 }
-
-
 
 .notify {
   width: 24px;
@@ -1437,11 +1438,24 @@ h2 {
     bottom: initial;
     height: 40px;
     left: initial;
+    padding-left: 50px;
     padding-top: 4px;
     position: absolute;
     text-align: initial;
     transform: initial;
     width: 200px;
+  }
+
+  .-option,
+  .-expander {
+    height: 40px;
+    line-height: 40px;
+    width: 40px;
+  }
+
+  .-trigger:not(:checked) + .-expander::after {
+    left: 43px;
+    top: 3px;
   }
 
   .-trigger:checked ~ .-option:nth-child(3) {
