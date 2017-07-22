@@ -989,21 +989,22 @@ document.addEventListener('DOMContentLoaded', function() {
   eggup.i18n('update');
 
   if (eggup.cache.language === 'en') {
-   document.querySelector('.-flags').classList.add('_english');
+   document.querySelector('.-option.-language').classList.add('_english');
   } else {
-   document.querySelector('.-flags').classList.add('_swedish');
+   document.querySelector('.-option.-language').classList.add('_swedish');
   }
   if (eggup.cache.notify === false) document.querySelector('.notify').classList.add('_mute');
 
-  document.querySelector('.-flags').onclick = function(element) {
-    if (element.target.classList.contains('-english')) {
+  document.querySelector('.-option.-language').onclick = function(element) {
+    console.log(element.target);
+    if (element.target.classList.contains('_english')) {
       eggup.i18n('set', 'sv');
-      document.querySelector('.-flags').classList.remove('_english');
-      document.querySelector('.-flags').classList.add('_swedish');
-    } else if (element.target.classList.contains('-swedish')) {
+      document.querySelector('.-option.-language').classList.remove('_english');
+      document.querySelector('.-option.-language').classList.add('_swedish');
+    } else if (element.target.classList.contains('_swedish')) {
       eggup.i18n('set', 'en');
-      document.querySelector('.-flags').classList.remove('_swedish');
-      document.querySelector('.-flags').classList.add('_english');
+      document.querySelector('.-option.-language').classList.remove('_swedish');
+      document.querySelector('.-option.-language').classList.add('_english');
     }
   };
 

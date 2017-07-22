@@ -825,22 +825,23 @@ h2 {
 
 .-flags {
   display: inline-block;
+  pointer-events: none;
   position: relative;
   top: 3px;
 }
 
-.-flags._english .-swedish,
-.-flags._english .-afrikaans {
+.-option.-language._english .-swedish,
+.-option.-language._english .-afrikaans {
   display: none;
 }
 
-.-flags._swedish .-english,
-.-flags._swedish .-afrikaans {
+.-option.-language._swedish .-english,
+.-option.-language._swedish .-afrikaans {
   display: none;
 }
 
-.-flags._afrikaans .-english,
-.-flags._afrikaans .-swedish {
+.-option.-language._afrikaans .-english,
+.-option.-language._afrikaans .-swedish {
   display: none;
 }
 
