@@ -817,7 +817,7 @@ h2 {
   transition-duration: 390ms;
 }
 
-.logout {
+.-door {
   top: 3px;
   position: relative;
   left: 2px;

@@ -993,7 +993,7 @@ document.addEventListener('DOMContentLoaded', function() {
   } else {
    document.querySelector('.-option.-language').classList.add('_swedish');
   }
-  if (eggup.cache.notify === false) document.querySelector('.notify').classList.add('_mute');
+  if (eggup.cache.notify === false) document.querySelector('.-notify').classList.add('_mute');
 
   document.querySelector('.-option.-language').onclick = function(element) {
     console.log(element.target);
@@ -1008,13 +1008,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  document.querySelector('.notify').onclick = function() {
+  document.querySelector('.-notify').onclick = function() {
     if (eggup.cache.notify === true) {
       eggup.settings('notify', false);
     } else {
       eggup.settings('notify', true);
     }
-    document.querySelector('.notify').classList.toggle('_mute');
+    document.querySelector('.-notify').classList.toggle('_mute');
   };
 
   socket.on('gateway', function(action) {
