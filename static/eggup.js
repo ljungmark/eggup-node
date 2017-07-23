@@ -996,7 +996,6 @@ document.addEventListener('DOMContentLoaded', function() {
   if (eggup.cache.notify === false) document.querySelector('.-notify').classList.add('_mute');
 
   document.querySelector('.-option.-language').onclick = function(element) {
-    console.log(element.target);
     if (element.target.classList.contains('_english')) {
       eggup.i18n('set', 'sv');
       document.querySelector('.-option.-language').classList.remove('_english');
