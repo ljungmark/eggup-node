@@ -1444,6 +1444,7 @@ h2 {
     padding-top: 4px;
     position: absolute;
     text-align: initial;
+    transform: initial;
     width: 200px;
   }
 
