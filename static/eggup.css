@@ -744,7 +744,7 @@ h2 {
 
 .-option,
 .-expander {
-  background: #fdfdfd;
+  background: linear-gradient(-180deg, #ffffff, #ededed);
   box-shadow:
     0 1px 0 0 rgba(46,86,153,.15),
     inset 0 1px 0 0 rgba(46,86,153,.1),
@@ -766,7 +766,7 @@ h2 {
 }
 
 .-trigger:not(:checked) + .-expander::after {
-  background: #fdfdfd;
+  background: linear-gradient(-180deg, #ffffff, #ededed);
   border-radius: 26px;
   box-shadow:
     0 1px 0 0 rgba(46,86,153,.15),
@@ -776,12 +776,13 @@ h2 {
   content: attr(data-tooltip);
   font-size: 11px;
   font-weight: bold;
-  left: 54px;
+  left: 36px;
   line-height: 20px;
   opacity: 1;
   padding: 6px 12px;
   position: absolute;
-  top: 8px;
+  top: 22px;
+  transform: rotate(-4deg);
   white-space: nowrap;
   z-index: 1;
 }
@@ -818,9 +819,9 @@ h2 {
 }
 
 .-door {
-  top: 3px;
+  top: 4px;
   position: relative;
-  left: 2px;
+  left: 1px;
 }
 
 .-flags {
@@ -1443,7 +1444,6 @@ h2 {
     padding-top: 4px;
     position: absolute;
     text-align: initial;
-    transform: initial;
     width: 200px;
   }
 
@@ -1457,6 +1457,7 @@ h2 {
   .-trigger:not(:checked) + .-expander::after {
     left: 43px;
     top: 3px;
+    transform: initial;
   }
 
   .-trigger:checked ~ .-option:nth-child(3) {
