@@ -790,7 +790,7 @@ h2 {
 .-expander {
   background-image: linear-gradient(-180deg, #44b1e8, #3098de);
   cursor: pointer;
-  transform: scale(1.1, 1.1) translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   transition-duration: 400ms;
   transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 2;
@@ -1456,8 +1456,8 @@ h2 {
   }
 
   .-trigger:not(:checked) + .-expander::after {
-    left: 43px;
-    top: 3px;
+    left: 44px;
+    top: 4px;
     transform: initial;
   }
 
