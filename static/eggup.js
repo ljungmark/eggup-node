@@ -26,18 +26,25 @@
 
 
 /**
-  Web sockets
-*/
+ * Enable strict mode
+ * Disabled to support arguments.callee
+ */
+/** 'use strict'; */
+
+
+/**
+ * Web sockets
+ */
 var socket = io.connect('');
 
 
 /**
-  HELPER FUNCTIONS
-*/
+ * HELPER FUNCTIONS
+ */
 
 /**
-  Returns date in format YYYY-MM-DD
-*/
+ * Returns date in format YYYY-MM-DD
+ */
 function get_date(date) {
   current_date = new Date(),
   year = current_date.getFullYear(),
