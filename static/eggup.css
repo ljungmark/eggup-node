@@ -819,9 +819,10 @@ h2 {
 }
 
 .-door {
-  top: 4px;
+  left: 2px;
   position: relative;
-  left: 1px;
+  top: 6px;
+  width: 18px;
 }
 
 .-flags {
@@ -846,8 +847,11 @@ h2 {
   display: none;
 }
 
-.-flags img {
+.-flags .selector {
   animation: flagspin 1000ms linear both;
+  position: relative;
+  top: 5px;
+  width: 26px;
 }
 
 @keyframes flagspin {
@@ -1472,6 +1476,11 @@ h2 {
   .-trigger:checked ~ .-option:nth-child(5) {
     transform: translate3d(129px, 0, 0);
     transition-duration: 390ms;
+  }
+
+  .-flags .selector {
+    top: 3px;
+    width: 22px;
   }
 
   .initiate {
