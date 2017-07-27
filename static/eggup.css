@@ -745,11 +745,9 @@ h2 {
 .-option,
 .-expander {
   background: linear-gradient(-180deg, #ffffff, #ededed);
-  box-shadow:
-    0 1px 0 0 rgba(46,86,153,.15),
-    inset 0 1px 0 0 rgba(46,86,153,.1),
-    inset 0 -1px 0 0 rgba(46,86,153,.4);
   border-radius: 100%;
+  box-shadow:
+    0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);
   color: white;
   height: 50px;
   line-height: 50px;
@@ -759,6 +757,13 @@ h2 {
   transform: translate3d(0, 0, 0);
   transition: transform ease-out 200ms;
   width: 50px;
+}
+
+.-trigger:checked ~ .-option {
+  box-shadow:
+    0 -2px 10px 0 rgba(46, 86, 153, 0.5),
+    inset 0 1px 0 0 rgba(46,86,153,.1),
+    inset 0 -1px 1px 0 rgba(46,86,153,.4);
 }
 
 .-trigger {
@@ -1459,10 +1464,24 @@ h2 {
     width: 40px;
   }
 
+  .-option {
+    box-shadow:
+      0 1px 0 0 rgba(46,86,153,.15),
+      inset 0 1px 0 0 rgba(46,86,153,.1),
+      inset 0 -1px 1px 0 rgba(46,86,153,.4);
+  }
+
   .-trigger:not(:checked) + .-expander::after {
     left: 44px;
     top: 4px;
     transform: initial;
+  }
+
+  .-trigger:checked ~ .-option {
+    box-shadow:
+      0 1px 0 0 rgba(46,86,153,.15),
+      inset 0 1px 0 0 rgba(46,86,153,.1),
+      inset 0 -1px 1px 0 rgba(46,86,153,.4);
   }
 
   .-trigger:checked ~ .-option:nth-child(3) {
@@ -1474,6 +1493,7 @@ h2 {
     transition-duration: 290ms;
   }
   .-trigger:checked ~ .-option:nth-child(5) {
+    border-right: 1px solid rgba(46,86,153, 0.3);
     transform: translate3d(129px, 0, 0);
     transition-duration: 390ms;
   }
