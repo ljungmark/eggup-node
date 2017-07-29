@@ -113,6 +113,7 @@ const path = require('path'),
   app.use('/styles', express.static(path.join(__dirname, 'static/')));
   app.use('/scripts', express.static(path.join(__dirname, 'static/')));
   app.use('/assets', express.static(path.join(__dirname, 'static/')));
+  app.use('/app', express.static(path.join(__dirname, 'app/')));
 
   /**
     Use body-parser to interpret XHR bodies
