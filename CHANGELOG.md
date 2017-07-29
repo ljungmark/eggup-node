@@ -1,3 +1,11 @@
+## 2.2.2 [Mijo](https://github.com/ljungmark/eggup-node/releases/tag/2.2.2) (2017-06-06)
+
+* Option controls
+* Support more than 2 languages
+* Link to /logout
+* Midsummer graphics
+* Pixel adjustments
+
 ## 2.2.1 [Appellie](https://github.com/ljungmark/eggup-node/releases/tag/2.2.1) (2017-06-06)
 
 * Add Spotify OAuth
