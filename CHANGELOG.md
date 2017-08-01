@@ -1,4 +1,8 @@
-## 2.2.2 [Mijo](https://github.com/ljungmark/eggup-node/releases/tag/2.2.2) (2017-06-06)
+## 2.2.3 [Telectives](https://github.com/ljungmark/eggup-node/releases/tag/2.2.3) (2017-08-02)
+
+* Implement Web Audio API
+
+## 2.2.2 [Mijo](https://github.com/ljungmark/eggup-node/releases/tag/2.2.2) (2017-07-29)
 
 * Option controls
 * Support more than 2 languages
