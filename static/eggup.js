@@ -124,60 +124,67 @@ function controller() {
   Audio is loaded and referenced through a key, eg:
     audio.load(key, audio_file);
   and then played through the play function, eg:
-    audio.play(key);
+    audio.start(key);
 */
-!function(reference, library){
-  var ctx = new (reference.AudioContext || reference.webkitAudioContext), buffers = {},
-  loadBuffer = function(key, arrayBuffer, callback){
-    ctx.decodeAudioData(arrayBuffer, function(bytes) {
+!function() {
+  const context = new (window.AudioContext || window.webkitAudioContext),
+    buffers = {},
+
+  audio_buffer = function(key, arrayBuffer, callback){
+    context.decodeAudioData(arrayBuffer, function(bytes) {
       buffers[key] = {};
       buffers[key].data = bytes;
       buffers[key].loop = false;
-      if(callback) callback(key);
+
+      if (callback) callback(key);
     }, function(event){
       console.error('Audio decoding error: ' + event.err);
     }
   )},
-  loadAudio = function(key, source, callback, request){
-    if(source.big) {
+  audio_load = function(key, source, callback, request){
+    if (source.big) {
       request = new XMLHttpRequest();
       request.open('GET', source, true);
       request.responseType = 'arraybuffer';
       request.onload = function() {
-        loadBuffer(key, request.response, callback)
+        audio_buffer(key, request.response, callback)
       };
       request.send();
     }
     else {
       request = new FileReader();
-      request.onload = function(){loadBuffer(key, request.result, callback)};
+      request.onload = function(){
+        audio_buffer(key, request.result, callback)
+      };
       request.readAsArrayBuffer(source);
     }
   },
-  unloadAudio = function(key){
+  audio_unload = function(key){
     delete buffers[key]
   },
-  playAudio = function(key, bufferSource){
-    if(key in buffers) {
-      if('node' in buffers[key]) buffers[key].node.stop(0);
-      bufferSource = ctx.createBufferSource();
+  audio_start = function(key, bufferSource){
+    if (key in buffers) {
+      if ('node' in buffers[key]) buffers[key].node.stop(0);
+
+      bufferSource = context.createBufferSource();
       bufferSource.buffer = buffers[key].data;
-      bufferSource.connect(ctx.destination);
+      bufferSource.connect(context.destination);
       bufferSource.loop = buffers[key].loop;
       bufferSource.start(0)
       buffers[key].node = bufferSource;
     }
   },
-  stopAudio = function(key) {
-    if (key in buffers && buffers[key].node) buffers[key].node.stop(0)
+  audio_stop = function(key) {
+    if (key in buffers && buffers[key].node) buffers[key].node.stop(0);
   };
-  reference[library] = {
-    load: loadAudio,
-    unload: unloadAudio,
-    play: playAudio,
-    stop: stopAudio
+
+  window.audio = {
+    load: audio_load,
+    unload: audio_unload,
+    start: audio_start,
+    stop: audio_stop
   }
-}(self,'audio');
+}();
 
 
 /**
@@ -734,7 +741,7 @@ Eggup.prototype.notify = function(sound = null) {
   const instance = this;
 
   if (instance.cache.notify && sound !== null && ['done', 'start', 'click', 'open', 'close', 'initiate', 'change', 'error'].includes(sound)) {
-    audio.play(`${sound}`);
+    audio.start(`${sound}`);
   }
 
   return false;
