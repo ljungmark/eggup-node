@@ -49,6 +49,32 @@ h2 {
   text-align: center;
 }
 
+.module[data-module="init"] .app_crest {
+  height: 160px;
+}
+
+#app_crest {
+  animation: fill_crest 2s linear forwards;
+  fill: transparent;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+
+@keyframes fill_crest {
+  0% {
+    fill: transparent;
+    stroke-dashoffset: 1000;
+  }
+  80% {
+    fill: rgba(40, 57, 72, 0.0);
+    stroke-dashoffset: 500;
+  }
+  100% {
+    fill: rgba(40, 57, 72, 0.9);
+    stroke-dashoffset: 0;
+  }
+}
+
 .module[data-module="review"] {
   background:
     url('../assets/receipt_bottom.png') bottom repeat-x,
