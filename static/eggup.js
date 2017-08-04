@@ -954,6 +954,15 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
 };
 
 
+Eggup.prototype.reload = function(component = null) {
+  if (!component) return false;
+
+  if (component === 'client') location.reload();
+
+  return false;
+};
+
+
 /**
   Set up default Countdown object
 
@@ -1910,5 +1919,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.ontouchend = (event) => {
     clearTimeout(persistency);
+  };
+
+  document.querySelector('.reloader').onclick = function(element) {
+    eggup.reload('client');
   };
 });
