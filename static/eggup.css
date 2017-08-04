@@ -35,7 +35,7 @@ h2 {
 .application {
   background: #f5f5f7;
   box-sizing: border-box;
-  bottom: 0;
+  bottom: -60px; /** Compensate for Android address bar */
   left: -10px; /** Compensate when shaking on device */
   padding: 0 10px;
   position: absolute; /** Stack blocks upon each other */
@@ -693,7 +693,7 @@ h2 {
 }
 
 .settings {
-  bottom: 50px;
+  bottom: 110px; /** +60px to compensate for Android address bar */
   box-sizing: border-box;
   filter: url("#settings");
   height: 70px;
