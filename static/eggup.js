@@ -927,11 +927,11 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
 
     /** Variant text handled separately */
     let variant_text = document.querySelector('.order-variant__data');
-    if (eggup.cache.quantity === 1 && eggup.cache.variant === 1) {
+    if (parseInt(eggup.cache.quantity) === 1 && parseInt(eggup.cache.variant) === 1) {
       variant_text.value = eggup.i18n('get', 'order.softboiled.singular');
-    } else if (eggup.cache.quantity === 2 && eggup.cache.variant === 1) {
+    } else if (parseInt(eggup.cache.quantity) === 2 && parseInt(eggup.cache.variant) === 1) {
       variant_text.value = eggup.i18n('get', 'order.softboiled.plural');
-    } else if (eggup.cache.quantity === 1 && eggup.cache.variant === 2) {
+    } else if (parseInt(eggup.cache.quantity) === 1 && parseInt(eggup.cache.variant) === 2) {
       variant_text.value = eggup.i18n('get', 'order.hardboiled.singular');
     } else {
       variant_text.value = eggup.i18n('get', 'order.hardboiled.plural');
