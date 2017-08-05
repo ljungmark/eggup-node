@@ -535,7 +535,7 @@ Eggup.prototype.load = function(target_module) {
    */
   if (target_module_index == current_module_index
     || target_module_index == -1
-    || current_module === 'closed') {
+    || current_module === 'docket') {
     instance.error();
 
     return false;
@@ -547,11 +547,12 @@ Eggup.prototype.load = function(target_module) {
     target_module_element.classList.remove('_hidden');
     target_module_element.classList.add('fade_in_from_right');
 
-    current_module_element.addEventListener('webkitAnimationEnd', function(e) {
-      e.target.removeEventListener(e.type, arguments.callee)
+    current_module_element.addEventListener('webkitAnimationEnd', function(reference) {
+      reference.target.removeEventListener(reference.type, arguments.callee)
       current_module_element.classList.remove('fade_out_to_left');
-      current_module_element.classList.add('_hidden');
       target_module_element.classList.remove('fade_in_from_right');
+
+      if (document.querySelectorAll('.module:not(._hidden)').length != 1) current_module_element.classList.add('_hidden');
 
       instance.input_threshold = false;
     });
@@ -560,11 +561,12 @@ Eggup.prototype.load = function(target_module) {
     target_module_element.classList.remove('_hidden');
     target_module_element.classList.add('fade_in_from_left');
 
-    current_module_element.addEventListener('webkitAnimationEnd', function(e) {
-      e.target.removeEventListener(e.type, arguments.callee)
+    current_module_element.addEventListener('webkitAnimationEnd', function(reference) {
+      reference.target.removeEventListener(reference.type, arguments.callee)
       current_module_element.classList.remove('fade_out_to_right');
-      current_module_element.classList.add('_hidden');
       target_module_element.classList.remove('fade_in_from_left');
+
+      if (document.querySelectorAll('.module:not(._hidden)').length != 1) current_module_element.classList.add('_hidden');
 
       instance.input_threshold = false;
     });
