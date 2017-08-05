@@ -50,7 +50,7 @@ h2 {
 }
 
 .reloader {
-  animation: reloader 1s 5s linear forwards;
+  animation: reloader 1s 3s linear forwards;
 }
 @keyframes reloader {
   0% {
