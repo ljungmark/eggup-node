@@ -1,3 +1,11 @@
+## 2.2.4 [Finitive](https://github.com/ljungmark/eggup-node/releases/tag/2.2.4) (2017-08-06)
+
+* Auth SVGs
+* Reload prototype
+* Fixed bug where container didn't have any populating modules
+* Fixed Android device paint errors
+* Fixed set i18n bug for variant and quantity
+
 ## 2.2.3 [Telectives](https://github.com/ljungmark/eggup-node/releases/tag/2.2.3) (2017-08-02)
 
 * Implement Web Audio API
