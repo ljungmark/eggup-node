@@ -9,25 +9,6 @@ body {
   background: transparent;
 }
 
-body::after {
-  background: linear-gradient(0deg, #00e7ff, #00ff5a);
-  background-size: auto auto;
-  border-radius: 8px;
-  box-shadow: 0 7px 10px rgba(9, 13, 62, 0.3);
-  box-sizing: border-box;
-  content: '';
-  height: 544px;
-  left: 50%;
-  max-height: calc(100vh - 84px);
-  opacity: 0.5;
-  padding: 0;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 576px;
-  z-index: -1;
-}
-
 .background {
   height: auto;
   left: 50%;
@@ -150,7 +131,6 @@ h2 {
   margin-top: 14px;
 }
 
-
 @keyframes wobble {
   from {
     transform: rotate(-4deg);
@@ -174,15 +154,15 @@ h2 {
   transition: background-position 500ms;
 }
 
-.container::after {
-  content: '';
+.container:after {
   background: url('../assets/mesh.png') repeat;
-  opacity: 0.4;
-  top: 0;
-  left: 0;
   bottom: 0;
-  right: 0;
+  content: '';
+  left: 0;
+  opacity: 0.4;
   position: absolute;
+  right: 0;
+  top: 0;
   z-index: -1;
 }
 
@@ -636,7 +616,23 @@ h2 {
   text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
   transition: background-color 300ms linear;
   padding: 2px 14px 8px;
+  position: relative;
   width: 100%;
+}
+
+.order-quantity:after,
+.order-variant:after {
+  background: url('../styles/input.png') repeat;
+  bottom: 0;
+  box-sizing: border-box;
+  content: '';
+  left: 0;
+  opacity: 0.1;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
 }
 
 .application--error .order-quantity,
@@ -668,12 +664,14 @@ h2 {
   font-size: 12px;
   letter-spacing: 1px;
   pointer-events: none;
+  position: relative; /** To be able to utilize z-index */
   text-shadow:
     1px 1px 0 rgba(140, 140, 140, 0.08),
     -1px -1px 1px rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
   transition: color 0.3s;
   overflow: hidden;
+  z-index: 1;
 }
 
 .order-quantity__data,
@@ -687,11 +685,13 @@ h2 {
   outline: 0;
   overflow: hidden;
   padding-top: 4px;
+  position: relative; /** To be able to utilize z-index */
   text-align: center;
   text-shadow:
     1px 1px 0 rgba(140, 140, 140, 0.08),
     -1px -1px 1px rgba(0, 0, 0, 0.3);
   width: 100%;
+  z-index: 1;
 }
 
 .order-buttons {
@@ -1252,6 +1252,34 @@ h2 {
   Only utilized on machines with more computional power
 */
 @media only screen and (min-width: 960px) {
+  body::after {
+    animation: backplate 10s infinite;
+    background: linear-gradient(0deg, #00e7ff, #00ff5a, #00e7ff, #00ff5a);
+    background-size: 100% 400%;
+    border-radius: 8px;
+    box-shadow: 0 7px 10px rgba(9, 13, 62, 0.3);
+    box-sizing: border-box;
+    content: '';
+    height: 544px;
+    left: 50%;
+    max-height: calc(100vh - 88px);
+    opacity: 0.5;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 576px;
+    z-index: -1;
+  }
+
+  @keyframes backplate {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 0% 100%;
+    }
+  }
   .application {
     border-radius: 6px;
     bottom: initial;
