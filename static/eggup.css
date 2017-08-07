@@ -1228,6 +1228,50 @@ h2 {
   transition: opacity 250ms;
 }
 
+body._party::after {
+  animation-duration: 300ms;
+  animation-iteration-count: infinite;
+  animation-name: after-swing;
+  left: 50%;
+  opacity: 0.8;
+  position: absolute;
+  top: 50%;
+  transition: opacity 250ms;
+}
+
+@keyframes after-swing {
+  0%, 100% {
+    transform:translate(-50%,-50%) rotate(0)
+  }
+  10% {
+    transform:translate(calc(-50% + 2px,)calc(-50% - 2px)) rotate(-1deg)
+  }
+  20% {
+    transform:translate(calc(-50% + 2px,)calc(-50% - 1px)) rotate(1deg)
+  }
+  30% {
+    transform:translate(calc(-50% - 1px),calc(-50% - 1px)) rotate(-2deg)
+  }
+  40% {
+    transform:translate(calc(-50% - 3px),calc(-50% + 2px)) rotate(-1deg)
+  }
+  50% {
+    transform:translate(calc(-50% + 2pxc),calc(-50% + 2px)) rotate(-2deg)
+  }
+  60% {
+    transform:translate(calc(-50% - 1px),calc(-50% - 2px)) rotate(-1deg)
+  }
+  70% {
+    transform:translate(calc(-50% + 1px,)calc(-50% - 3px)) rotate(-2deg)
+  }
+  80% {
+    transform:translate(calc(-50% - 3px),calc(-50% - 3px)) rotate(1deg)
+  }
+  90% {
+    transform:translate(calc(-50% + 2px,)calc(-50% - 3px)) rotate(-2deg)
+  }
+}
+
 @keyframes albin-swing {
   20% {
     transform: translate(-190px, -321px) rotate(4deg);
