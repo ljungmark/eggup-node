@@ -10,9 +10,14 @@ module.exports = {
     'callbackURL': '',
     'userProfileURL': ''
   },
+  'github' : {
+    'clientID': '',
+    'clientSecret': '',
+    'callbackURL': ''
+  },
   'spotify' : {
     'clientID': '',
     'clientSecret': '',
-    'callbackURL': '',
+    'callbackURL': ''
   }
 };

@@ -10,6 +10,7 @@ const path = require('path'),
   passport = require('passport'),
   facebookStrategy = require('passport-facebook').Strategy,
   twitterStrategy = require('passport-twitter').Strategy,
+  githubStrategy = require('passport-github').Strategy,
   spotifyStrategy = require('passport-spotify').Strategy;
 
   /**
@@ -36,6 +37,19 @@ const path = require('path'),
   },
   function(accessToken, refreshToken, profile, done) {
     passportParser(profile, done, 'twitter');
+  }));
+
+  /**
+   * Set up Github strategy
+   */
+  passport.use(new githubStrategy({
+    clientID: strategies.github.clientID,
+    clientSecret: strategies.github.clientSecret,
+    callbackURL: strategies.github.callbackURL,
+    scope: ['user:email']
+  },
+  function(accessToken, refreshToken, profile, done) {
+    passportParser(profile, done, 'github');
   }));
 
   /**
@@ -67,20 +81,27 @@ const path = require('path'),
       if (error) {
         done(error)
       } else {
-        sql = 'SELECT * FROM tokens WHERE email = ?',
-          values = [profile.emails[0].value];
-        sql = mysql.format(sql, values);
+        let emails = [];
+
+        profile.emails.forEach(function(email) {
+          emails.push(`'${email.value}'`);
+        });
+
+        emails = emails.join(',');
+
+        sql = `SELECT * FROM tokens WHERE email IN (${emails})`;
 
         pool.query(sql, function (error, results, fields) {
           if (error) {
-            done(error)
+            done(error);
           } else {
             let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12),
+              email = (results.length) ? results[0].email : profile.emails[0].value,
               overwrite = (strategy == 'facebook') ? '?' : 'COALESCE(name, ?)' ;
 
             sql = `INSERT INTO tokens (token, email, name, created, visit, ${strategy}) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ` +
               `ON DUPLICATE KEY UPDATE name = ${overwrite}, visit = CURRENT_TIMESTAMP, ${strategy} = COALESCE(${strategy}, ?)`,
-              values = [token, profile.emails[0].value, profile.displayName, profile.id, profile.displayName, profile.id];
+              values = [token, email, profile.displayName, profile.id, profile.displayName, profile.id];
             sql = mysql.format(sql, values);
 
             pool.query(sql, function (error, results, fields) {
@@ -189,6 +210,15 @@ app.get('/auth/twitter',
 
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
+  function(request, response) {
+    response.redirect('/');
+  });
+
+app.get('/auth/github',
+  passport.authenticate('github', { scope: [ 'user:email' ]}));
+
+app.get('/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login' }),
   function(request, response) {
     response.redirect('/');
   });
