@@ -415,7 +415,7 @@ Eggup.prototype.synchronize = function() {
     });
   });
 
-  console.log('%c Eggup 2.1 ', [
+  console.log('%c Eggup 2.2.4 ', [
     'background: linear-gradient(-180deg, #44b1e8, #3098de)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
@@ -554,8 +554,10 @@ Eggup.prototype.load = function(target_module) {
 
       if (document.querySelectorAll('.module:not(._hidden)').length != 1) current_module_element.classList.add('_hidden');
 
-      /** Remove all other modules if target is Docket */
+      /** Remove superfluous elements if target is Docket */
       if (target_module == 'docket'){
+        document.querySelector('body').removeChild(document.querySelector('.initiate'));
+        document.querySelector('body').removeChild(document.querySelector('.overlay'));
         document.querySelectorAll('.module._hidden').forEach(function(module) {
           module.parentNode.removeChild(module);
         });
