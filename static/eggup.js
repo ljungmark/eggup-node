@@ -554,6 +554,13 @@ Eggup.prototype.load = function(target_module) {
 
       if (document.querySelectorAll('.module:not(._hidden)').length != 1) current_module_element.classList.add('_hidden');
 
+      /** Remove all other modules if target is Docket */
+      if (target_module == 'docket'){
+        document.querySelectorAll('.module._hidden').forEach(function(module) {
+          module.parentNode.removeChild(module);
+        });
+      }
+
       instance.input_threshold = false;
     });
   } else {
