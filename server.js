@@ -9,8 +9,9 @@ const path = require('path'),
   strategies = require('./static/strategies'),
   passport = require('passport'),
   facebookStrategy = require('passport-facebook').Strategy,
+  googleStrategy = require('passport-google-oauth20').Strategy,
   twitterStrategy = require('passport-twitter').Strategy,
-  githubStrategy = require('passport-github').Strategy,
+  githubStrategy = require('passport-github2').Strategy,
   spotifyStrategy = require('passport-spotify').Strategy;
 
   /**
@@ -24,6 +25,19 @@ const path = require('path'),
   },
   function(accessToken, refreshToken, profile, done) {
     passportParser(profile, done, 'facebook');
+  }));
+
+  /**
+   * Set up Google strategy
+   */
+  passport.use(new googleStrategy({
+    clientID: strategies.google.clientID,
+    clientSecret: strategies.google.clientSecret,
+    callbackURL: strategies.google.callbackURL,
+    scope: ['email']
+  },
+  function(accessToken, refreshToken, profile, done) {
+    passportParser(profile, done, 'google');
   }));
 
   /**
@@ -201,6 +215,15 @@ app.get('/auth/facebook',
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(request, response) {
+    response.redirect('/');
+  });
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: 'email'}));
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
   function(request, response) {
     response.redirect('/');
   });

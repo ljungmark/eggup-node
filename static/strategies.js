@@ -4,6 +4,11 @@ module.exports = {
     'secret': '',
     'callback': ''
   },
+  'google' : {
+    'clientID': '',
+    'clientSecret': '',
+    'callbackURL': ''
+  },
   'twitter' : {
     'consumerKey': '',
     'consumerSecret': '',
