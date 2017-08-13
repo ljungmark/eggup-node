@@ -87,7 +87,13 @@ const path = require('path'),
   });
 
   function passportParser(profile, done, strategy) {
-    let sql = `SELECT * FROM tokens WHERE ${strategy} = ?`,
+    let emails = [];
+    profile.emails.forEach(function(email) {
+      emails.push(`'${email.value}'`);
+    });
+    emails = emails.join(',');
+
+    sql = `SELECT * FROM tokens WHERE email IN (${emails}) OR ${strategy} = ?`,
       values = [profile.id];
     sql = mysql.format(sql, values);
 
@@ -95,46 +101,28 @@ const path = require('path'),
       if (error) {
         done(error);
       } else {
-        let emails = [];
+        let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12),
+          email = (results.length) ? results[0].email : profile.emails[0].value,
+          overwrite = (strategy == 'facebook') ? '?' : 'COALESCE(name, ?)' ;
 
-        profile.emails.forEach(function(email) {
-          emails.push(`'${email.value}'`);
-        });
-
-        emails = emails.join(',');
-
-        sql = `SELECT * FROM tokens WHERE email IN (${emails}) OR ${strategy} = ?`,
-          values = [profile.id];
+        sql = `INSERT INTO tokens (token, email, name, created, visit, ${strategy}) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ` +
+          `ON DUPLICATE KEY UPDATE name = ${overwrite}, visit = CURRENT_TIMESTAMP, ${strategy} = COALESCE(${strategy}, ?)`,
+          values = [token, email, profile.displayName, profile.id, profile.displayName, profile.id];
         sql = mysql.format(sql, values);
 
         pool.query(sql, function (error, results, fields) {
           if (error) {
             done(error);
           } else {
-            let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12),
-              email = (results.length) ? results[0].email : profile.emails[0].value,
-              overwrite = (strategy == 'facebook') ? '?' : 'COALESCE(name, ?)' ;
-
-            sql = `INSERT INTO tokens (token, email, name, created, visit, ${strategy}) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ` +
-              `ON DUPLICATE KEY UPDATE name = ${overwrite}, visit = CURRENT_TIMESTAMP, ${strategy} = COALESCE(${strategy}, ?)`,
-              values = [token, email, profile.displayName, profile.id, profile.displayName, profile.id];
+            sql = 'SELECT * FROM tokens WHERE token = ?',
+              values = [token];
             sql = mysql.format(sql, values);
 
             pool.query(sql, function (error, results, fields) {
               if (error) {
                 done(error);
               } else {
-                sql = 'SELECT * FROM tokens WHERE token = ?',
-                  values = [token];
-                sql = mysql.format(sql, values);
-
-                pool.query(sql, function (error, results, fields) {
-                  if (error) {
-                    done(error);
-                  } else {
-                    return done(null, results[0]);
-                  }
-                });
+                return done(null, results[0]);
               }
             });
           }
