@@ -93,7 +93,7 @@ const path = require('path'),
     });
     emails = emails.join(',');
 
-    sql = `SELECT * FROM tokens WHERE email IN (${emails}) OR ${strategy} = ?`,
+    sql = `SELECT * FROM tokens WHERE email IN (${emails}) OR ${strategy} = ? LIMIT 1`,
       values = [profile.id];
     sql = mysql.format(sql, values);
 
