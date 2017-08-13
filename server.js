@@ -93,7 +93,7 @@ const path = require('path'),
 
     pool.query(sql, function (error, results, fields) {
       if (error) {
-        done(error)
+        done(error);
       } else {
         let emails = [];
 
@@ -103,7 +103,9 @@ const path = require('path'),
 
         emails = emails.join(',');
 
-        sql = `SELECT * FROM tokens WHERE email IN (${emails})`;
+        sql = `SELECT * FROM tokens WHERE email IN (${emails}) OR ${strategy} = ?`,
+          values = [profile.id];
+        sql = mysql.format(sql, values);
 
         pool.query(sql, function (error, results, fields) {
           if (error) {
@@ -142,17 +144,17 @@ const path = require('path'),
   }
 
   /**
-    Map static resources
-    Static resources should be stored in the 'static' folder
-  */
+   * Map static resources
+   * Static resources should be stored in the 'static' folder
+   */
   app.use('/styles', express.static(path.join(__dirname, 'static/')));
   app.use('/scripts', express.static(path.join(__dirname, 'static/')));
   app.use('/assets', express.static(path.join(__dirname, 'static/')));
   app.use('/app', express.static(path.join(__dirname, 'app/')));
 
   /**
-    Use body-parser to interpret XHR bodies
-  */
+   * Use body-parser to interpret XHR bodies
+   */
   app.use(bodyParser.urlencoded({ extended: true }));
 
   app.use(require('cookie-parser')());

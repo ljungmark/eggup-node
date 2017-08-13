@@ -1,3 +1,9 @@
+## 2.2.5 [Expande](https://github.com/ljungmark/eggup-node/releases/tag/2.2.5) (2017-08-12)
+
+* Added Google & Github auth
+* Couple accounts with strategies
+* Iterate through all provided OAuth emails on login
+
 ## 2.2.4 [Finitive](https://github.com/ljungmark/eggup-node/releases/tag/2.2.4) (2017-08-06)
 
 * Auth SVGs
