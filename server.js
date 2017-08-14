@@ -87,13 +87,23 @@ const path = require('path'),
   });
 
   function passportParser(profile, done, strategy) {
-    let emails = [];
-    profile.emails.forEach(function(email) {
-      emails.push(`'${email.value}'`);
-    });
-    emails = emails.join(',');
+    let emails,
+      email_query;
 
-    sql = `SELECT * FROM tokens WHERE email IN (${emails}) OR ${strategy} = ? LIMIT 1`,
+    profile.emails = null;
+
+    if (profile.emails) {
+      emails = [];
+      profile.emails.forEach(function(email) {
+        emails.push(`'${email.value}'`);
+      });
+      emails = emails.join(`,`);
+      email_query = ` email IN (${emails}) OR `;
+    } else {
+      email_query = ' ';
+    }
+
+    sql = `SELECT * FROM tokens WHERE${email_query}${strategy} = ? LIMIT 1`,
       values = [profile.id];
     sql = mysql.format(sql, values);
 
@@ -102,7 +112,7 @@ const path = require('path'),
         done(error);
       } else {
         let token = (results.length) ? results[0].token : Math.random().toString(36).slice(2, 12),
-          email = (results.length) ? results[0].email : profile.emails[0].value,
+          email = (results.length) ? results[0].email : (profile.emails) ? profile.emails[0].value : '',
           overwrite = (strategy == 'facebook') ? '?' : 'COALESCE(name, ?)' ;
 
         sql = `INSERT INTO tokens (token, email, name, created, visit, ${strategy}) VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?) ` +
