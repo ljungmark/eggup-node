@@ -15,6 +15,11 @@ module.exports = {
     'callbackURL': '',
     'userProfileURL': ''
   },
+  'steam' : {
+    'returnURL': '',
+    'realm': '',
+    'apiKey': ''
+  },
   'github' : {
     'clientID': '',
     'clientSecret': '',
