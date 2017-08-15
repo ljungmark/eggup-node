@@ -11,6 +11,7 @@ const path = require('path'),
   facebookStrategy = require('passport-facebook').Strategy,
   googleStrategy = require('passport-google-oauth20').Strategy,
   twitterStrategy = require('passport-twitter').Strategy,
+  steamStrategy = require('passport-steam').Strategy,
   githubStrategy = require('passport-github2').Strategy,
   spotifyStrategy = require('passport-spotify').Strategy;
 
@@ -54,6 +55,18 @@ const path = require('path'),
   }));
 
   /**
+   * Set up Steam strategy
+   */
+  passport.use(new steamStrategy({
+    returnURL: strategies.steam.returnURL,
+    realm: strategies.steam.realm,
+    apiKey: strategies.steam.apiKey
+  },
+  function(identifier, profile, done) {
+    passportParser(profile, done, 'steam');
+  }));
+
+  /**
    * Set up Github strategy
    */
   passport.use(new githubStrategy({
@@ -89,8 +102,6 @@ const path = require('path'),
   function passportParser(profile, done, strategy) {
     let emails,
       email_query;
-
-    profile.emails = null;
 
     if (profile.emails) {
       emails = [];
@@ -233,6 +244,15 @@ app.get('/auth/twitter',
 
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
+  function(request, response) {
+    response.redirect('/');
+  });
+
+app.get('/auth/steam',
+  passport.authenticate('steam', { scope: 'user-read-email'}));
+
+app.get('/auth/steam/callback',
+  passport.authenticate('steam', { failureRedirect: '/login' }),
   function(request, response) {
     response.redirect('/');
   });
