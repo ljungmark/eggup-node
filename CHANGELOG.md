@@ -1,3 +1,8 @@
+## 2.2.6 [Palesting](https://github.com/ljungmark/eggup-node/releases/tag/2.2.6) (2017-08-16)
+
+* Allow tokens without emails
+* Added Steam OpenID & Reddit OAuth
+
 ## 2.2.5 [Expande](https://github.com/ljungmark/eggup-node/releases/tag/2.2.5) (2017-08-12)
 
 * Added Google & Github auth

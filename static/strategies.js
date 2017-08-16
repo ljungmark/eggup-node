@@ -25,6 +25,11 @@ module.exports = {
     'clientSecret': '',
     'callbackURL': ''
   },
+  'reddit' : {
+    'clientID': '',
+    'clientSecret': '',
+    'callbackURL': ''
+  },
   'spotify' : {
     'clientID': '',
     'clientSecret': '',

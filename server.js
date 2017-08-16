@@ -13,6 +13,7 @@ const path = require('path'),
   twitterStrategy = require('passport-twitter').Strategy,
   steamStrategy = require('passport-steam').Strategy,
   githubStrategy = require('passport-github2').Strategy,
+  redditStrategy = require('passport-reddit').Strategy,
   spotifyStrategy = require('passport-spotify').Strategy;
 
   /**
@@ -77,6 +78,18 @@ const path = require('path'),
   },
   function(accessToken, refreshToken, profile, done) {
     passportParser(profile, done, 'github');
+  }));
+
+  /**
+   * Set up Reddit strategy
+   */
+  passport.use(new redditStrategy({
+    clientID: strategies.reddit.clientID,
+    clientSecret: strategies.reddit.clientSecret,
+    callbackURL: strategies.reddit.callbackURL
+  },
+  function(accessToken, refreshToken, profile, done) {
+    passportParser(profile, done, 'reddit');
   }));
 
   /**
@@ -265,6 +278,20 @@ app.get('/auth/github/callback',
   function(request, response) {
     response.redirect('/');
   });
+
+app.get('/auth/reddit', function(request, response, next){
+  passport.authenticate('reddit', {
+    state: 'eggup',
+    duration: 'permanent',
+  })(request, response, next);
+});
+
+app.get('/auth/reddit/callback', function(request, response, next){
+  passport.authenticate('reddit', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  })(request, response, next);
+});
 
 app.get('/auth/spotify',
   passport.authenticate('spotify', { scope: 'user-read-email'}));
