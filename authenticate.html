@@ -90,6 +90,7 @@
       border-radius: 2px;
       color: #ffffff;
       display: inline-block;
+      opacity: 0;
       overflow: visible;
       padding: 10px 22px 10px 72px;
       position: relative;
@@ -257,6 +258,18 @@
       box-shadow: none;
     }
 
+    .-login._display {
+      animation: show 500ms;
+      animation-fill-mode: forwards;
+    }
+    @keyframes show {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    .-login._displaying {
+      opacity: 1;
+    }
+
     @media only screen and (min-width: 960px) {
       .faq {
         bottom: 40px;
@@ -318,6 +331,26 @@
         <a class="-login -google" href="/auth/google">Google</a>
       </div>-->
     </div>
+    <script>
+      let timer = 0;
+
+      document.querySelectorAll('.-login').forEach(element => {
+        timer += 50;
+        setTimeout(_ => {
+          element.classList.add('_display');
+          element.addEventListener('webkitAnimationEnd', function(e) {
+            e.target.removeEventListener(e.type, arguments.callee);
+            element.classList.add('_displaying');
+            element.classList.remove('_display');
+          });
+        }, timer);
+      });
+
+      /** Update .faq::after CSSOM on scroll */
+      document.querySelector('.faq').addEventListener('scroll', _ => {
+        document.styleSheets[0].rules[3].style.bottom = `-${document.querySelector('.faq').scrollTop}px`;
+      });
+    </script>
   </div>
 </body>
 </html>
