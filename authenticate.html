@@ -259,12 +259,31 @@
     }
 
     .-login._display {
-      animation: show 500ms;
+      animation: show 1000ms ease-in;
       animation-fill-mode: forwards;
     }
     @keyframes show {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+      0% {
+        opacity: 0;
+        transform:
+          perspective(800px)
+          scale(.8)
+          translateZ(-500px);
+        transform-origin: 50% 20%;
+      }
+      40% {
+        animation-timing-function: ease-out;
+        opacity: 0.8;
+        transform:
+          perspective(800px)
+          rotateX(-15deg);
+        transform-origin: 50% 0;
+      }
+      100% {
+        opacity: 1;
+        transform: perspective(800px);
+        transform-origin: 50% 0;
+      }
     }
     .-login._displaying {
       opacity: 1;
