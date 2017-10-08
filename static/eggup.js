@@ -816,7 +816,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'hardboiled_singular': ' hard boiled egg',
           'hardboiled_plural': ' hard boiled eggs',
           'summary': '<span class="review-text__total">[total]</span> ordered today, <span class="review-text__heap_1">[soft]</span> and <span class="review-text__heap_2">[hard]</span>.',
-          'cancel': '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Change/cancel',
+          'cancel': '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Cancel order',
           'gate': 'The cooking is commencing shortly and you cannot place or change any of todays orders! :)',
           'empty': 'You haven\'t placed any order'
         },
@@ -870,7 +870,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'hardboiled_singular': ' hårdkokt ägg',
           'hardboiled_plural': ' hårdkokta ägg',
           'summary': 'Totalt har det beställts <span class="review-text__total">[total]</span> idag, varav <span class="review-text__heap_1">[soft]</span> och <span class="review-text__heap_2">[hard]</span>.',
-          'cancel': '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Ändra/avbeställ',
+          'cancel': '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Avbeställ',
           'gate': 'Äggkokning är på gång och du kan inte längre ändra dagens order! :)',
           'empty': 'Du har inte beställt några ägg'
         },
