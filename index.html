@@ -64,7 +64,7 @@
       display: flex;
       left: 50%;
       position: absolute;
-      top: 50px;
+      top: 35px;
       transform: translate(-50%, 0%);
     }
     .egg .yolk .face .eyes:before,
@@ -74,7 +74,7 @@
       content: '';
       display: block;
       height: 12px;
-      margin: 0 30px;
+      margin: 0 22px;
       width: 12px;
     }
     .egg .yolk .face .mouth {
@@ -98,6 +98,57 @@
       height: 8px;
       margin-bottom: 2px;
       width: 20px;
+    }
+    #mustache {
+      margin: 0 41px;
+      opacity: 0;
+      width: 195px;
+    }
+    .mustache {
+      background: transparent;
+      border-color: #909090;
+      border-radius: 100%;
+      border-style: solid;
+      border-width: 0px 0px 50px 0px;
+      float: left;
+      height: 48px;
+      margin-left: -45px;
+      position: relative;
+      transform: rotate(-45deg) scale(0.5);
+      width: 96px;
+    }
+    .mustache:first-child {
+      margin-right: -10px;
+      transform: scale(-0.5,0.5) rotate(-45deg);
+    }
+    .mustache:before {
+      background: #909090;
+      border: 18px solid #909090;
+      border-radius: 100%;
+      content: '';
+      height: 12px;
+      left: 0;
+      position: absolute;
+      top: 50%;
+      width: 12px;
+    }
+    .mustache:after {
+      background: #ffdf50;
+      border-radius:100%;
+      content: '';
+      height: 50px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      width: 50px;
+    }
+    .pink-ribbon {
+      bottom: 8px;
+      filter: drop-shadow(1px 1px #b93d66);
+      height: 46px;
+      left: 80px;
+      position: relative;
+      transform: rotate(-8deg);
     }
     .bubble {
       background: #b7a141;

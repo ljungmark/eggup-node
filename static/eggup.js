@@ -873,7 +873,27 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
       'sv' : {
         'egg': {
           'bubble': {
-            '0': 'Glad sommar, allesammans!'
+            '0': '"I am the eggman! I am the lizard king!" -Joakim',
+            '1': '"Men vad händer om man använder hästliniment i pannan? Domnar hjärnan bort då?" -Pontus',
+            '2': '"Ja, så jag tänker att det kanske typ kommer att fungera" -Anton S.',
+            '3': '"Variabler är jobbigt" -Patrik',
+            '4': '"Om fågeldjur som ger oss ägg försvinner. Blir vi lyckligare då?" -Viktor',
+            '5': '"Allting har ju konsekvenser hela jävla tiden, vilket är lite störande" -Anton S.',
+            '6': '"Om du rakar en fiskmås så finns det ju ingenting kvar!" -Albin',
+            '7': '"Jag vet inte hur man läser Matte A på ett år. Vad gör man sista året, liksom?" Albin',
+            '8': '"Och då får man en etta, så då kanske det finns en lösning" - Joakim',
+            '9': '"Det blir mycket pilar och gegga just nu alltså" -Joakim',
+            '10': '"Gunnar dödade processen" -Layal',
+            '11': '"Det finns en jättebra artikel på Aftonbladet" -Simon',
+            '12': '"Helvete vad jag kan arbeta med den här skärmen som inte existerar" -Patrik',
+            '13': '"Men kan du sluta ta bort min decimal, jävla Excel?!" -Daniel',
+            '14': '"Anslutningen misslyckades?! Jag fick ingen gris! Är det gris-filter på firewallen?!" -Joakim',
+            '15': '"Skulle aldrig kunna gosa med Patrik i mörkret" -Annika',
+            '16': '"Det ser ut typ som GEM. Det vill säga, det funkar inte" -Patrik',
+            '17': '"Jaha. Det är någon form av JavaScript... Det har jag aldrig provat..." -Joakim',
+            '18': '"Varför har min telefon navelludd varje dag?" -Joakim',
+            '19': '"Jag är så trött på att läsa. Ser jag mer än två meningar måste jag läsa om dem. Jag menar, vad hände i den första meningen liksom" -Henric',
+            '20': '"Man kan inte lita på outputen när man kör kod genom PHP-gegga" -Joakim'
           }
         },
         'map': {
@@ -1199,9 +1219,14 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="bubble"></div>
         <div class="yolk">
           <div class="face">
-            <div class="eyes"></div>
             <div class="mouth"></div>
+            <div id="mustache">
+              <div class="mustache"></div>
+              <div class="mustache"></div>
+            </div>
+            <div class="eyes"></div>
           </div>
+          <img class="pink-ribbon" src="assets/pink-ribbon.svg" />
         </div>
       </div>`;
 
@@ -1212,7 +1237,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.bubble = setInterval(function(){
       document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
-    }, 5000);
+    }, 8000);
   }
 
   /**
@@ -1873,7 +1898,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         window.bubble = setInterval(function(){
           document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
-        }, 5000);
+        }, 8000);
       }
     }
 
