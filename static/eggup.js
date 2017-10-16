@@ -436,6 +436,12 @@ Eggup.prototype.synchronize = function() {
     'font-weight: bold'
   ].join(';'));
 
+  console.log('%c   https://m.me/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
+    'font-weight: bold'
+  ].join(';'));
+
   console.log('%c   https://www.github.com/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
@@ -443,6 +449,36 @@ Eggup.prototype.synchronize = function() {
   ].join(';'));
 
   console.log('%c   https://www.twitter.com/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
+    'font-weight: bold'
+  ].join(';'));
+
+  console.log('%c   https://www.instagram.com/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
+    'font-weight: bold'
+  ].join(';'));
+
+  console.log('%c   https://www.linkedin.com/in/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
+    'font-weight: bold'
+  ].join(';'));
+
+  console.log('%c   https://www.facebook.com/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
+    'font-weight: bold'
+  ].join(';'));
+
+  console.log('%c   https://www.steamcommunity.com/id/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
+    'font-weight: bold'
+  ].join(';'));
+
+  console.log('%c   https://www.soundcloud.com/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
     'font-weight: bold'
@@ -783,7 +819,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
       'en' : {
         'egg': {
           'bubble': {
-            '0': 'Have a great summer, everybody!'
+            '0': 'Eggup, er\'body!'
           }
         },
         'map': {
@@ -1176,7 +1212,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.bubble = setInterval(function(){
       document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
-    }, 10000);
+    }, 5000);
   }
 
   /**
@@ -1837,7 +1873,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         window.bubble = setInterval(function(){
           document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
-        }, 10000);
+        }, 5000);
       }
     }
 
