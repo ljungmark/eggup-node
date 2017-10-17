@@ -1157,7 +1157,7 @@ h2 {
   width: 100%;
 }
 
-.albin {
+.dancing {
   display: none;
   left: 50%;
   opacity: 0;
@@ -1167,16 +1167,16 @@ h2 {
   transition: all 1000ms;
 }
 
-._party .albin {
+._party .dancing {
   animation-duration: 2500ms;
   animation-fill-mode: backwards;
   animation-iteration-count: infinite;
-  animation-name: albin-swing;
+  animation-name: dancing-swing;
   left: 50%;
   opacity: 1;
   position: absolute;
   top: 50%;
-  transform: translate(-190px, -321px);
+  transform: translate(-190px, -421px);
   transition: opacity 250ms;
 }
 
@@ -1224,21 +1224,21 @@ body._party::after {
   }
 }
 
-@keyframes albin-swing {
+@keyframes dancing-swing {
   20% {
-    transform: translate(-190px, -321px) rotate(4deg);
+    transform: translate(-190px, -421px) rotate(4deg);
   }
   40% {
-    transform: translate(-190px, -318px) rotate(-2deg);
+    transform: translate(-190px, -418px) rotate(-2deg);
   }
   60% {
-    transform: translate(-190px, -321px) rotate(2deg);
+    transform: translate(-190px, -421px) rotate(2deg);
   }
   80% {
-    transform: translate(-190px, -320px) rotate(-3deg);
+    transform: translate(-190px, -420px) rotate(-3deg);
   }
   100% {
-    transform: translate(-190px, -321px) rotate(0deg);
+    transform: translate(-190px, -421px) rotate(0deg);
   }
 }
 
@@ -1910,10 +1910,10 @@ body._party::after {
 }
 
 /**
-  Display .albin if the screen have enough height
+  Display .dancing if the screen have enough height
 */
 @media only screen and (min-height: 960px) {
-  .albin {
+  .dancing {
     display: block;
   }
 }

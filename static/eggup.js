@@ -783,6 +783,7 @@ audio.load('close', `assets/close.mp3`);
 audio.load('change', `assets/change.mp3`);
 audio.load('initiate', `assets/initiate.mp3`);
 audio.load('error', `assets/error.mp3`);
+audio.load('party', `assets/ifg.mp3`);
 
 Eggup.prototype.notify = function(sound = null) {
   const instance = this;
@@ -1532,8 +1533,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
               if (body.classList.contains('_party')) {
                 body.classList.remove('_party');
+                audio.stop('party');
               } else {
                 body.classList.add('_party');
+                audio.start('party');
               }
 
               sequence = [];
