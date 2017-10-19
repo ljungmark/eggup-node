@@ -619,6 +619,37 @@ h2 {
   z-index: 1;
 }
 
+.order-wrapper::before,
+.order-wrapper::after {
+  border-bottom: 20px solid transparent;
+  border-top: 20px solid transparent;
+  content: '';
+  display: block;
+  position: absolute;
+  top: 58px;
+  transition: border 250ms;
+}
+
+.order-wrapper::before {
+  border-right: 20px solid rgba(255, 255, 255, 0.05);
+  left: 20px;
+}
+
+.order-wrapper::after {
+  border-left: 20px solid rgba(255, 255, 255, 0.05);
+  right: 20px;
+}
+
+.order-quantity:hover .order-wrapper::before,
+.order-variant:hover .order-wrapper::before {
+  border-right: 20px solid rgba(46, 52, 58, 0.5);
+}
+
+.order-quantity:hover .order-wrapper::after,
+.order-variant:hover .order-wrapper::after {
+  border-left: 20px solid rgba(46, 52, 58, 0.5);
+}
+
 .order-buttons {
   padding: 20px 0 0;
 }
