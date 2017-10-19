@@ -436,53 +436,65 @@ Eggup.prototype.synchronize = function() {
     'font-weight: bold'
   ].join(';'));
 
+  console.log('%c   0700-88 00 00 ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
+    'font-weight: bold'
+  ].join(';'));
+
+  /** Whitespace */
+  console.log('');
+
   console.log('%c   https://m.me/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
     'font-weight: bold'
   ].join(';'));
 
-  console.log('%c   https://www.github.com/ljungmark ', [,
+  console.log('%c   https://github.com/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
     'font-weight: bold'
   ].join(';'));
 
-  console.log('%c   https://www.twitter.com/ljungmark ', [,
+  console.log('%c   https://twitter.com/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
     'font-weight: bold'
   ].join(';'));
 
-  console.log('%c   https://www.instagram.com/ljungmark ', [,
+  console.log('%c   https://instagram.com/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
     'font-weight: bold'
   ].join(';'));
 
-  console.log('%c   https://www.linkedin.com/in/ljungmark ', [,
+  console.log('%c   https://linkedin.com/in/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
     'font-weight: bold'
   ].join(';'));
 
-  console.log('%c   https://www.facebook.com/ljungmark ', [,
+  console.log('%c   https://facebook.com/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
     'font-weight: bold'
   ].join(';'));
 
-  console.log('%c   https://www.steamcommunity.com/id/ljungmark ', [,
+  console.log('%c   https://steamcommunity.com/id/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
     'font-weight: bold'
   ].join(';'));
 
-  console.log('%c   https://www.soundcloud.com/ljungmark ', [,
+  console.log('%c   https://soundcloud.com/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
     'font-weight: bold'
   ].join(';'));
+
+  /** Whitespace */
+  console.log('');
 
   console.log('%c 2017 Ljungmark, CC BY-NC-SA 3.0 ', [,
     'background: linear-gradient(-180deg, #FB7928, #EE5B32)',
@@ -894,7 +906,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '17': '"Jaha. Det är någon form av JavaScript... Det har jag aldrig provat..." -Joakim',
             '18': '"Varför har min telefon navelludd varje dag?" -Joakim',
             '19': '"Jag är så trött på att läsa. Ser jag mer än två meningar måste jag läsa om dem. Jag menar, vad hände i den första meningen liksom" -Henric',
-            '20': '"Man kan inte lita på outputen när man kör kod genom PHP-gegga" -Joakim'
+            '20': '"Man kan inte lita på outputen när man kör kod genom PHP-gegga" -Joakim',
+            '21': '"Jag har gjort rätt fula grejer i mitt liv..." -Johan',
           }
         },
         'map': {
