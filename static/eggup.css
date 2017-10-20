@@ -626,7 +626,7 @@ h2 {
   content: '';
   display: block;
   position: absolute;
-  top: 58px;
+  top: 30px;
   transition: border 250ms;
 }
 
@@ -1334,6 +1334,11 @@ body._party::after {
     left: 0;
     padding: 30px 30px 20px;
     right: 0;
+  }
+
+  .order-wrapper::before,
+  .order-wrapper::after {
+    top: 58px;
   }
 
   .order-button,
