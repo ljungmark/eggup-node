@@ -415,7 +415,7 @@ Eggup.prototype.synchronize = function() {
     });
   });
 
-  console.log('%c Eggup 2.2.6 ', [
+  console.log('%c Eggup 2.2.7 ', [
     'background: linear-gradient(-180deg, #44b1e8, #3098de)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
@@ -430,7 +430,7 @@ Eggup.prototype.synchronize = function() {
     'text-shadow: 0 -1px 0 rgba(0,0,0,.12)'
   ].join(';'));
 
-  console.log('%c  by @ljungmark, 2017 ', [,
+  console.log('%c  by @ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 20px',
     'font-weight: bold'
@@ -440,6 +440,11 @@ Eggup.prototype.synchronize = function() {
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
     'font-weight: bold'
+  ].join(';'));
+
+  console.log('%c   Get the latest release here: https://github.com/ljungmark/eggup-node/releases ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px'
   ].join(';'));
 
   /** Whitespace */
