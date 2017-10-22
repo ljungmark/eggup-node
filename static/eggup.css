@@ -631,12 +631,12 @@ h2 {
 }
 
 .order-wrapper::before {
-  border-right: 20px solid rgba(255, 255, 255, 0.05);
+  border-right: 20px solid rgba(255, 255, 255, 0.02);
   left: 20px;
 }
 
 .order-wrapper::after {
-  border-left: 20px solid rgba(255, 255, 255, 0.05);
+  border-left: 20px solid rgba(255, 255, 255, 0.02);
   right: 20px;
 }
 
