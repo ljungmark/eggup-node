@@ -15,7 +15,8 @@ const path = require('path'),
   githubStrategy = require('passport-github2').Strategy,
   redditStrategy = require('passport-reddit').Strategy,
   spotifyStrategy = require('passport-spotify').Strategy,
-  linkedinStrategy = require('passport-linkedin').Strategy;
+  linkedinStrategy = require('passport-linkedin').Strategy,
+  instagramStrategy = require('passport-instagram').Strategy;
 
   /**
    * Set up Facebook strategy
@@ -117,13 +118,23 @@ const path = require('path'),
    * Set up Linkedin strategy
    */
   passport.use(new linkedinStrategy({
-      consumerKey: strategies.linkedin.clientID,
-      consumerSecret: strategies.linkedin.clientSecret,
-      callbackURL: strategies.linkedin.callbackURL,
-      profileFields: ['id', 'first-name', 'last-name', 'email-address']
-    },
-    function(token, tokenSecret, profile, done) {
-      passportParser(profile, done, 'linkedin');
+    consumerKey: strategies.linkedin.clientID,
+    consumerSecret: strategies.linkedin.clientSecret,
+    callbackURL: strategies.linkedin.callbackURL,
+    profileFields: ['id', 'first-name', 'last-name', 'email-address']
+  },
+  function(token, tokenSecret, profile, done) {
+    passportParser(profile, done, 'linkedin');
+  }
+  ));
+
+  passport.use(new instagramStrategy({
+    clientID: strategies.instagram.clientID,
+    clientSecret: strategies.instagram.clientSecret,
+    callbackURL: strategies.instagram.callbackURL
+  },
+  function(accessToken, refreshToken, profile, done) {
+      passportParser(profile, done, 'instagram');
     }
   ));
 
@@ -322,6 +333,15 @@ app.get('/auth/linkedin',
 
 app.get('/auth/linkedin/callback',
   passport.authenticate('linkedin', { failureRedirect: '/login' }),
+  function(request, response) {
+    response.redirect('/');
+  });
+
+app.get('/auth/instagram',
+  passport.authenticate('instagram'));
+
+app.get('/auth/instagram/callback',
+  passport.authenticate('instagram', { failureRedirect: '/login' }),
   function(request, response) {
     response.redirect('/');
   });
