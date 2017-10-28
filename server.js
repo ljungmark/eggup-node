@@ -14,7 +14,8 @@ const path = require('path'),
   steamStrategy = require('passport-steam').Strategy,
   githubStrategy = require('passport-github2').Strategy,
   redditStrategy = require('passport-reddit').Strategy,
-  spotifyStrategy = require('passport-spotify').Strategy;
+  spotifyStrategy = require('passport-spotify').Strategy,
+  linkedinStrategy = require('passport-linkedin').Strategy;
 
   /**
    * Set up Facebook strategy
@@ -111,6 +112,20 @@ const path = require('path'),
   passport.deserializeUser(function(user, done) {
     done(null, user);
   });
+
+  /**
+   * Set up Linkedin strategy
+   */
+  passport.use(new linkedinStrategy({
+      consumerKey: strategies.linkedin.clientID,
+      consumerSecret: strategies.linkedin.clientSecret,
+      callbackURL: strategies.linkedin.callbackURL,
+      profileFields: ['id', 'first-name', 'last-name', 'email-address']
+    },
+    function(token, tokenSecret, profile, done) {
+      passportParser(profile, done, 'linkedin');
+    }
+  ));
 
   function passportParser(profile, done, strategy) {
     let emails,
@@ -298,6 +313,15 @@ app.get('/auth/spotify',
 
 app.get('/auth/spotify/callback',
   passport.authenticate('spotify', { failureRedirect: '/login' }),
+  function(request, response) {
+    response.redirect('/');
+  });
+
+app.get('/auth/linkedin',
+  passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }));
+
+app.get('/auth/linkedin/callback',
+  passport.authenticate('linkedin', { failureRedirect: '/login' }),
   function(request, response) {
     response.redirect('/');
   });
