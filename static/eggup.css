@@ -621,33 +621,33 @@ h2 {
 
 .order-wrapper::before,
 .order-wrapper::after {
-  border-bottom: 20px solid transparent;
-  border-top: 20px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-top: 10px solid transparent;
   content: '';
   display: block;
   position: absolute;
-  top: 30px;
+  top: 40px;
   transition: border 250ms;
 }
 
 .order-wrapper::before {
-  border-right: 20px solid rgba(255, 255, 255, 0.02);
+  border-right: 10px solid rgba(255, 255, 255, 0.02);
   left: 20px;
 }
 
 .order-wrapper::after {
-  border-left: 20px solid rgba(255, 255, 255, 0.02);
+  border-left: 10px solid rgba(255, 255, 255, 0.02);
   right: 20px;
 }
 
 .order-quantity:hover .order-wrapper::before,
 .order-variant:hover .order-wrapper::before {
-  border-right: 20px solid rgba(46, 52, 58, 0.5);
+  border-right: 10px solid rgba(46, 52, 58, 0.5);
 }
 
 .order-quantity:hover .order-wrapper::after,
 .order-variant:hover .order-wrapper::after {
-  border-left: 20px solid rgba(46, 52, 58, 0.5);
+  border-left: 10px solid rgba(46, 52, 58, 0.5);
 }
 
 .order-buttons {
@@ -1338,7 +1338,27 @@ body._party::after {
 
   .order-wrapper::before,
   .order-wrapper::after {
+    border-bottom: 20px solid transparent;
+    border-top: 20px solid transparent;
     top: 58px;
+  }
+
+  .order-wrapper::before {
+    border-right: 20px solid rgba(255, 255, 255, 0.02);
+  }
+
+  .order-wrapper::after {
+    border-left: 20px solid rgba(255, 255, 255, 0.02);
+  }
+
+  .order-quantity:hover .order-wrapper::before,
+  .order-variant:hover .order-wrapper::before {
+    border-right: 20px solid rgba(46, 52, 58, 0.5);
+  }
+
+  .order-quantity:hover .order-wrapper::after,
+  .order-variant:hover .order-wrapper::after {
+    border-left: 20px solid rgba(46, 52, 58, 0.5);
   }
 
   .order-button,
