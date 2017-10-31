@@ -1,3 +1,13 @@
+## 2.2.8 [Througes](https://github.com/ljungmark/eggup-node/releases/tag/2.2.8) (2017-10-29)
+
+* Smoother, less CPU heavy, auth animations
+* LinkedIn strategy
+
+## 2.2.7 [Femmente](https://github.com/ljungmark/eggup-node/releases/tag/2.2.7) (2017-10-28)
+
+* Update party konami
+* Pink Ribbon
+
 ## 2.2.6 [Palesting](https://github.com/ljungmark/eggup-node/releases/tag/2.2.6) (2017-08-16)
 
 * Allow tokens without emails
