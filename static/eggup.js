@@ -501,7 +501,7 @@ Eggup.prototype.synchronize = function() {
   /** Whitespace */
   console.log('');
 
-  console.log('%c 2017 Ljungmark, CC BY-NC-SA 3.0 ', [,
+  console.log('%c 2017 Ljungmark, CC BY-NC-SA 4.0 ', [,
     'background: linear-gradient(-180deg, #FB7928, #EE5B32)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
