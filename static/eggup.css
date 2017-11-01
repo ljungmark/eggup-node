@@ -1207,7 +1207,7 @@ h2 {
   padding: 16px 36px 17px;
 }
 .feedback .-send._confirmed {
-  background: #ffeb3b;
+  background: #ffd0e5;
 }
 .feedback .-send:after {
   backface-visibility: hidden;
