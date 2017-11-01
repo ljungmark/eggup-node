@@ -930,6 +930,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '19': '"Jag är så trött på att läsa. Ser jag mer än två meningar måste jag läsa om dem. Jag menar, vad hände i den första meningen liksom" -Henric',
             '20': '"Man kan inte lita på outputen när man kör kod genom PHP-gegga" -Joakim',
             '21': '"Jag har gjort rätt fula grejer i mitt liv..." -Johan',
+            '22': '"Jag stog här och andades på Martin" -Patrik',
+            '23': '"Om du drar ett hår från rumpan, kommer det en tår från ögat" -Benny',
+            '24': '"Who cares about SEO anyways" -Carlo',
           }
         },
         'map': {
