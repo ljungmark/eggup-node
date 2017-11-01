@@ -383,6 +383,24 @@ Eggup.prototype.synchronize = function() {
 
           if (startdate < current_date) {
             /** Countdown is finished */
+            if (json.quantity == 0) {
+              egg_markup = `
+                <div class="egg _docket">
+                  <div class="yolk">
+                    <div class="face">
+                      <div class="eyes"></div>
+                      <div class="mouth"></div>
+                    </div>
+                  </div>
+                </div>`;
+
+              document.querySelector('.-eggs').innerHTML = egg_markup;
+              document.querySelector('.feedback').parentNode.removeChild(document.querySelector('.feedback'));
+            } else {
+              const valid_feedback = ['-2', '-1', '0', '1', '2'];
+              if (valid_feedback.includes(json.feedback)) document.querySelector(`.feedback .-send[data-feedback="${json.feedback}"]`).classList.add('_confirmed');
+            }
+
             instance.load('docket');
           } else {
             /** There's still time left on the timer */
@@ -415,7 +433,7 @@ Eggup.prototype.synchronize = function() {
     });
   });
 
-  console.log('%c Eggup 2.2.8 ', [
+  console.log('%c Eggup 2.3.0 ', [
     'background: linear-gradient(-180deg, #44b1e8, #3098de)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
@@ -637,23 +655,11 @@ Eggup.prototype.load = function(target_module) {
   /** Finish all map nodes when orders are done */
   (target_module == 'docket') ? eggup.map(target_module_index + 1) : eggup.map(target_module_index);
 
-  if (target_module == 'docket' &&  !document.querySelector('.egg._docket')) {
+  if (target_module == 'docket') {
     if (document.querySelector('.wrapper > .egg')) {
       document.querySelector('.wrapper').removeChild(document.querySelector('.egg'));
       clearTimeout(window.bubble);
     }
-
-    egg_markup = `
-      <div class="egg _docket">
-        <div class="yolk">
-          <div class="face">
-            <div class="eyes"></div>
-            <div class="mouth"></div>
-          </div>
-        </div>
-      </div>`;
-
-    document.querySelector('.-eggs').innerHTML = egg_markup;
   }
 
   /** Never load a module while not scrolled to the top */
@@ -884,7 +890,13 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'done': 'All done'
         },
         'docket': {
-          'done': 'The eggs are done, enjoy!'
+          'done': 'The eggs are done, enjoy!',
+          'feedback': 'What\'d you think of the eggs?',
+          'toosoft': 'Way too soft boiled',
+          'soft': 'A bit too soft boiled',
+          'perfect': 'Perfect',
+          'hard': 'A bit too hard boiled',
+          'toohard': 'Way too hard boiled'
         }
       },
       /** Swedish */
@@ -959,7 +971,13 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'done': 'Färdiga'
         },
         'docket': {
-          'done': 'Äggen är klara, hugg in!'
+          'done': 'Äggen är klara, hugg in!',
+          'feedback': 'Vad tyckte du om dina ägg idag?',
+          'toosoft': 'Alldeles för löskokta',
+          'soft': 'Lite för löskokta',
+          'perfect': 'Perfekt!',
+          'hard': 'Lite för hårdkokta',
+          'toohard': 'Alldeles för hårdkokta'
         }
       }
     };
@@ -1860,6 +1878,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
     return false;
   };
+
+  document.querySelectorAll('.feedback').forEach(element => {
+    element.onclick = (event) => {
+      if (eggup.module != 'docket') return false;
+
+        let value = event.target.dataset.feedback;
+
+        let feedback_request = new Promise(function(resolve, reject) {
+          fetch('/feedback', {
+            method: 'post',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: serialize({ 'value': value }),
+            credentials: 'include'
+          }).then(function(response) {
+            return response.json().then(function(json) {
+              resolve(json);
+            });
+          });
+        });
+
+        feedback_request.then((response) => {
+          if (Object.values(response)[0] == true) {
+
+            document.querySelectorAll('.feedback .-send._confirmed').forEach(element => element.classList.remove(`_confirmed`));
+            event.target.classList.add(`_confirmed`);
+
+          } else {
+            eggup.error();
+          }
+        });
+
+      return false;
+    };
+  });
 
   /** Add shadow on containers when scrolled */
   document.querySelectorAll('.container').forEach(function(element) {

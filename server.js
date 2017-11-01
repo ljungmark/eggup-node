@@ -370,6 +370,7 @@ app.post('/synchronize', (request, response) => {
       'past_hard': null,
       'quantity': 0,
       'variant': 0,
+      'feedback': null,
       'tokenstamp': null,
       'heap_1': 0,
       'heap_2': 0,
@@ -401,7 +402,7 @@ app.post('/synchronize', (request, response) => {
       model.hardboiled = results[0].hardboiled;
     }
 
-    sql = 'SELECT date, quantity, variant FROM orders WHERE token = ? AND DATE(date) = ?',
+    sql = 'SELECT date, quantity, variant, feedback FROM orders WHERE token = ? AND DATE(date) = ?',
       values = [request.user.token, date];
     sql = mysql.format(sql, values);
 
@@ -411,6 +412,7 @@ app.post('/synchronize', (request, response) => {
       if (results.length) {
         model.quantity = results[0].quantity;
         model.variant = results[0].variant;
+        model.feedback = results[0].feedback;
         model.tokenstamp = results[0].date.substring(0, 10);
       }
 
@@ -761,6 +763,47 @@ app.post('/controller', (request, response) => {
 
       if (results.length) {
         if (request.user.token == results[0].token) model.result = true;
+
+        resolve();
+      } else {
+        reject();
+      }
+    });
+  }).then(function(exists) {
+    response.send(JSON.stringify(model));
+  }).catch(function() {
+    response.send(JSON.stringify(model));
+  });
+});
+
+
+
+/**
+  Recieve feedback
+
+  Example
+  {
+    'result': false,
+  }
+*/
+app.post('/feedback', (request, response) => {
+  const date = get_date();
+
+  const model = {
+    'result': false
+  }
+
+  let value = request.body.value;
+
+  let check = new Promise(function(resolve, reject) {
+    sql = 'UPDATE orders SET feedback = ? WHERE token = ? AND DATE(date) = ?';
+    sql = mysql.format(sql, [value, request.user.token, date]);
+
+    pool.query(sql, function (error, results, fields) {
+      if (error) reject();
+
+      if (results.affectedRows) {
+        model.result = true;
 
         resolve();
       } else {

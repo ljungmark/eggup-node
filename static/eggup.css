@@ -1188,6 +1188,42 @@ h2 {
   width: 100%;
 }
 
+.feedback .-send {
+  background: #ffffff;
+  border: #666666 2px solid;
+  border-radius: 6px;
+  color: #222222;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0;
+  overflow: hidden;
+  padding: 8px 10px 12px;
+  position: relative;
+  text-decoration: none;
+  transition: all .5s ease;
+}
+.feedback .-send.-perfect {
+  margin: 10px 0;
+  padding: 16px 36px 17px;
+}
+.feedback .-send._confirmed {
+  background: #ffeb3b;
+}
+.feedback .-send:after {
+  backface-visibility: hidden;
+  background-image: repeating-linear-gradient(135deg, #666, #666 1px, transparent 2px, transparent 5px);
+  background-size: 7px 7px;
+  border-top: 1px solid #666;
+  bottom: 0;
+  content: '';
+  display: block;
+  height: 3px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+}
+
 .dancing {
   display: none;
   left: 50%;

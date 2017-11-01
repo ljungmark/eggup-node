@@ -1,6 +1,6 @@
 {
   "name": "eggup",
-  "version": "2.0.0",
+  "version": "2.3.0",
   "description": "Order breakfast eggs at the Silverspin office",
   "main": "server.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/ljungmark/eggup-node.git"
   },
   "author": "twitter.com/ljungmark",
-  "license": "Creative Commons Attribution-NonCommercial-ShareAlike 3.0 (CC BY-NC-SA 3.0)",
+  "license": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (CC BY-NC-SA 4.0)",
   "bugs": {
     "url": "https://github.com/ljungmark/eggup-node/issues"
   },
@@ -26,7 +26,7 @@
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-github2": "^0.1.10",
-    "passport-google-oauth20": "^1.0.0",
+    "passport-linkedin": "^1.0.0",
     "passport-reddit": "^0.2.4",
     "passport-spotify": "^0.3.1",
     "passport-steam": "^1.0.8",
