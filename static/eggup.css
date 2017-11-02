@@ -1195,16 +1195,36 @@ h2 {
   color: #222222;
   cursor: pointer;
   display: inline-block;
+  font-size: 12pt;
   margin: 0;
+  outline: 0;
   overflow: hidden;
-  padding: 8px 10px 12px;
+  padding: 10px 14px 12px;
   position: relative;
   text-decoration: none;
   transition: all .5s ease;
 }
 .feedback .-send.-perfect {
+  font-size: 13pt;
   margin: 10px 0;
-  padding: 16px 36px 17px;
+  padding: 18px 40px 18px;
+}
+@keyframes processing {
+  from { background-position: 0 0; }
+  to { background-position: -42px 0; }
+}
+.feedback .-send._processing {
+  animation: process 2s linear infinite;
+  background-image: repeating-linear-gradient(135deg, #ffbcda, #ffbcda 15px, #ffd0e5 15px, #ffd0e5 30px);
+  background-repeat: repeat;
+  background-size: 42px 42px, 100% 100%;
+  opacity: 0.5;
+}
+.feedback .-send._processing:hover {
+  cursor: not-allowed;
+}
+.feedback .-send:disabled {
+  opacity: 0.4;
 }
 .feedback .-send._confirmed {
   background: #ffd0e5;

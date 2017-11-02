@@ -1274,7 +1274,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.bubble = setInterval(function(){
       document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
-    }, 8000);
+    }, 15000);
   }
 
   /**
@@ -1883,6 +1883,12 @@ document.addEventListener('DOMContentLoaded', function() {
     element.onclick = (event) => {
       if (eggup.module != 'docket') return false;
 
+        document.querySelectorAll('.feedback .-send').forEach(element => {
+          element.disabled = true;
+          element.classList.remove(`_confirmed`);
+        });
+        event.target.classList.add(`_processing`);
+
         let value = event.target.dataset.feedback;
 
         let feedback_request = new Promise(function(resolve, reject) {
@@ -1903,7 +1909,10 @@ document.addEventListener('DOMContentLoaded', function() {
         feedback_request.then((response) => {
           if (Object.values(response)[0] == true) {
 
-            document.querySelectorAll('.feedback .-send._confirmed').forEach(element => element.classList.remove(`_confirmed`));
+            document.querySelectorAll('.feedback .-send').forEach(element => {
+              element.disabled = false;
+              element.classList.remove(`_confirmed`, `_processing`);
+            });
             event.target.classList.add(`_confirmed`);
 
           } else {
@@ -1973,7 +1982,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         window.bubble = setInterval(function(){
           document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
-        }, 8000);
+        }, 15000);
       }
     }
 
