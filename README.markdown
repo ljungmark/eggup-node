@@ -116,19 +116,19 @@ The actions differ depending on the current module.
 
 ### Module: Order
 
-| Key combination  | Action               |
-| ---------------- |:--------------------:|
-| 1, 1 or 1, L     | Set to 1 soft-boiled |
-| 1, 2 or 1, H     | Set to 1 hard-boiled |
-| 2, 1 or 2, L     | Set to 2 soft-boiled |
-| 2, 2 or 2, H     | Set to 2 hard-boiled |
-| Space or Return  | Confirm/send order   |
+| Key combination                                        | Action               |
+| ------------------------------------------------------ |:--------------------:|
+| <kbd>1</kbd>+<kbd>1</kbd> or <kbd>1</kbd>+<kbd>L</kbd> | Set to 1 soft-boiled |
+| <kbd>1</kbd>+<kbd>2</kbd> or <kbd>1</kbd>+<kbd>H</kbd> | Set to 1 hard-boiled |
+| <kbd>2</kbd>+<kbd>1</kbd> or <kbd>2</kbd>+<kbd>L</kbd> | Set to 2 soft-boiled |
+| <kbd>2</kbd>+<kbd>2</kbd> or <kbd>2</kbd>+<kbd>H</kbd> | Set to 2 hard-boiled |
+| <kbd>Space</kbd> or <kbd>Return</kbd>                  | Confirm/send order   |
 
 ### Module: Review
 
-| Key combination  | Action       |
-| ---------------- |:------------:|
-| Backspace        | Revert order |
+| Key combination      | Action       |
+| -------------------- |:------------:|
+| <kbd>Backspace</kbd> | Revert order |
 
 
 # Contribute
