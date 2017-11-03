@@ -534,7 +534,7 @@ Eggup.prototype.synchronize = function() {
     'text-shadow: 0 -1px 0 rgba(0,0,0,.12)'
   ].join(';'));
 
-  console.log('%c   (https://creativecommons.org/licenses/by-nc-sa/3.0/) ', [,
+  console.log('%c   (https://creativecommons.org/licenses/by-nc-sa/4.0/) ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 11px'
   ].join(';'));

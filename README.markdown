@@ -12,7 +12,7 @@ Eggup Node
     * [Environment](#user-content-environment)
 * [Settings](#user-content-settings)
   * [Login](#user-content-login)
-  * [Logout](#user-content-Logout)
+  * [Logout](#user-content-logout)
   * [i18n](#user-content-i18n)
 * [Hotkeys](#user-content-hotkeys)
 * [Contribute](#user-content-contribute)
