@@ -1,3 +1,7 @@
+## 2.3.1 [Compone](https://github.com/ljungmark/eggup-node/releases/tag/2.3.1) (2017-11-04)
+
+* Debug prototype
+
 ## 2.3.0 [Fources](https://github.com/ljungmark/eggup-node/releases/tag/2.3.0) (2017-11-01)
 
 * Feedback functionality; [525c1d7](https://github.com/ljungmark/eggup-node/commit/525c1d7dd098a3efffe5dff79ed6ef9595958e4b) resolves [#4 Feedback on eggs](https://github.com/ljungmark/eggup-node/issues/4)

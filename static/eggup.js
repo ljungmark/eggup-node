@@ -95,6 +95,8 @@ function controller() {
       credentials: 'include'
     }).then(function(response) {
       return response.json().then(function(json) {
+        if (eggup.debug()) console.table(json);
+
         resolve(json.result);
       });
     });
@@ -315,6 +317,9 @@ Eggup.prototype.synchronize = function() {
     credentials: 'include'
   }).then(function(response) {
     return response.json().then(function(json) {
+
+      if (eggup.debug()) console.table(json);
+
       instance.thread.tokenstamp = json.tokenstamp;
       instance.thread.variant = json.variant;
       instance.thread.quantity = json.quantity;
@@ -433,7 +438,7 @@ Eggup.prototype.synchronize = function() {
     });
   });
 
-  console.log('%c Eggup 2.3.0 ', [
+  console.log('%c Eggup 2.3.1 ', [
     'background: linear-gradient(-180deg, #44b1e8, #3098de)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
@@ -1067,6 +1072,21 @@ Eggup.prototype.reload = function(component = null) {
 };
 
 
+Eggup.prototype.debug = function() {
+  let value = null,
+    pair = [];
+
+  location.search.substr(1).split('&').forEach((item) => {
+    pair = item.split('=');
+    if (pair[0] === 'debug' && pair[1] === 'true') {
+      value = decodeURIComponent(pair[1]);
+    }
+  });
+
+  return value;
+}
+
+
 /**
   Set up default Countdown object
 
@@ -1642,6 +1662,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     set_request.then((response) => {
+      if (eggup.debug()) console.table(response);
+
       if (response['status'] == true) {
 
         document.querySelector('.review-text__order').innerHTML = `${eggup.cache['quantity']} ${document.querySelector('.order-variant__data').value.toLowerCase()} ${(eggup.cache['quantity'] == 1) ? eggup.i18n('get', 'review.eggs_singular') : eggup.i18n('get', 'review.eggs_plural')}`;
@@ -1696,6 +1718,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     set_request.then((response) => {
       if (response.status == true) {
+        if (eggup.debug()) console.table(response);
 
         let thread = JSON.parse(localStorage.getItem('thread'));
         eggup.thread.tokenstamp = response.tokenstamp;
@@ -1777,6 +1800,8 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       send_request.then((response) => {
+        if (eggup.debug()) console.table(response);
+
         if (response['status'] == true) {
           const wrapper = document.querySelector('.wrapper'),
             popup = document.querySelector('.initiate');
@@ -1851,6 +1876,8 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       lock_request.then((response) => {
+        if (eggup.debug()) console.table(response);
+
         if (response['status'] == true) {
           event.target.classList.toggle('locked', eggup.thread.gateway == true);
 
@@ -1907,6 +1934,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         feedback_request.then((response) => {
+          if (eggup.debug()) console.table(response);
+
           if (Object.values(response)[0] == true) {
 
             document.querySelectorAll('.feedback .-send').forEach(element => {
