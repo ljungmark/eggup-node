@@ -1458,10 +1458,31 @@ document.addEventListener('DOMContentLoaded', function() {
     return false;
   }
 
+  /**
+   * From https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
+   */
+  if(Array.prototype.equals) console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+
+  Array.prototype.equals = function (array) {
+      if (!array) return false;
+      if (this.length != array.length) return false;
+
+      for (var i = 0, l=this.length; i < l; i++) {
+          if (this[i] instanceof Array && array[i] instanceof Array) {
+              if (!this[i].equals(array[i]))
+                  return false;
+          }
+          else if (this[i] != array[i]) { 
+              return false;
+          }
+      }
+      return true;
+  }
+
+  Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 
   document.onkeydown = (event) => {
-    if (!document.querySelector('.initiate__open'))
-    {
+    if (!document.querySelector('.initiate__open')) {
       const sequences = [
         [49, 49], /** 1 + 1 */
         [49, 50], /** 1 + 2 */
@@ -1471,7 +1492,8 @@ document.addEventListener('DOMContentLoaded', function() {
         [49, 72], /** 1 + H */
         [50, 76], /** 2 + L */
         [50, 72],  /** 2 + H */
-        [80, 65, 82, 84, 89] /** p + a + r + t + y */
+        [80, 65, 82, 84, 89], /** p + a + r + t + y */
+        [83, 78, 79, 79, 75] /** s + n + o + o + k */
       ];
 
       if (eggup.module == 'order') {
@@ -1581,13 +1603,18 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.close-start').click();
       }
 
-      if (event.keyCode == '80' || event.keyCode == '65' || event.keyCode == '82' || event.keyCode == '84' || event.keyCode == '89') { /** p, a, r, t, y */
-        sequence.push(event.keyCode);
+      if (event.keyCode == 27 && document.querySelector('body').classList.contains('_snook')) {
+        document.querySelector('body').classList.remove('_snook');
+      }
 
-        let eq = function(a, b) { return !(a < b || b < a) }
-        for (let sequence_index = 0; sequence_index < sequences.length; sequence_index++) {
-          if (eq(sequence, sequences[sequence_index].slice(0, sequence.length))) {
-            if (eq(sequence, sequences[sequence_index])) {
+      sequence.push(event.keyCode);
+
+      let eq = function(a, b) { return !(a < b || b < a) }
+      for (let sequence_index = 0; sequence_index < sequences.length; sequence_index++) {
+        if (eq(sequence, sequences[sequence_index].slice(0, sequence.length))) {
+          if (eq(sequence, sequences[sequence_index])) {
+
+            if (sequence.equals([80, 65, 82, 84, 89])) {
               const body = document.querySelector('body');
 
               if (body.classList.contains('_party')) {
@@ -1597,16 +1624,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 body.classList.add('_party');
                 audio.start('party');
               }
-
-              sequence = [];
+            } else if (sequence.equals([83, 78, 79, 79, 75])) {
+              console.log('snook');
             }
 
-            return false;
+            sequence = [];
           }
-        }
 
-        sequence = [];
+          return false;
+        }
       }
+
+      sequence = [];
     }
   };
 
