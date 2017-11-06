@@ -145,3 +145,5 @@ The actions differ depending on the current module.
 **Revert order:** <kbd>Backspace</kbd>
 
 ## Konami
+
+<kbd>p</kbd>+<kbd>a</kbd>+<kbd>r</kbd>+<kbd>t</kbd>+<kbd>y</kbd>
