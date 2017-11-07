@@ -933,6 +933,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '22': '"Jag stog här och andades på Martin" -Freij',
             '23': '"Om du drar ett hår från rumpan, kommer det en tår från ögat" -Benny',
             '24': '"Who cares about SEO anyways" -Carlo',
+            '25': '"Alltså, jag börjar gilla Microsoft. De verkar veta vad de pysslar med..." -Daniel',
           }
         },
         'map': {
@@ -1472,7 +1473,7 @@ document.addEventListener('DOMContentLoaded', function() {
               if (!this[i].equals(array[i]))
                   return false;
           }
-          else if (this[i] != array[i]) { 
+          else if (this[i] != array[i]) {
               return false;
           }
       }
