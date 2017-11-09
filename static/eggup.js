@@ -2048,10 +2048,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /** Static background for progress bars */
-    const barwidth = document.querySelector('.progress-bar__v1').offsetWidth,
-      barheight = document.querySelector('.progress-bar__v1').offsetHeight;
-    document.querySelector('.progress-bar__variant_1').style.backgroundSize = `${barwidth}px ${barheight}px`;
-    document.querySelector('.progress-bar__variant_2').style.backgroundSize = `${barwidth}px ${barheight}px`;
+    if (document.querySelector('.progress').length > 0) {
+      const barwidth = document.querySelector('.progress-bar__v1').offsetWidth,
+        barheight = document.querySelector('.progress-bar__v1').offsetHeight;
+      document.querySelector('.progress-bar__variant_1').style.backgroundSize = `${barwidth}px ${barheight}px`;
+      document.querySelector('.progress-bar__variant_2').style.backgroundSize = `${barwidth}px ${barheight}px`;
+    }
   });
 
   document.querySelector('.logout').onclick = function() {
