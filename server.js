@@ -817,6 +817,56 @@ app.post('/feedback', (request, response) => {
   });
 });
 
+
+
+/**
+ * Update highscore
+ */
+app.post('/snook', (request, response) => {
+  const model = {
+    'toplist': {}
+  }
+
+  let score = request.body.score;
+
+  let check = new Promise(function(resolve, reject) {
+    sql = 'UPDATE tokens SET snook = ? WHERE token = ? AND snook < ?';
+    sql = mysql.format(sql, [score, request.user.token, score]);
+
+    pool.query(sql, function (error, results, fields) {
+      if (error) reject();
+
+      if (results.affectedRows) {
+        sql = 'SELECT name, snook FROM tokens ORDER BY snook DESC LIMIT 3';
+
+        pool.query(sql, function (error, results, fields) {
+          if (error) response.send(JSON.stringify(model));
+
+          model.toplist = results;
+        });
+
+        resolve();
+      } else {
+        sql = 'SELECT name, snook FROM tokens ORDER BY snook DESC LIMIT 3';
+
+        pool.query(sql, function (error, results, fields) {
+          if (error) response.send(JSON.stringify(model));
+
+          model.toplist = results;
+        });
+
+        reject();
+      }
+    });
+  }).then(function(exists) {
+    response.send(JSON.stringify(model));
+  }).catch(function() {
+    response.send(JSON.stringify(model));
+  });
+});
+
+
+
 /**
  * Set up broadcasting emitters
  */

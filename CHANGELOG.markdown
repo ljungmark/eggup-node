@@ -1,3 +1,7 @@
+## 2.3.2 [Octavoz](https://github.com/ljungmark/eggup-node/releases/tag/2.3.2) (2017-11-10)
+
+* Snook
+
 ## 2.3.1 [Compone](https://github.com/ljungmark/eggup-node/releases/tag/2.3.1) (2017-11-04)
 
 * Debug prototype

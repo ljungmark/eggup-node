@@ -1497,6 +1497,35 @@ document.addEventListener('DOMContentLoaded', function() {
         [83, 78, 79, 79, 75] /** s + n + o + o + k */
       ];
 
+      if (document.querySelector('body._snook')) {
+        if (event.keyCode == '116') window.reload();
+
+        if (event.keyCode == '27') {
+          window.clearInterval(window.game);
+          document.body.classList.remove('_snook');
+
+          document.querySelector('.snook').innerHTML = '';
+        } else if (event.keyCode === 37 && horizontal_velocity !== 1) {
+          /** Left */
+          horizontal_velocity = -1;
+          vertical_velocity = 0;
+        } else if (event.keyCode === 38 && vertical_velocity !== 1) {
+          /** Up */
+          horizontal_velocity = 0;
+          vertical_velocity = -1;
+        } else if (event.keyCode === 39 && horizontal_velocity !== -1) {
+          /** Right */
+          horizontal_velocity = 1;
+          vertical_velocity = 0;
+        } else if (event.keyCode === 40 && vertical_velocity !== -1) {
+          /** Down */
+          horizontal_velocity = 0;
+          vertical_velocity = 1;
+        }
+
+        return false;
+      }
+
       if (eggup.module == 'order') {
         if (event.keyCode == '13' || event.keyCode == '32') { /** Return & Space keys */
           document.querySelector('.order-button__submit').click();
@@ -1626,7 +1655,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 audio.start('party');
               }
             } else if (sequence.equals([83, 78, 79, 79, 75])) {
-              console.log('snook');
+
+                document.querySelector('.snook').innerHTML = `<canvas class="context" width="400" height="400"></canvas>
+                  <div class="-legend">
+                    <div class="-instructions">Use your arrow keys to guide the snake to delicious apples</div>
+                    <div class="-highscore"></div>
+                  </div>`;
+
+                window.game = setInterval(game, 1000/10);
+
+                document.body.classList.add('_snook');
             }
 
             sequence = [];
@@ -1639,6 +1677,82 @@ document.addEventListener('DOMContentLoaded', function() {
       sequence = [];
     }
   };
+
+  function snook() {
+    fetch('/snook', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: serialize({ 'score': highscore }),
+      credentials: 'include'
+    }).then(function(response) {
+      return response.json().then(function(json) {
+        console.log(json);
+      })
+    });
+  }
+
+  const path = [],
+    tile_count = 20,
+    tile_size = 20;
+  let size = 5,
+    horizontal_position = 10,
+    vertical_position = 10,
+    horizontal_velocity = 0,
+    vertical_velocity = 0,
+    horizontal_candy = 15,
+    vertical_candy = 15,
+    highscore = 5;
+  const game = _ => {
+    canvas = document.querySelector('.context');
+    context = canvas.getContext('2d');
+    horizontal_position += horizontal_velocity;
+    vertical_position += vertical_velocity;
+    if (horizontal_position < 0) {
+      horizontal_position = tile_count - 1;
+    } else if (horizontal_position > tile_count - 1) {
+      horizontal_position = 0;
+    } else if (vertical_position < 0) {
+      vertical_position = tile_count - 1;
+    } else if (vertical_position > tile_count - 1) {
+      vertical_position = 0;
+    }
+    context.fillStyle = '#fefefe';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = '#607d8b';
+    for(let i=0 ; i < path.length; i++) {
+      context.fillRect(path[i].horizontal_coordinate * tile_size, path[i].vertical_coordinate * tile_size, tile_size - 2, tile_size - 2);
+      if (path[i].horizontal_coordinate === horizontal_position && path[i].vertical_coordinate === vertical_position) {
+        //var img    = canvas.toDataURL("image/png");
+        //document.querySelector('.highscore').innerHTML = '<img src="'+img+'"/>';
+        size = 5;
+        document.querySelector('.-highscore').innerText = `Score: ${size} --- Session highscore ${highscore}`;
+      }
+    }
+    path.push({
+      horizontal_coordinate: horizontal_position,
+      vertical_coordinate: vertical_position
+    });
+    while(path.length > size) {
+      path.shift();
+    }
+    if (horizontal_candy === horizontal_position && vertical_candy === vertical_position) {
+      size++;
+      if (size > highscore) {
+        highscore = size;
+
+        snook(highscore);
+      }
+
+      document.querySelector('.-highscore').innerText = `Score: ${size} --- Session highscore ${highscore}`;
+      horizontal_candy = Math.floor(Math.random() * tile_count);
+      vertical_candy = Math.floor(Math.random() * tile_count);
+    }
+    context.fillStyle = '#ff4d4d';
+    context.fillRect(horizontal_candy * tile_size, vertical_candy * tile_size, tile_size - 2, tile_size - 2);
+  }
+
 
   document.querySelectorAll('.start-input').forEach((element) => element.onkeyup = (event) => {
 
