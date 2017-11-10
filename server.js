@@ -836,27 +836,15 @@ app.post('/snook', (request, response) => {
     pool.query(sql, function (error, results, fields) {
       if (error) reject();
 
-      if (results.affectedRows) {
-        sql = 'SELECT name, snook FROM tokens ORDER BY snook DESC LIMIT 3';
+      sql = 'SELECT name, snook FROM tokens ORDER BY snook DESC LIMIT 3';
 
-        pool.query(sql, function (error, results, fields) {
-          if (error) response.send(JSON.stringify(model));
+      pool.query(sql, function (error, results, fields) {
+        if (error) reject();
 
-          model.toplist = results;
-        });
+        model.toplist = results;
 
         resolve();
-      } else {
-        sql = 'SELECT name, snook FROM tokens ORDER BY snook DESC LIMIT 3';
-
-        pool.query(sql, function (error, results, fields) {
-          if (error) response.send(JSON.stringify(model));
-
-          model.toplist = results;
-        });
-
-        reject();
-      }
+      });
     });
   }).then(function(exists) {
     response.send(JSON.stringify(model));

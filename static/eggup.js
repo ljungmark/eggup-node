@@ -318,6 +318,8 @@ Eggup.prototype.synchronize = function() {
   }).then(function(response) {
     return response.json().then(function(json) {
 
+      eggup.snook(0);
+
       if (eggup.debug()) console.table(json);
 
       instance.thread.tokenstamp = json.tokenstamp;
@@ -1091,6 +1093,22 @@ Eggup.prototype.debug = function() {
 }
 
 
+Eggup.prototype.snook = function(highscore) {
+    fetch('/snook', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: serialize({ 'score': highscore }),
+      credentials: 'include'
+    }).then(function(response) {
+      return response.json().then(function(json) {
+        console.log(json);
+      })
+    });
+  }
+
+
 /**
   Set up default Countdown object
 
@@ -1503,8 +1521,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.keyCode == '27') {
           window.clearInterval(window.game);
           document.body.classList.remove('_snook');
-
-          document.querySelector('.snook').innerHTML = '';
         } else if (event.keyCode === 37 && horizontal_velocity !== 1) {
           /** Left */
           horizontal_velocity = -1;
@@ -1656,12 +1672,6 @@ document.addEventListener('DOMContentLoaded', function() {
               }
             } else if (sequence.equals([83, 78, 79, 79, 75])) {
 
-                document.querySelector('.snook').innerHTML = `<canvas class="context" width="400" height="400"></canvas>
-                  <div class="-legend">
-                    <div class="-instructions">Use your arrow keys to guide the snake to delicious apples</div>
-                    <div class="-highscore"></div>
-                  </div>`;
-
                 window.game = setInterval(game, 1000/10);
 
                 document.body.classList.add('_snook');
@@ -1677,21 +1687,6 @@ document.addEventListener('DOMContentLoaded', function() {
       sequence = [];
     }
   };
-
-  function snook() {
-    fetch('/snook', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: serialize({ 'score': highscore }),
-      credentials: 'include'
-    }).then(function(response) {
-      return response.json().then(function(json) {
-        console.log(json);
-      })
-    });
-  }
 
   const path = [],
     tile_count = 20,
@@ -1742,7 +1737,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (size > highscore) {
         highscore = size;
 
-        snook(highscore);
+        eggup.snook(highscore);
       }
 
       document.querySelector('.-highscore').innerText = `Score: ${size} --- Session highscore ${highscore}`;
