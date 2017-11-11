@@ -904,6 +904,10 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'perfect': 'Perfect',
           'hard': 'A bit too hard boiled',
           'toohard': 'Way too hard boiled'
+        },
+        'snook': {
+          'instructions': 'Use your arrow keys to guide the snake to delicious chickens',
+          'scoreheader': 'Highscore',
         }
       },
       /** Swedish */
@@ -989,6 +993,10 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'perfect': 'Perfekt!',
           'hard': 'Lite för hårdkokta',
           'toohard': 'Alldeles för hårdkokta'
+        },
+        'snook': {
+          'instructions': 'Använd piltangenterna för att äta små kycklingar',
+          'scoreheader': 'Topplista',
         }
       }
     };
@@ -1094,19 +1102,27 @@ Eggup.prototype.debug = function() {
 
 
 Eggup.prototype.snook = function(highscore) {
-    fetch('/snook', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: serialize({ 'score': highscore }),
-      credentials: 'include'
-    }).then(function(response) {
-      return response.json().then(function(json) {
-        console.log(json);
-      })
+  fetch('/snook', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: serialize({ 'score': highscore }),
+    credentials: 'include'
+  }).then(function(response) {
+    return response.json().then(function(json) {
+      let markup = '<table>';
+
+      json.toplist.forEach(function(participant) {
+        markup += `<tr><td>${participant.name}</td><td>${participant.snook}</td></tr>`;
+      });
+
+      markup += '</table>';
+
+      document.querySelector('.snook .-highscore').innerHTML = markup;
     });
-  }
+  });
+}
 
 
 /**
@@ -1713,16 +1729,16 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (vertical_position > tile_count - 1) {
       vertical_position = 0;
     }
-    context.fillStyle = '#fefefe';
+    context.fillStyle = '#8bc34a';
     context.fillRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = '#607d8b';
+    context.fillStyle = '#795548';
     for(let i=0 ; i < path.length; i++) {
       context.fillRect(path[i].horizontal_coordinate * tile_size, path[i].vertical_coordinate * tile_size, tile_size - 2, tile_size - 2);
       if (path[i].horizontal_coordinate === horizontal_position && path[i].vertical_coordinate === vertical_position) {
         //var img    = canvas.toDataURL("image/png");
         //document.querySelector('.highscore').innerHTML = '<img src="'+img+'"/>';
         size = 5;
-        document.querySelector('.-highscore').innerText = `Score: ${size} --- Session highscore ${highscore}`;
+        document.querySelector('.-sessionscore').innerHTML = `<table><tr><td>Score</td><td>${size}</td></tr><tr><td>Session highscore</td><td>${highscore}</td></tr></table>`;
       }
     }
     path.push({
@@ -1740,11 +1756,11 @@ document.addEventListener('DOMContentLoaded', function() {
         eggup.snook(highscore);
       }
 
-      document.querySelector('.-highscore').innerText = `Score: ${size} --- Session highscore ${highscore}`;
+      document.querySelector('.-sessionscore').innerHTML = `<table><tr><td>Score</td><td>${size}</td></tr><tr><td>Session highscore</td><td>${highscore}</td></tr></table>`;
       horizontal_candy = Math.floor(Math.random() * tile_count);
       vertical_candy = Math.floor(Math.random() * tile_count);
     }
-    context.fillStyle = '#ff4d4d';
+    context.fillStyle = '#ffeb3b';
     context.fillRect(horizontal_candy * tile_size, vertical_candy * tile_size, tile_size - 2, tile_size - 2);
   }
 
