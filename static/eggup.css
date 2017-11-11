@@ -206,7 +206,7 @@ h2 {
   top: 500%;
 }
 
-.wrapper._open ~ .initiate {
+.wrapper._initiate ~ .initiate {
   bottom: 0;
   left: -10px;
   min-height: 100vh;
@@ -349,6 +349,18 @@ h2 {
   border-radius: 3px;
   box-shadow: 0 2px 10px rgba(9, 13, 62, 0.3);
 }
+.snook h2 {
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+.snook hr {
+  border-top: 1px solid #795548;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  height: 0;
+  margin: 30px 2px;
+}
 .snook .-legend {
   color: #000000;
   right: 0;
@@ -356,6 +368,16 @@ h2 {
   position: absolute;
   max-width: 228px;
   padding: 30px;
+}
+.snook .-table {
+  text-align: left;
+  width: 100%;
+}
+.snook .-table td {
+  padding: 2px 4px;
+}
+.snook .-table td.-right {
+  text-align: right;
 }
 .snook .-highscore {
   text-align: center;
@@ -1674,7 +1696,7 @@ body._party::after {
     transform: translate(-50%, calc(-50% - 10px));
   }
 
-  .wrapper._open ~ .initiate {
+  .wrapper._initiate ~ .initiate {
     bottom: initial;
     left: 50%;
     max-height: 600px;
@@ -1829,7 +1851,8 @@ body._party::after {
     }
   }
 
-  .wrapper._open {
+  .wrapper._initiate,
+  .wrapper._snook {
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
     animation-name: wrapper-opening;
@@ -1877,7 +1900,8 @@ body._party::after {
     }
   }
 
-  .wrapper._open ~ .overlay {
+  .wrapper._initiate ~ .overlay,
+  .wrapper._snook ~ .overlay {
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
     animation-name: overlay-opening;

@@ -148,6 +148,8 @@ The actions differ depending on the current module.
 
 <kbd>p</kbd>+<kbd>a</kbd>+<kbd>r</kbd>+<kbd>t</kbd>+<kbd>y</kbd>
 
+<kbd>s</kbd>+<kbd>n</kbd>+<kbd>o</kbd>+<kbd>o</kbd>+<kbd>k</kbd>
+
 
 # File extension declaration
 

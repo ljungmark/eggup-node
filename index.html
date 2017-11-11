@@ -386,9 +386,21 @@
     <div class="snook">
       <canvas class="context" width="400" height="400"></canvas>
       <div class="-legend">
+        <h2 class="-instructionsheader" data-lang="snook.instructionsheader"></h2>
         <div class="-instructions" data-lang="snook.instructions"></div>
-        <div class="-sessionscore"></div>
-        <div class="-scoreheader" data-lang="snook.scoreheader"></div>
+        <hr>
+        <table class="-table">
+          <tr>
+            <td data-lang="snook.score"></td>
+            <td class="-sessionscore -right"></td>
+          </tr>
+          <tr>
+            <td data-lang="snook.sessionhighscore"></td>
+            <td class="-sessionhighscore -right"></td>
+          </tr>
+        </table>
+        <hr>
+        <h2 class="-scoreheader" data-lang="snook.scoreheader"></h2>
         <div class="-highscore"></div>
       </div>
     </div>

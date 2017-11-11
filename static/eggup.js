@@ -440,7 +440,7 @@ Eggup.prototype.synchronize = function() {
     });
   });
 
-  console.log('%c Eggup 2.3.1 ', [
+  console.log('%c Eggup 2.3.2 ', [
     'background: linear-gradient(-180deg, #44b1e8, #3098de)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
@@ -573,10 +573,10 @@ Eggup.prototype.load = function(target_module) {
         const wrapper = document.querySelector('.wrapper'),
             initiate = document.querySelector('.initiate');
 
-          if (!wrapper.classList.contains('_open')) {
+          if (!wrapper.classList.contains('_initiate')) {
             eggup.notify('initiate');
 
-            wrapper.classList.add('_open');
+            wrapper.classList.add('_initiate');
             initiate.classList.add('_opening');
 
             document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
@@ -685,7 +685,7 @@ Eggup.prototype.error = function() {
   const instance = this;
   let current_module;
 
-  if (document.querySelector('.wrapper._open')) {
+  if (document.querySelector('.wrapper._initiate')) {
     current_module = document.querySelector('.initiate');
   } else {
     current_module = document.querySelector('.application');
@@ -908,6 +908,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
         'snook': {
           'instructions': 'Use your arrow keys to guide the snake to delicious chickens',
           'scoreheader': 'Highscore',
+          'score': 'Score:',
+          'sessionhighscore': 'Session highscore:',
+          'instructionsheader': 'Instructions'
         }
       },
       /** Swedish */
@@ -997,6 +1000,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
         'snook': {
           'instructions': 'Använd piltangenterna för att äta små kycklingar',
           'scoreheader': 'Topplista',
+          'score': 'Poäng:',
+          'sessionhighscore': 'Högst poäng denna gång:',
+          'instructionsheader': 'Instruktioner'
         }
       }
     };
@@ -1111,10 +1117,10 @@ Eggup.prototype.snook = function(highscore) {
     credentials: 'include'
   }).then(function(response) {
     return response.json().then(function(json) {
-      let markup = '<table>';
+      let markup = '<table class="-table">';
 
       json.toplist.forEach(function(participant) {
-        markup += `<tr><td>${participant.name}</td><td>${participant.snook}</td></tr>`;
+        markup += `<tr><td>${participant.name}</td><td class="-right">${participant.snook}</td></tr>`;
       });
 
       markup += '</table>';
@@ -1287,7 +1293,7 @@ document.addEventListener('DOMContentLoaded', function() {
     thread.gateway = eggup.thread.gateway;
     localStorage.setItem('thread', JSON.stringify(thread));
 
-    if (document.querySelector('.wrapper').classList.contains('_open')) document.querySelector('.close-start').click();
+    if (document.querySelector('.wrapper').classList.contains('_initiate')) document.querySelector('.close-start').click();
 
     action = (action == true) ? 'unlock' : 'lock';
     eggup.gateway(action);
@@ -1537,6 +1543,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.keyCode == '27') {
           window.clearInterval(window.game);
           document.body.classList.remove('_snook');
+          document.querySelector('.wrapper').classList.remove('_snook');
         } else if (event.keyCode === 37 && horizontal_velocity !== 1) {
           /** Left */
           horizontal_velocity = -1;
@@ -1661,7 +1668,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
 
-      if (event.keyCode == 27 && document.querySelector('.wrapper').classList.contains('_open')) {
+      if (event.keyCode == 27 && document.querySelector('.wrapper').classList.contains('_initiate')) {
         document.querySelector('.close-start').click();
       }
 
@@ -1691,6 +1698,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.game = setInterval(game, 1000/10);
 
                 document.body.classList.add('_snook');
+                if (!document.querySelector('.wrapper').classList.contains('_snook')) {
+                  document.querySelector('.wrapper').classList.add('_snook');
+
+                  history.replaceState('', document.title, window.location.pathname + '#snook');
+
+                  if (document.querySelector('.background')) document.querySelector('.background').pause();
+                }
             }
 
             sequence = [];
@@ -1738,7 +1752,8 @@ document.addEventListener('DOMContentLoaded', function() {
         //var img    = canvas.toDataURL("image/png");
         //document.querySelector('.highscore').innerHTML = '<img src="'+img+'"/>';
         size = 5;
-        document.querySelector('.-sessionscore').innerHTML = `<table><tr><td>Score</td><td>${size}</td></tr><tr><td>Session highscore</td><td>${highscore}</td></tr></table>`;
+        document.querySelector('.-sessionscore').innerHTML = size;
+        document.querySelector('.-sessionhighscore').innerHTML = highscore;
       }
     }
     path.push({
@@ -1756,7 +1771,8 @@ document.addEventListener('DOMContentLoaded', function() {
         eggup.snook(highscore);
       }
 
-      document.querySelector('.-sessionscore').innerHTML = `<table><tr><td>Score</td><td>${size}</td></tr><tr><td>Session highscore</td><td>${highscore}</td></tr></table>`;
+      document.querySelector('.-sessionscore').innerHTML = size;
+      document.querySelector('.-sessionhighscore').innerHTML = highscore;
       horizontal_candy = Math.floor(Math.random() * tile_count);
       vertical_candy = Math.floor(Math.random() * tile_count);
     }
@@ -1964,8 +1980,8 @@ document.addEventListener('DOMContentLoaded', function() {
           const wrapper = document.querySelector('.wrapper'),
             popup = document.querySelector('.initiate');
 
-          if (wrapper.classList.contains('_open')) {
-            wrapper.classList.remove('_open');
+          if (wrapper.classList.contains('_initiate')) {
+            wrapper.classList.remove('_initiate');
             if (document.querySelector('.background')) document.querySelector('.background').play();
           }
 
@@ -2004,7 +2020,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
       e.target.removeEventListener(e.type, arguments.callee);
 
-      document.querySelector('.wrapper').classList.remove('_open');
+      document.querySelector('.wrapper').classList.remove('_initiate');
       document.querySelector('.wrapper').classList.remove('_closing');
     });
 
@@ -2203,10 +2219,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const wrapper = document.querySelector('.wrapper'),
               initiate = document.querySelector('.initiate');
 
-            if (!wrapper.classList.contains('_open')) {
+            if (!wrapper.classList.contains('_initiate')) {
               eggup.notify('initiate');
 
-              wrapper.classList.add('_open');
+              wrapper.classList.add('_initiate');
               initiate.classList.add('_opening');
 
               document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
@@ -2241,8 +2257,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const wrapper = document.querySelector('.wrapper'),
               initiate = document.querySelector('.initiate');
 
-            if (!wrapper.classList.contains('_open')) {
-              wrapper.classList.add('_open');
+            if (!wrapper.classList.contains('_initiate')) {
+              wrapper.classList.add('_initiate');
               initiate.classList.add('_opening');
 
               document.querySelector('.initiate').addEventListener('webkitAnimationEnd', function(e) {
