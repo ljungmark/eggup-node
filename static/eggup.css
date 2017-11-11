@@ -189,11 +189,6 @@ h2 {
   top: 0;
 }
 
-.overlay__open {
-  opacity: 0.96;
-  pointer-events: initial;
-}
-
 .initiate {
   background: white;
   bottom: 0;
@@ -327,21 +322,38 @@ h2 {
   transition: background-color 100ms linear;
 }
 
+.stats {
+  background: #ffffff;
+  border-bottom: 3px solid #c3c3c3;
+  border-radius: 6px;
+  box-shadow: 0 7px 10px rgba(9, 13, 62, 0.3);
+  display: none;
+  height: 406px;
+  left: 50%;
+  overflow-y: auto;
+  padding: 30px;
+  position: fixed;
+  text-align: left;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 660px;
+}
+
 .snook {
   background: #ffffff;
   border-bottom: 3px solid #c3c3c3;
   border-radius: 6px;
   box-shadow: 0 7px 10px rgba(9, 13, 62, 0.3);
+  display: none;
+  height: 406px;
+  left: 50%;
   overflow-y: auto;
   padding: 30px;
   position: fixed;
   text-align: left;
-  width: 660px;
-  height: 406px;
-  left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  display: none;
+  width: 660px;
 }
 
 .snook .context {
@@ -901,8 +913,19 @@ body._snook .snook {
   transition-duration: 290ms;
 }
 .-trigger:checked ~ .-option:nth-child(5) {
-  transform: translate3d(50px, 0, 0);
+  transform: translate3d(-22px, -50px, 0);
   transition-duration: 390ms;
+}
+.-trigger:checked ~ .-option:nth-child(6) {
+  transform: translate3d(50px, 0, 0);
+  transition-duration: 490ms;
+}
+
+.-chart {
+  left: 1px;
+  position: relative;
+  top: 7px;
+  width: 26px;
 }
 
 .-door {
@@ -1671,9 +1694,18 @@ body._party::after {
     transition-duration: 290ms;
   }
   .-trigger:checked ~ .-option:nth-child(5) {
-    border-right: 1px solid rgba(46,86,153, 0.3);
     transform: translate3d(129px, 0, 0);
     transition-duration: 390ms;
+  }
+  .-trigger:checked ~ .-option:nth-child(6) {
+    border-right: 1px solid rgba(46,86,153, 0.3);
+    transform: translate3d(175px, 0, 0);
+    transition-duration: 490ms;
+  }
+
+  .-chart {
+    top: 6px;
+    width: 23px;
   }
 
   .-flags .selector {

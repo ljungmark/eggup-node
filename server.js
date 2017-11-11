@@ -245,6 +245,40 @@ function get_date(date) {
   return date;
 }
 
+function stats() {
+  const soft_boiled_eggs_in_eggup1 = 686,
+    hard_boiled_eggs_in_eggup1 = 287,
+    soft_boiled_eggs_in_eggup2 = 48,
+    hard_boiled_eggs_in_eggup2 = 20,
+    stats = {
+    'number_of_users': 0,
+    'number_of_soft_boiled': soft_boiled_eggs_in_eggup1 + soft_boiled_eggs_in_eggup2,
+    'number_of_hard_boiled': hard_boiled_eggs_in_eggup1 + hard_boiled_eggs_in_eggup2,
+    'total_eggs_ordered': soft_boiled_eggs_in_eggup1 + soft_boiled_eggs_in_eggup2 + hard_boiled_eggs_in_eggup1 + hard_boiled_eggs_in_eggup2,
+    'past_two_weeks': {},
+  }
+
+  pool.query('SELECT COUNT(*) AS number_of_users FROM tokens', function(error, results, fields) {
+    stats.number_of_users = results[0].number_of_users;
+  });
+
+  pool.query('SELECT SUM(quantity) AS number_of_soft_boiled FROM orders WHERE variant = 1', function(error, results, fields) {
+    stats.number_of_soft_boiled += results[0].number_of_soft_boiled;
+    stats.total_eggs_ordered = stats.total_eggs_ordered + results[0].number_of_soft_boiled;
+  });
+
+  pool.query('SELECT SUM(quantity) AS number_of_hard_boiled FROM orders WHERE variant = 2', function(error, results, fields) {
+    stats.number_of_hard_boiled += results[0].number_of_hard_boiled;
+    stats.total_eggs_ordered = stats.total_eggs_ordered + results[0].number_of_hard_boiled;
+  });
+
+  pool.query('SELECT SUM(quantity) AS quantity, DATE(date) as date FROM orders GROUP BY DATE(date) ORDER BY date DESC LIMIT 10;', function(error, results, fields) {
+    stats.past_two_weeks = results;
+  });
+
+  return stats;
+}
+
 
 /** ROUTING */
 app.get('/', verify, (request, response) => {
@@ -374,7 +408,8 @@ app.post('/synchronize', (request, response) => {
       'tokenstamp': null,
       'heap_1': 0,
       'heap_2': 0,
-      'gateway': true
+      'gateway': true,
+      'stats': stats()
     };
 
   let sql = 'SELECT lockdate, startdate, softboiled, hardboiled FROM cookings WHERE DATE(lockdate) = ?',

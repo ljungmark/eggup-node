@@ -1542,6 +1542,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (event.keyCode == '27') {
           window.clearInterval(window.game);
+          history.replaceState('', document.title, window.location.pathname);
           document.body.classList.remove('_snook');
           document.querySelector('.wrapper').classList.remove('_snook');
         } else if (event.keyCode === 37 && horizontal_velocity !== 1) {
@@ -1694,17 +1695,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 audio.start('party');
               }
             } else if (sequence.equals([83, 78, 79, 79, 75])) {
+              if (document.querySelector('.wrapper').classList.contains('_initiate')) return false;
 
-                window.game = setInterval(game, 1000/10);
+              window.game = setInterval(game, 1000/10);
 
-                document.body.classList.add('_snook');
-                if (!document.querySelector('.wrapper').classList.contains('_snook')) {
-                  document.querySelector('.wrapper').classList.add('_snook');
+              document.body.classList.add('_snook');
+              if (!document.querySelector('.wrapper').classList.contains('_snook')) {
+                document.querySelector('.wrapper').classList.add('_snook');
 
-                  history.replaceState('', document.title, window.location.pathname + '#snook');
+                history.replaceState('', document.title, window.location.pathname + '#snook');
 
-                  if (document.querySelector('.background')) document.querySelector('.background').pause();
-                }
+                if (document.querySelector('.background')) document.querySelector('.background').pause();
+              }
             }
 
             sequence = [];
@@ -1729,9 +1731,10 @@ document.addEventListener('DOMContentLoaded', function() {
     horizontal_candy = 15,
     vertical_candy = 15,
     highscore = 5;
+
+  canvas = document.querySelector('.context');
+  context = canvas.getContext('2d');
   const game = _ => {
-    canvas = document.querySelector('.context');
-    context = canvas.getContext('2d');
     horizontal_position += horizontal_velocity;
     vertical_position += vertical_velocity;
     if (horizontal_position < 0) {
@@ -2210,6 +2213,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.onmousedown = (event) => {
     if (event.which == 1 /** Only trigger on left clicks */
       && (eggup.module == 'order' || eggup.module == 'review')) {
+      if (document.querySelector('.wrapper').classList.contains('_snook')) return false;
       clearTimeout(persistency);
 
       persistency = window.setTimeout(function() {
@@ -2248,6 +2252,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.ontouchstart = (event) => {
     if ((eggup.module == 'order' || eggup.module == 'review')) {
+      if (document.querySelector('.wrapper').classList.contains('_snook')) return false;
       clearTimeout(persistency);
 
       persistency = window.setTimeout(function() {
