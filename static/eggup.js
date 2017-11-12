@@ -1279,6 +1279,14 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.-notify').classList.toggle('_mute');
   };
 
+  document.querySelector('.settings .-stats').onclick = function() {
+    eggup.notify('click');
+    document.querySelector('.-expander').click();
+    document.querySelector('.wrapper').classList.add('_stats');
+
+    console.log('click')
+  };
+
   document.querySelector('.-expander').onclick = function(element) {
     if (document.querySelector('.-trigger:checked')) {
       eggup.notify('close');
@@ -1566,6 +1574,17 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
       }
 
+      if (document.querySelector('.wrapper._stats')) {
+        if (event.keyCode == '116') window.reload();
+
+        if (event.keyCode == '27') {
+          history.replaceState('', document.title, window.location.pathname);
+          document.querySelector('.wrapper').classList.remove('_stats');
+        }
+
+        return false;
+      }
+
       if (eggup.module == 'order') {
         if (event.keyCode == '13' || event.keyCode == '32') { /** Return & Space keys */
           document.querySelector('.order-button__submit').click();
@@ -1696,6 +1715,7 @@ document.addEventListener('DOMContentLoaded', function() {
               }
             } else if (sequence.equals([83, 78, 79, 79, 75])) {
               if (document.querySelector('.wrapper').classList.contains('_initiate')) return false;
+              if (document.querySelector('.wrapper').classList.contains('_stats')) return false;
 
               window.game = setInterval(game, 1000/10);
 
@@ -2214,6 +2234,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (event.which == 1 /** Only trigger on left clicks */
       && (eggup.module == 'order' || eggup.module == 'review')) {
       if (document.querySelector('.wrapper').classList.contains('_snook')) return false;
+      if (document.querySelector('.wrapper').classList.contains('_stats')) return false;
       clearTimeout(persistency);
 
       persistency = window.setTimeout(function() {
@@ -2253,6 +2274,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.ontouchstart = (event) => {
     if ((eggup.module == 'order' || eggup.module == 'review')) {
       if (document.querySelector('.wrapper').classList.contains('_snook')) return false;
+      if (document.querySelector('.wrapper').classList.contains('_stats')) return false;
       clearTimeout(persistency);
 
       persistency = window.setTimeout(function() {

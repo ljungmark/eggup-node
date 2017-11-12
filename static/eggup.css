@@ -339,6 +339,10 @@ h2 {
   width: 660px;
 }
 
+.wrapper._stats ~ .stats {
+  display: block;
+}
+
 .snook {
   background: #ffffff;
   border-bottom: 3px solid #c3c3c3;
@@ -1884,7 +1888,8 @@ body._party::after {
   }
 
   .wrapper._initiate,
-  .wrapper._snook {
+  .wrapper._snook,
+  .wrapper._stats {
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
     animation-name: wrapper-opening;
@@ -1933,7 +1938,8 @@ body._party::after {
   }
 
   .wrapper._initiate ~ .overlay,
-  .wrapper._snook ~ .overlay {
+  .wrapper._snook ~ .overlay,
+  .wrapper._stats ~ .overlay {
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
     animation-name: overlay-opening;
