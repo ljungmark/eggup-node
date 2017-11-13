@@ -1,3 +1,7 @@
+## 2.3.2 [Aument](https://github.com/ljungmark/eggup-node/releases/tag/2.3.3) (2017-11-14)
+
+* Show aggregated stats
+
 ## 2.3.2 [Octavoz](https://github.com/ljungmark/eggup-node/releases/tag/2.3.2) (2017-11-10)
 
 * Snook

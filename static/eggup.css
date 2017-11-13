@@ -328,7 +328,6 @@ h2 {
   border-radius: 6px;
   box-shadow: 0 7px 10px rgba(9, 13, 62, 0.3);
   display: none;
-  height: 406px;
   left: 50%;
   overflow-y: auto;
   padding: 30px;
@@ -336,7 +335,7 @@ h2 {
   text-align: left;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 660px;
+  width: 460px;
 }
 
 .wrapper._stats ~ .stats {

@@ -320,6 +320,39 @@ Eggup.prototype.synchronize = function() {
 
       eggup.snook(0);
 
+      const weekdays = [],
+        dayvalue = [];
+
+      json.stats.past_two_weeks.reverse().forEach(day => {
+        weekdays.push(`${['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör'][new Date(day.date).getDay()]} (${day.date})`);
+        dayvalue.push(day.quantity);
+      });
+
+      var ctx = document.querySelector('.-past-weeks').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: weekdays,
+          datasets: [{
+            data: dayvalue,
+            backgroundColor: "rgba(103, 130, 142, 0.4)"
+          }]
+        },
+        options: {
+          legend: {
+              display: false
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                min: 0
+              }
+            }]
+          }
+        }
+      });
+
       if (eggup.debug()) console.table(json);
 
       instance.thread.tokenstamp = json.tokenstamp;
@@ -440,7 +473,7 @@ Eggup.prototype.synchronize = function() {
     });
   });
 
-  console.log('%c Eggup 2.3.2 ', [
+  console.log('%c Eggup 2.3.3 ', [
     'background: linear-gradient(-180deg, #44b1e8, #3098de)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
