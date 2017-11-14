@@ -335,7 +335,23 @@ h2 {
   text-align: left;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 460px;
+  width: 660px;
+}
+
+.stats .-past-weeks {
+  float: left;
+  width: 300px;
+}
+
+.stats .-table {
+  float: right;
+  width: 300px;
+}
+.stats .-table td {
+  padding: 2px 4px;
+}
+.stats .-table td.-right {
+  text-align: right;
 }
 
 .wrapper._stats ~ .stats {

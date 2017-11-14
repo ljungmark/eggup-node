@@ -328,7 +328,7 @@ Eggup.prototype.synchronize = function() {
         dayvalue.push(day.quantity);
       });
 
-      var ctx = document.querySelector('.-past-weeks').getContext('2d');
+      var ctx = document.querySelector('.-past-weeks .-chart').getContext('2d');
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -352,6 +352,11 @@ Eggup.prototype.synchronize = function() {
           }
         }
       });
+
+      document.querySelector('.-number_of_users').innerText = json.stats.number_of_users;
+      document.querySelector('.-total_eggs_ordered').innerText = json.stats.total_eggs_ordered;
+      document.querySelector('.-number_of_soft_boiled').innerText = json.stats.number_of_soft_boiled;
+      document.querySelector('.-number_of_hard_boiled').innerText = json.stats.number_of_hard_boiled;
 
       if (eggup.debug()) console.table(json);
 
@@ -944,6 +949,12 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'score': 'Score:',
           'sessionhighscore': 'Session highscore:',
           'instructionsheader': 'Instructions'
+        },
+        'stats': {
+          'number_of_users': '# of users',
+          'total_eggs_ordered': 'Total # eggs ordered',
+          'number_of_soft_boiled': '...of which are soft boiled',
+          'number_of_hard_boiled': '...of which are hard boiled'
         }
       },
       /** Swedish */
@@ -1036,6 +1047,12 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'score': 'Poäng:',
           'sessionhighscore': 'Högst poäng denna gång:',
           'instructionsheader': 'Instruktioner'
+        },
+        'stats': {
+          'number_of_users': 'Antal användare',
+          'total_eggs_ordered': 'Totalt antal ägg beställda',
+          'number_of_soft_boiled': '...varav löskokta',
+          'number_of_hard_boiled': '...varav hårdkokta'
         }
       }
     };
