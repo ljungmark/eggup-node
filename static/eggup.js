@@ -1333,8 +1333,6 @@ document.addEventListener('DOMContentLoaded', function() {
     eggup.notify('click');
     document.querySelector('.-expander').click();
     document.querySelector('.wrapper').classList.add('_stats');
-
-    console.log('click')
   };
 
   document.querySelector('.-expander').onclick = function(element) {
