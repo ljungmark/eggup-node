@@ -272,7 +272,7 @@ function stats() {
     stats.total_eggs_ordered = stats.total_eggs_ordered + results[0].number_of_hard_boiled;
   });
 
-  pool.query('SELECT SUM(quantity) AS quantity, DATE(date) as date FROM orders GROUP BY DATE(date) ORDER BY date DESC LIMIT 10;', function(error, results, fields) {
+  pool.query('SELECT SUM(quantity) AS quantity, DATE(date) as date FROM orders GROUP BY DATE(date) ORDER BY date DESC LIMIT 30;', function(error, results, fields) {
     stats.past_two_weeks = results;
   });
 

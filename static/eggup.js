@@ -335,7 +335,7 @@ Eggup.prototype.synchronize = function() {
           labels: weekdays,
           datasets: [{
             data: dayvalue,
-            backgroundColor: "rgba(103, 130, 142, 0.4)"
+            backgroundColor: "rgba(233, 30, 99, 0.5)"
           }]
         },
         options: {
@@ -954,7 +954,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'number_of_users': '# of users',
           'total_eggs_ordered': 'Total # eggs ordered',
           'number_of_soft_boiled': '...of which are soft boiled',
-          'number_of_hard_boiled': '...of which are hard boiled'
+          'number_of_hard_boiled': '...and hard boiled',
+          'volume': 'Order volume in the past 30 days'
         }
       },
       /** Swedish */
@@ -1052,7 +1053,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'number_of_users': 'Antal användare',
           'total_eggs_ordered': 'Totalt antal ägg beställda',
           'number_of_soft_boiled': '...varav löskokta',
-          'number_of_hard_boiled': '...varav hårdkokta'
+          'number_of_hard_boiled': '...och hårdkokta',
+          'volume': 'Beställningsvolym senaste 30 arbetsdagarna'
         }
       }
     };
@@ -1330,6 +1332,8 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.querySelector('.settings .-stats').onclick = function() {
+    if (!(window.innerWidth >= 960)) return false;
+
     eggup.notify('click');
     document.querySelector('.-expander').click();
     document.querySelector('.wrapper').classList.add('_stats');
@@ -1762,6 +1766,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 audio.start('party');
               }
             } else if (sequence.equals([83, 78, 79, 79, 75])) {
+              if (!(window.innerWidth >= 960)) return false;
               if (document.querySelector('.wrapper').classList.contains('_initiate')) return false;
               if (document.querySelector('.wrapper').classList.contains('_stats')) return false;
 

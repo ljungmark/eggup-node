@@ -408,27 +408,28 @@
       </div>
     </div>
     <div class="stats">
-      <div class="-past-weeks">
-        <canvas class="-chart" height="400" width="400"></canvas>
+      <div class="pattern">
+        <div class="content">
+          <table class="-table">
+            <tr>
+              <td class="-number_of_users number"></td>
+              <td class="-total_eggs_ordered number"></td>
+              <td class="-number_of_soft_boiled number"></td>
+              <td class="-number_of_hard_boiled number"></td>
+            </tr>
+            <tr>
+              <td data-lang="stats.number_of_users"></td>
+              <td data-lang="stats.total_eggs_ordered"></td>
+              <td data-lang="stats.number_of_soft_boiled"></td>
+              <td data-lang="stats.number_of_hard_boiled"></td>
+            </tr>
+          </table>
+          <div class="-past-weeks">
+            <h2 data-lang="stats.volume"></h2>
+            <canvas class="-chart" height="160" width="400"></canvas>
+          </div>
+        </div>
       </div>
-      <table class="-table">
-        <tr>
-          <td data-lang="stats.number_of_users"></td>
-          <td class="-number_of_users -right"></td>
-        </tr>
-        <tr>
-          <td data-lang="stats.total_eggs_ordered"></td>
-          <td class="-total_eggs_ordered -right"></td>
-        </tr>
-        <tr>
-          <td data-lang="stats.number_of_soft_boiled"></td>
-          <td class="-number_of_soft_boiled -right"></td>
-        </tr>
-        <tr>
-          <td data-lang="stats.number_of_hard_boiled"></td>
-          <td class="-number_of_hard_boiled -right"></td>
-        </tr>
-      </table>
     </div>
     <div class="initiate">
       <div class="-instructions">
