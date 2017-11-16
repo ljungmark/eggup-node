@@ -1321,6 +1321,32 @@ body._snook .snook {
     1px 1px 0 rgba(140, 140, 140, 0.08),
     -1px -1px 1px rgba(0, 0, 0, 0.3);
   width: 100%;
+} 
+
+.settings a:before {
+  background: #151515;
+  border-radius: 30px;
+  color: #f7f7f7;
+  content: attr(data-hint);
+  display: block;
+  font-size: 11px;
+  left: 50%;
+  opacity: 0;
+  padding: 0 4px;
+  pointer-events: none;
+  position: absolute;
+  text-transform: uppercase;
+  top: -46px;
+  transform: translate3d(-50%, 10px, 0) rotate3d(1, 1, 0, 25deg);
+  transition: opacity 0.3s, transform 0.3s;
+  width: 80px;
+}
+
+.settings a:hover:before {
+  left: 50%;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(-50%, 0, 0) rotate3d(0, 0, 0, 0);
 }
 
 .feedback .-send {

@@ -904,6 +904,12 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           '3': 'Boiling',
           '4': 'All done',
         },
+        'settings': {
+          'language': 'Language',
+          'sounds': 'UI Sounds',
+          'stats': 'Statistics',
+          'logout': 'Log out'
+        },
         'order': {
           'quantity': '# of eggs',
           'variant': 'Boiling time',
@@ -1006,6 +1012,12 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           '2': 'Invänta kokning',
           '3': 'Äggen kokar',
           '4': 'Klart',
+        },
+        'settings': {
+          'language': 'Språk',
+          'sounds': 'UI-ljud',
+          'stats': 'Statistik',
+          'logout': 'Logga ut'
         },
         'order': {
           'quantity': 'Antal ägg',
