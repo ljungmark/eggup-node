@@ -357,9 +357,9 @@ Eggup.prototype.synchronize = function() {
         gram = 55;
 
       document.querySelector('.-my_orders').innerText = (json.stats.my_orders) ? json.stats.my_orders : '0';
-      document.querySelector('.-my_grams').innerText = (json.stats.my_orders) ? `${(json.stats.my_orders * 55) / 1000}` : '0';
-      document.querySelector('.-my_protein').innerText = (json.stats.my_orders) ? `${json.stats.my_orders * protein}` : '0';
-      document.querySelector('.-all_grams').innerText = (json.stats.total_eggs_ordered * gram) / 1000;
+      document.querySelector('.-my_grams').innerText = (json.stats.my_orders) ? `${((json.stats.my_orders * 55) / 1000).toFixed(3)}` : '0';
+      document.querySelector('.-my_protein').innerText = (json.stats.my_orders) ? `${(json.stats.my_orders * protein).toFixed(2)}` : '0';
+      document.querySelector('.-all_grams').innerText = ((json.stats.total_eggs_ordered * gram) / 1000).toFixed(2);
       document.querySelector('.-number_of_users').innerText = json.stats.number_of_users;
       document.querySelector('.-total_eggs_ordered').innerText = json.stats.total_eggs_ordered;
       document.querySelector('.-number_of_soft_boiled').innerText = json.stats.number_of_soft_boiled;
