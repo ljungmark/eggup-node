@@ -245,7 +245,7 @@ function get_date(date) {
   return date;
 }
 
-function stats() {
+function stats(request) {
   const soft_boiled_eggs_in_eggup1 = 686,
     hard_boiled_eggs_in_eggup1 = 287,
     soft_boiled_eggs_in_eggup2 = 48,
@@ -256,6 +256,7 @@ function stats() {
     'number_of_hard_boiled': hard_boiled_eggs_in_eggup1 + hard_boiled_eggs_in_eggup2,
     'total_eggs_ordered': soft_boiled_eggs_in_eggup1 + soft_boiled_eggs_in_eggup2 + hard_boiled_eggs_in_eggup1 + hard_boiled_eggs_in_eggup2,
     'past_two_weeks': {},
+    'my_orders': 0
   }
 
   pool.query('SELECT COUNT(*) AS number_of_users FROM tokens', function(error, results, fields) {
@@ -272,8 +273,16 @@ function stats() {
     stats.total_eggs_ordered = stats.total_eggs_ordered + results[0].number_of_hard_boiled;
   });
 
-  pool.query('SELECT SUM(quantity) AS quantity, DATE(date) as date FROM orders GROUP BY DATE(date) ORDER BY date DESC LIMIT 30;', function(error, results, fields) {
+  pool.query('SELECT SUM(quantity) AS quantity, DATE(date) as date FROM orders GROUP BY DATE(date) ORDER BY date DESC LIMIT 30', function(error, results, fields) {
     stats.past_two_weeks = results;
+  });
+
+  let sql = 'SELECT SUM(quantity) as quantity FROM eggup3.orders WHERE token = ?',
+    values = [request.user.token];
+  sql = mysql.format(sql, values);
+
+  pool.query(sql, function(error, results, fields) {
+    stats.my_orders = results[0].quantity;
   });
 
   return stats;
@@ -409,7 +418,7 @@ app.post('/synchronize', (request, response) => {
       'heap_1': 0,
       'heap_2': 0,
       'gateway': true,
-      'stats': stats()
+      'stats': stats(request)
     };
 
   let sql = 'SELECT lockdate, startdate, softboiled, hardboiled FROM cookings WHERE DATE(lockdate) = ?',

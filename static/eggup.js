@@ -353,6 +353,13 @@ Eggup.prototype.synchronize = function() {
         }
       });
 
+      const protein = 7.15,
+        gram = 55;
+
+      document.querySelector('.-my_orders').innerText = (json.stats.my_orders) ? json.stats.my_orders : '0';
+      document.querySelector('.-my_grams').innerText = (json.stats.my_orders) ? `${(json.stats.my_orders * 55) / 1000}` : '0';
+      document.querySelector('.-my_protein').innerText = (json.stats.my_orders) ? `${json.stats.my_orders * protein}` : '0';
+      document.querySelector('.-all_grams').innerText = (json.stats.total_eggs_ordered * gram) / 1000;
       document.querySelector('.-number_of_users').innerText = json.stats.number_of_users;
       document.querySelector('.-total_eggs_ordered').innerText = json.stats.total_eggs_ordered;
       document.querySelector('.-number_of_soft_boiled').innerText = json.stats.number_of_soft_boiled;
@@ -955,7 +962,11 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'total_eggs_ordered': 'Total # eggs ordered',
           'number_of_soft_boiled': '...of which are soft boiled',
           'number_of_hard_boiled': '...and hard boiled',
-          'volume': 'Order volume in the past 30 days'
+          'volume': 'Order volume in the past 30 days',
+          'my_orders': '# of eggs I\'ve eaten',
+          'my_protein': 'gram protein',
+          'my_grams': 'Quantity of eggs I\'ve eaten (kg)',
+          'all_grams': 'Quantity of eggs we\'ve eaten together (kg)'
         }
       },
       /** Swedish */
@@ -1054,7 +1065,11 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'total_eggs_ordered': 'Totalt antal ägg beställda',
           'number_of_soft_boiled': '...varav löskokta',
           'number_of_hard_boiled': '...och hårdkokta',
-          'volume': 'Beställningsvolym senaste 30 arbetsdagarna'
+          'volume': 'Beställningsvolym senaste 30 arbetsdagarna',
+          'my_orders': 'Antal ägg jag har ätit',
+          'my_protein': 'gram protein',
+          'my_grams': 'Mängd ägg jag har ätit (kg)',
+          'all_grams': 'Mängd ägg vi ätit kollektivt (kg)'
         }
       }
     };
@@ -1819,7 +1834,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (vertical_position > tile_count - 1) {
       vertical_position = 0;
     }
-    context.fillStyle = '#8bc34a';
+    context.fillStyle = '#779653';
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = '#795548';
     for(let i=0 ; i < path.length; i++) {

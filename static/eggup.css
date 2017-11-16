@@ -332,33 +332,33 @@ h2 {
   width: 831px;
 }
 .stats .pattern {
-    background: url(../assets/stats_mid.png) repeat-y;
-    margin: 35px 0 21px 0px;
+  background: url(../assets/stats_mid.png) repeat-y;
+  margin: 35px 0 21px 0px;
 }
 .stats .content {
   margin: 0 40px;
 }
 
 .stats::before {
-      position: absolute;
-    top: 0;
-    content: '';
-    left: 0;
-    height: 280px;
-    width: 831px;
-        background: url('../assets/stats_topbottom.png') no-repeat;
-    z-index: -1;
+  background: url('../assets/stats_topbottom.png') no-repeat;
+  content: '';
+  height: 280px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 831px;
+  z-index: -1;
 }
 .stats::after {
-      position: absolute;
-    bottom: 0;
-    left: 0;
-    content: '';
-    height: 22px;
-    width: 831px;
-        background: url('../assets/stats_topbottom.png') no-repeat;
-    background-position: 0 bottom;
-    z-index: -1;
+  background: url('../assets/stats_topbottom.png') no-repeat;
+  background-position: 0 bottom;
+  bottom: 0;
+  content: '';
+  height: 22px;
+  left: 0;
+  position: absolute;
+  width: 831px;
+  z-index: -1;
 }
 .stats h2 {
   font-size: 12px;
@@ -378,6 +378,13 @@ h2 {
 }
 .stats .-table td {
   padding: 2px 4px;
+}
+.stats .-table td.-caption {
+  color: #222222;
+  font-size: 14px;
+}
+.stats .-table td.spacious {
+  padding: 2px 4px 20px;
 }
 
 .wrapper._stats ~ .stats {
