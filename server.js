@@ -874,7 +874,7 @@ app.post('/snook', (request, response) => {
   let score = request.body.score;
 
   let check = new Promise(function(resolve, reject) {
-    sql = 'UPDATE tokens SET snook = ? WHERE token = ? AND snook < ?';
+    sql = 'UPDATE tokens SET snook = ?, snooktime = NOW() WHERE token = ? AND snook < ?';
     sql = mysql.format(sql, [score, request.user.token, score]);
 
     pool.query(sql, function (error, results, fields) {
