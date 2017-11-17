@@ -354,12 +354,14 @@ Eggup.prototype.synchronize = function() {
       });
 
       const protein = 7.15,
-        gram = 55;
+        gram = 58,
+        volume = 65;
 
       document.querySelector('.-my_orders').innerText = (json.stats.my_orders) ? json.stats.my_orders : '0';
-      document.querySelector('.-my_grams').innerText = (json.stats.my_orders) ? `${((json.stats.my_orders * 55) / 1000).toFixed(3)}` : '0';
-      document.querySelector('.-my_protein').innerText = (json.stats.my_orders) ? `${(json.stats.my_orders * protein).toFixed(2)}` : '0';
-      document.querySelector('.-all_grams').innerText = ((json.stats.total_eggs_ordered * gram) / 1000).toFixed(2);
+      document.querySelector('.-my_grams').innerText = (json.stats.my_orders) ? `${((json.stats.my_orders * 55) / 1000).toFixed(3)} kg` : '0';
+      document.querySelector('.-my_protein').innerText = (json.stats.my_orders) ? `${(json.stats.my_orders * protein).toFixed(2)} g` : '0';
+      document.querySelector('.-all_grams').innerText = `${((json.stats.total_eggs_ordered * gram) / 1000).toFixed(2)} kg`;
+      document.querySelector('.-all_volume').innerText = `${((json.stats.total_eggs_ordered * volume) / 1000).toFixed(2)} L`;
       document.querySelector('.-number_of_users').innerText = json.stats.number_of_users;
       document.querySelector('.-total_eggs_ordered').innerText = json.stats.total_eggs_ordered;
       document.querySelector('.-number_of_soft_boiled').innerText = json.stats.number_of_soft_boiled;
@@ -895,7 +897,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
       'en' : {
         'egg': {
           'bubble': {
-            '0': 'Eggup, er\'body!'
+            '0': 'You have a great day now, buddy!'
           }
         },
         'map': {
@@ -970,9 +972,13 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'number_of_hard_boiled': '...and hard boiled',
           'volume': 'Order volume in the past 30 days',
           'my_orders': '# of eggs I\'ve eaten',
-          'my_protein': 'gram protein',
-          'my_grams': 'Quantity of eggs I\'ve eaten (kg)',
-          'all_grams': 'Quantity of eggs we\'ve eaten together (kg)'
+          'my_protein': 'protein',
+          'my_grams': 'Quantity of eggs I\'ve eaten',
+          'all_grams': 'Quantity of eggs we\'ve eaten together',
+          'personal': 'Personal stats',
+          'company': 'The company',
+          'app': 'General',
+          'all_volume': 'Volume of all eggs consumed'
         }
       },
       /** Swedish */
@@ -1073,15 +1079,19 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'instructionsheader': 'Instruktioner'
         },
         'stats': {
-          'number_of_users': 'Antal användare',
+          'number_of_users': 'Antal äggätare',
           'total_eggs_ordered': 'Totalt antal ägg beställda',
           'number_of_soft_boiled': '...varav löskokta',
           'number_of_hard_boiled': '...och hårdkokta',
           'volume': 'Beställningsvolym senaste 30 arbetsdagarna',
           'my_orders': 'Antal ägg jag har ätit',
-          'my_protein': 'gram protein',
-          'my_grams': 'Mängd ägg jag har ätit (kg)',
-          'all_grams': 'Mängd ägg vi ätit kollektivt (kg)'
+          'my_protein': 'protein',
+          'my_grams': 'Mängd ägg jag har ätit',
+          'all_grams': 'Mängd ägg vi har ätit tillsammans',
+          'personal': 'Personlig statistik',
+          'company': 'Bolaget',
+          'app': 'Allmänt',
+          'all_volume': 'Volymen på de konsumerade äggen'
         }
       }
     };

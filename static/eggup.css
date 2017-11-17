@@ -368,6 +368,10 @@ h2 {
   text-align: center;
   text-transform: uppercase;
 }
+.stats h2:not(:first-child) {
+  border-top: 1px solid #b3b3b3;
+  padding-top: 20px;
+}
 
 .stats .-table {
   text-align: center;
@@ -382,9 +386,6 @@ h2 {
 .stats .-table td.-caption {
   color: #222222;
   font-size: 14px;
-}
-.stats .-table td.spacious {
-  padding: 2px 4px 20px;
 }
 
 .wrapper._stats ~ .stats {
