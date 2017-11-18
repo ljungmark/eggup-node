@@ -3,7 +3,6 @@ Eggup Node
 
 
 * [Documentation](#user-content-documentation)
-  * [License](#user-content-license)
 * [About the app](#user-content-about-the-app)
   * [Modules](#user-content-modules)
   * [Technical](#user-content-technical)
@@ -20,19 +19,15 @@ Eggup Node
   * [Konami](#user-content-konami)
 
 
-## Changelog
+# Documentation
 [Changelog](docs/CHANGELOG.markdown)
 
-## Contributing
 [Contributing](docs/CONTRIBUTING.markdown)
 
-## License
 [CC BY-NC-SA 4.0](docs/LICENSE.markdown)
 
-## Privacy
 [Privacy](docs/PRIVACY.markdown)
 
-## TOS
 [TOS](docs/TOS.markdown)
 
 

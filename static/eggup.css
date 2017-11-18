@@ -966,8 +966,7 @@ body._snook .snook {
   transition-duration: 290ms;
 }
 .-trigger:checked ~ .-option:nth-child(5) {
-  transform: translate3d(-22px, -50px, 0);
-  transition-duration: 390ms;
+  display: none;
 }
 .-trigger:checked ~ .-option:nth-child(6) {
   transform: translate3d(50px, 0, 0);
@@ -1337,7 +1336,7 @@ body._snook .snook {
   pointer-events: none;
   position: absolute;
   text-transform: uppercase;
-  top: -46px;
+  top: -58px;
   transform: translate3d(-50%, 10px, 0) rotate3d(1, 1, 0, 25deg);
   transition: opacity 0.3s, transform 0.3s;
   width: 80px;
@@ -1737,6 +1736,10 @@ body._party::after {
     width: 200px;
   }
 
+  .settings a:before {
+    top: -46px;
+  }
+
   .-option,
   .-expander {
     height: 40px;
@@ -1773,6 +1776,7 @@ body._party::after {
     transition-duration: 290ms;
   }
   .-trigger:checked ~ .-option:nth-child(5) {
+    display: block;
     transform: translate3d(129px, 0, 0);
     transition-duration: 390ms;
   }

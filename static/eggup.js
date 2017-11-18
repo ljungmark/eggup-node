@@ -358,7 +358,7 @@ Eggup.prototype.synchronize = function() {
         volume = 65;
 
       document.querySelector('.-my_orders').innerText = (json.stats.my_orders) ? json.stats.my_orders : '0';
-      document.querySelector('.-my_grams').innerText = (json.stats.my_orders) ? `${((json.stats.my_orders * 55) / 1000).toFixed(3)} kg` : '0';
+      document.querySelector('.-my_grams').innerText = (json.stats.my_orders) ? `${((json.stats.my_orders * 55) / 1000).toFixed(2)} kg` : '0';
       document.querySelector('.-my_protein').innerText = (json.stats.my_orders) ? `${(json.stats.my_orders * protein).toFixed(2)} g` : '0';
       document.querySelector('.-all_grams').innerText = `${((json.stats.total_eggs_ordered * gram) / 1000).toFixed(2)} kg`;
       document.querySelector('.-all_volume').innerText = `${((json.stats.total_eggs_ordered * volume) / 1000).toFixed(2)} L`;

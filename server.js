@@ -880,7 +880,7 @@ app.post('/snook', (request, response) => {
     pool.query(sql, function (error, results, fields) {
       if (error) reject();
 
-      sql = 'SELECT name, snook FROM tokens ORDER BY snook DESC LIMIT 3';
+      sql = 'SELECT name, snook FROM tokens WHERE snook > 0 ORDER BY snook DESC LIMIT 3';
 
       pool.query(sql, function (error, results, fields) {
         if (error) reject();
