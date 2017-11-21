@@ -256,7 +256,9 @@ function stats(request) {
     'number_of_hard_boiled': hard_boiled_eggs_in_eggup1 + hard_boiled_eggs_in_eggup2,
     'total_eggs_ordered': soft_boiled_eggs_in_eggup1 + soft_boiled_eggs_in_eggup2 + hard_boiled_eggs_in_eggup1 + hard_boiled_eggs_in_eggup2,
     'past_two_weeks': {},
-    'my_orders': 0
+    'my_orders': 0,
+    'average_cooking_quality_soft_boiled': 0,
+    'average_cooking_quality_hard_boiled': 0
   }
 
   pool.query('SELECT COUNT(*) AS number_of_users FROM tokens', function(error, results, fields) {
@@ -283,6 +285,14 @@ function stats(request) {
 
   pool.query(sql, function(error, results, fields) {
     stats.my_orders = results[0].quantity;
+  });
+
+  pool.query('SELECT SUM(feedback) / COUNT(feedback) AS average_cooking_quality_soft_boiled FROM eggup3.orders WHERE variant = 1 AND feedback IS NOT NULL', function(error, results, fields) {
+    stats.average_cooking_quality_soft_boiled = results[0].average_cooking_quality_soft_boiled;
+  });
+
+  pool.query('SELECT SUM(feedback) / COUNT(feedback) AS average_cooking_quality_hard_boiled FROM eggup3.orders WHERE variant = 2 AND feedback IS NOT NULL', function(error, results, fields) {
+    stats.average_cooking_quality_hard_boiled = results[0].average_cooking_quality_hard_boiled;
   });
 
   return stats;
@@ -874,13 +884,13 @@ app.post('/snook', (request, response) => {
   let score = request.body.score;
 
   let check = new Promise(function(resolve, reject) {
-    sql = 'UPDATE tokens SET snook = ?, snooktime = NOW() WHERE token = ? AND snook < ?';
-    sql = mysql.format(sql, [score, request.user.token, score]);
+    sql = 'UPDATE tokens SET snook = snook + 1, snooktime = NOW() WHERE token = ? AND snook = ? - 1';
+    sql = mysql.format(sql, [request.user.token, score]);
 
     pool.query(sql, function (error, results, fields) {
       if (error) reject();
 
-      sql = 'SELECT name, snook FROM tokens WHERE snook > 0 ORDER BY snook DESC LIMIT 3';
+      sql = 'SELECT name, snook FROM tokens WHERE snook > 5 ORDER BY snook DESC LIMIT 3';
 
       pool.query(sql, function (error, results, fields) {
         if (error) reject();

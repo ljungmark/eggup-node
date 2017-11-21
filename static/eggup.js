@@ -366,6 +366,8 @@ Eggup.prototype.synchronize = function() {
       document.querySelector('.-total_eggs_ordered').innerText = json.stats.total_eggs_ordered;
       document.querySelector('.-number_of_soft_boiled').innerText = json.stats.number_of_soft_boiled;
       document.querySelector('.-number_of_hard_boiled').innerText = json.stats.number_of_hard_boiled;
+      document.querySelector('.-average_cooking_quality_soft_boiled').value = (json.stats.average_cooking_quality_soft_boiled * 100).toFixed(0);
+      document.querySelector('.-average_cooking_quality_hard_boiled').value = (json.stats.average_cooking_quality_hard_boiled * 100).toFixed(0);
 
       if (eggup.debug()) console.table(json);
 
@@ -978,7 +980,10 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'personal': 'Personal stats',
           'company': 'The company',
           'app': 'General',
-          'all_volume': 'Volume of all eggs consumed'
+          'all_volume': 'Volume of all eggs consumed',
+          'cooking_accuracy': 'Cooking accuracy',
+          'cooking_accuracy_soft': 'Soft boiled',
+          'cooking_accuracy_hard': 'hardboiled'
         }
       },
       /** Swedish */
@@ -1091,7 +1096,10 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'personal': 'Personlig statistik',
           'company': 'Bolaget',
           'app': 'Allmänt',
-          'all_volume': 'Volymen på de konsumerade äggen'
+          'all_volume': 'Volymen på de konsumerade äggen',
+          'cooking_accuracy': 'Kokningsprecision',
+          'cooking_accuracy_soft': 'Löskokta',
+          'cooking_accuracy_hard': 'Hårdkokta'
         }
       }
     };
