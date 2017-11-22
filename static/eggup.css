@@ -415,7 +415,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 input[type=range]::-webkit-slider-runnable-track {
-  background: linear-gradient(to right, #ff3a3a, #d4d410, #58f158, #00ff53, #d4d410, #ff3a3a);
+  background: linear-gradient(to right, #e55525, #f18a21, #89db62, #89db62, #f18a21, #e55525);
   border-radius: 10px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
   height: 12px;
