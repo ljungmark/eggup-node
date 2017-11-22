@@ -20,15 +20,7 @@ Eggup Node
 
 
 # Documentation
-[Changelog](docs/CHANGELOG.markdown)
-
-[Contributing](docs/CONTRIBUTING.markdown)
-
-[CC BY-NC-SA 4.0](docs/LICENSE.markdown)
-
-[Privacy](docs/PRIVACY.markdown)
-
-[TOS](docs/TOS.markdown)
+[Changelog](docs/CHANGELOG.markdown) | [Contributing](docs/CONTRIBUTING.markdown) | [License: CC BY-NC-SA 4.0](docs/LICENSE.markdown) | [Privacy](docs/PRIVACY.markdown) | [TOS](docs/TOS.markdown)
 
 
 # About the app
