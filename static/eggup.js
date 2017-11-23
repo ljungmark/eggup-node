@@ -1017,6 +1017,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '24': '"Who cares about SEO anyways" -Carlo',
             '25': '"Alltså, jag börjar gilla Microsoft. De verkar veta vad de pysslar med..." -Daniel',
             '26': '"Vad är en capricciosa?" -Freij',
+            '27': '"Slå han i huvudet, det är där han är dum!" -Anton A.'
           }
         },
         'map': {
