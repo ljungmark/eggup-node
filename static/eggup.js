@@ -899,7 +899,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
       'en' : {
         'egg': {
           'bubble': {
-            '0': 'You have a great day now, buddy!'
+            '0': 'You have a great day now, buddy!',
           }
         },
         'map': {
@@ -912,7 +912,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'language': 'Language',
           'sounds': 'UI Sounds',
           'stats': 'Statistics',
-          'logout': 'Log out'
+          'logout': 'Log out',
         },
         'order': {
           'quantity': '# of eggs',
@@ -920,13 +920,13 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'button': 'Order <img class="order-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAclBMVEUAAAAAAAAEBAQBAQEAAAAJCQliYmL///8AAACOjo7////p6eny8vIiIiL////4+Pj///9DQ0Pw8PD///+2tranp6f////Gxsb+/v739/f7+/vs7Oz39/fj4+Ph4eH19fXy8vJubm5GRkYjIyOgoKD////gy5wGAAAAJXRSTlMPABQdJRkUBAQZ+hwTEALAJBMiHhwaFRL008+xqZ2YkowzLCQj8f+kPwAAAK1JREFUGNNNkFkShCAMBQPIoiA6brPvw/2vODERyveTStOBCiDWOKmqqlLSUUdMYwsAeKA35pSGHK0cMXIo5K5MMipQCnB58JnHHRQr3Q6bCbqw1NUssvdqUpNSuvzYo5wSp+O2BcyDvfObCV28bobWBzBI6vLG9UsVyTGzu+KKxGYxo9qCCAb2MQH3jd7skY/IhPVzQbO3/KdxGSbTQmumYYmCGaph7Pt+DJa6P73VCGq32yoQAAAAAElFTkSuQmCC">',
           'softboiled': {
             'singular': 'Soft boiled',
-            'plural': 'Soft boiled'
+            'plural': 'Soft boiled',
           },
           'hardboiled': {
             'singular': 'Hard boiled',
-            'plural': 'Hard boiled'
+            'plural': 'Hard boiled',
           },
-          'settings': 'Language & Sounds'
+          'settings': 'Language & Sounds',
         },
         'review': {
           'header': 'Lovely! Eggs for breakfast today!',
@@ -940,16 +940,16 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'summary': '<span class="review-text__total">[total]</span> ordered today, <span class="review-text__heap_1">[soft]</span> and <span class="review-text__heap_2">[hard]</span>.',
           'cancel': '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Cancel order',
           'gate': 'The cooking is commencing shortly and you cannot place or change any of todays orders! :)',
-          'empty': 'You haven\'t placed any order'
+          'empty': 'You haven\'t placed any order',
         },
         'controller': {
           'soft': 'soft boiled',
-          'hard': 'hard boiled'
+          'hard': 'hard boiled',
         },
         'boiling': {
           'softboiled': 'Soft boiled',
           'hardboiled': 'Hard boiled',
-          'done': 'All done'
+          'done': 'All done',
         },
         'docket': {
           'done': 'The eggs are done, enjoy!',
@@ -958,14 +958,14 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'soft': 'A bit too soft boiled',
           'perfect': 'Perfect',
           'hard': 'A bit too hard boiled',
-          'toohard': 'Way too hard boiled'
+          'toohard': 'Way too hard boiled',
         },
         'snook': {
           'instructions': 'Use your arrow keys to guide the snake to delicious chickens',
           'scoreheader': 'Highscore',
           'score': 'Score:',
           'sessionhighscore': 'Session highscore:',
-          'instructionsheader': 'Instructions'
+          'instructionsheader': 'Instructions',
         },
         'stats': {
           'number_of_users': '# of users',
@@ -983,7 +983,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'all_volume': 'Volume of all eggs consumed',
           'cooking_accuracy': 'Cooking accuracy',
           'cooking_accuracy_soft': 'Soft boiled',
-          'cooking_accuracy_hard': 'hardboiled'
+          'cooking_accuracy_hard': 'hardboiled',
         }
       },
       /** Swedish */
@@ -1016,6 +1016,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '23': '"Om du drar ett hår från rumpan, kommer det en tår från ögat" -Benny',
             '24': '"Who cares about SEO anyways" -Carlo',
             '25': '"Alltså, jag börjar gilla Microsoft. De verkar veta vad de pysslar med..." -Daniel',
+            '26': '"Vad är en capricciosa?" -Freij',
+            '27': '"Slå han i huvudet, det är där han är dum!" -Anton A.'
           }
         },
         'map': {
@@ -1028,7 +1030,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'language': 'Språk',
           'sounds': 'UI-ljud',
           'stats': 'Statistik',
-          'logout': 'Logga ut'
+          'logout': 'Logga ut',
         },
         'order': {
           'quantity': 'Antal ägg',
@@ -1036,13 +1038,13 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'button': 'Beställ <img class="order-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAclBMVEUAAAAAAAAEBAQBAQEAAAAJCQliYmL///8AAACOjo7////p6eny8vIiIiL////4+Pj///9DQ0Pw8PD///+2tranp6f////Gxsb+/v739/f7+/vs7Oz39/fj4+Ph4eH19fXy8vJubm5GRkYjIyOgoKD////gy5wGAAAAJXRSTlMPABQdJRkUBAQZ+hwTEALAJBMiHhwaFRL008+xqZ2YkowzLCQj8f+kPwAAAK1JREFUGNNNkFkShCAMBQPIoiA6brPvw/2vODERyveTStOBCiDWOKmqqlLSUUdMYwsAeKA35pSGHK0cMXIo5K5MMipQCnB58JnHHRQr3Q6bCbqw1NUssvdqUpNSuvzYo5wSp+O2BcyDvfObCV28bobWBzBI6vLG9UsVyTGzu+KKxGYxo9qCCAb2MQH3jd7skY/IhPVzQbO3/KdxGSbTQmumYYmCGaph7Pt+DJa6P73VCGq32yoQAAAAAElFTkSuQmCC">',
           'softboiled': {
             'singular': 'Löskokt',
-            'plural': 'Löskokta'
+            'plural': 'Löskokta',
           },
           'hardboiled': {
             'singular': 'Hårdkokt',
-            'plural': 'Hårdkokta'
+            'plural': 'Hårdkokta',
           },
-          'settings': 'Språk & ljud'
+          'settings': 'Språk & ljud',
         },
         'review': {
           'header': 'Härligt! I dag blir det ägg till frukost!',
@@ -1056,16 +1058,16 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'summary': 'Totalt har det beställts <span class="review-text__total">[total]</span> idag, varav <span class="review-text__heap_1">[soft]</span> och <span class="review-text__heap_2">[hard]</span>.',
           'cancel': '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Avbeställ',
           'gate': 'Äggkokning är på gång och du kan inte längre ändra dagens order! :)',
-          'empty': 'Du har inte beställt några ägg'
+          'empty': 'Du har inte beställt några ägg',
         },
         'controller': {
           'soft': 'löskokta',
-          'hard': 'hårdkokta'
+          'hard': 'hårdkokta',
         },
         'boiling': {
           'softboiled': 'Löskokta',
           'hardboiled': 'Hårdkokta',
-          'done': 'Färdiga'
+          'done': 'Färdiga',
         },
         'docket': {
           'done': 'Äggen är klara, hugg in!',
@@ -1074,14 +1076,14 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'soft': 'Lite för löskokta',
           'perfect': 'Perfekt!',
           'hard': 'Lite för hårdkokta',
-          'toohard': 'Alldeles för hårdkokta'
+          'toohard': 'Alldeles för hårdkokta',
         },
         'snook': {
           'instructions': 'Använd piltangenterna för att äta små kycklingar',
           'scoreheader': 'Topplista',
           'score': 'Poäng:',
           'sessionhighscore': 'Högst poäng denna gång:',
-          'instructionsheader': 'Instruktioner'
+          'instructionsheader': 'Instruktioner',
         },
         'stats': {
           'number_of_users': 'Antal äggätare',
@@ -1099,7 +1101,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'all_volume': 'Volymen på de konsumerade äggen',
           'cooking_accuracy': 'Kokningsprecision',
           'cooking_accuracy_soft': 'Löskokta',
-          'cooking_accuracy_hard': 'Hårdkokta'
+          'cooking_accuracy_hard': 'Hårdkokta',
         }
       }
     };
