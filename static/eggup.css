@@ -1530,7 +1530,7 @@ body._party::after {
   Only utilized on machines with more computional power
 */
 @media only screen and (min-width: 960px) {
-  body::after {
+  .wrapper::after {
     animation: backplate 10s infinite;
     background: linear-gradient(0deg, #00e7ff, #00ff5a, #00e7ff, #00ff5a);
     background-size: 100% 400%;
@@ -1833,7 +1833,6 @@ body._party::after {
   .initiate {
     border-bottom: 2px solid #c3c3c3;
     border-radius: 3px;
-    border-top: 1px solid #ffffff;
     box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.2);
     max-height: 0;
     max-width: 400px;
@@ -1843,6 +1842,25 @@ body._party::after {
     right: initial;
     top: 500%;
     transform: translate(-50%, calc(-50% - 10px));
+  }
+
+  .initiate::after {
+    background: linear-gradient(to right, #3dade9, #bf2fcb),linear-gradient(to right, #3dade9, #bf2fcb);
+    background-size: 100% 400%;
+    border-radius: 3px;
+    box-shadow: 0 7px 10px rgba(9, 13, 62, 0.3);
+    box-sizing: border-box;
+    content: '';
+    height: 444px;
+    left: 50%;
+    max-height: calc(100vh - 84px);
+    opacity: 1;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 531px;
+    z-index: -1;
   }
 
   .wrapper._initiate ~ .initiate {
@@ -1890,7 +1908,7 @@ body._party::after {
       filter: blur(0);
     }
     to {
-      filter: blur(3px);
+      filter: blur(3px) grayscale(100%);
     }
   }
 
@@ -1902,7 +1920,7 @@ body._party::after {
 
   @keyframes wrapper-closing {
     from {
-      filter: blur(3px);
+      filter: blur(3px) grayscale(100%);
     }
     to {
       filter: blur(0);

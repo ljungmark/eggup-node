@@ -1652,6 +1652,8 @@ document.addEventListener('DOMContentLoaded', function() {
           history.replaceState('', document.title, window.location.pathname);
           document.body.classList.remove('_snook');
           document.querySelector('.wrapper').classList.remove('_snook');
+
+          if (document.querySelector('.background')) document.querySelector('.background').play();
         } else if (event.keyCode === 37 && horizontal_velocity !== 1) {
           /** Left */
           horizontal_velocity = -1;
