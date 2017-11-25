@@ -1534,19 +1534,19 @@ body._party::after {
     animation: backplate 10s infinite;
     background: linear-gradient(0deg, #00e7ff, #00ff5a, #00e7ff, #00ff5a);
     background-size: 100% 400%;
-    border-radius: 8px;
+    border-radius: 3px;
     box-shadow: 0 7px 10px rgba(9, 13, 62, 0.3);
     box-sizing: border-box;
     content: '';
-    height: 544px;
+    height: 548px;
     left: 50%;
-    max-height: calc(100vh - 88px);
+    max-height: calc(100vh - 84px);
     opacity: 0.5;
     padding: 0;
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 576px;
+    width: 580px;
     z-index: -1;
   }
 
@@ -1559,7 +1559,7 @@ body._party::after {
     }
   }
   .application {
-    border-radius: 6px;
+    border-radius: 2px;
     bottom: initial;
     box-shadow: 0 7px 10px rgba(9, 13, 62, 0.3);
     box-sizing: border-box;
