@@ -34,5 +34,15 @@ module.exports = {
     'clientID': '',
     'clientSecret': '',
     'callbackURL': ''
+  },
+  'linkedin' : {
+    'clientID': '',
+    'clientSecret': '',
+    'callbackURL': ''
+  },
+  'instagram' : {
+    'clientID': '',
+    'clientSecret': ' ',
+    'callbackURL': ''
   }
 };
