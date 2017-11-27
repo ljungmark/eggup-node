@@ -473,7 +473,7 @@ Eggup.prototype.synchronize = function() {
           eggup.thread.heap_1 = response.heap_1;
           eggup.thread.heap_2 = response.heap_2;
 
-          document.querySelector('.lock-button').innerHTML = 'Tillåt fler beställningar';
+          document.querySelector('.lock-button').innerHTML = `Tillåt fler beställningar`;
           document.querySelector('.lock-button').classList.add('locked');
 
           if (eggup.thread.quantity) {
@@ -716,6 +716,18 @@ Eggup.prototype.load = function(target_module) {
       document.querySelector('.wrapper').removeChild(document.querySelector('.egg'));
       clearTimeout(window.bubble);
     }
+
+    let docket_text = ``;
+    if (new Date().getHours() >= 10) {
+      if (new Date().getDay() < 5) {
+        docket_text = `${eggup.i18n('get', 'docket.done_closed')} ${eggup.i18n('get', 'docket.done_tomorrow')}`;
+      } else {
+        docket_text = `${eggup.i18n('get', 'docket.done_closed')} ${eggup.i18n('get', 'docket.done_monday')}`;
+      }
+    } else {
+      docket_text = `${eggup.i18n('get', 'docket.done')}`;
+    }
+    document.querySelector('.-docket_text').textContent = docket_text;
   }
 
   /** Never load a module while not scrolled to the top */
@@ -777,7 +789,7 @@ Eggup.prototype.map = function(node) {
 
     if (current_node < node) {
       current_element.classList.add('done');
-      current_element.innerHTML = '<img src="assets/tick.svg" />';
+      current_element.innerHTML = `<img src="assets/tick.svg" />`;
     } else if (current_node == node) {
       current_element.classList.add('active');
       current_element.innerHTML = current_node;
@@ -953,6 +965,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
         },
         'docket': {
           'done': 'The eggs are done, enjoy!',
+          'done_closed': 'Closed for today. The next order can be placed',
+          'done_tomorrow': 'tomorrow morning',
+          'done_monday': 'on monday morning',
           'feedback': 'What\'d you think of the eggs?',
           'toosoft': 'Way too soft boiled',
           'soft': 'A bit too soft boiled',
@@ -1072,6 +1087,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
         },
         'docket': {
           'done': 'Äggen är klara, hugg in!',
+          'done_closed': 'Stängt för dagen, nästa äggbeställning kan genomföras',
+          'done_tomorrow': 'imorgon bitti',
+          'done_monday': 'på måndag morgon',
           'feedback': 'Vad tyckte du om dina ägg idag?',
           'toosoft': 'Alldeles för löskokta',
           'soft': 'Lite för löskokta',
@@ -1875,8 +1893,6 @@ document.addEventListener('DOMContentLoaded', function() {
     for(let i=0 ; i < path.length; i++) {
       context.fillRect(path[i].horizontal_coordinate * tile_size, path[i].vertical_coordinate * tile_size, tile_size - 2, tile_size - 2);
       if (path[i].horizontal_coordinate === horizontal_position && path[i].vertical_coordinate === vertical_position) {
-        //var img    = canvas.toDataURL("image/png");
-        //document.querySelector('.highscore').innerHTML = '<img src="'+img+'"/>';
         size = 5;
         document.querySelector('.-sessionscore').innerHTML = size;
         document.querySelector('.-sessionhighscore').innerHTML = highscore;
@@ -2198,9 +2214,9 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
     if (eggup.thread.gateway == true) {
-      event.target.innerHTML = 'Tillåt fler beställningar';
+      event.target.innerHTML = `Tillåt fler beställningar`;
     } else {
-      event.target.innerHTML = 'Ta inte emot fler beställningar';
+      event.target.innerHTML = `Ta inte emot fler beställningar`;
     }
 
     return false;
