@@ -1,3 +1,7 @@
+## 2.3.4 [Mercano](https://github.com/ljungmark/eggup-node/releases/tag/2.3.4) (2017-11-27)
+
+* Protect credentials
+
 ## 2.3.2 [Aument](https://github.com/ljungmark/eggup-node/releases/tag/2.3.3) (2017-11-14)
 
 * Show aggregated stats

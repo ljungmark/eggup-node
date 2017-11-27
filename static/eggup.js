@@ -489,7 +489,7 @@ Eggup.prototype.synchronize = function() {
     });
   });
 
-  console.log('%c Eggup 2.3.3 ', [
+  console.log('%c Eggup 2.3.4 ', [
     'background: linear-gradient(-180deg, #44b1e8, #3098de)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
@@ -1017,7 +1017,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '24': '"Who cares about SEO anyways" -Carlo',
             '25': '"Alltså, jag börjar gilla Microsoft. De verkar veta vad de pysslar med..." -Daniel',
             '26': '"Vad är en capricciosa?" -Freij',
-            '27': '"Slå han i huvudet, det är där han är dum!" -Anton A.'
+            '27': '"Slå han i huvudet, det är där han är dum!" -Anton A.',
+            '28': '"We need to stop building tents and start building towers" -Dirk'
           }
         },
         'map': {

@@ -1,6 +1,6 @@
 {
   "name": "eggup",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Order breakfast eggs at the Silverspin office",
   "main": "server.js",
   "scripts": {
