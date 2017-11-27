@@ -245,6 +245,10 @@ function get_date(date) {
   return date;
 }
 
+function between(x, min, max) {
+  return x >= min && x <= max;
+}
+
 function stats(request) {
   const soft_boiled_eggs_in_eggup1 = 686,
     hard_boiled_eggs_in_eggup1 = 287,
@@ -536,6 +540,15 @@ app.post('/request', (request, response) => {
   */
   let quantity = request.body.quantity,
     variant = request.body.variant;
+
+  if (!between(quantity, 1, 2)) {
+    model.data ='too_large_quantity';
+    return response.send(JSON.stringify(model));
+  }
+  if (!between(variant, 1, 2)) {
+    model.data ='no_valid_variant';
+    return response.send(JSON.stringify(model));
+  }
 
   let already_ordered = new Promise(function(resolve, reject) {
     sql = 'SELECT * FROM orders WHERE `token` = ? AND DATE(date) = ?',
