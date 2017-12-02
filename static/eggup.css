@@ -409,14 +409,10 @@ input[type=range] {
 }
 
 input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-}
-
-/* Special styling for WebKit/Blink */
-input[type=range]::-webkit-slider-thumb {
-  background: #ffffff;
-  border: 1px solid #000000;
+  background: linear-gradient(to bottom, #dddddd 0%, #e2e2e2 13%, #ffffff 97%);
+  border: rgba(0, 0, 0, 0.5) 0.8px solid;
   border-radius: 50%;
+  box-shadow: 0 2px 1px -1px #ffffff inset, 0 1px 3px rgba(0, 0, 0, 0.39);
   cursor: pointer;
   height: 20px;
   margin-top: -4px;

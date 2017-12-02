@@ -1018,7 +1018,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '10': '"Gunnar dödade processen" -Layal',
             '11': '"Det finns en jättebra artikel på Aftonbladet" -Simon',
             '12': '"Helvete vad jag kan arbeta med den här skärmen som inte existerar" -Freij',
-            '13': '"Men kan du sluta ta bort min decimal, jävla Excel?!" -Daniel',
+            '13': '"Men kan du sluta ta bort min decimal, jävla Excel?!" -Quaniel',
             '14': '"Anslutningen misslyckades?! Jag fick ingen gris! Är det gris-filter på firewallen?!" -Jocke',
             '15': '"Skulle aldrig kunna gosa med Freij i mörkret" -Annika',
             '16': '"Det ser ut typ som GEM. Det vill säga, det funkar inte" -Freij',
@@ -1030,10 +1030,11 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '22': '"Jag stog här och andades på Martin" -Freij',
             '23': '"Om du drar ett hår från rumpan, kommer det en tår från ögat" -Benny',
             '24': '"Who cares about SEO anyways" -Carlo',
-            '25': '"Alltså, jag börjar gilla Microsoft. De verkar veta vad de pysslar med..." -Daniel',
+            '25': '"Alltså, jag börjar gilla Microsoft. De verkar veta vad de pysslar med..." -Quaniel',
             '26': '"Vad är en capricciosa?" -Freij',
-            '27': '"Slå han i huvudet, det är där han är dum!" -Anton A.',
-            '28': '"We need to stop building tents and start building towers" -Dirk'
+            '27': '"Slå han i huvudet, det är där han är dum!" -Algulin',
+            '28': '"We need to stop building tents and start building towers" -Dirk',
+            '29': '"Vad gör ni? Det funkar ju inte!" -Anteryd'
           }
         },
         'map': {
