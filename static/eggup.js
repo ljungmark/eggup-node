@@ -1034,7 +1034,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '26': '"Vad är en capricciosa?" -Freij',
             '27': '"Slå han i huvudet, det är där han är dum!" -Algulin',
             '28': '"We need to stop building tents and start building towers" -Dirk',
-            '29': '"Vad gör ni? Det funkar ju inte!" -Anteryd'
+            '29': '"Vad gör ni? Det funkar ju inte!" -Anteryd',
+            '30': '"Men jag har ändrat lite i webfront module... Yolo! \'Improvements\', hahaha!" -Boya',
           }
         },
         'map': {
