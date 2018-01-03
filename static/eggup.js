@@ -1041,7 +1041,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '33': '"Måste vi heta vad vi gör? För jag sitter på Reddit här...." -Qaniel',
             '34': '"Jobbbar du som spets-slutet?" -Emilio',
             '35': '"Thihihihihi" -Andreas',
-            '36': '"Martin luktar som min rollspelsgrupp på 90-talet..." -Hübsch',
+            '36': '"Martin luktar som min rollspelsgrupp från 90-talet..." -Hübsch',
           }
         },
         'map': {
