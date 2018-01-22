@@ -1042,6 +1042,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '34': '"Jobbbar du som spets-slutet?" -Emilio',
             '35': '"Thihihihihi" -Andreas',
             '36': '"Martin luktar som min rollspelsgrupp från 90-talet..." -Hübsch',
+            '37': '"String concatenation motherfuckers 🎶" -Andreas',
           }
         },
         'map': {
