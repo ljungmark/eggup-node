@@ -1044,6 +1044,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '36': '"Martin luktar som min rollspelsgrupp från 90-talet..." -Hübsch',
             '37': '"String concatenation motherfuckers 🎶" -Andreas',
             '38': '"You\'re just confused here Patrik, aren\'t you?" -Carlo',
+            '39': '"Plese" -Compliance, 2018',
           }
         },
         'map': {
