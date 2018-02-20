@@ -1045,6 +1045,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '37': '"String concatenation motherfuckers 🎶" -Andreas',
             '38': '"You\'re just confused here Patrik, aren\'t you?" -Carlo',
             '39': '"Plese" -Compliance, 2018',
+            '40': '"Dä ä bar å gört" -Pontus',
           }
         },
         'map': {
