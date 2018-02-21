@@ -1046,6 +1046,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '38': '"You\'re just confused here Patrik, aren\'t you?" -Carlo',
             '39': '"Plese" -Compliance, 2018',
             '40': '"Dä ä bar å gört" -Pontus',
+            '41': '"Det där var ingen helikopter. Det var bara jag, Johan Lindberg." -Johan',
           }
         },
         'map': {
