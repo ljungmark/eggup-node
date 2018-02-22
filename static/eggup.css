@@ -58,6 +58,7 @@ h2 {
 }
 
 .module[data-module="init"] {
+  font-size: 24pt;
   padding-top: 130px;
   text-align: center;
 }
@@ -79,34 +80,8 @@ h2 {
 }
 
 .reloader .-spinner {
-  margin-top: 30px;
+  margin-top: 90px;
   width: 50px;
-}
-
-.module[data-module="init"] .app_crest {
-  height: 160px;
-}
-
-#app_crest {
-  animation: fill_crest 2s linear forwards;
-  fill: transparent;
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-}
-
-@keyframes fill_crest {
-  0% {
-    fill: transparent;
-    stroke-dashoffset: 1000;
-  }
-  80% {
-    fill: rgba(40, 57, 72, 0.0);
-    stroke-dashoffset: 500;
-  }
-  100% {
-    fill: rgba(40, 57, 72, 0.9);
-    stroke-dashoffset: 0;
-  }
 }
 
 .module[data-module="review"] {

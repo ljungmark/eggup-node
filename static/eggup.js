@@ -926,6 +926,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'stats': 'Statistics',
           'logout': 'Log out',
         },
+        'init': {
+          'synchronizing': 'Synchronizing...'
+        },
         'order': {
           'quantity': '# of eggs',
           'variant': 'Boiling time',
@@ -1061,6 +1064,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'sounds': 'UI-ljud',
           'stats': 'Statistik',
           'logout': 'Logga ut',
+        },
+        'init': {
+          'synchronizing': 'Synkroniserar...'
         },
         'order': {
           'quantity': 'Antal ägg',
@@ -1377,13 +1383,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /**
    * Perform a synchronization after visibility has been re-established
-   * This will allow you to re-syncronize the state after a device screen has
+   * This will allow you to re-synchronize the state after a device screen has
    * been shut off and then turned on again or allow for you to not have to
    * reload the application if you have it open in a background tab over night
    */
   document.addEventListener("visibilitychange", function() {
     if (!document.hidden) {
-      //eggup.synchronize();
+      eggup.reload('client');
     }
   }, false);
 
