@@ -1376,6 +1376,18 @@ document.addEventListener('DOMContentLoaded', function() {
   window.eggup = new Eggup();
 
   /**
+   * Perform a synchronization after visibility has been re-established
+   * This will allow you to re-syncronize the state after a device screen has
+   * been shut off and then turned on again or allow for you to not have to
+   * reload the application if you have it open in a background tab over night
+   */
+  document.addEventListener("visibilitychange", function() {
+    if (!document.hidden) {
+      //eggup.synchronize();
+    }
+  }, false);
+
+  /**
    * Update DOM
    */
   eggup.i18n('update');
