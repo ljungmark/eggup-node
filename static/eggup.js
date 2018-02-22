@@ -1389,6 +1389,7 @@ document.addEventListener('DOMContentLoaded', function() {
    */
   document.addEventListener("visibilitychange", function() {
     if (!document.hidden) {
+      eggup.load('init');
       eggup.reload('client');
     }
   }, false);
