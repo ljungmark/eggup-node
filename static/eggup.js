@@ -734,6 +734,10 @@ Eggup.prototype.load = function(target_module) {
   document.querySelector('.container').scrollTop = 0;
 
   instance.module = target_module;
+
+  if (target_module == 'init') {
+    eggup.reload('client');
+  }
 };
 
 
@@ -1390,7 +1394,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener("visibilitychange", function() {
     if (!document.hidden) {
       eggup.load('init');
-      eggup.reload('client');
     }
   }, false);
 
