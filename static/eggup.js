@@ -733,11 +733,13 @@ Eggup.prototype.load = function(target_module) {
   /** Never load a module while not scrolled to the top */
   document.querySelector('.container').scrollTop = 0;
 
-  instance.module = target_module;
-
-  if (target_module == 'init') {
-    eggup.reload('client');
+  if (target_module == 'init' && current_module !== 'init') {
+    setTimeout(function(){
+      eggup.reload('client');
+    }, 1000);
   }
+
+  instance.module = target_module;
 };
 
 
@@ -1055,6 +1057,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '40': '"Dä ä bar å gört" -Pontus',
             '41': '"Det där var ingen helikopter. Det var bara jag, Johan Lindberg." -Johan',
             '42': '"Hehe, there\'s a few jiras for that lulz" -Robert',
+            '43': '"Jag behöver raka min tiger" -Sophie',
           }
         },
         'map': {
