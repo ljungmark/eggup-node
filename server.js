@@ -308,6 +308,10 @@ app.get('/', verify, (request, response) => {
   response.sendFile(path.join(__dirname + '/index.html'));
 });
 
+app.get('/kiosk', (request, response) => {
+  response.sendFile(path.join(__dirname + '/kiosk.html'));
+});
+
 app.get('/login', (request, response) => {
   response.sendFile(path.join(__dirname + '/authenticate.html'));
 });
@@ -553,10 +557,8 @@ app.post('/request', (request, response) => {
         if (results.length) {
           internal_model.token = results[0].token;
           resolve();
-  console.log('1st res');
         } else {
           reject();
-  console.log('2');
         }
       });
     } else {
@@ -565,7 +567,6 @@ app.post('/request', (request, response) => {
       internal_model.variant = request.body.variant;
 
       resolve();
-  console.log('3');
     }
   });
   let get_previous_order = new Promise(function(resolve, reject) {
@@ -582,7 +583,6 @@ app.post('/request', (request, response) => {
           internal_model.variant = results[0].variant;
 
           resolve();
-  console.log('4');
         } else {
           internal_model.quantity = 1,
           internal_model.variant = 2;
@@ -592,12 +592,10 @@ app.post('/request', (request, response) => {
       });
     } else {
       resolve();
-  console.log('5');
     }
   });
 
   Promise.all([get_token, get_previous_order]).then(function(exists) {
-    console.log('6');
     /**
       The token exists, see if this token has already ordered today
     */
@@ -687,7 +685,10 @@ app.post('/request', (request, response) => {
       });
     });
   }).catch(function() {
-    response.send(JSON.stringify(internal_model));
+    model.data = 'Could not set model';
+    delete model.heap_1;
+    delete model.heap_2;
+    response.send(JSON.stringify(model));
   })
 });
 
