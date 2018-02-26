@@ -15,6 +15,7 @@ Eggup Node
   * [Internationalization and localization](#user-content-internationalization-and-localization)
   * [Login](#user-content-login)
   * [Logout](#user-content-logout)
+* [Kiosk](#user-content-kiosk)
 * [Hotkeys](#user-content-hotkeys)
   * [Konami](#user-content-konami)
 
@@ -127,6 +128,25 @@ Navigate to /logout to logout from the application.
 
 Eggup listens to hotkeys to perform actions.
 The actions differ depending on the current module.
+
+
+# Kiosk
+
+Copy:
+```sh
+cp /etc/xdg/lxsession/LXDE-pi/autostart /home/pi/.config/lxsession/LXDE-pi/autostart
+```
+
+Edit with content from `autostart` file:
+```sh
+sudo nano /home/pi/.config/lxsession/LXDE-pi/autostart
+```
+
+Reboot:
+```sh
+sudo reboot
+```
+
 
 ## Module: Order
 
