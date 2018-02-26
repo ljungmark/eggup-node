@@ -1,0 +1,5 @@
+@xscreensaver -no-splash
+@xset s off
+@xset -dpms
+@xset s noblank
+@chromium-browser --incognito --kiosk https://eggs.silverspin.com/kiosk
