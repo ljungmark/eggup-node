@@ -1395,7 +1395,7 @@ document.addEventListener('DOMContentLoaded', function() {
    * reload the application if you have it open in a background tab over night
    */
   document.addEventListener("visibilitychange", function() {
-    if (!document.hidden) {
+    if (!document.hidden && eggup.module !== 'docket') {
       eggup.load('init');
     }
   }, false);
