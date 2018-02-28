@@ -540,7 +540,8 @@ app.post('/request', (request, response) => {
   const internal_model = {
     'token': null,
     'quantity': null,
-    'variant': null
+    'variant': null,
+    'source': null,
   }
 
   const date = get_date();
@@ -566,6 +567,8 @@ app.post('/request', (request, response) => {
   }).then(function(exists) {
     let get_token = new Promise(function(resolve, reject) {
       if (request.body.tag) {
+        internal_model.source = 'TAG';
+
         sql = 'SELECT token FROM tokens WHERE `tag` = ?',
           values = [request.body.tag];
         sql = mysql.format(sql, values);
@@ -585,6 +588,7 @@ app.post('/request', (request, response) => {
         internal_model.token = request.user.token;
         internal_model.quantity = request.body.quantity,
         internal_model.variant = request.body.variant;
+        internal_model.source = 'WEB';
 
         resolve();
       }
@@ -675,8 +679,8 @@ app.post('/request', (request, response) => {
           /**
             No previous order for this token has been found today, create a new
           */
-          sql = 'INSERT INTO orders (token, quantity, variant) VALUES (?, ?, ?)',
-            values = [internal_model.token, internal_model.quantity, internal_model.variant];
+          sql = 'INSERT INTO orders (token, quantity, variant, source) VALUES (?, ?, ?, ?)',
+            values = [internal_model.token, internal_model.quantity, internal_model.variant, internal_model.source];
           sql = mysql.format(sql, values);
 
           pool.query(sql, function (error, results, fields) {
