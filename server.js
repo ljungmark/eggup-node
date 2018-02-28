@@ -545,151 +545,181 @@ app.post('/request', (request, response) => {
 
   const date = get_date();
 
-  let get_token = new Promise(function(resolve, reject) {
-    if (request.body.tag) {
-      sql = 'SELECT token FROM tokens WHERE `tag` = ?',
-        values = [request.body.tag];
-      sql = mysql.format(sql, values);
+  let locked_from_new_orders = new Promise(function(resolve, reject) {
+    let sql = 'SELECT lockdate, startdate, softboiled, hardboiled FROM cookings WHERE DATE(lockdate) = ?',
+      values = [date];
+    sql = mysql.format(sql, values);
 
-      pool.query(sql, function (error, results, fields) {
-        if (error) response.send('ERR');
+    pool.query(sql, function(error, results, fields) {
+      if (error) response.send(JSON.stringify(model));
 
-        if (results.length) {
-          internal_model.token = results[0].token;
-          resolve();
-        } else {
-          reject();
-        }
-      });
-    } else {
-      internal_model.token = request.user.token;
-      internal_model.quantity = request.body.quantity,
-      internal_model.variant = request.body.variant;
-
-      resolve();
-    }
-  });
-  let get_previous_order = new Promise(function(resolve, reject) {
-    if (request.body.tag) {
-      sql = 'SELECT quantity, variant FROM orders WHERE `token` = ? ORDER BY date DESC LIMIT 1',
-        values = [internal_model.token];
-      sql = mysql.format(sql, values);
-
-      pool.query(sql, function (error, results, fields) {
-        if (error) response.send('ERR');
-
-        if (results.length) {
-          internal_model.quantity = results[0].quantity,
-          internal_model.variant = results[0].variant;
-
-          resolve();
-        } else {
-          internal_model.quantity = 1,
-          internal_model.variant = 2;
-
-          resolve();
-        }
-      });
-    } else {
-      resolve();
-    }
-  });
-
-  Promise.all([get_token, get_previous_order]).then(function(exists) {
-    /**
-      The token exists, see if this token has already ordered today
-    */
-    if (!between(internal_model.quantity, 1, 2)) {
-      model.data ='too_large_quantity';
-      return response.send(JSON.stringify(model));
-    }
-    if (!between(internal_model.variant, 1, 2)) {
-      model.data ='no_valid_variant';
-      return response.send(JSON.stringify(model));
-    }
-
-    let already_ordered = new Promise(function(resolve, reject) {
-      sql = 'SELECT * FROM orders WHERE `token` = ? AND DATE(date) = ?',
-        values = [internal_model.token, date];
-      sql = mysql.format(sql, values);
-
-      pool.query(sql, function (error, results, fields) {
-        if (error) response.send(JSON.stringify(model));
-
-        if (!results.length) {
-          reject();
-        } else {
-          resolve();
-        }
-      });
-
-    }).then(function(exists) {
       /**
-        Previous order today exists for this token, update already existing order
+        If there isn't a result, it means that the cooking hasn't commenced yet
+        The app is available for additional orders
       */
-      sql = 'UPDATE orders SET `quantity` = ?, `variant` = ? WHERE `token` = ? AND DATE(date) = ?',
-        values = [internal_model.quantity, internal_model.variant, internal_model.token, date];
-      sql = mysql.format(sql, values);
-
-      pool.query(sql, function (error, results, fields) {
-        if (error) response.send(JSON.stringify(model));
-
-        model.status = true;
-        model.data ='updated';
-
-        sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
-          values = [date];
+      if (!results.length) {
+        resolve()
+      } else {
+        reject();
+      }
+    });
+  }).then(function(exists) {
+    let get_token = new Promise(function(resolve, reject) {
+      if (request.body.tag) {
+        sql = 'SELECT token FROM tokens WHERE `tag` = ?',
+          values = [request.body.tag];
         sql = mysql.format(sql, values);
 
         pool.query(sql, function (error, results, fields) {
-          for (var index = 0; index < results.length; index++) {
-            if (results[index].variant == 1) {
-              model.heap_1 = model.heap_1 + results[index].quantity;
-            } else {
-              model.heap_2 = model.heap_2 + results[index].quantity;
-            }
-          }
+          if (error) response.send('ERR');
 
-          response.send(JSON.stringify(model));
+          if (results.length) {
+            internal_model.token = results[0].token;
+
+            resolve();
+          } else {
+            reject();
+          }
         });
+      } else {
+        internal_model.token = request.user.token;
+        internal_model.quantity = request.body.quantity,
+        internal_model.variant = request.body.variant;
+
+        resolve();
+      }
+    }).then(function(exists) {
+      let get_previous_order = new Promise(function(resolve, reject) {
+        if (request.body.tag) {
+          sql = 'SELECT quantity, variant FROM orders WHERE `token` = ? ORDER BY date DESC LIMIT 1',
+            values = [internal_model.token];
+          sql = mysql.format(sql, values);
+
+          pool.query(sql, function (error, results, fields) {
+            if (error) response.send('ERR');
+
+            if (results.length) {
+              internal_model.quantity = results[0].quantity,
+              internal_model.variant = results[0].variant;
+
+              resolve();
+            } else {
+              internal_model.quantity = 1,
+              internal_model.variant = 2;
+
+              resolve();
+            }
+          });
+        } else {
+          resolve();
+        }
+      }).then(function(exists) {
+        /**
+          The token exists, see if this token has already ordered today
+        */
+        if (!between(internal_model.quantity, 1, 2)) {
+          model.data ='too_large_quantity';
+          return response.send(JSON.stringify(model));
+        }
+        if (!between(internal_model.variant, 1, 2)) {
+          model.data ='no_valid_variant';
+          return response.send(JSON.stringify(model));
+        }
+
+        let already_ordered = new Promise(function(resolve, reject) {
+          sql = 'SELECT * FROM orders WHERE `token` = ? AND DATE(date) = ?',
+            values = [internal_model.token, date];
+          sql = mysql.format(sql, values);
+
+          pool.query(sql, function (error, results, fields) {
+            if (error) response.send(JSON.stringify(model));
+
+            if (!results.length) {
+              reject();
+            } else {
+              resolve();
+            }
+          });
+
+        }).then(function(exists) {
+          /**
+            Previous order today exists for this token, update already existing order
+          */
+          sql = 'UPDATE orders SET `quantity` = ?, `variant` = ? WHERE `token` = ? AND DATE(date) = ?',
+            values = [internal_model.quantity, internal_model.variant, internal_model.token, date];
+          sql = mysql.format(sql, values);
+
+          pool.query(sql, function (error, results, fields) {
+            if (error) response.send(JSON.stringify(model));
+
+            model.status = true;
+            model.data ='updated';
+
+            sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
+              values = [date];
+            sql = mysql.format(sql, values);
+
+            pool.query(sql, function (error, results, fields) {
+              for (var index = 0; index < results.length; index++) {
+                if (results[index].variant == 1) {
+                  model.heap_1 = model.heap_1 + results[index].quantity;
+                } else {
+                  model.heap_2 = model.heap_2 + results[index].quantity;
+                }
+              }
+
+              response.send(JSON.stringify(model));
+            });
+          });
+        }).catch(function() {
+          /**
+            No previous order for this token has been found today, create a new
+          */
+          sql = 'INSERT INTO orders (token, quantity, variant) VALUES (?, ?, ?)',
+            values = [internal_model.token, internal_model.quantity, internal_model.variant];
+          sql = mysql.format(sql, values);
+
+          pool.query(sql, function (error, results, fields) {
+            if (error) response.send(JSON.stringify(model));
+
+            model.status = true;
+            model.data ='inserted';
+
+            sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
+              values = [date];
+            sql = mysql.format(sql, values);
+
+            pool.query(sql, function (error, results, fields) {
+              for (var index = 0; index < results.length; index++) {
+                if (results[index].variant == 1) {
+                  model.heap_1 = model.heap_1 + results[index].quantity;
+                } else {
+                  model.heap_2 = model.heap_2 + results[index].quantity;
+                }
+              }
+
+              response.send(JSON.stringify(model));
+            });
+          });
+        });
+      }).catch(function() {
+        model.data = 'Could not set model';
+        delete model.heap_1;
+        delete model.heap_2;
+        response.send(JSON.stringify(model));
       });
     }).catch(function() {
-      /**
-        No previous order for this token has been found today, create a new
-      */
-      sql = 'INSERT INTO orders (token, quantity, variant) VALUES (?, ?, ?)',
-        values = [internal_model.token, internal_model.quantity, internal_model.variant];
-      sql = mysql.format(sql, values);
-
-      pool.query(sql, function (error, results, fields) {
-        if (error) response.send(JSON.stringify(model));
-
-        model.status = true;
-        model.data ='inserted';
-
-        sql = 'SELECT * FROM orders WHERE DATE(date) = ?',
-          values = [date];
-        sql = mysql.format(sql, values);
-
-        pool.query(sql, function (error, results, fields) {
-          for (var index = 0; index < results.length; index++) {
-            if (results[index].variant == 1) {
-              model.heap_1 = model.heap_1 + results[index].quantity;
-            } else {
-              model.heap_2 = model.heap_2 + results[index].quantity;
-            }
-          }
-
-          response.send(JSON.stringify(model));
-        });
-      });
+      model.data = 'Could not find tag';
+      delete model.heap_1;
+      delete model.heap_2;
+      response.send(JSON.stringify(model));
     });
   }).catch(function() {
-    model.data = 'Could not set model';
+    model.data = 'Orders closed';
     delete model.heap_1;
     delete model.heap_2;
     response.send(JSON.stringify(model));
-  })
+  });
 });
 
 
