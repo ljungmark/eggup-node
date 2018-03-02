@@ -130,16 +130,11 @@ Eggup listens to hotkeys to perform actions.
 The actions differ depending on the current module.
 
 
-# Kiosk
-
-Copy:
-```sh
-cp /etc/xdg/lxsession/LXDE-pi/autostart /home/pi/.config/lxsession/LXDE-pi/autostart
-```
+# Kiosk setup
 
 Edit with content from `autostart` file:
 ```sh
-sudo nano /home/pi/.config/lxsession/LXDE-pi/autostart
+sudo nano ~/.config/lxsession/LXDE/autostart
 ```
 
 Reboot:
