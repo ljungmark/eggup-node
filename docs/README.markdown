@@ -15,7 +15,7 @@ Eggup Node
   * [Internationalization and localization](#user-content-internationalization-and-localization)
   * [Login](#user-content-login)
   * [Logout](#user-content-logout)
-* [Kiosk](#user-content-kiosk)
+* [Kiosk setup](#user-content-kiosk-setup)
 * [Hotkeys](#user-content-hotkeys)
   * [Konami](#user-content-konami)
 

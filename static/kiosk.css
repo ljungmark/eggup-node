@@ -1,5 +1,5 @@
 * {
-  /** cursor: none; */
+  cursor: none;
 }
 
 .ui {
@@ -26,7 +26,9 @@ p {
 }
 
 .tag {
-  display: none;
+  pointer-events: none;
+  position: fixed;
+  top: 200%;
 }
 
 #login_crest {
