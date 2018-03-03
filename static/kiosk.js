@@ -1,5 +1,6 @@
-
 document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('.tag').focus();
+
   document.addEventListener('keydown', (event) => {
     document.querySelector('.tag').focus();
   })
@@ -16,5 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const data = `tag=${document.querySelector('.tag').value}`;
 
     xhr.send(data);
-  })
+  });
+
+  document.querySelector('.tag').focus();
 });

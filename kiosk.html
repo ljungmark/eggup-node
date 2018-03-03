@@ -26,12 +26,19 @@
   <meta name="msapplication-TileColor" content="#454f5f">
   <meta name="msapplication-TileImage" content="app/ms-icon-144x144.png">
   <meta name="theme-color" content="#454f5f">
+
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+  <link rel="stylesheet" href="styles/kiosk.css" media="screen">
 </head>
 
 <body>
-  <form class="form" action="/request" method="post">
-    <input class="tag" name="tag" type="text" />
-  </form>
+  <div class="ui">
+    <form class="form" action="/request" method="post">
+      <input class="tag" name="tag" type="text" />
+    </form>
+    <h1>Order eggs</h1>
+    <p>Hold your tag in front of the reader</p>
+  </div>
   <script src="scripts/kiosk.js"></script>
 </body>
 </html>
