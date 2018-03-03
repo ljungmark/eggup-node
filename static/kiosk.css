@@ -23,8 +23,8 @@ h1 {
 p {
   font-size: 20pt;
 }
-/**
-.tag {
+
+.form {
   pointer-events: none;
   position: fixed;
   top: 200%;

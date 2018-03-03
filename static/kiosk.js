@@ -8,7 +8,9 @@ const templates = {
     <p>Thank you! You can cancel your order in the app.</p>`,
   'tag_not_found': `<h1>Oh noes!</h1>
     <p>Your tag hasn't been registered. Please contact Mattias.</p>`,
-  'terminal_closed': `<h1>Have a great day!</h1>`,
+  'have_a_great_day': `<h1>Have a great day!</h1>`,
+  'terminal_closed': `<h1>Terminal is closed</h1>
+    <p>Welcome back next work day</p>`,
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -40,6 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
           ui_refresher = setTimeout(function(){
             document.querySelector('.ui').innerHTML = templates.default;
           }, 3000);
+        } else if (response.data === 'terminal_closed') {
+          document.querySelector('.ui').innerHTML = templates.terminal_closed;
+
+          ui_refresher = setTimeout(function(){
+            document.querySelector('.ui').innerHTML = templates.default;
+          }, 3000);
         }
       }
     });
@@ -57,6 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 socket.on('gateway', function(open) {
   if (open == false) {
-    document.querySelector('.ui').innerHTML = templates.terminal_closed;
+    document.querySelector('.ui').innerHTML = templates.have_a_great_day;
   }
 });
