@@ -3,16 +3,90 @@
 }
 
 .ui {
-  align-content: center;
   bottom: 0;
   color: #0c0f12;
-  display: grid;
   font-family: 'Quicksand', sans-serif;
   left: 0;
   position: fixed;
   right: 0;
   text-align: center;
   top: 0;
+}
+
+.view,
+.queue {
+  align-content: center;
+  display: grid;
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+}
+
+.view {
+  opacity: 1;
+}
+
+.queue {
+  opacity: 0;
+}
+
+@keyframes upwardsview {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes upwardsqueue {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes downwardsview {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes downwardsqueue {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.upwards .view {
+  animation: upwardsview 250ms linear forwards;
+}
+
+.upwards .queue {
+  animation: upwardsqueue 250ms linear forwards;
+}
+
+.downwards .view {
+  animation: downwardsview 250ms linear forwards;
+}
+
+.downwards .queue {
+  animation: downwardsqueue 250ms linear forwards;
 }
 
 h1 {
