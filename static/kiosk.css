@@ -4,11 +4,10 @@
 
 .ui {
   align-content: center;
-  background: linear-gradient(135deg, #0d1012 0%,#0c0f12 100%);
   bottom: 0;
-  color: #f3f3f3;
+  color: #0c0f12;
   display: grid;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Quicksand', sans-serif;
   left: 0;
   position: fixed;
   right: 0;
@@ -24,30 +23,9 @@ h1 {
 p {
   font-size: 20pt;
 }
-
+/**
 .tag {
   pointer-events: none;
   position: fixed;
   top: 200%;
-}
-
-#login_crest {
-  animation: fill_login_crest 60s linear forwards;
-  fill: transparent;
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-}
-@keyframes fill_login_crest {
-  0% {
-    fill: transparent;
-    stroke-dashoffset: 1000;
-  }
-  80% {
-    fill: rgba(40, 57, 72, 0.0);
-    stroke-dashoffset: 500;
-  }
-  100% {
-    fill: rgba(40, 57, 72, 0.9);
-    stroke-dashoffset: 0;
-  }
 }

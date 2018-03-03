@@ -713,13 +713,13 @@ app.post('/request', (request, response) => {
         response.send(JSON.stringify(model));
       });
     }).catch(function() {
-      model.data = 'Could not find tag';
+      model.data = 'tag_not_found';
       delete model.heap_1;
       delete model.heap_2;
       response.send(JSON.stringify(model));
     });
   }).catch(function() {
-    model.data = 'Orders closed';
+    model.data = 'closed_terminal';
     delete model.heap_1;
     delete model.heap_2;
     response.send(JSON.stringify(model));
