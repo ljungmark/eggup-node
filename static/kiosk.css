@@ -97,10 +97,9 @@ h1 {
 p {
   font-size: 20pt;
 }
-/**
+
 .form {
   pointer-events: none;
   position: fixed;
   top: 200%;
 }
-*/

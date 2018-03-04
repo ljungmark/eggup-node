@@ -132,6 +132,12 @@ The actions differ depending on the current module.
 
 # Kiosk setup
 
+Provide details in `wpa_supplicant` configuration file:
+```sh
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+```
+
+
 Edit with content from `autostart` file:
 ```sh
 sudo nano ~/.config/lxsession/LXDE/autostart

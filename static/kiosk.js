@@ -11,7 +11,7 @@ const templates = {
   'tag_not_found': `<h1>Oh noes!</h1>
     <p>Your tag hasn't been registered. Please use the app!</p>`,
   'have_a_great_day': `<h1>You're great!</h1>`,
-  'terminal_closed': `<h1>Terminal is closed</h1>
+  'closed_terminal': `<h1>Terminal is closed</h1>
     <p>Welcome back next work day</p>`,
 }
 
@@ -50,6 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
     xhr.addEventListener('load', (request) => {
       clearTimeout(ui_refresher);
       document.querySelector('.tag').value = '';
+
+      socket.emit('heap');
 
       const response = JSON.parse(request.target.response);
       switchmessages(response.data, true);
