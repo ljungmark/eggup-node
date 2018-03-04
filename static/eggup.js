@@ -489,7 +489,7 @@ Eggup.prototype.synchronize = function() {
     });
   });
 
-  console.log('%c Eggup 2.3.4 ', [
+  console.log('%c Eggup 2.4.0 ', [
     'background: linear-gradient(-180deg, #44b1e8, #3098de)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',
@@ -548,6 +548,12 @@ Eggup.prototype.synchronize = function() {
     'font-weight: bold'
   ].join(';'));
 
+  console.log('%c   https://dribbble.com/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
+    'font-weight: bold'
+  ].join(';'));
+
   console.log('%c   https://linkedin.com/in/ljungmark ', [,
     'font-family: "Roboto Slab", serif',
     'font-size: 13px',
@@ -572,10 +578,22 @@ Eggup.prototype.synchronize = function() {
     'font-weight: bold'
   ].join(';'));
 
+  console.log('%c   https://www.reddit.com/user/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
+    'font-weight: bold'
+  ].join(';'));
+
+  console.log('%c   https://keybase.io/ljungmark ', [,
+    'font-family: "Roboto Slab", serif',
+    'font-size: 13px',
+    'font-weight: bold'
+  ].join(';'));
+
   /** Whitespace */
   console.log('');
 
-  console.log('%c 2017 Ljungmark, CC BY-NC-SA 4.0 ', [,
+  console.log('%c 2016-2018 Ljungmark, CC BY-NC-SA 4.0 ', [,
     'background: linear-gradient(-180deg, #FB7928, #EE5B32)',
     'border-radius: 3px',
     'box-shadow: 0 1px 0 0 rgba(46,86,153,.15), inset 0 1px 0 0 rgba(46,86,153,.1), inset 0 -1px 0 0 rgba(46,86,153,.4);',

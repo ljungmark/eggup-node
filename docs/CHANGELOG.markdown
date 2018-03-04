@@ -1,3 +1,9 @@
+## 2.3.4 [Nabilite](https://github.com/ljungmark/eggup-node/releases/tag/2.4.0) (2018-03-03)
+
+* Input sanitation
+* Adaptive docket texts
+* Instagram strategy
+
 ## 2.3.4 [Mercano](https://github.com/ljungmark/eggup-node/releases/tag/2.3.4) (2017-11-27)
 
 * Protect credentials
