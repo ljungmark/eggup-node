@@ -4,13 +4,13 @@ let ui_refresher;
 const templates = {
   'default': `<h1>Order eggs</h1>
     <p>Hold your tag in front of the reader</p>`,
-  'inserted': `<h1>Order received</h1>
-    <p>Thank you! You can cancel your order in the app.</p>`,
-  'updated': `<h1>Order updated</h1>
-    <p>Thank you! You can cancel your order in the app.</p>`,
+  'inserted': `<h1>Order confirmed</h1>
+    <p>Thank you and have a great day!</p>`,
+  'updated': `<h1>Order already placed</h1>
+    <p>If you wanted to cancel your order, you can do so in the app.</p>`,
   'tag_not_found': `<h1>Oh noes!</h1>
-    <p>Your tag hasn't been registered.</p>`,
-  'have_a_great_day': `<h1>Have a great day!</h1>`,
+    <p>Your tag hasn't been registered. Please use the app!</p>`,
+  'have_a_great_day': `<h1>You're great!</h1>`,
   'terminal_closed': `<h1>Terminal is closed</h1>
     <p>Welcome back next work day</p>`,
 }
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('.tag').value = '';
 
       const response = JSON.parse(request.target.response);
-      switchmessages(response.data, response.status);
+      switchmessages(response.data, true);
     });
 
     xhr.open('POST', '/request');
@@ -69,6 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 socket.on('gateway', function(open) {
   if (open == false) {
-    document.querySelector('.ui').innerHTML = templates.have_a_great_day;
+    switchmessages('have_a_great_day');
+  } else {
+    switchmessages();
   }
 });

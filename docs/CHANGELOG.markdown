@@ -1,5 +1,6 @@
 ## 2.3.4 [Nabilite](https://github.com/ljungmark/eggup-node/releases/tag/2.4.0) (2018-03-03)
 
+* Kiosk integration
 * Input sanitation
 * Adaptive docket texts
 * Instagram strategy
