@@ -1,5 +1,6 @@
-@xscreensaver -no-splash
-@xset s off
+@lxpanel --profile LXDE
+@pcmanfm --desktop --profile LXDE
 @xset -dpms
 @xset s noblank
+@xset s off
 @chromium-browser --incognito --kiosk {$address}

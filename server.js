@@ -714,6 +714,7 @@ app.post('/request', (request, response) => {
       });
     }).catch(function() {
       model.data = 'tag_not_found';
+      model.tag = request.body.tag;
       delete model.heap_1;
       delete model.heap_2;
       response.send(JSON.stringify(model));
