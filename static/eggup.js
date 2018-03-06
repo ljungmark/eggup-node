@@ -2404,6 +2404,16 @@ document.addEventListener('DOMContentLoaded', function() {
     window.location = '/logout';
   };
 
+  document.querySelector('.egg').addEventListener('click', function() {
+    clearTimeout(window.bubble);
+
+    document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
+
+    window.bubble = setInterval(function(){
+      document.querySelector('.bubble').textContent = eggup.i18n('get', 'egg.bubble.' + Math.floor(Math.random() * Object.keys(eggup.i18n('get', 'egg.bubble')).length));
+    }, 15000);
+  });
+
   /**
     Long press click to fire popup to start cooking
   */
