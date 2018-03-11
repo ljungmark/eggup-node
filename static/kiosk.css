@@ -2,38 +2,10 @@
   cursor: none;
 }
 
-.ui::before {
-  background: url(pattern.png);
-  bottom: 0;
-  opacity: 0.3;
-  content: '';
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: -1;
-}
-
-.ui::after {
-  background:
-    url(clouds.png) center 30px no-repeat,
-    url(grass.png) bottom center repeat-x,
-    url(sweden.png) 5% bottom no-repeat;
-  bottom: 0;
-  content: '';
-  filter: grayscale(10%);
-  left: 0;
-  opacity: 1;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: -1;
-}
-
 .ui {
-  background: radial-gradient(ellipse farthest-corner at center top, #64d2f3 0%, #21272c 100%);
+  background: url('kiosk.png');
   bottom: 0;
-  color: #ffffff;
+  color: #000000;
   font-family: 'Roboto', sans-serif;
   left: 0;
   position: fixed;
@@ -59,7 +31,7 @@
 .queue {
   align-content: center;
   display: grid;
-  height: 116vh;
+  height: 100vh;
   position: absolute;
   width: 100vw;
 }
