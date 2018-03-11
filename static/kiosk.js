@@ -10,13 +10,16 @@ const templates = {
     <p>If you wanted to cancel your order, you can do so in the app.</p>`,
   'tag_not_found': `<h1>Oh noes!</h1>
     <p>Your tag hasn't been registered. Please use the app!</p>
-    <p>Ref: {{}}</p>`,
+    <p>Ref: {{tag_id}}</p>`,
   'have_a_great_day': `<h1>You're great!</h1>`,
   'closed_terminal': `<h1>Terminal is closed</h1>
     <p>Welcome back next work day</p>`,
+  'too_large_quantity': `<h1>Invalid params</h1>
+    <p>Please provide valid input</p>`,
 }
 
 function switchmessages(input = 'default', revert = false, replacements = []) {
+  console.log(replacements)
   document.querySelector('.queue').innerHTML = templates[input].replace(/{{(.*?)}}/g, replacements[0]);
 
   const direction = (input === 'default') ? 'downwards' : 'upwards';
@@ -55,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
       socket.emit('heap');
 
       const response = JSON.parse(request.target.response);
-      switchmessages(response.data, true, [response.tag]);
+      switchmessages(response.data, true, [response.tag_id]);
     });
 
     xhr.open('POST', '/request');

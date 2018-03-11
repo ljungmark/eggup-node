@@ -2,9 +2,38 @@
   cursor: none;
 }
 
-.ui {
+.ui::before {
+  background: url(pattern.png);
   bottom: 0;
-  color: #0c0f12;
+  opacity: 0.3;
+  content: '';
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.ui::after {
+  background:
+    url(clouds.png) center 30px no-repeat,
+    url(grass.png) bottom center repeat-x,
+    url(sweden.png) 5% bottom no-repeat;
+  bottom: 0;
+  content: '';
+  filter: grayscale(10%);
+  left: 0;
+  opacity: 1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.ui {
+  background: radial-gradient(ellipse farthest-corner at center top, #64d2f3 0%, #21272c 100%);
+  bottom: 0;
+  color: #ffffff;
   font-family: 'Roboto', sans-serif;
   left: 0;
   position: fixed;
@@ -13,11 +42,24 @@
   top: 0;
 }
 
+.background {
+  height: auto;
+  left: 50%;
+  min-height: 100%;
+  min-width: 100%;
+  opacity: 0.3;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  z-index: -100;
+}
+
 .view,
 .queue {
   align-content: center;
   display: grid;
-  height: 100vh;
+  height: 116vh;
   position: absolute;
   width: 100vw;
 }
@@ -97,7 +139,7 @@ h1 {
 p {
   font-size: 20pt;
 }
-
+/**
 .form {
   pointer-events: none;
   position: fixed;
