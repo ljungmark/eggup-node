@@ -1077,6 +1077,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '42': '"Hehe, there\'s a few jiras for that lulz" -Robert',
             '43': '"Jag behöver raka min tiger" -Sophie',
             '44': '"Tokens not working as intended är intended" -Ljungmark',
+            '45': '"Det är ofta jag blandar ihop upp och ner..." -Kevin',
           }
         },
         'map': {
