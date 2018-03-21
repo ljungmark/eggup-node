@@ -1078,6 +1078,10 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '43': '"Jag behöver raka min tiger" -Sophie',
             '44': '"Tokens not working as intended är intended" -Ljungmark',
             '45': '"Det är ofta jag blandar ihop upp och ner..." -Kevin',
+            '46': '"Heter man så så är man ju tjej!" -Marie',
+            '47': '"Är tigrar blåa?!?!" -Boya',
+            '48': '"Tja! Hur känns det? För jag har fortfarande ont i röven alltså..."" -Petter',
+            '49': '"Om det är något som är skräckinjagande så är det en entusiastisk tysk" -Andreas',
           }
         },
         'map': {
