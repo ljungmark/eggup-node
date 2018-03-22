@@ -1082,6 +1082,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '47': '"Är tigrar blåa?!?!" -Boya',
             '48': '"Tja! Hur känns det? För jag har fortfarande ont i röven alltså..."" -Petter',
             '49': '"Om det är något som är skräckinjagande så är det en entusiastisk tysk" -Andreas',
+            '50': '"Alla heter ju Oleksandr!" -Anteryd',
+            '51': '"Det är som att ha två rövhål istället för öron" -Marie',
           }
         },
         'map': {
