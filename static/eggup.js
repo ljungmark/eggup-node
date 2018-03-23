@@ -1084,6 +1084,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '49': '"Om det är något som är skräckinjagande så är det en entusiastisk tysk" -Andreas',
             '50': '"Alla heter ju Oleksandr!" -Anteryd',
             '51': '"Det är som att ha två rövhål istället för öron" -Marie',
+            '52': '"Knark och genmodifikation är helt okej!" -Linus',
           }
         },
         'map': {
