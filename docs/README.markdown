@@ -21,7 +21,7 @@ Eggup Node
 
 
 # Documentation
-[Changelog](docs/CHANGELOG.markdown) | [Contributing](docs/CONTRIBUTING.markdown) | [License: CC BY-NC-SA 4.0](docs/LICENSE.markdown) | [Privacy](docs/PRIVACY.markdown) | [TOS](docs/TOS.markdown)
+[Changelog](CHANGELOG.markdown) | [Contributing](CONTRIBUTING.markdown) | [License: CC BY-NC-SA 4.0](LICENSE.markdown) | [Privacy](PRIVACY.markdown) | [TOS](TOS.markdown)
 
 
 # About the app
@@ -170,14 +170,3 @@ sudo reboot
 <kbd>p</kbd>+<kbd>a</kbd>+<kbd>r</kbd>+<kbd>t</kbd>+<kbd>y</kbd>
 
 <kbd>s</kbd>+<kbd>n</kbd>+<kbd>o</kbd>+<kbd>o</kbd>+<kbd>k</kbd>
-
-
-# File extension declaration
-
-## .markdown
-
-*"We no longer live in a 8.3 world, so we should be using the most descriptive file extensions. It’s sad that all our operating systems rely on this stupid convention instead of the better creator code or a metadata model, but great that they now support longer file extensions."*
-Hilton Lipschitz ([via](http://hiltmon.com/blog/2012/03/07/the-markdown-file-extension/))
-
-*"…the only file extension I would endorse is “.markdown”, for the same reason offered by Hilton Lipschitz"*
-John Gruber, creator of Markdown ([via](http://daringfireball.net/linked/2014/01/08/markdown-extension))
