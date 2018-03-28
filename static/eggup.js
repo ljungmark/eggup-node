@@ -1741,22 +1741,46 @@ document.addEventListener('DOMContentLoaded', function() {
           document.querySelector('.wrapper').classList.remove('_snook');
 
           if (document.querySelector('.background')) document.querySelector('.background').play();
-        } else if (event.keyCode === 37 && horizontal_velocity !== 1) {
+        }
+
+        if (event.keyCode === 37 && horizontal_velocity !== 1) {
           /** Left */
-          horizontal_velocity = -1;
-          vertical_velocity = 0;
-        } else if (event.keyCode === 38 && vertical_velocity !== 1) {
+          horizontal_pending_velocity = -1;
+          vertical_pending_velocity = 0;
+
+          /* Buffer input in u-turn */
+          if(horizontal_velocity === 1 && vertical_pending_velocity != 0)
+            next_horizontal_velocity = -1;
+        }
+
+        if (event.keyCode === 38 && vertical_velocity !== 1) {
           /** Up */
-          horizontal_velocity = 0;
-          vertical_velocity = -1;
-        } else if (event.keyCode === 39 && horizontal_velocity !== -1) {
+          horizontal_pending_velocity = 0;
+          vertical_pending_velocity = -1;
+
+          /* Buffer input in u-turn */
+          if(vertical_velocity === 1 && horizontal_pending_velocity != 0)
+            next_vertical_velocity = -1;
+        }
+
+        if (event.keyCode === 39 && horizontal_velocity !== -1) {
           /** Right */
-          horizontal_velocity = 1;
-          vertical_velocity = 0;
-        } else if (event.keyCode === 40 && vertical_velocity !== -1) {
+          horizontal_pending_velocity = 1;
+          vertical_pending_velocity = 0;
+
+          /* Buffer input in u-turn */
+          if(horizontal_velocity === -1 && vertical_pending_velocity != 0)
+            next_horizontal_velocity = 1;
+        }
+
+        if (event.keyCode === 40 && vertical_velocity !== -1) {
           /** Down */
-          horizontal_velocity = 0;
-          vertical_velocity = 1;
+          horizontal_pending_velocity = 0;
+          vertical_pending_velocity = 1;
+
+          /* Buffer input in u-turn */
+          if(vertical_velocity === -1 && horizontal_pending_velocity != 0)
+            next_vertical_velocity = 1;
         }
 
         return false;
@@ -1907,6 +1931,7 @@ document.addEventListener('DOMContentLoaded', function() {
               if (document.querySelector('.wrapper').classList.contains('_stats')) return false;
 
               window.game = setInterval(game, 1000/10);
+              snook_draw_frame();
 
               document.body.classList.add('_snook');
               if (!document.querySelector('.wrapper').classList.contains('_snook')) {
@@ -1937,15 +1962,30 @@ document.addEventListener('DOMContentLoaded', function() {
     vertical_position = 10,
     horizontal_velocity = 0,
     vertical_velocity = 0,
+    horizontal_pending_velocity = 0,
+    vertical_pending_velocity = 0,
     horizontal_candy = 15,
     vertical_candy = 15,
-    highscore = 5;
+    highscore = 5,
+    next_horizontal_velocity = 0,
+    next_vertical_velocity = 0;
 
   canvas = document.querySelector('.context');
   context = canvas.getContext('2d');
   const game = _ => {
-    horizontal_position += horizontal_velocity;
-    vertical_position += vertical_velocity;
+    if(next_horizontal_velocity != 0 || next_vertical_velocity != 0)
+    {
+      horizontal_pending_velocity = next_horizontal_velocity;
+      vertical_pending_velocity = next_vertical_velocity;
+      next_horizontal_velocity = 0;
+      next_vertical_velocity = 0;
+    }
+
+    horizontal_position += horizontal_pending_velocity;
+    vertical_position += vertical_pending_velocity;
+    horizontal_velocity = horizontal_pending_velocity;
+    vertical_velocity = vertical_pending_velocity;
+
     if (horizontal_position < 0) {
       horizontal_position = tile_count - 1;
     } else if (horizontal_position > tile_count - 1) {
@@ -1955,11 +1995,8 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (vertical_position > tile_count - 1) {
       vertical_position = 0;
     }
-    context.fillStyle = '#779653';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = '#795548';
+
     for(let i=0 ; i < path.length; i++) {
-      context.fillRect(path[i].horizontal_coordinate * tile_size, path[i].vertical_coordinate * tile_size, tile_size - 2, tile_size - 2);
       if (path[i].horizontal_coordinate === horizontal_position && path[i].vertical_coordinate === vertical_position) {
         size = 5;
         document.querySelector('.-sessionscore').innerHTML = size;
@@ -1981,13 +2018,55 @@ document.addEventListener('DOMContentLoaded', function() {
         eggup.snook(highscore);
       }
 
+      set_new_candy_pos();
       document.querySelector('.-sessionscore').innerHTML = size;
       document.querySelector('.-sessionhighscore').innerHTML = highscore;
-      horizontal_candy = Math.floor(Math.random() * tile_count);
-      vertical_candy = Math.floor(Math.random() * tile_count);
     }
+  }
+
+  function set_new_candy_pos()
+  {
+    for(var i = 0; i < 10000; i++)
+    {
+      if(candy_bad_pos())
+      {
+        horizontal_candy = Math.floor(Math.random() * tile_count);
+        vertical_candy = Math.floor(Math.random() * tile_count);
+      }
+      else
+      {
+        break;
+      }
+    }
+  }
+
+  function snook_draw_frame()
+  {
+    context.fillStyle = '#779653';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = '#795548';
+
+    for(let i=0 ; i < path.length; i++) {
+      context.fillRect(path[i].horizontal_coordinate * tile_size, path[i].vertical_coordinate * tile_size, tile_size - 2, tile_size - 2);
+    }
+
     context.fillStyle = '#ffeb3b';
     context.fillRect(horizontal_candy * tile_size, vertical_candy * tile_size, tile_size - 2, tile_size - 2);
+
+    requestAnimationFrame(snook_draw_frame);
+  }
+
+  function candy_bad_pos()
+  {
+    var i = path.length;
+    while (i-- > 0)
+    {
+      if (path[i].horizontal_coordinate === horizontal_candy && path[i].vertical_coordinate == vertical_candy)
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
 
