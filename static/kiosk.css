@@ -5,7 +5,7 @@
 .ui {
   background: url('kiosk.png');
   bottom: 0;
-  color: #000000;
+  color: #ffffff;
   font-family: 'Roboto', sans-serif;
   left: 0;
   position: fixed;
@@ -14,25 +14,13 @@
   top: 0;
 }
 
-.background {
-  height: auto;
-  left: 50%;
-  min-height: 100%;
-  min-width: 100%;
-  opacity: 0.3;
-  position: fixed;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: auto;
-  z-index: -100;
-}
-
 .view,
 .queue {
   align-content: center;
   display: grid;
   height: 100vh;
   position: absolute;
+  top: 50px;
   width: 100vw;
 }
 
