@@ -1088,6 +1088,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '53': '"Vi måste göra slut på det här med är göra grejer som inte fungerar" -Linus',
             '54': '"Nu vet jag varför man ska äta mat... Annars blir man ju värsta trött" -Marie',
             '55': '"Jag blir yr i huvudet nu när jag andades så mycket" -Marie',
+            '56': '"Hur skapar man en server då?! How do I server?!" -Patrik',
+            '57': '"Man ska inte ropa Beck förrän man har kommit över Gunnar" -Albin',
           }
         },
         'map': {
