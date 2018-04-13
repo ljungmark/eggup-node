@@ -1090,6 +1090,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '55': '"Jag blir yr i huvudet nu när jag andades så mycket" -Marie',
             '56': '"Hur skapar man en server då?! How do I server?!" -Patrik',
             '57': '"Man ska inte ropa Beck förrän man har kommit över Gunnar" -Albin',
+            '58': '"Och sen all denna inkompetens. Och så ska det diskuteras i grupper hit och dit..." -Ljungmark',
+            '59': '"Och sen när det faktiskt ska jobbas, när man faktiskt behöver få saker gjort på riktigt. Ja, då tar man in konsulter..." -Ljungmark',
           }
         },
         'map': {
