@@ -1093,6 +1093,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '58': '"Och sen all denna inkompetens. Och så ska det diskuteras i grupper hit och dit..." -Ljungmark',
             '59': '"Och sen när det faktiskt ska jobbas, när man faktiskt behöver få saker gjort på riktigt. Ja, då tar man in konsulter..." -Ljungmark',
             '60': '"Nu när jag har kärat ner mig i Khanh, är jag då Sharekhan?" -Freij',
+            '61': '"A town is a little bit smaller and a city is a city you know" -Rebecka',
           }
         },
         'map': {
