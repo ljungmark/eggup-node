@@ -1095,6 +1095,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '60': '"Nu när jag har kärat ner mig i Khanh, är jag då Sharekhan?" -Freij',
             '61': '"A town is a little bit smaller and a city is a city you know" -Rebecka',
             '62': '"Vet du vad som är äldst, jag eller yttrandefrihetsgrundlagen?" -Albin',
+            '63': '"Thats pretty bad" -Carlo',
+            '64': '"We first have to check that Brandon has a deposit boner" -Carlo',
           }
         },
         'map': {
