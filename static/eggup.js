@@ -1097,6 +1097,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '62': '"Vet du vad som är äldst, jag eller yttrandefrihetsgrundlagen?" -Albin',
             '63': '"Thats pretty bad" -Carlo',
             '64': '"We first have to check that Brandon has a deposit boner" -Carlo',
+            '65': '".md? Det var ett konstigt filformat..." -Kevin',
           }
         },
         'map': {
