@@ -1098,6 +1098,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '63': '"Thats pretty bad" -Carlo',
             '64': '"We first have to check that Brandon has a deposit boner" -Carlo',
             '65': '".md? Det var ett konstigt filformat..." -Kevin',
+            '66': '"Hittils har jag inte dött när jag inte har ätit. Jag blir bara jävligt jobbig för alla runt omkring mig" -Ljungmark',
+            '67': '"Det ska vara ubersafe. Lita på det, trademark!" -Joakim',
           }
         },
         'map': {
