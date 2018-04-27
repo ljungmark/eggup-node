@@ -1101,6 +1101,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '66': '"Hittils har jag inte dött när jag inte har ätit. Jag blir bara jävligt jobbig för alla runt omkring mig" -Ljungmark',
             '67': '"Det ska vara ubersafe. Lita på det, trademark!" -Jocke',
             '68': '"Varför är våra sajter är så sega? Kan vi inte bara trycka in lite anabola?!" -Boya',
+            '69': '"Jag förstår vad den gör, jag bara inte förstår vad den gör..." -Stefan',
           }
         },
         'map': {
