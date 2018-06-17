@@ -1104,8 +1104,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '69': '"Jag förstår vad den gör, jag förstår bara inte vad den gör..." -Stefan',
             '70': '"Nu måste jag bara fråga. Betyder det att man inte får raka får längre?!" -Jocke',
             '71': '"Tur att det är en klocka där, så jag ser att jag är sen till ett möte" -Gunnar',
-            '72': '"Dont skip eggday!" -Freij',
-            '73': '"Du kan kalla mig sadist-Matte" -Ljungmark',
+            '72': '"Du kan kalla mig sadist-Matte" -Ljungmark',
+            '73': '"Dont skip eggday!" -Freij',
           }
         },
         'map': {
