@@ -1106,6 +1106,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '71': '"Tur att det är en klocka där, så jag ser att jag är sen till ett möte" -Gunnar',
             '72': '"Du kan kalla mig sadist-Matte" -Ljungmark',
             '73': '"Dont skip eggday!" -Freij',
+            '74': '"Va? Får man ligga ner och spela?!" -Rebecka',
           }
         },
         'map': {
