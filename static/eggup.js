@@ -729,6 +729,14 @@ Eggup.prototype.load = function(target_module) {
   /** Finish all map nodes when orders are done */
   (target_module == 'docket') ? eggup.map(target_module_index + 1) : eggup.map(target_module_index);
 
+  if (target_module == 'cooking') {
+    if (JSON.parse(localStorage.getItem('thread'))['variant'] && JSON.parse(localStorage.getItem('thread'))['quantity']) {
+      document.querySelector('.cooking-text__order').innerHTML = `${eggup.cache['quantity']} ${document.querySelector('.order-variant__data').value.toLowerCase()} ${(eggup.cache['quantity'] == 1) ? eggup.i18n('get', 'review.eggs_singular') : eggup.i18n('get', 'review.eggs_plural')}`;
+    } else {
+      document.querySelector('.cooking-text__order').textContent = eggup.i18n('get', 'review.empty');
+    }
+  }
+
   if (target_module == 'docket') {
     if (document.querySelector('.wrapper > .egg')) {
       document.querySelector('.wrapper').removeChild(document.querySelector('.egg'));
@@ -981,6 +989,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'gate': 'The cooking is commencing shortly and you cannot place or change any of todays orders! :)',
           'empty': 'You haven\'t placed any order',
         },
+        'cooking': {
+          'yourorder': 'Your order:',
+        },
         'controller': {
           'soft': 'soft boiled',
           'hard': 'hard boiled',
@@ -1154,6 +1165,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
           'cancel': '<img class="review-button__image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAMAAABYi/ZGAAAAYFBMVEUBAQEAAAAFBQUBAQH///8AAAAJCQliYmIAAACOjo7////4+Pivr6/y8vL4+Pj///9CQkL5+fny8vLi4uLp6eno6Oj////Gxsb+/v719fXy8vJvb29GRkYkJCSgoKD///8yNr5lAAAAH3RSTlMPABQdAyUZFAQZ+iAbE8AkE9GtmxwcFRL0kowzLCQjg3Jp6gAAAKJJREFUGNNNz90WwxAQBOANggRN27Tpf73/W3aspZkLh8/goKHEKz2Oo1aeV2wWSyLChhXz2lKL1Z4NHQl3iymhhmog3w4+2nFP0jqesxik1qZD7mZr73vKOc95ftYeBy3Onf55SW+Vy3l8o1l+V2Uizqe/C7nJTK8ygZipYasZGpKjfVzCf83V7eliYMDYKYJgwC1EVzoxbCA2aArLsoQEQX4BRgcYZ8kYeQAAAABJRU5ErkJggg=="> Avbeställ',
           'gate': 'Äggkokning är på gång och du kan inte längre ändra dagens order! :)',
           'empty': 'Du har inte beställt några ägg',
+        },
+        'cooking': {
+          'yourorder': 'Din beställning:',
         },
         'controller': {
           'soft': 'löskokta',

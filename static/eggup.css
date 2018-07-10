@@ -62,6 +62,9 @@ h2 {
   padding-top: 130px;
   text-align: center;
 }
+.module[data-module="cooking"] {
+  text-align: center;
+}
 
 .reloader {
   animation: reloader 1s 3s linear forwards;
