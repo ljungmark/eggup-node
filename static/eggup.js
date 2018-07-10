@@ -1767,7 +1767,8 @@ document.addEventListener('DOMContentLoaded', function() {
         [50, 76], /** 2 + L */
         [50, 72],  /** 2 + H */
         [80, 65, 82, 84, 89], /** p + a + r + t + y */
-        [83, 78, 79, 79, 75] /** s + n + o + o + k */
+        [83, 78, 79, 79, 75], /** s + n + o + o + k */
+        [83, 84, 65, 84] /** s + t + a +t */
       ];
 
       if (document.querySelector('body._snook')) {
@@ -1980,6 +1981,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (document.querySelector('.background')) document.querySelector('.background').pause();
               }
+            } else if (sequence.equals([83, 84, 65, 84])) {
+              console.log('fea');
+              if (!(window.innerWidth >= 960)) return false;
+
+              eggup.notify('click');
+              if (typeof(document.querySelector('.-expander')) != 'undefined' && document.querySelector('.-expander') != null) document.querySelector('.-expander').click();
+              document.querySelector('.wrapper').classList.add('_stats');
             }
 
             sequence = [];
