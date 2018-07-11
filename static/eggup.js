@@ -1121,6 +1121,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '75': '"You don\'t want any ass to be seen, so let\'s hide it!" -Khanh',
             '76': '"Tänk om vi hade haft lego-byxor. Då hade vi kunna sitta hur som helst..." -Freij',
             '77': '"Man ska inte ha sju generationer av barn. Någonstans måste man dö ut..." -Anteryd',
+            '78': '"Jag tycker i alla fall att ni är bättre än Radiotjänst" -Simon',
           }
         },
         'map': {
