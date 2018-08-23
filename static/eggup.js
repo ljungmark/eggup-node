@@ -1123,6 +1123,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '77': '"Man ska inte ha sju generationer av barn. Någonstans måste man dö ut..." -Anteryd',
             '78': '"Jag tycker i alla fall att ni är bättre än Radiotjänst" -Simon',
             '79': '"Premature generalization is the root of all evil, assumptions is the mother of all fuck-ups" -Ljungmark',
+            '80': '"Hur funkar PHP ens" -Kevin',
           }
         },
         'map': {
