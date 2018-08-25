@@ -1124,6 +1124,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '78': '"Jag tycker i alla fall att ni är bättre än Radiotjänst" -Simon',
             '79': '"Premature generalization is the root of all evil, assumptions is the mother of all fuck-ups" -Ljungmark',
             '80': '"Hur funkar PHP ens" -Kevin',
+            '81': '"Its like a horse box! With fish tanks!" -Gunnar',
           }
         },
         'map': {
