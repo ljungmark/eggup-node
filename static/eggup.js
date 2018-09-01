@@ -1126,6 +1126,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '80': '"Hur funkar PHP ens" -Kevin',
             '81': '"Its like a horse box! With fish tanks!" -Gunnar',
             '82': '"Jag gillar inte text. Det är bara i vägen. Fånigheter att förmedla budskap." -Simon',
+            '83': '"Ekosystem? Äh! Det är bara en snuttefilt för engagerade miljöpartister!" -Simon',
           }
         },
         'map': {
