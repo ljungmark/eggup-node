@@ -1127,6 +1127,10 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '81': '"Its like a horse box! With fish tanks!" -Gunnar',
             '82': '"Jag gillar inte text. Det är bara i vägen. Fånigheter att förmedla budskap." -Simon',
             '83': '"Ekosystem? Äh! Det är bara en snuttefilt för engagerade miljöpartister!" -Simon',
+            '84': '"Silverspin luktar iller..." -Martin',
+            '85': '"Jag är lite rädd för mig själv. Man vet ju inte vad jag kan göra!" -Marie',
+            '86': '"Jag ska gå och köpa mig en fredagsbanan!" Patrik',
+            '87': '"Mattias, jag börjar bli rädd för ditt skägg..." -Gunnar',
           }
         },
         'map': {
