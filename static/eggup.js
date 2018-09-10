@@ -1131,6 +1131,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '85': '"Jag är lite rädd för mig själv. Man vet ju inte vad jag kan göra!" -Marie',
             '86': '"Jag ska gå och köpa mig en fredagsbanan!" Patrik',
             '87': '"Mattias, jag börjar bli rädd för ditt skägg..." -Gunnar',
+            '88': '"Jag ska skriva en självbiografi. Den ska heta \'Spela död. En romantisk komedi om att navigera i livet.\'." -Ljungmark',
           }
         },
         'map': {
