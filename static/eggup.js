@@ -1132,6 +1132,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '86': '"Jag ska gå och köpa mig en fredagsbanan!" Patrik',
             '87': '"Mattias, jag börjar bli rädd för ditt skägg..." -Gunnar',
             '88': '"Jag ska skriva en självbiografi. Den ska heta \'Spela död. En romantisk komedi om att navigera i livet.\'." -Ljungmark',
+            '89': '"Men hur mycket vaniljsås äter du?!" -Linus',
+            '90': '"Linus... Förlåt, men jag stod på toa. Och det här med Mouse..." -Lagerman',
+            '91': '"Det låter kanske dumt men jag brukar lyssna på en låt som är 20 minuter av katter som spinner." -Freij',
           }
         },
         'map': {
