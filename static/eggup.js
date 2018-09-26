@@ -1136,6 +1136,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '90': '"Linus... Förlåt, men jag stod på toa. Och det här med Mouse..." -Lagerman',
             '91': '"Det låter kanske dumt men jag brukar lyssna på en låt som är 20 minuter av katter som spinner." -Freij',
             '92': '"Ser jag ut som en man som köper ströbröd?" -Jens',
+            '93': '"Kevin, om du hade varit 20 år yngre så hade du definitivt varit imponerad av hur jag flänger runt med min banan!" -Ljungmark',
           }
         },
         'map': {
