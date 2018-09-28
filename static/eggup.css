@@ -1599,6 +1599,7 @@ body._party::after {
     border-bottom: none;
     border-radius: 8px;
     bottom: 560px;
+    height: auto;
     left: 0;
     top: initial;
     width: calc(100% - 80px);
