@@ -1598,7 +1598,10 @@ body._party::after {
   .broadcast {
     border-bottom: none;
     border-radius: 8px;
-    top: -150px;
+    bottom: 560px;
+    left: 0;
+    top: initial;
+    width: calc(100% - 80px);
   }
 
   .container {
