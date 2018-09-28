@@ -323,51 +323,57 @@ Eggup.prototype.synchronize = function() {
       const weekdays = [],
         dayvalue = [];
 
-      json.stats.past_two_weeks.reverse().forEach(day => {
-        weekdays.push(`${['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör'][new Date(day.date).getDay()]} (${day.date})`);
-        dayvalue.push(day.quantity);
-      });
+      try {
+        json.stats.past_two_weeks.reverse().forEach(day => {
+          weekdays.push(`${['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör'][new Date(day.date).getDay()]} (${day.date})`);
+          dayvalue.push(day.quantity);
+        });
 
-      var ctx = document.querySelector('.-past-weeks .-chart').getContext('2d');
-      var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: weekdays,
-          datasets: [{
-            data: dayvalue,
-            backgroundColor: "rgba(233, 30, 99, 0.5)"
-          }]
-        },
-        options: {
-          legend: {
-              display: false
-          },
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-                min: 0
-              }
+        var ctx = document.querySelector('.-past-weeks .-chart').getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: weekdays,
+            datasets: [{
+              data: dayvalue,
+              backgroundColor: "rgba(233, 30, 99, 0.5)"
             }]
+          },
+          options: {
+            legend: {
+                display: false
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  min: 0
+                }
+              }]
+            }
           }
-        }
-      });
+        });
 
-      const protein = 7.15,
-        gram = 58,
-        volume = 65;
+        const protein = 7.15,
+          gram = 58,
+          volume = 65;
 
-      document.querySelector('.-my_orders').innerText = (json.stats.my_orders) ? json.stats.my_orders : '0';
-      document.querySelector('.-my_grams').innerText = (json.stats.my_orders) ? `${((json.stats.my_orders * 55) / 1000).toFixed(2)} kg` : '0';
-      document.querySelector('.-my_protein').innerText = (json.stats.my_orders) ? `${(json.stats.my_orders * protein).toFixed(2)} g` : '0';
-      document.querySelector('.-all_grams').innerText = `${((json.stats.total_eggs_ordered * gram) / 1000).toFixed(2)} kg`;
-      document.querySelector('.-all_volume').innerText = `${((json.stats.total_eggs_ordered * volume) / 1000).toFixed(2)} L`;
-      document.querySelector('.-number_of_users').innerText = json.stats.number_of_users;
-      document.querySelector('.-total_eggs_ordered').innerText = json.stats.total_eggs_ordered;
-      document.querySelector('.-number_of_soft_boiled').innerText = json.stats.number_of_soft_boiled;
-      document.querySelector('.-number_of_hard_boiled').innerText = json.stats.number_of_hard_boiled;
-      document.querySelector('.-average_cooking_quality_soft_boiled').value = (json.stats.average_cooking_quality_soft_boiled * 100).toFixed(0);
-      document.querySelector('.-average_cooking_quality_hard_boiled').value = (json.stats.average_cooking_quality_hard_boiled * 100).toFixed(0);
+        document.querySelector('.-my_orders').innerText = (json.stats.my_orders) ? json.stats.my_orders : '0';
+        document.querySelector('.-my_grams').innerText = (json.stats.my_orders) ? `${((json.stats.my_orders * 55) / 1000).toFixed(2)} kg` : '0';
+        document.querySelector('.-my_protein').innerText = (json.stats.my_orders) ? `${(json.stats.my_orders * protein).toFixed(2)} g` : '0';
+        document.querySelector('.-all_grams').innerText = `${((json.stats.total_eggs_ordered * gram) / 1000).toFixed(2)} kg`;
+        document.querySelector('.-all_volume').innerText = `${((json.stats.total_eggs_ordered * volume) / 1000).toFixed(2)} L`;
+        document.querySelector('.-number_of_users').innerText = json.stats.number_of_users;
+        document.querySelector('.-total_eggs_ordered').innerText = json.stats.total_eggs_ordered;
+        document.querySelector('.-number_of_soft_boiled').innerText = json.stats.number_of_soft_boiled;
+        document.querySelector('.-number_of_hard_boiled').innerText = json.stats.number_of_hard_boiled;
+        document.querySelector('.-average_cooking_quality_soft_boiled').value = (json.stats.average_cooking_quality_soft_boiled * 100).toFixed(0);
+        document.querySelector('.-average_cooking_quality_hard_boiled').value = (json.stats.average_cooking_quality_hard_boiled * 100).toFixed(0);
+      }
+      catch(err) {
+        instance.synchronize();
+        return;
+      }
 
       if (eggup.debug()) console.table(json);
 
