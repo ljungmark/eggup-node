@@ -436,6 +436,7 @@ app.post('/synchronize', (request, response) => {
       'heap_1': 0,
       'heap_2': 0,
       'gateway': true,
+      'broadcast': null,
       'stats': stats(request)
     };
 
@@ -509,7 +510,15 @@ app.post('/synchronize', (request, response) => {
               model.past_hard = results[0].hardboiled;
             }
 
-            response.send(JSON.stringify(model));
+            sql = 'SELECT message FROM broadcast WHERE enabled=1 ORDER BY date DESC LIMIT 1';
+
+            pool.query(sql, function (error, results, fields) {
+              if (results.length) {
+                model.broadcast = results[0].message;
+              }
+
+              response.send(JSON.stringify(model));
+            });
           });
         });
       });

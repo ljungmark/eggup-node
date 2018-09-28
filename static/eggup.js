@@ -371,6 +371,15 @@ Eggup.prototype.synchronize = function() {
 
       if (eggup.debug()) console.table(json);
 
+      if (json.broadcast !== null && !document.querySelector('.broadcast')) {
+        var div = document.createElement('div');
+        div.className = 'broadcast';
+
+        div.textContent = json.broadcast;
+
+        document.querySelector('.application').appendChild(div);
+      }
+
       instance.thread.tokenstamp = json.tokenstamp;
       instance.thread.variant = json.variant;
       instance.thread.quantity = json.quantity;
