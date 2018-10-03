@@ -1154,6 +1154,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '93': '"Kevin, om du hade varit 20 år yngre så hade du definitivt varit imponerad av hur jag flänger runt med min banan!" -Ljungmark',
             '94': '"Jag är fylld av bra poänger!" -Qaniel',
             '95': '"Jag gömmer mig inte, jag vill bara inte synas!" -Marie',
+            '96': '"Det är lite som att passera den Nordkoreanska gränsen att passera igenom QA" -Tobias',
           }
         },
         'map': {
