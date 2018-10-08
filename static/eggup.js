@@ -1155,6 +1155,10 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '94': '"Jag är fylld av bra poänger!" -Qaniel',
             '95': '"Jag gömmer mig inte, jag vill bara inte synas!" -Marie',
             '96': '"Det är lite som att passera den Nordkoreanska gränsen, att passera igenom QA" -Frisk',
+            '97': '"Albin har ju inte Mattias mysiga skägg. Vilket hade varit lite creepy, om han hade haft det..." -Qaniel',
+            '98': '"Alltså, jag är av åsikten att det är inget fel med nakna barn..." -Kevin',
+            '99': '"Jag tyckte, sen så tyckte jag inte så mycket mer" -Freij',
+            '100': '-"Hur förklarar man transparans för en blind person?" -"Tänk dig att man inte kan se..." -"Fast det du tittar på inte syns..." -Web Engine',
           }
         },
         'map': {
