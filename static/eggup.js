@@ -1159,6 +1159,9 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '98': '"Alltså, jag är av åsikten att det är inget fel med nakna barn..." -Kevin',
             '99': '"Jag tyckte, sen så tyckte jag inte så mycket mer" -Freij',
             '100': '-"Hur förklarar man transparans för en blind person?" -"Tänk dig att du skulle kunna se..." -"Fast det du tittar på inte syns..." -Web Engine',
+            '101': '"Oh jävlar, vad med text!" -Qaniel',
+            '102': '"CCTool är on par med Teams för mig..." -Qaniel',
+            '103': '"Så, Webfront får agera bitch ett tag" -Qaniel',
           }
         },
         'map': {
