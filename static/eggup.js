@@ -1162,6 +1162,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '101': '"Oh jävlar, vad med text!" -Qaniel',
             '102': '"CCTool är on par med Teams för mig..." -Qaniel',
             '103': '"Så, Webfront får agera bitch ett tag" -Qaniel',
+            '104': '"Ja... Nä... Det här var inte bra gjort..." -Roland',
           }
         },
         'map': {
