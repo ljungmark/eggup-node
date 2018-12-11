@@ -1164,6 +1164,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '103': '"Så, Webfront får agera bitch ett tag" -Qaniel',
             '104': '"Ja... Nä... Det här var inte bra gjort..." -Roland',
             '105': '"Jag har ju en gammal telefon, jag kan inte ladda ner den senaste uppdateringen av någonting..." -Kristoffer',
+            '106': '"Åh nej! Jag gick i min egen fälla!" -Qaniel',
           }
         },
         'map': {
