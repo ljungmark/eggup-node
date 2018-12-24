@@ -1166,6 +1166,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '105': '"Jag har ju en gammal telefon, jag kan inte ladda ner den senaste uppdateringen av någonting..." -Kristoffer',
             '106': '"Åh nej! Jag gick i min egen fälla!" -Qaniel',
             '107': '"DECIMAL(24,12)...? Oh. My. God..." -Matthew',
+            '108': '"It might be a bad idea, or it might be a good idea - but we have no idea...." -Qaniel',
+            '109': '"Är deadlinen om 6 månader?! Vad gör  vi här?" -Boya',
           }
         },
         'map': {
