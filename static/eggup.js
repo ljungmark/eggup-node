@@ -1169,6 +1169,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '108': '"It might be a bad idea, or it might be a good idea - but we have no idea...." -Qaniel',
             '109': '"Är deadlinen om 6 månader?! Vad gör  vi här?" -Boya',
             '110': '"Stress? Embrace it... Or die!" -Wykes',
+            '111': '"Teams övergår mitt förstånd som vanligt" -Qaniel',
+            '112': '"Titta här på cirklarna! Som är... fyrkantiga..." -Annika',
           }
         },
         'map': {
