@@ -1171,6 +1171,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '110': '"Stress? Embrace it... Or die!" -Wykes',
             '111': '"Teams övergår mitt förstånd som vanligt" -Qaniel',
             '112': '"Titta här på cirklarna! Som är... fyrkantiga..." -Annika',
+            '113': '"Va?! En lucka! Där ska jag se till att klämma in en liten Gunnar" -Ljungmark',
           }
         },
         'map': {
