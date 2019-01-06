@@ -1173,6 +1173,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '112': '"Titta här på cirklarna! Som är... fyrkantiga..." -Annika',
             '113': '"Va?! En lucka! Där ska jag se till att klämma in en liten Gunnar" -Ljungmark',
             '114': '"Jag är galet conflicted när det kommer till alla dessa anti-bribery-kurserna. Mutor kan ju vara mysigt om man är på rätt ände av ekvationen..." -Ljungmark',
+            '115': '"Ett logaritmiskt bonussystem som presenteras linjärt är lika oklart som britternas förhållande till tandvård och Brexit." -Ljungmark',
           }
         },
         'map': {
