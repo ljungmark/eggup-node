@@ -1175,6 +1175,13 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '114': '"Jag är galet conflicted när det kommer till alla dessa anti-bribery-kurserna. Mutor kan ju vara mysigt om man är på rätt ände av ekvationen..." -Ljungmark',
             '115': '"Ett logaritmiskt bonussystem som presenteras linjärt är lika oklart som britternas förhållande till tandvård och Brexit." -Ljungmark',
             '116': '"Om det har varit så? Jag tror också att det har varit så... Men jag tror inte det." -Elias',
+            '117': '"Let me do the click of the button" -Duane',
+            '118': '"I used to be so clever.. What happened?" -Ljungmark',
+            '119': '"Det hade varit så pinsamt om man hade fått sparken för att man av misstag kollade på porr på jobbet" -Anonym',
+            '120': '"Jag är inte holistisk, men jag har hittat ett hål i din teori" -Kevin',
+            '121': '"Jag tillhör inte direkt dem som skrattar..." -Qaniel',
+            '122': '"Shit, vad vit jag är!" -Freij',
+            '123': '"Vem vare som fucking checka ut branchen?! WES-side!!!" -Qaniel',
           }
         },
         'map': {
