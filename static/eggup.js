@@ -1182,6 +1182,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '121': '"Jag tillhör inte direkt dem som skrattar..." -Qaniel',
             '122': '"Shit, vad vit jag är!" -Freij',
             '123': '"Vem vare som fucking checka ut branchen?! WES-side!!!" -Qaniel',
+            '124': '"Du pratar bara vuxenspråk, pappa. Vuxenspråk låter såhär; \'Bla, bla, bla - inget socker!!\'" -Emilio',
           }
         },
         'map': {
