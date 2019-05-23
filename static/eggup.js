@@ -1185,6 +1185,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '124': '"Du pratar bara vuxenspråk, pappa. Vuxenspråk låter såhär; \'Bla, bla, bla - inget socker!!\'" -Emilio',
             '125': '"Portus? Det är som porr... fast för Docker images. Mhmmmm, Docker images......." -Freij',
             '126': '"Cabo löser ju alla våra problem i AFUN!" -Erik',
+            '127': '"Det är det som är grejen med sport... ...att sport är sport" -Algulin',
           }
         },
         'map': {
