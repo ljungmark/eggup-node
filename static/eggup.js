@@ -1186,6 +1186,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '125': '"Portus? Det är som porr... fast för Docker images. Mhmmmm, Docker images......." -Freij',
             '126': '"Cabo löser ju alla våra problem i AFUN!" -Erik',
             '127': '"Det är det som är grejen med sport... ...att sport är sport" -Algulin',
+            '128': '"Jag skulle vilja födas! Eller nä... En milstolpe i taget." -Qaniel',
           }
         },
         'map': {
