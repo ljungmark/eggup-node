@@ -1188,6 +1188,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '127': '"Det är det som är grejen med sport... ...att sport är sport" -Algulin',
             '128': '"Jag skulle vilja födas! Eller nä... En milstolpe i taget." -Qaniel',
             '129': '"It won\'t fail..." -Roland',
+            '130': '"Folk är ju som myror, springer runt hur som helst" -Qvarford',
           }
         },
         'map': {
