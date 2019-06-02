@@ -1189,6 +1189,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '128': '"Jag skulle vilja födas! Eller nä... En milstolpe i taget." -Qaniel',
             '129': '"It won\'t fail..." -Roland',
             '130': '"Folk är ju som myror, springer runt hur som helst" -Qvarford',
+            '131': '"Åh nej pappa, strömavbrott! Nu måste vi leva som 80-talsbarn!" -Emilio',
           }
         },
         'map': {
