@@ -1191,6 +1191,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '130': '"Folk är ju som myror, springer runt hur som helst" -Qvarford',
             '131': '"Åh nej pappa, strömavbrott! Nu måste vi leva som 80-talsbarn!" -Emilio',
             '132': '"Varför behöver vi tester? Vi har ju QA!" -Freij',
+            '133': '"Roland, [...] I want us to do this major change without you knowing about it." -Elias',
           }
         },
         'map': {
