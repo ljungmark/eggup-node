@@ -1193,6 +1193,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '132': '"Varför behöver vi tester? Vi har ju QA!" -Freij',
             '133': '"Roland, [...] I want us to do this major change without you knowing about it." -Elias',
             '134': '"Mattias... I am your girlfriend..." -Duane',
+            '135': '"Evro är ju en valuta. Euro - det är ju som en kommité, typ" -Kevin',
           }
         },
         'map': {
