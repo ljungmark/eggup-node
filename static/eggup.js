@@ -1196,6 +1196,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '135': '"Evro är ju en valuta. Euro - det är ju som en kommité, typ" -Kevin',
             '136': '"Det här med grupptryck alltså..." -Qaniel',
             '137': '*suckar* "Jaha... Dependencies......" -Rebecka',
+            '138': '"Jag är en häst! Hbbrrpphhgttt!" -Ljungmark',
           }
         },
         'map': {
