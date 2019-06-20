@@ -1197,6 +1197,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '136': '"Det här med grupptryck alltså..." -Qaniel',
             '137': '*suckar* "Jaha... Dependencies......" -Rebecka',
             '138': '"Jag är en häst! Hbbrrpphhgttt!" -Ljungmark',
+            '139': '"Actually, you could put movies in the database!" -Roland',
           }
         },
         'map': {
