@@ -1200,6 +1200,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '139': '"Actually, you could put movies in the database!" -Roland',
             '140': '"Är det stora bokstäver på siffrorna?" -Kvarnström',
             '141': '"Du ska ge fan i att kolla i koden" -Frisell',
+            '142': '"Suck... Jag orkar inte med Java längre..." -Freij',
           }
         },
         'map': {
