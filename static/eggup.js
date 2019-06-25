@@ -1202,6 +1202,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '141': '"Du ska ge fan i att kolla i koden" -Frisell',
             '142': '"Suck... Jag orkar inte med Java längre..." -Freij',
             '143': '"I can hook you up with that... Hint hint!" - Roland',
+            '144': '"Alla som sysslar med versionsnummer är idioter" -Roland',
           }
         },
         'map': {
