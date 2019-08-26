@@ -1206,6 +1206,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '145': '"Mikael Grön har inte en kopiator i bakfickan!" -Linus',
             '146': '"Bra! Då är den fortfarande kass." -Algulin',
             '147': '"Jag är så frustrerad att jag behöver en banan" -Simon',
+            '148': '"Teams is Teams, så vi får köra Skype" -Marcus',
           }
         },
         'map': {
