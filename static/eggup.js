@@ -1207,6 +1207,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '146': '"Bra! Då är den fortfarande kass." -Algulin',
             '147': '"Jag är så frustrerad att jag behöver en banan" -Simon',
             '148': '"Teams is Teams, så vi får köra Skype" -Marcus',
+            '149': '"Java är lite som att simma i filmjölk... Det går trögt men man flyter bra" -Qaniel',
           }
         },
         'map': {
