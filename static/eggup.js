@@ -1209,6 +1209,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '148': '"Teams is Teams, så vi får köra Skype" -Marcus',
             '149': '"Java är lite som att simma i filmjölk... Det går trögt men man flyter bra" -Qaniel',
             '150': '"Vafan. Vafan! Vafan...! Vad i helv... Vafan! Nej, de var inget. Eller jo... *suckar* ...det var det..." -Tomas',
+            '151': '"Ja men dåså! Då ska jag uppmärksamma att Freij är här" -Qaniel',
           }
         },
         'map': {
