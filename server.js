@@ -312,6 +312,10 @@ app.get('/kiosk', (request, response) => {
   response.sendFile(path.join(__dirname + '/kiosk.html'));
 });
 
+app.get('/checkout', (request, response) => {
+  response.sendFile(path.join(__dirname + '/checkout.html'));
+});
+
 app.get('/login', (request, response) => {
   response.sendFile(path.join(__dirname + '/authenticate.html'));
 });
