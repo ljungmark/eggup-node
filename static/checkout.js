@@ -1,6 +1,6 @@
 var socket = io();
 
-socket.on('heap', function(heap) {
+function updateList() {
     fetch('/orders', {
         method: 'post',
         headers: {
@@ -18,15 +18,28 @@ socket.on('heap', function(heap) {
                     json.orders.forEach(order => {
                         const item = document.createElement('div');
                         item.classList.add('order');
-                        var checkbox = document.createElement('input');
+                        const checkbox = document.createElement('input');
                         checkbox.setAttribute('type', 'checkbox');
+                        checkbox.setAttribute('onclick', `update(${order.token})`);
+                        checkbox.id = order.token;
                         checkbox.dataset.token = order.token;
+                        const label = document.createElement('label');
+                        label.setAttribute('for', order.token);
+                        label.innerHTML = order.name;
                         item.appendChild(checkbox);
-                        item.insertAdjacentHTML('beforeend', order.token);
+                        item.appendChild(label);
 
                         document.querySelector('.list').appendChild(item);
                     });
                 }
         });
     });
+}
+
+function update(token) {
+    console.log(token.dataset.token);
+}
+
+socket.on('heap', function(heap) {
+    updateList();
 });
