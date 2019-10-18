@@ -1049,6 +1049,36 @@ app.post('/snook', (request, response) => {
 
 
 /**
+  Fetch list of ppl that have ordered eggs and their quantity
+*/
+app.post('/orders', (request, response) => {
+  const date = get_date();
+
+  const model = {
+    'orders': {}
+  }
+
+  let check = new Promise(function(resolve, reject) {
+    sql = 'SELECT token, quantity, variant, checkout FROM orders WHERE DATE(date) = ?',
+    sql = mysql.format(sql, [date]);
+
+    pool.query(sql, function (error, results, fields) {
+      if (error) reject();
+
+      model.orders = results;
+
+      resolve();
+    });
+  }).then(function(exists) {
+    response.send(JSON.stringify(model));
+  }).catch(function() {
+    response.send(JSON.stringify(model));
+  });
+});
+
+
+
+/**
  * Set up broadcasting emitters
  */
 io.sockets.on('connection', function (socket) {
