@@ -1059,13 +1059,18 @@ app.post('/orders', (request, response) => {
   }
 
   let check = new Promise(function(resolve, reject) {
-    sql = 'SELECT token, quantity, variant, checkout FROM orders WHERE DATE(date) = ?',
+    sql = 'SELECT tokens.token, orders.quantity, orders.variant, orders.checkout, tokens.email, tokens.name FROM orders LEFT JOIN tokens ON tokens.token = orders.token WHERE DATE(orders.date) = ?',
     sql = mysql.format(sql, [date]);
 
     pool.query(sql, function (error, results, fields) {
       if (error) reject();
 
       model.orders = results;
+
+      model.orders.forEach((order, index) => {
+        order.email = order.email.replace(/(?<=^.)[^@]*|(?<=@.).*(?=\.[^.]+$)/g, '*');
+        model.orders[index].email = order.email;
+      });
 
       resolve();
     });
