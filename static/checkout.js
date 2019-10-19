@@ -49,6 +49,9 @@ function updateList() {
                         item.appendChild(span);
                         item.insertAdjacentHTML('beforeend', order.name ? order.name : order.email);
 
+                        const variant = order.variant == 1 ? 'soft-boiled' : 'hard-boiled';
+                        item.insertAdjacentHTML('beforeend', ` <span class="eggs">${order.quantity} ${variant}</span>`);
+
                         document.querySelector('.list').appendChild(item);
                     });
             }

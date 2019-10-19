@@ -84,3 +84,6 @@ svg {
   background-color: #333333;
   transform: scale(1.25);
 }
+.order .eggs {
+  color: #cccccc;
+}
