@@ -1084,6 +1084,40 @@ app.post('/orders', (request, response) => {
 
 
 /**
+ * Update highscore
+ */
+app.post('/checkout', (request, response) => {
+  const date = get_date();
+
+  const model = {
+    'status': false
+  }
+
+  let token = request.body.token;
+  let collected = request.body.collected;
+
+  let check = new Promise(function(resolve, reject) {
+    sql = 'UPDATE orders SET checkout = ? WHERE token = ? AND DATE(date) = ?';
+    sql = mysql.format(sql, [collected, token, date]);
+
+    pool.query(sql, function (error, results, fields) {
+      if (error) reject();
+
+      model.status = true;
+
+      resolve();
+
+    });
+  }).then(function(exists) {
+      response.send(JSON.stringify(model));
+  }).catch(function() {
+      response.send(JSON.stringify(model));
+  });
+});
+
+
+
+/**
  * Set up broadcasting emitters
  */
 io.sockets.on('connection', function (socket) {
