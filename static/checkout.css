@@ -2,11 +2,10 @@
   font-family: Meta;
   src: url('/assets/meta.woff2');
 }
-* {
-  cursor: none;
-}
 html {
-  background: #ffffff;
+  color: #w333333;
+  font-family: 'Meta';
+  font-size: 30pt;
 }
 svg {
   position: relative;
@@ -17,6 +16,71 @@ svg {
   left: 0;
   padding: 40px;
   position: fixed;
-  text-align: center;
+  text-align: right;
   width: calc(100vw - 80px);
+}
+.list {
+  display: grid;
+  grid-auto-columns: 1fr;
+  padding: 20px 30px;
+}
+.order {
+  grid-column: 1;
+  padding: 10px 0;
+}
+.collected {
+  display: inline-block;
+  position: relative;
+  background-color: transparent;
+  width: 25px;
+  height: 25px;
+  transform-origin: center;
+  border: 2px solid #333333;
+  border-radius: 50%;
+  pointer-events: none;
+
+  top: 1px;
+  left: 4px;
+  margin-right: 10px;
+  transition: background-color 150ms 200ms, transform 350ms cubic-bezier(0.78, -1.22, 0.17, 1.89);
+}
+.collected:before {
+  content: '';
+  width: 0px;
+  height: 2px;
+  border-radius: 2px;
+  background: #333333;
+  position: absolute;
+  transform: rotate(45deg);
+  top: 13px;
+  left: 9px;
+  transition: width 50ms ease 50ms;
+  transform-origin: 0% 0%;
+}
+.collected:after {
+  content: '';
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: #333333;
+  position: absolute;
+  transform: rotate(305deg);
+  top: 16px;
+  left: 10px;
+  transition: width 50ms ease;
+  transform-origin: 0% 0%;
+}
+.order[data-collected="1"] .collected:before {
+  width: 5px;
+  background: #fff;
+  transition: width 150ms ease 100ms;
+}
+.order[data-collected="1"] .collected::after {
+  width: 10px;
+  background: #fff;
+  transition: width 150ms ease 100ms;
+}
+.order[data-collected="1"] .collected {
+  background-color: #333333;
+  transform: scale(1.25);
 }

@@ -37,38 +37,45 @@ function updateList() {
                 if (!Array.isArray(json.orders) || !json.orders.length) {
                     document.querySelector('.list').innerHTML = 'No orders yet';
                 } else {
-                    //document.querySelector('.list').innerHTML = '';
+                    document.querySelector('.list').innerHTML = '';
 
                     json.orders.forEach(order => {
-                        console.log(order.checkout == 1)
                         const item = document.createElement('div');
                         item.classList.add('order');
-                        const checkbox = document.createElement('input');
-                        checkbox.setAttribute('type', 'checkbox');
-                        checkbox.setAttribute('onclick', `update(${order.token})`);
-                        checkbox.id = order.token;
-                        checkbox.dataset.token = order.token;
-                        if (order.checkout == 1) checkbox.setAttribute('checked', 'checked');
-                        const label = document.createElement('label');
-                        label.setAttribute('for', order.token);
-                        label.innerHTML = order.name;
-                        item.appendChild(checkbox);
-                        item.appendChild(label);
+                        item.dataset.token = order.token;
+                        item.dataset.collected = order.checkout;
+                        const span = document.createElement('span');
+                        span.classList.add('collected')
+                        item.appendChild(span);
+                        item.insertAdjacentHTML('beforeend', order.name ? order.name : order.email);
 
                         document.querySelector('.list').appendChild(item);
                     });
-                }
+            }
         });
     });
 }
 
-function update(token) {
+document.querySelector('.list').addEventListener('click', event => {
+    if (event.target.classList.contains('order')) {
+        const target = event.target;
+        if (target.dataset.collected == 1) {
+            target.dataset.collected = 0;
+        } else {
+            target.dataset.collected = 1;
+        }
+
+        update(target.dataset.token, target.dataset.collected);
+     }
+});
+
+function update(token, collected) {
     fetch('/checkout', {
         method: 'post',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: serialize({ 'collected': token.checked ? 1 : 0, 'token': token.dataset.token }),
+        body: serialize({ 'collected': collected, 'token': token }),
         credentials: 'include'
     }).then(function(response) {
             return response.json().then(function(json) {
