@@ -9,15 +9,18 @@ html {
 }
 svg {
   position: relative;
-  top: 28px;
+  top: 14px;
 }
 .header {
   bottom: 0;
+  color: hsl(0, 0%, 85%);
+  font-size: 16pt;
   left: 0;
-  padding: 40px;
+  padding-bottom: 20px;
   position: fixed;
   text-align: right;
-  width: calc(100vw - 80px);
+  text-transform: uppercase;
+  width: calc(100vw - 30px);
 }
 .list {
   display: grid;
