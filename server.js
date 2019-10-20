@@ -1059,7 +1059,7 @@ app.post('/orders', (request, response) => {
   }
 
   let check = new Promise(function(resolve, reject) {
-    sql = 'SELECT tokens.token, orders.quantity, orders.variant, orders.checkout, tokens.email, tokens.name FROM orders LEFT JOIN tokens ON tokens.token = orders.token WHERE DATE(orders.date) = ?',
+    sql = 'SELECT tokens.token, orders.quantity, orders.variant, orders.checkout, tokens.email, tokens.name FROM orders LEFT JOIN tokens ON tokens.token = orders.token WHERE DATE(orders.date) = ? ORDER BY tokens.name DESC',
     sql = mysql.format(sql, [date]);
 
     pool.query(sql, function (error, results, fields) {

@@ -50,7 +50,8 @@ function updateList() {
                         item.insertAdjacentHTML('beforeend', order.name ? order.name : order.email);
 
                         const variant = order.variant == 1 ? 'soft-boiled' : 'hard-boiled';
-                        item.insertAdjacentHTML('beforeend', ` <span class="eggs">${order.quantity} ${variant}</span>`);
+                        const quantity = order.quantity == 1 ? 'One' : 'Two';
+                        item.insertAdjacentHTML('beforeend', ` <span class="eggs">${quantity} ${variant}</span>`);
 
                         document.querySelector('.list').appendChild(item);
                     });

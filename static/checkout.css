@@ -30,6 +30,7 @@ svg {
 .order {
   grid-column: 1;
   padding: 10px 0;
+  transition: color 150ms 200ms;
 }
 .collected {
   display: inline-block;
@@ -44,7 +45,7 @@ svg {
 
   top: 1px;
   left: 4px;
-  margin-right: 10px;
+  margin-right: 20px;
   transition: background-color 150ms 200ms, transform 350ms cubic-bezier(0.78, -1.22, 0.17, 1.89);
 }
 .collected:before {
@@ -73,6 +74,9 @@ svg {
   transition: width 50ms ease;
   transform-origin: 0% 0%;
 }
+.order[data-collected="1"] {
+  color: #cccccc;
+}
 .order[data-collected="1"] .collected:before {
   width: 5px;
   background: #fff;
@@ -89,4 +93,6 @@ svg {
 }
 .order .eggs {
   color: #cccccc;
+  font-size: 14pt;
+  text-transform: uppercase;
 }
