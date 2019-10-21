@@ -7,6 +7,9 @@ html {
   font-family: 'Meta';
   font-size: 30pt;
 }
+body {
+  overflow-x: hidden;
+}
 svg {
   position: relative;
   top: 14px;
@@ -25,12 +28,16 @@ svg {
 .list {
   display: grid;
   grid-auto-columns: 1fr;
+  height: calc(100vh - 110px);
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 20px 30px;
 }
 .order {
   grid-column: 1;
   padding: 10px 0;
   transition: color 150ms 200ms;
+  white-space: nowrap;
 }
 .collected {
   display: inline-block;

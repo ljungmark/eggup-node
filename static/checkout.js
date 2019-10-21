@@ -51,7 +51,7 @@ function updateList() {
 
                         const variant = order.variant == 1 ? 'soft-boiled' : 'hard-boiled';
                         const quantity = order.quantity == 1 ? 'One' : 'Two';
-                        item.insertAdjacentHTML('beforeend', ` <span class="eggs">${quantity} ${variant}</span>`);
+                        item.insertAdjacentHTML('beforeend', ` <span class="eggs">${quantity} ${variant} egg${order.quantity == 1 ? '' : 's'}</span>`);
 
                         document.querySelector('.list').appendChild(item);
                     });
