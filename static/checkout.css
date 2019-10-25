@@ -3,6 +3,7 @@
   src: url('/assets/meta.woff2');
 }
 html {
+  background: hsl(0, 16%, 96%);
   color: #w333333;
   font-family: 'Meta';
   font-size: 30pt;
@@ -15,22 +16,35 @@ svg {
   top: 14px;
 }
 .header {
-  bottom: 0;
-  color: hsl(0, 0%, 85%);
+  background: white;
+  border-bottom: hsl(0, 0%, 88%) 1px solid;
+  box-shadow: 0 4px 15px -5px rgba(10,17,36,0.1);
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   font-size: 16pt;
   left: 0;
   padding-bottom: 20px;
   position: fixed;
   text-align: right;
+  width: 100vw;
+}
+.instructions {
+  justify-content: left;
+  text-align: left;
+  padding-left: 16px;
+  margin-top: 16px;
+}
+.logo {
+  color: hsl(0, 0%, 85%);
   text-transform: uppercase;
-  width: calc(100vw - 30px);
+  padding-right: 16px;
 }
 .list {
   display: grid;
   grid-auto-columns: 1fr;
   height: calc(100vh - 110px);
-  overflow-x: hidden;
-  overflow-y: auto;
+  margin-bottom: 100px;
   padding: 20px 30px;
 }
 .order {
@@ -38,6 +52,12 @@ svg {
   padding: 10px 0;
   transition: color 150ms 200ms;
   white-space: nowrap;
+}
+.order:first-child {
+  margin-top: 70px;
+}
+.order:last-child {
+  margin-bottom: 30px;
 }
 .collected {
   display: inline-block;
