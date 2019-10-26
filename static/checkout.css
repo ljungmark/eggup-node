@@ -28,6 +28,7 @@ svg {
   text-align: right;
   width: 100vw;
   background-color: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
 }
 .instructions {
