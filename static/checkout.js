@@ -47,7 +47,7 @@ function updateList() {
                         const span = document.createElement('span');
                         span.classList.add('collected')
                         item.appendChild(span);
-                        item.insertAdjacentHTML('beforeend', order.name ? order.name : order.email);
+                        item.insertAdjacentHTML('beforeend', order.name ? `<span class="name">${order.name}</span>` : `<span class="name">${order.email}</span>`);
 
                         const variant = order.variant == 1 ? 'soft-boiled' : 'hard-boiled';
                         const quantity = order.quantity == 1 ? 'One' : 'Two';

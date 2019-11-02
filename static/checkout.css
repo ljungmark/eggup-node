@@ -104,8 +104,12 @@ svg {
   transition: width 50ms ease;
   transform-origin: 0% 0%;
 }
-.order[data-collected="1"] {
+.order .name {
+  pointer-events: none;
+}
+.order[data-collected="1"] .name {
   color: #cccccc;
+  text-decoration: line-through;
 }
 .order[data-collected="1"] .collected:before {
   width: 5px;
