@@ -11,7 +11,7 @@ html {
 html::after {
   content: "";
   background: url('../assets/checkout-background.png') repeat;
-  opacity: 0.2;
+  opacity: 0.15;
   top: 0;
   left: 0;
   bottom: 0;
@@ -28,8 +28,8 @@ svg {
 }
 .header {
   border-bottom: hsl(0, 0%, 88%) 1px solid;
-  box-shadow: 0 4px 15px -5px rgba(10,17,36,0.1);
-  top: 0;
+  bottom: 0;
+  box-shadow: 0 -4px 15px -5px rgba(10,17,36,0.1);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   font-size: 16pt;
@@ -70,11 +70,8 @@ svg {
   transition: color 150ms 200ms;
   white-space: nowrap;
 }
-.order:first-child {
-  margin-top: 70px;
-}
 .order:last-child {
-  margin-bottom: 50px;
+  margin-bottom: 90px;
 }
 .collected {
   display: inline-block;
