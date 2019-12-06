@@ -1182,6 +1182,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '151': '"Ja men dåså! Då ska jag uppmärksamma att Freij är här" -Qaniel',
             '152': '""Vad fan är det här? Hur ska jag... Hur fan äter man det här?" -Rebecka',
             '153': '"Netflix är fan överallt. Om vi går ut och köper en brödrost så måste vi avinstallera Netflix först." -Qaniel',
+            '154': 'It\'s so hard with LDV... Because, you know... Numbers. -Emil',
           }
         },
         'map': {
