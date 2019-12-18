@@ -11,7 +11,7 @@ const templates = {
   'too_large_quantity': '<h1>Invalid params</h1><p>Please provide valid input</p>',
 }
 
-function switchmessages(input = 'default', revert = false, replacements = []) {
+function switchmessages(input, revert, replacements) {
   document.querySelector('.queue').innerHTML = templates[input].replace(/{{(.*?)}}/g, replacements[0]);
 
   const direction = (input === 'default') ? 'downwards' : 'upwards';
@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 socket.on('gateway', function(open) {
   if (open == false) {
-    switchmessages('have_a_great_day');
+    switchmessages('have_a_great_day', false, []);
   } else {
-    switchmessages();
+    switchmessages('default', false, []);
   }
 });
