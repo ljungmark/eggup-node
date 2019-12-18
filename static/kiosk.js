@@ -2,20 +2,13 @@ var socket = io();
 
 let ui_refresher;
 const templates = {
-  'default': `<h1>Order eggs</h1>
-    <p>Hold your tag in front of the reader</p>`,
-  'inserted': `<h1>Order confirmed</h1>
-    <p>Thank you and have a great day!</p>`,
-  'updated': `<h1>Order already placed</h1>
-    <p>If you wanted to cancel your order, you can do so in the app.</p>`,
-  'tag_not_found': `<h1>Oh noes!</h1>
-    <p>Your tag hasn't been registered. Please use the app!</p>
-    <p>Ref: {{tag_id}}</p>`,
-  'have_a_great_day': `<h1>You're great!</h1>`,
-  'closed_terminal': `<h1>Terminal is closed</h1>
-    <p>Welcome back next work day</p>`,
-  'too_large_quantity': `<h1>Invalid params</h1>
-    <p>Please provide valid input</p>`,
+  'default': '<h1>Order eggs</h1><p>Hold your tag in front of the reader</p>',
+  'inserted': '<h1>Order confirmed</h1><p>Thank you and have a great day!</p>',
+  'updated': '<h1>Order already placed</h1><p>If you wanted to cancel your order, you can do so in the app.</p>',
+  'tag_not_found': '<h1>Oh noes!</h1><p>Your tag hasn\'t been registered. Please use the app!</p><p>Ref: ' + tag_id + '</p>',
+  'have_a_great_day': '<h1>You\'re great!</h1>',
+  'closed_terminal': '<h1>Terminal is closed</h1><p>Welcome back next work day</p>',
+  'too_large_quantity': '<h1>Invalid params</h1><p>Please provide valid input</p>',
 }
 
 function switchmessages(input = 'default', revert = false, replacements = []) {
