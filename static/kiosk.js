@@ -42,15 +42,15 @@ function switchmessages(input = 'default', revert = false, replacements = []) {
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('.tag').focus();
 
-  document.addEventListener('keydown', (event) => {
+  document.addEventListener('keydown', function(event) {
     document.querySelector('.tag').focus();
   })
 
-  document.querySelector('.form').addEventListener('submit', (event) => {
+  document.querySelector('.form').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', (request) => {
+    xhr.addEventListener('load', function(request) {
       clearTimeout(ui_refresher);
       document.querySelector('.tag').value = '';
 
