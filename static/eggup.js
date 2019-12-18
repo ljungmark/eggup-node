@@ -1187,6 +1187,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '156': '"Släng ut mig ur chatten..." -Corbett',
             '157': '"Elias tänker aldrig på mitt hjärta" -Jens',
             '158': '"Man måste ligga ett steg framför 12-åringarna, det är det som Internet går ut på!" -Sandgren',
+            '159': '"Du vet, som vanligt, om du visar din så visar jag min" -Gunnar',
           }
         },
         'map': {
