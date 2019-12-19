@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-    const data = `tag=${document.querySelector('.tag').value}`;
+    const data = 'tag=' + document.querySelector('.tag').value;
 
     xhr.send(data);
   });
