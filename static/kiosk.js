@@ -27,7 +27,7 @@ function switchmessages(input, revert, replacements) {
 
   if (revert) {
     ui_refresher = setTimeout(function(){
-      switchmessages();
+      switchmessages('default', false, []);
     }, 3000);
   }
 
