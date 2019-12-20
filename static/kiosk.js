@@ -12,8 +12,9 @@ const templates = {
 }
 
 function switchmessages(input, revert, replacements) {
+  document.querySelector('.queue').innerHTML = templates[input]
   if (replacements.length > 0) {
-    document.querySelector('.queue').innerHTML = templates[input].replace(/{{(.*?)}}/g, replacements[0]);
+    document.querySelector('.queue').innerHTML.replace(/{{(.*?)}}/g, replacements[0]);
   }
 
   const direction = (input === 'default') ? 'downwards' : 'upwards';
