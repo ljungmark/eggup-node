@@ -2,20 +2,24 @@ var socket = io();
 
 let ui_refresher;
 const templates = {
-  'default': '<h1>Order eggs</h1><p>Hold your tag in front of the reader</p>',
-  'inserted': '<h1>Order confirmed</h1><p>Thank you and have a great day!</p>',
-  'updated': '<h1>Order already placed</h1><p>If you wanted to cancel your order, you can do so in the app.</p>',
-  'tag_not_found': '<h1>Oh noes!</h1><p>Your tag hasn\'t been registered. Please use the app!</p><p>Ref: {{tag_id}}</p>',
-  'have_a_great_day': '<h1>You\'re great!</h1>',
-  'closed_terminal': '<h1>Terminal is closed</h1><p>Welcome back next work day</p>',
-  'too_large_quantity': '<h1>Invalid params</h1><p>Please provide valid input</p>',
+  'default': `<h1>Order eggs</h1>
+    <p>Hold your tag in front of the reader</p>`,
+  'inserted': `<h1>Order confirmed</h1>
+    <p>Thank you and have a great day!</p>`,
+  'updated': `<h1>Order already placed</h1>
+    <p>If you wanted to cancel your order, you can do so in the app.</p>`,
+  'tag_not_found': `<h1>Oh noes!</h1>
+    <p>Your tag hasn't been registered. Please use the app!</p>
+    <p>Ref: {{tag_id}}</p>`,
+  'have_a_great_day': `<h1>You're great!</h1>`,
+  'closed_terminal': `<h1>Terminal is closed</h1>
+    <p>Welcome back next work day</p>`,
+  'too_large_quantity': `<h1>Invalid params</h1>
+    <p>Please provide valid input</p>`,
 }
 
-function switchmessages(input, revert, replacements) {
-  document.querySelector('.queue').innerHTML = templates[input]
-  if (replacements.length > 0) {
-    document.querySelector('.queue').innerHTML.replace(/{{(.*?)}}/g, replacements[0]);
-  }
+function switchmessages(input = 'default', revert = false, replacements = []) {
+  document.querySelector('.queue').innerHTML = templates[input].replace(/{{(.*?)}}/g, replacements[0]);
 
   const direction = (input === 'default') ? 'downwards' : 'upwards';
 
@@ -28,7 +32,7 @@ function switchmessages(input, revert, replacements) {
 
   if (revert) {
     ui_refresher = setTimeout(function(){
-      switchmessages('default', false, []);
+      switchmessages();
     }, 3000);
   }
 
@@ -38,15 +42,15 @@ function switchmessages(input, revert, replacements) {
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('.tag').focus();
 
-  document.addEventListener('keydown', function(event) {
+  document.addEventListener('keydown', (event) => {
     document.querySelector('.tag').focus();
   })
 
-  document.querySelector('.form').addEventListener('submit', function(event) {
+  document.querySelector('.form').addEventListener('submit', (event) => {
     event.preventDefault();
 
     const xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', function(request) {
+    xhr.addEventListener('load', (request) => {
       clearTimeout(ui_refresher);
       document.querySelector('.tag').value = '';
 
@@ -60,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-    const data = 'tag=' + document.querySelector('.tag').value;
+    const data = `tag=${document.querySelector('.tag').value}`;
 
     xhr.send(data);
   });
@@ -70,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 socket.on('gateway', function(open) {
   if (open == false) {
-    switchmessages('have_a_great_day', false, null);
+    switchmessages('have_a_great_day');
   } else {
-    switchmessages('default', false, null);
+    switchmessages();
   }
 });
