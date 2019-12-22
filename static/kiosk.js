@@ -4,12 +4,12 @@ var socket = io();
 var ui_refresher;
 var templates = {
   'default': "<h1>Order eggs</h1>\n    <p>Hold your tag in front of the reader</p>",
-  'inserted': "<h1>Order confirmed</h1>\n    <p>Thank you and have a great day!</p>",
-  'updated': "<h1>Order already placed</h1>\n    <p>If you wanted to cancel your order, you can do so in the app.</p>",
-  'tag_not_found': "<h1>Oh noes!</h1>\n    <p>Your tag hasn't been registered. Please use the app!</p>\n    <p>Ref: {{tag_id}}</p>",
-  'have_a_great_day': "<h1>You're great!</h1>",
-  'closed_terminal': "<h1>Terminal is closed</h1>\n    <p>Welcome back next work day</p>",
-  'too_large_quantity': "<h1>Invalid params</h1>\n    <p>Please provide valid input</p>"
+  inserted: "<h1>Order confirmed</h1>\n    <p>Thank you and have a great day!</p>",
+  updated: "<h1>Order already placed</h1>\n    <p>If you wanted to cancel your order, you can do so in the app.</p>",
+  tag_not_found: "<h1>Oh noes!</h1>\n    <p>Your tag hasn't been registered. Please use the app!</p>\n    <p>Ref: {{tag_id}}</p>",
+  have_a_great_day: "<h1>You're great!</h1>",
+  closed_terminal: "<h1>Terminal is closed</h1>\n    <p>Welcome back next work day</p>",
+  too_large_quantity: "<h1>Invalid params</h1>\n    <p>Please provide valid input</p>"
 };
 
 function switchmessages() {
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
       document.querySelector('.tag').value = '';
       socket.emit('heap');
       var response = JSON.parse(request.target.response);
-      switchmessages(response.data, true, [response.tag_id]);
+      switchmessages(response.data, true, [response.tag]);
     });
     xhr.open('POST', '/request');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

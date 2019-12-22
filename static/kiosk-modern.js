@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
       socket.emit('heap');
 
       const response = JSON.parse(request.target.response);
-      switchmessages(response.data, true, [response.tag_id]);
+      switchmessages(response.data, true, [response.tag]);
     });
 
     xhr.open('POST', '/request');
