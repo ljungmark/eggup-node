@@ -3,10 +3,10 @@
 }
 
 .ui {
-  background: url('kiosk.png');
+  background: url('kiosk.png') no-repeat center #121212;
   bottom: 0;
   color: #ffffff;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Alegreya', serif;
   left: 0;
   position: fixed;
   right: 0;
