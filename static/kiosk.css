@@ -32,11 +32,9 @@
 }
 
 .tag {
-  display: none;
   opacity: 0;
   position: fixed;
   top: -2000px;
-  visibility: hidden;
 }
 
 @keyframes upwardsview {
