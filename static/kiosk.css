@@ -3,7 +3,7 @@
 }
 
 .ui {
-  background: url('kiosk.png') no-repeat center #121212;
+  background: url('kiosk.png') no-repeat bottom #121212;
   bottom: 0;
   color: #ffffff;
   font-family: 'Alegreya', serif;
@@ -18,9 +18,8 @@
 .queue {
   align-content: center;
   display: grid;
-  height: 100vh;
   position: absolute;
-  top: 50px;
+  top: 20px;
   width: 100vw;
 }
 
@@ -30,6 +29,12 @@
 
 .queue {
   opacity: 0;
+}
+
+.tag {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
 }
 
 @keyframes upwardsview {
