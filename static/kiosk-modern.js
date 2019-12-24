@@ -7,7 +7,7 @@ const templates = {
   'inserted': `<h1>Order confirmed</h1>
     <p>Thank you and have a great day!</p>`,
   'updated': `<h1>Order already placed</h1>
-    <p>If you wanted to cancel your order, you can do so in the app.</p>`,
+    <p>If you want to cancel your order, you can do so in the app.</p>`,
   'tag_not_found': `<h1>Oh noes!</h1>
     <p>Your tag hasn't been registered. Please use the app!</p>
     <p>Ref: {{tag_id}}</p>`,
@@ -33,7 +33,7 @@ function switchmessages(input = 'default', revert = false, replacements = []) {
   if (revert) {
     ui_refresher = setTimeout(function(){
       switchmessages();
-    }, 3000);
+    }, 4500);
   }
 
   return false;
