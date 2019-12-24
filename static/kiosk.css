@@ -3,10 +3,11 @@
 }
 
 .ui {
-  background: url('kiosk.png') no-repeat bottom #121212;
+  background: url('kiosk.png') no-repeat 50% 580px #121212;
   bottom: 0;
   color: #ffffff;
-  font-family: 'Alegreya', serif;
+  font-family: 'VT323', monospace;
+
   left: 0;
   position: fixed;
   right: 0;
@@ -19,7 +20,7 @@
   align-content: center;
   display: grid;
   position: absolute;
-  top: 20px;
+  top: 200px;
   width: 100vw;
 }
 
@@ -97,12 +98,14 @@
 }
 
 h1 {
-  font-size: 40pt;
+  font-size: 80pt;
   font-weight: initial;
+  margin: 20px;
 }
 
 p {
-  font-size: 20pt;
+  font-size: 40pt;
+  margin: 0;
 }
 /**
 .form {
