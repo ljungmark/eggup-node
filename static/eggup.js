@@ -1195,6 +1195,15 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '164': '"Jag tar det tidigare tåget för det senare tåget går väldigt sent" -Qaniel',
             '165': '"Jag är rädd för att göra mellanslag" -Rebecka',
             '166': '"Nu smäller det! Dags att migrera!" -Qaniel',
+            '167': '"Kan vi bara slakta en bäver eller någonting?!" -Sandgren',
+            '168': '""Du vet den där nazistorganisationen, vad heter den nu igen? ... Webfront!" -Skärgård',
+            '169': '"Kom och merga mig i röven!" -Algulin',
+            '170': '"Gött att vi har en kyrkklocka nu, som säger när det är dags för deployments i PROD!" -Algulin',
+            '171': '"Sen istället för bonuspengar i steg två så får jag en indisk brödbit." -Sandgren',
+            '172': '"Nu behöver vi bara en access till sen slipper vi utvecklarna" -Algulin',
+            '173': '"Du äger inte ditt ansikte" -Sandgren',
+            '174': '"Höna av en fjäder? Ah, jag läste faktiskt om det i en bok!" -Kumlin',
+            '175': '(10:58 på måndag morgon) "Jag ger upp..." -Sandgren',
           }
         },
         'map': {
