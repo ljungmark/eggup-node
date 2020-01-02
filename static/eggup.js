@@ -1189,6 +1189,12 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '158': '"Man måste ligga ett steg framför 12-åringarna, det är det som Internet går ut på!" -Sandgren',
             '159': '"Du vet, som vanligt, om du visar din så visar jag min" -Gunnar',
             '160': '"Jag såg en rysk tungorkester häromdagen" -Lindberg',
+            '161': '"Jag har verb!" -Linus J',
+            '162': '"Om du lägger det i en hög så är det fortfarande en hög" -Amanda',
+            '163': '"Docker har gjort scripts på ett inte-så-bra sätt. Vi skulle kunna göra som dem" -Freij',
+            '164': '"Jag tar det tidigare tåget för det senare tåget går väldigt sent" -Qaniel',
+            '165': '"Jag är rädd för att göra mellanslag" -Rebecka',
+            '166': '"Nu smäller det! Dags att migrera!" -Qaniel',
           }
         },
         'map': {
