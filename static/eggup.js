@@ -1204,6 +1204,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '173': '"Du äger inte ditt ansikte" -Sandgren',
             '174': '"Höna av en fjäder? Ah, jag läste faktiskt om det i en bok!" -Kumlin',
             '175': '(10:58 på måndag morgon) "Jag ger upp..." -Sandgren',
+            '176': '"Att ha en hund känns lite som att ha en ko - den har liksom ingen... flexibilitet" -Tau',
           }
         },
         'map': {
