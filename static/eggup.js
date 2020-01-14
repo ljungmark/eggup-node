@@ -1207,6 +1207,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '176': '"Att ha en hund känns lite som att ha en ko - den har liksom ingen... flexibilitet" -Tau',
             '177': '"Pappa, du är ju från 80-talet. Du fattar ju inte ens vad stelt innebär..." -Emilio',
             '178': '"Välkommen till vårt hemliga möte. Här får man bara vara med om man hittar oss..." -Anonym',
+            '179': '"Alltså, dem vill någon riktigt korkat..." -Qvarford',
           }
         },
         'map': {
