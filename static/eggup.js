@@ -1208,6 +1208,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '177': '"Pappa, du är ju från 80-talet. Du fattar ju inte ens vad stelt innebär..." -Emilio',
             '178': '"Välkommen till vårt hemliga möte. Här får man bara vara med om man hittar oss..." -Anonym',
             '179': '"Alltså, dem vill något riktigt korkat..." -Qvarford',
+            '180': '"Antingen så sjunker man, eller så lever man livet" -Ljungmark',
+            '181': '"Det var en väldigt estetiskt tilltalande gurka" -Jimmy',
           }
         },
         'map': {
