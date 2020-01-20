@@ -1210,6 +1210,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '179': '"Alltså, dem vill något riktigt korkat..." -Qvarford',
             '180': '"Antingen så sjunker man, eller så lever man livet" -Ljungmark',
             '181': '"Det var en väldigt estetiskt tilltalande gurka" -Jimmy',
+            '182': '"Precis som kungen, sån är jag!" -Therese',
           }
         },
         'map': {
