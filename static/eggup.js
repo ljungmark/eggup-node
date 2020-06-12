@@ -1212,6 +1212,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '181': '"Det var en väldigt estetiskt tilltalande gurka" -Jimmy',
             '182': '"Precis som kungen, sån är jag!" -Therese',
             '183': '"sdf" -Amanda',
+            '184': '"Alcohol and drugs! Det här är grejer det, grabbar!" - Håkan',
           }
         },
         'map': {
