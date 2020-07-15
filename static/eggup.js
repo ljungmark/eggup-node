@@ -1213,6 +1213,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '182': '"Precis som kungen, sån är jag!" -Therese',
             '183': '"sdf" -Amanda',
             '184': '"Alcohol and drugs! Det här är grejer det, grabbar!" - Håkan',
+            '185': '"We need to get our developers hooked on crack cocaine" - Tommy',
+            '186': '"Why do we need QA? The answer is "We don\'t" - Gunnar',
           }
         },
         'map': {
