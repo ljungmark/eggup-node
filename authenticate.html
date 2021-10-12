@@ -381,7 +381,7 @@
         <a class="-login -reddit" href="/auth/reddit">Reddit</a>
       </div>
       <div>
-        <a href="https://github.com/ljungmark/eggup-node/blob/master/docs/PRIVACY.markdown">Privacy Policy</a>
+        <a class="-privacy-policy" href="https://github.com/ljungmark/eggup-node/blob/master/docs/PRIVACY.markdown">Privacy Policy</a>
       </div>
       <!--<div>
         <a class="-login -linkedin" href="/auth/linkedin">LinkedIn</a>
@@ -393,7 +393,7 @@
     <script>
       let timer = 0;
 
-      document.querySelectorAll('.-login').forEach(element => {
+      document.querySelectorAll('.-login, -privacy-policy').forEach(element => {
         timer += 20;
         setTimeout(_ => {
           element.classList.add('_display');
