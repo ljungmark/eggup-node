@@ -1218,6 +1218,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '187': '"Nu förtiden behöver man ju inte utsätta kollegor så mycket heller, så man kan göra riktigt galna saker som jag gjort idag genom att blanda Yatagan och Tresor Midnight Rose. Jag luktar som sexet efter något kungligt medeltida par: bäverkön, rök, hallon och rosor" -Henric',
             '188': '"Om ni blundar så kan jag visa Vedin vad som hände igår..." -Farre',
             '189': '"En antik attraktion? Är det en GILF, eller?" -Algulin',
+            '190': '"My body have... substantially resized." -Petter',
+            '191': '"Paymenthub är en jävla djungel asså" -Stewart',
           }
         },
         'map': {
