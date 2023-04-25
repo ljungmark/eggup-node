@@ -1220,6 +1220,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '189': '"En antik attraktion? Är det en GILF, eller?" -Algulin',
             '190': '"My body have... substantially resized." -Petter',
             '191': '"Paymenthub är en jävla djungel asså" -Stewart',
+            '192': '"Jag har blivit inspirerad av Webfront" -Qaniel',
           }
         },
         'map': {

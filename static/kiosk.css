@@ -3,10 +3,11 @@
 }
 
 .ui {
-  background: url('kiosk.png') no-repeat 50% 580px #121212;
+  background: url('/assets/mesh.png') repeat;
   bottom: 0;
-  color: #ffffff;
-  font-family: 'VT323', monospace;
+  color: white;
+  font-family: 'Roboto Slab', serif;
+  font-size: 1em;
 
   left: 0;
   position: fixed;
@@ -14,13 +15,24 @@
   text-align: center;
   top: 0;
 }
+.ui::after {
+  content: "";
+  background: linear-gradient(to right, #141e30, #243b55);
+  opacity: 0.8;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
 
 .view,
 .queue {
   align-content: center;
   display: grid;
   position: absolute;
-  top: 200px;
+  top: 20px;
   width: 100vw;
 }
 
@@ -98,18 +110,116 @@
 }
 
 h1 {
-  font-size: 80pt;
+  font-size: 50pt;
   font-weight: initial;
   margin: 20px;
 }
 
 p {
-  font-size: 40pt;
+  font-size: 30pt;
   margin: 0;
 }
-/**
-.form {
-  pointer-events: none;
+
+.egg {
+  animation: egg 3s linear infinite;
+  background: #ffffff;
+  border-bottom-left-radius: 50% 40%;
+  border-bottom-right-radius: 50% 40%;
+  border-top-left-radius: 50% 60%;
+  border-top-right-radius: 50% 60%;
+  bottom: -130px;
+  box-shadow: inset -10px -5px #eaefdd;
+  height: 250px;
+  left: 80px;
   position: fixed;
-  top: 200%;
+  transform-origin: 0 50%;
+  transition: margin 0.6s, opacity 0.6s;
+  width: 200px;
+}
+.egg .yolk {
+  background: #ffdf50;
+  border-radius: 100%;
+  bottom: 20px;
+  box-shadow: inset -5px -5px #f1ad41;
+  height: 130px;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, 0%);
+  width: 130px;
+}
+.egg .yolk .face .eyes {
+  display: flex;
+  left: 50%;
+  position: absolute;
+  top: 35px;
+  transform: translate(-50%, 0%);
+}
+.egg .yolk .face .eyes:before,
+.egg .yolk .face .eyes:after {
+  background: #884e2c;
+  border-radius: 100%;
+  content: '';
+  display: block;
+  height: 12px;
+  margin: 0 22px;
+  width: 12px;
+}
+.egg .yolk .face .mouth {
+  align-items: flex-end;
+  background: #884e2c;
+  border-radius: 15px 15px 70px 70px;
+  display: flex;
+  height: 20px;
+  justify-content: center;
+  left: 50%;
+  position: absolute;
+  top: 65px;
+  transform: translate(-50%, 0%);
+  width: 40px;
+}
+.egg .yolk .face .mouth:after {
+  background: #cd5b4d;
+  border-radius: 5px 5px 100% 100%;
+  content: '';
+  display: block;
+  height: 8px;
+  margin-bottom: 2px;
+  width: 20px;
+}
+
+@-webkit-keyframes egg {
+  0% {
+    -webkit-transform: rotate(0deg) translate(-50%, -50%);
+    transform: rotate(0deg) translate(-50%, -50%);
+  }
+  25% {
+    -webkit-transform: rotate(2.69153297deg) translate(-50%, -50%);
+    transform: rotate(3deg) translate(-50%, -50%);
+  }
+  75% {
+    -webkit-transform: rotate(-0.94917757deg) translate(-50%, -50%);
+    transform: rotate(-1deg) translate(-50%, -50%);
+  }
+  100% {
+    -webkit-transform: rotate(0deg) translate(-50%, -50%);
+    transform: rotate(0deg) translate(-50%, -50%);
+  }
+}
+@keyframes egg {
+  0% {
+    -webkit-transform: rotate(0deg) translate(-50%, -50%);
+    transform: rotate(0deg) translate(-50%, -50%);
+  }
+  25% {
+    -webkit-transform: rotate(2.69153297deg) translate(-50%, -50%);
+    transform: rotate(3deg) translate(-50%, -50%);
+  }
+  75% {
+    -webkit-transform: rotate(-1deg) translate(-50%, -50%);
+    transform: rotate(-1deg) translate(-50%, -50%);
+  }
+  100% {
+    -webkit-transform: rotate(0deg) translate(-50%, -50%);
+    transform: rotate(0deg) translate(-50%, -50%);
+  }
 }
