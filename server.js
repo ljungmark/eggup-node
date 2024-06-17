@@ -146,6 +146,7 @@ const path = require('path'),
    * Set up Okta strategy
    */
   passport.use(new oktaStrategy({
+    audience: strategies.okta.audience,
     clientID: strategies.okta.clientID,
     clientSecret: strategies.okta.clientSecret,
     callbackURL: strategies.okta.callbackURL
