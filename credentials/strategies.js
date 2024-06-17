@@ -44,5 +44,11 @@ module.exports = {
     'clientID': '',
     'clientSecret': ' ',
     'callbackURL': ''
+  },
+  'okta' : {
+    'audience': '',
+    'clientID': '',
+    'clientSecret': ' ',
+    'callbackURL': ''
   }
 };

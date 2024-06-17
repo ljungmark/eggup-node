@@ -16,7 +16,8 @@ const path = require('path'),
   redditStrategy = require('passport-reddit').Strategy,
   spotifyStrategy = require('passport-spotify').Strategy,
   linkedinStrategy = require('passport-linkedin').Strategy,
-  instagramStrategy = require('passport-instagram').Strategy;
+  instagramStrategy = require('passport-instagram').Strategy,
+  oktaStrategy = require('passport-okta-oauth').Strategy;
 
   /**
    * Set up Facebook strategy
@@ -128,6 +129,9 @@ const path = require('path'),
   }
   ));
 
+  /**
+   * Set up Instagram strategy
+   */
   passport.use(new instagramStrategy({
     clientID: strategies.instagram.clientID,
     clientSecret: strategies.instagram.clientSecret,
@@ -135,6 +139,19 @@ const path = require('path'),
   },
   function(accessToken, refreshToken, profile, done) {
       passportParser(profile, done, 'instagram');
+    }
+  ));
+
+  /**
+   * Set up Okta strategy
+   */
+  passport.use(new oktaStrategy({
+    clientID: strategies.okta.clientID,
+    clientSecret: strategies.okta.clientSecret,
+    callbackURL: strategies.okta.callbackURL
+  },
+  function(accessToken, refreshToken, profile, done) {
+      passportParser(profile, done, 'okta');
     }
   ));
 
@@ -407,6 +424,15 @@ app.get('/auth/instagram',
 
 app.get('/auth/instagram/callback',
   passport.authenticate('instagram', { failureRedirect: '/login' }),
+  function(request, response) {
+    response.redirect('/');
+  });
+
+app.get('/auth/okta',
+  passport.authenticate('okta', { scope: ['openid', 'email', 'profile'], response_type: 'code' }));
+
+app.get('/auth/okta/callback',
+  passport.authenticate('okta', { failureRedirect: '/login' }),
   function(request, response) {
     response.redirect('/');
   });
