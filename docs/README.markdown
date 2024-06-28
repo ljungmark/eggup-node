@@ -109,15 +109,16 @@ Will update the DOM with whatever language is chosen internally. Is called withi
 Navigate to /login to login with your social media account.
 
 The following services are available:
-* Facebook
-* Twitter
+* Okta
+* ~~Facebook~~ *[DEACTIVATED]*
+* ~~Twitter~~ *[DEACTIVATED]*
 * ~~Instagram~~ *[DEACTIVATED]*
 * Spotify
-* Github
-* Steam
-* Reddit
+* ~~Github~~ *[DEACTIVATED]*
+* ~~Steam~~ *[DEACTIVATED]*
+* ~~Reddit~~ *[DEACTIVATED]*
 * ~~Google+~~ *[DEACTIVATED]*
-* LinkedIn
+* ~~LinkedIn~~ *[DEACTIVATED]*
 
 ## Logout
 
