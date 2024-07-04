@@ -57,10 +57,11 @@ svg {
   padding-top: 3px;
 }
 .list {
+  align-content: start;
   display: grid;
   grid-auto-columns: 1fr;
-  height: calc(100vh - 110px);
-  margin-bottom: 100px;
+  height: 100vh;
+  margin-bottom: 120px;
   padding: 20px 30px;
 }
 .order {
