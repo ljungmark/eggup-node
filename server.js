@@ -433,7 +433,12 @@ app.get('/auth/okta',
   passport.authenticate('okta', { scope: ['openid', 'email', 'profile'], response_type: 'code' }));
 
 app.get('/auth/okta/callback',
-  passport.authenticate('okta', { failureRedirect: '/login' }),
+  passport.authenticate('okta', {
+    failureRedirect: '/login',
+    failureFlash: true
+  }, (err, user, options) => {
+    console.log(options) // options will be the complete object you pass in done()
+  }),
   function(request, response) {
     response.redirect('/');
   });
