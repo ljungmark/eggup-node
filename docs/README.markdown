@@ -114,10 +114,10 @@ The following services are available:
 * ~~Twitter~~ *[DEACTIVATED]*
 * ~~Instagram~~ *[DEACTIVATED]*
 * Spotify
-* ~~Github~~ *[DEACTIVATED]*
+* Github
 * ~~Steam~~ *[DEACTIVATED]*
-* ~~Reddit~~ *[DEACTIVATED]*
-* ~~Google+~~ *[DEACTIVATED]*
+* Reddit
+* Google
 * ~~LinkedIn~~ *[DEACTIVATED]*
 
 ## Logout
