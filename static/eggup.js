@@ -1222,7 +1222,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '191': '"Paymenthub är en jävla djungel asså" -Stewart',
             '192': '"Jag har blivit inspirerad av Webfront" -Qaniel',
             '193': '"De viktiga personerna är här" -Admir "Jag sitter och målar!" -Strålberg',
-            '194': 'Jag har gjort en massa dank shit nu som Patrik har fixat." -Joakim',
+            '194': '"Jag har gjort en massa dank shit nu som Patrik har fixat." -Joakim',
+            '195': '"Ett sätt att lösa det här är ju bara att hoppas att allt löser sig" -Joakim',
           }
         },
         'map': {
