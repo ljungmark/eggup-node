@@ -1225,6 +1225,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '194': '"Jag har gjort en massa dank shit nu som Patrik har fixat." -Joakim',
             '195': '"Ett sätt att lösa det här är ju bara att hoppas att allt löser sig" -Joakim',
             '196': '"Soul food? Vi är i Skövde, vi har smörgåstårta." -Therese',
+            '197': '"Och så valde vi Java... \'Här har du en `Hello World`, det blir 400MB tack.\' Enterprise!!" -Ljungmark',
+            '198': '"Vafan är syftet med verajohn.com!?" -Robert',
           }
         },
         'map': {
