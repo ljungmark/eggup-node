@@ -1228,6 +1228,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '197': '"Och så valde vi Java... \'Här har du en `Hello World`, det blir 400MB tack.\' Enterprise!!" -Ljungmark',
             '198': '"Vafan är syftet med verajohn.com!?" -Robert',
             '199': '"Varför nöja sig med A eller B när man kan ha A och B för priset av 10x komplexitet" -Ljungmark',
+            '200': '"Jag vet inte vad en tangent är" -Fredrik B',
           }
         },
         'map': {
