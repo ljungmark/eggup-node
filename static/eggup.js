@@ -1229,6 +1229,8 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '198': '"Vafan är syftet med verajohn.com!?" -Robert',
             '199': '"Varför nöja sig med A eller B när man kan ha A och B för priset av 10x komplexitet" -Ljungmark',
             '200': '"Jag vet inte vad en tangent är" -Fredrik B',
+            '201': '"Shiima shiima daitan daitan" -Robert',
+            '202': '"Det borde finnas en citatbok nånstans" -Rasmus',
           }
         },
         'map': {
