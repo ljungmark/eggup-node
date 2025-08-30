@@ -18,6 +18,7 @@ const path = require('path'),
   linkedinStrategy = require('passport-linkedin').Strategy,
   instagramStrategy = require('passport-instagram').Strategy,
   oktaStrategy = require('passport-okta-oauth').Strategy;
+  entraStrategy = require('passport-azure-ad').Strategy;
 
   /**
    * Set up Facebook strategy
@@ -153,6 +154,20 @@ const path = require('path'),
   },
   function(accessToken, refreshToken, profile, done) {
       passportParser(profile, done, 'okta');
+    }
+  ));
+
+  /**
+   * Set up Entra strategy
+   */
+  passport.use(new entraStrategy({
+    audience: strategies.entra.audience,
+    clientID: strategies.entra.clientID,
+    clientSecret: strategies.entra.clientSecret,
+    callbackURL: strategies.entra.callbackURL
+  },
+  function(accessToken, refreshToken, profile, done) {
+      passportParser(profile, done, 'entra');
     }
   ));
 
@@ -434,6 +449,15 @@ app.get('/auth/okta',
 
 app.get('/auth/okta/callback',
   passport.authenticate('okta', { failureRedirect: '/login' }),
+  function(request, response) {
+    response.redirect('/');
+  });
+
+app.get('/auth/entra',
+  passport.authenticate('entra', { scope: ['openid', 'email', 'profile'], response_type: 'code' }));
+
+app.get('/auth/entra/callback',
+  passport.authenticate('entra', { failureRedirect: '/login' }),
   function(request, response) {
     response.redirect('/');
   });

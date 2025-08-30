@@ -46,7 +46,7 @@ module.exports = {
     'callbackURL': ''
   },
   'okta' : {
-    'audience': '',
+    'tenant': '',
     'clientID': '',
     'clientSecret': ' ',
     'callbackURL': ''
