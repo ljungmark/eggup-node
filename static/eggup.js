@@ -1231,6 +1231,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '200': '"Jag vet inte vad en tangent är" -Fredrik B',
             '201': '"Shiima shiima daitan daitan" -Robert',
             '202': '"Det borde finnas en citatbok nånstans" -Rasmus',
+            '203': '"Det är fan helt sjukt vad man kan lära sig av att bara läsa" -Freij',
           }
         },
         'map': {
