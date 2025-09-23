@@ -1232,6 +1232,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '201': '"Shiima shiima daitan daitan" -Robert',
             '202': '"Det borde finnas en citatbok nånstans" -Rasmus',
             '203': '"Det är fan helt sjukt vad man kan lära sig av att bara läsa" -Freij',
+            '204': '"Om du vill träffas så kan du ju inte boka in ett möte på arbetstid; det är ju redan fullt." -Ljungmark',
           }
         },
         'map': {
