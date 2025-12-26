@@ -1235,6 +1235,7 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '204': '"Om du vill träffas så kan du ju inte boka in ett möte på arbetstid; det är ju redan fullt." -Ljungmark',
             '205': '"Jag har spelat mot dig. Du kan inte vinna..." -Tomas',
             '206': '"Jag gör allt du ber mig om... Men jag är också lite korkad, så jag förstår inte..." -Anonym',
+            '207': '"Det må vara en liten råbiff. Men den luktar som en stor!" -Grehn',
           }
         },
         'map': {
