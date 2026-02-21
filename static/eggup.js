@@ -1235,7 +1235,10 @@ Eggup.prototype.i18n = function(operation = 'get', pointer = null) {
             '204': '"Om du vill träffas så kan du ju inte boka in ett möte på arbetstid; det är ju redan fullt." -Ljungmark',
             '205': '"Jag har spelat mot dig. Du kan inte vinna..." -Tomas',
             '206': '"Jag gör allt du ber mig om... Men jag är också lite korkad, så jag förstår inte..." -Anonym',
-            '207': '"Det må vara en liten råbiff. Men den luktar som en stor!" -Grehn',
+            '207': '"Ja... Det är inte klockrent... Men det kommer bli klockrent!" -Enstörm',
+            '208': '"Det må vara en liten råbiff. Men den luktar som en stor!" -Grehn',
+            '209': '"All is fair in love and korsord" -Patric',
+            '210': '"Jag är en gammal potatis" -Admir',
           }
         },
         'map': {
